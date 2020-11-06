@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -23,8 +24,8 @@ public class ParkMeApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception{
 		repository.deleteAll();
 
-	    repository.save(new User("Giacomo", "Rocchetti", "Rocche", "blabla"));
-	    repository.save(new User("Manuel", "Cretone", "Cret", "blabla"));
+	    repository.save(new User("Rocche", "blabla", Roles.DRIVER));
+	    repository.save(new User("Cret", "blabla", Roles.VIGILANT));
 
 	    for (User user : repository.findAll()) {
 	      System.out.println(user.getUserName());
