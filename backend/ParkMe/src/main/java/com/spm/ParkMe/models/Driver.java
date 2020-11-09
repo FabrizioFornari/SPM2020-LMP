@@ -121,14 +121,14 @@ public class Driver {
 	}
 	
 	public boolean isValid() {
-		return (this.getFirstName() != null
-				&& this.getLastName() != null 
-				&& this.getEmail() != null
-				&& this.getPassword() != null
+		return (this.getFirstName() != ""
+				&& this.getLastName() != "" 
+				&& this.getEmail() != ""
+				&& this.getPassword() != ""
 				&& this.getPhone() != null
-				&& this.getPlate() != null
-				&& this.getSsn() != null
-				&& this.getVehicleType() != null);
+				&& this.getPlate() != ""
+				&& this.getSsn() != ""
+				&& this.getVehicleType() != "");
 	}
 	
 }
