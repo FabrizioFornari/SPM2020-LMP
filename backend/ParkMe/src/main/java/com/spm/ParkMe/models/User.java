@@ -2,38 +2,24 @@ package com.spm.ParkMe.models;
 
 import org.springframework.data.annotation.Id;
 
+import com.spm.ParkMe.enums.Roles;
+
 public class User {
 	
 	@Id private String id;
 	
-	private String firstName;
-	private String lastName;
 	private String username;
 	private String hashedPassword;
+	private Roles role;
 	
-	public User(String firstName, String lastName, String username, String hashedPassword) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String username, String hashedPassword, Roles role) {
 		this.username = username;
 		this.hashedPassword = hashedPassword;
+		this.setRole(role);
 	}
 	
 	
 	/*-----------ACCESSORY METHODS--------------*/
-	public String getFristName() {
-		return firstName;
-	}
-	public void setFristName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
 	public String getUserName() {
 		return username;
 	}
@@ -46,6 +32,13 @@ public class User {
 	}
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
+	}
+
+	public Roles getRole() {
+		return role;
+	}
+	public void setRole(Roles role) {
+		this.role = role;
 	}
 	
 }
