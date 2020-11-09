@@ -4,6 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.encryption.Encryptor;
 import com.spm.ParkMe.enums.Roles;
@@ -18,6 +21,9 @@ public class ParkMeApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	PasswordEncoder encoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParkMeApplication.class, args);
@@ -29,12 +35,11 @@ public class ParkMeApplication implements CommandLineRunner {
 	}
 
 	private void populateDB() {
-
 		User[] users = null;
-		users = new User[] { new User("Cret", "cret@park.it", Encryptor.encryptPassword("Cret"), Roles.VIGILANT),
-				new User("Rocche", "rocche@park.it", Encryptor.encryptPassword("Rocche"), Roles.DRIVER),
-				new User("Flash", "flash@park.it", Encryptor.encryptPassword("Flash"), Roles.PARKING_MANAGER),
-				new User("Fusaro", "fusaro@turbomondialismo.it", Encryptor.encryptPassword("Fusaro"), Roles.ADMIN), };
+		users = new User[] { new User("Cret", "cret@park.it", encoder.encode("Cret"), Roles.VIGILANT),
+				new User("Rocche", "rocche@park.it",  encoder.encode("Rocche"), Roles.DRIVER),
+				new User("Flash", "flash@park.it",  encoder.encode("Flash"), Roles.PARKING_MANAGER),
+				new User("Fusaro", "fusaro@turbomondialismo.it", encoder.encode("Fusaro"), Roles.ADMIN), };
 		repository.deleteAll();
 		for (User user : users) {
 			repository.save(user);
