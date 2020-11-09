@@ -24,8 +24,8 @@ public class Driver {
 	
 	
 	/*-------Constructor------*/
-	public Driver(String firstName) {
-		this.firstName = firstName;
+	public Driver() {
+		
 
 	}
 	

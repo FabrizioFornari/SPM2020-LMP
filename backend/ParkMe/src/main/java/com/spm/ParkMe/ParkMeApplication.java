@@ -26,6 +26,7 @@ public class ParkMeApplication implements CommandLineRunner {
 	    repository.save(new User("Giacomo", "Rocchetti", "Rocche", "blabla"));
 	    repository.save(new User("Manuel", "Cretone", "Cret", "blabla"));
 
+	    
 	    for (User user : repository.findAll()) {
 	      System.out.println(user.getUserName());
 	    }
