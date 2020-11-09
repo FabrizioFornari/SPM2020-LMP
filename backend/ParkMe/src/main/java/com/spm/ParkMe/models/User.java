@@ -9,29 +9,36 @@ public class User {
 	@Id private String id;
 	
 	private String username;
-	private String hashedPassword;
+	private String password;
+	private String email;
 	private Roles role;
 	
-	public User(String username, String hashedPassword, Roles role) {
+	public User(String username, String email, String password, Roles role) {
 		this.username = username;
-		this.hashedPassword = hashedPassword;
-		this.setRole(role);
+		this.email = email;
+		this.password = password;
+		this.role = role;
 	}
 	
 	
 	/*-----------ACCESSORY METHODS--------------*/
-	public String getUserName() {
+	
+	public String getId() {
+		return this.id;
+	}
+	
+	public String getUsername() {
 		return username;
 	}
-	public void setUserName(String userName) {
+	public void setUsername(String userName) {
 		this.username = userName;
 	}
 	
 	public String getHashedPassword() {
-		return hashedPassword;
+		return password;
 	}
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
+	public void setHashedPassword(String password) {
+		this.password = password;
 	}
 
 	public Roles getRole() {
@@ -39,6 +46,14 @@ public class User {
 	}
 	public void setRole(Roles role) {
 		this.role = role;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }
