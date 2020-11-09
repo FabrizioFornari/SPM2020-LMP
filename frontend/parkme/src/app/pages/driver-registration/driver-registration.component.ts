@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DriverAuthService } from 'src/app/services/driver-auth.service';
 
 @Component({
   selector: 'app-driver-registration',
@@ -16,7 +17,7 @@ export class DriverRegistrationComponent implements OnInit {
   vehicle: string;
   password: string;
   isLoading: boolean = false;
-  constructor() {}
+  constructor(private driverAuthService: DriverAuthService) {}
 
   ngOnInit(): void {}
 
@@ -25,17 +26,26 @@ export class DriverRegistrationComponent implements OnInit {
     this.isLoading = true;
 
     const user = {
-      name: this.name,
-      surname: this.surname,
+      firstName: this.name,
+      lastName: this.surname,
       ssn: this.ssn,
       email: this.email,
       phone: this.phone,
       plate: this.plate,
-      vehicle: this.vehicle,
+      vehicleType: this.vehicle,
       password: this.password,
     };
 
-    console.table(user);
-    this.isLoading = false;
+    this.driverAuthService.register(user).subscribe(
+      data => {
+        console.log(data)
+        this.isLoading = false;
+      },
+      error => {
+        console.log(error)
+        this.isLoading = false;
+      }
+    );
   }
+
 }

@@ -28,7 +28,15 @@ public class ParkMeApplication implements CommandLineRunner {
 		this.populateDB();
 	}
 
+<<<<<<< HEAD
 	private void populateDB() {
+=======
+	    
+	    for (User user : repository.findAll()) {
+	      System.out.println(user.getUserName());
+	    }
+	    System.out.println();
+>>>>>>> 9932bc9c8bd2e5f4faf91106d0ebde9c0456433f
 
 		User[] users = null;
 		users = new User[] { new User("Cret", Encryptor.encryptPassword("Cret"), Roles.VIGILANT),
