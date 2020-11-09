@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.spm.ParkMe.security.jwt.AuthEntryPointJwt;
 import com.spm.ParkMe.security.jwt.AuthTokenFilter;
 import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
 

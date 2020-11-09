@@ -19,10 +19,10 @@ public class UserController {
 
 	@PostMapping(path="/api/login", consumes = "application/json")
 	public User login(@RequestBody Credentials credentials) {
-		User user = repository.findByUsername(credentials.getUsername());
+		User user = repository.findByUsername(credentials.getUsername()).get();
 		if(user != null) {
 			String encrypted = Encryptor.encryptPassword(credentials.getPassword());
-			if(encrypted.equals(user.getHashedPassword())) {
+			if(encrypted.equals(user.getPassword())) {
 				return user;
 			}
 		} 

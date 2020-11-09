@@ -31,10 +31,10 @@ public class ParkMeApplication implements CommandLineRunner {
 	private void populateDB() {
 
 		User[] users = null;
-		users = new User[] { new User("Cret", Encryptor.encryptPassword("Cret"), Roles.VIGILANT),
-				new User("Rocche", Encryptor.encryptPassword("Rocche"), Roles.DRIVER),
-				new User("Flash", Encryptor.encryptPassword("Flash"), Roles.PARKING_MANAGER),
-				new User("Fusaro", Encryptor.encryptPassword("Fusaro"), Roles.ADMIN), };
+		users = new User[] { new User("Cret", "cret@park.it", Encryptor.encryptPassword("Cret"), Roles.VIGILANT),
+				new User("Rocche", "rocche@park.it", Encryptor.encryptPassword("Rocche"), Roles.DRIVER),
+				new User("Flash", "flash@park.it", Encryptor.encryptPassword("Flash"), Roles.PARKING_MANAGER),
+				new User("Fusaro", "fusaro@turbomondialismo.it", Encryptor.encryptPassword("Fusaro"), Roles.ADMIN), };
 		repository.deleteAll();
 		for (User user : users) {
 			repository.save(user);
