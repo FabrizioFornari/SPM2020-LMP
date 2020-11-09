@@ -26,9 +26,7 @@ export class DriverAuthService {
   }): Observable<any> {
     return this.http.post(
       DRIVER_AUTH_API + 'registration',
-      {
-        user,
-      },
+      user,
       httpOptions
     );
   }
