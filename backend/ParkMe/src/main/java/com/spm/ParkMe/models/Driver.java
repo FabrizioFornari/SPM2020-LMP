@@ -120,5 +120,15 @@ public class Driver {
 		this.isLoading = isLoading;
 	}
 	
+	public boolean isValid() {
+		return (this.getFirstName() != null
+				&& this.getLastName() != null 
+				&& this.getEmail() != null
+				&& this.getPassword() != null
+				&& this.getPhone() != null
+				&& this.getPlate() != null
+				&& this.getSsn() != null
+				&& this.getVehicleType() != null);
+	}
 	
 }
