@@ -29,14 +29,10 @@ public class DriverController {
 	@PostMapping(path="api/registration",consumes = "application/json" )
 	public Driver registration(@RequestBody Driver driver) {
 	
-			if(driver.isValid()) {
-				System.out.println("CIAOOOOO");
-				System.out.print(driver.isValid());
 				repository.save(driver);
 				System.out.println(driver);
 				return driver;
-			}else {
-				return null;
+			
 	}
 	
 			
@@ -45,4 +41,4 @@ public class DriverController {
 	
 	
 	
-}
+
