@@ -34,10 +34,10 @@ public class User {
 		this.username = userName;
 	}
 	
-	public String getHashedPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setHashedPassword(String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
