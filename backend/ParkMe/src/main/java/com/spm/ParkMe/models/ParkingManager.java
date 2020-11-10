@@ -58,12 +58,12 @@ public class ParkingManager {
 	
 	
 	public boolean isValid() {
-		return (this.getFirstName() != ""
-				&& this.getLastName() != "" 
-				&& this.getEmail() != ""
-				&& this.getPassword() != ""
-				&& this.getPhone() != ""
-				&& this.getSsn() != ""
+		return (this.getFirstName() != null
+				&& this.getLastName() != null 
+				&& this.getEmail() != null
+				&& this.getPassword() != null
+				&& this.getPhone() != null
+				&& this.getSsn() != null
 				);
 	}
 

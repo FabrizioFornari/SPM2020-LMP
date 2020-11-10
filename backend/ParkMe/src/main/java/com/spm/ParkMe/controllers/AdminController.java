@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,7 @@ public class AdminController {
 	
 	@PostMapping("/api/parkingmanager/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> parkingManagerRegistration(ParkingManager pmanager)  {
+	public ResponseEntity<String> parkingManagerRegistration(@RequestBody ParkingManager pmanager)  {
 		if(pmanager.isValid() == true) {
 			repository.save(pmanager);
 			
@@ -45,7 +46,7 @@ public class AdminController {
 	
 	@PostMapping("/api/vigilant/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> vigilantRegistration(Vigilant vigilant)  {
+	public ResponseEntity<String> vigilantRegistration(@RequestBody Vigilant vigilant)  {
 		if(vigilant.isValid() == true) {
 			vigilant_repository.save(vigilant);
 			System.out.println(vigilant);
