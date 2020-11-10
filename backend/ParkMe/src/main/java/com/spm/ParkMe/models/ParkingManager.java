@@ -7,6 +7,7 @@ public class ParkingManager {
 	private String ssn;
 	private String email;
 	private Number phone;
+	private String password;
 	
 	
 	/*-------Constructor------*/
@@ -46,4 +47,24 @@ public class ParkingManager {
 		this.ssn = ssn;
 	}
 	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+	public boolean isValid() {
+		return (this.getFirstName() != ""
+				&& this.getLastName() != "" 
+				&& this.getEmail() != ""
+				&& this.getPassword() != ""
+				&& this.getPhone() != null
+				&& this.getSsn() != ""
+				);
+	}
+
 }
