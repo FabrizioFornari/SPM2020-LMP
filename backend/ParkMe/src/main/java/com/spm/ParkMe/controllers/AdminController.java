@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.models.ParkingManager;
-import com.spm.ParkMe.repositories.AdminRepository;
+
+import com.spm.ParkMe.repositories.ParkingManagerRepository;
 
 @CrossOrigin(origins ="*", maxAge =3600)
 @RestController
@@ -23,7 +24,7 @@ import com.spm.ParkMe.repositories.AdminRepository;
 public class AdminController {
 
 	@Autowired
-	private AdminRepository repository;
+	private ParkingManagerRepository repository;
 	
 	@PostMapping("/api/parkingmanager/registration")
 	@PreAuthorize("hasRole('ADMIN')")
