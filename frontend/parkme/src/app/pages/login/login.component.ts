@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   isLoading: boolean = false;
-  constructor() {}
+  constructor(private unifiedLogin: UnifiedLoginService) {}
 
   ngOnInit(): void {}
 
@@ -21,7 +22,15 @@ export class LoginComponent implements OnInit {
       password: this.password,
     };
 
-    console.table(user);
-    this.isLoading = false;
+    this.unifiedLogin.login(user).subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
 }

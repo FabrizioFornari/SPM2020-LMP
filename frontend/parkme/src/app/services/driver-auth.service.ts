@@ -24,10 +24,6 @@ export class DriverAuthService {
     vehicleType: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(
-      DRIVER_AUTH_API + 'registration',
-      user,
-      httpOptions
-    );
+    return this.http.post(DRIVER_AUTH_API + 'registration', user, httpOptions);
   }
 }
