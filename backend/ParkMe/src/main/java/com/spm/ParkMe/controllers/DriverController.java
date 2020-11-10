@@ -1,10 +1,6 @@
 package com.spm.ParkMe.controllers;
 
 
-import java.io.IOException;
-import java.net.http.HttpResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,22 +25,21 @@ public class DriverController {
 	@Autowired
 	private DriverRepository repository;
 	
+
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	
 
 	@PostMapping(path="api/registration",consumes = "application/json" )
-	public Driver registration(@RequestBody Driver driver,HttpServletResponse response) throws IOException {
+	public ResponseEntity<String> driverRegistration(@RequestBody Driver driver)  {
 	if(driver.isValid() == true) {
 		repository.save(driver);
 		System.out.println(driver);
-		return driver;
+		 return new ResponseEntity<String>("Driver created successfully",  HttpStatus.CREATED);
+		
 	
 	}else {
-		response.sendError(400,"richiesta sbagliata");
+		 return new ResponseEntity<String>("Try again something went wrong", HttpStatus.BAD_REQUEST);
 	}
-	return null;
-	
-			
 	
 	}
 	
