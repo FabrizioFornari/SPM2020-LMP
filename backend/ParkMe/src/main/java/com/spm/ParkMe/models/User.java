@@ -1,37 +1,40 @@
 package com.spm.ParkMe.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.spm.ParkMe.enums.Roles;
 
+@Document(collection = "users")
 public class User {
 	
 	@Id private String id;
 	
+	private String email;
 	private String username;
-	private String hashedPassword;
+	private String password;
 	private Roles role;
 	
-	public User(String username, String hashedPassword, Roles role) {
+	public User(String email, String username, String password, Roles role) {
+		this.email = email;
 		this.username = username;
-		this.hashedPassword = hashedPassword;
-		this.setRole(role);
+		this.password = password;
+		this.role = role;
 	}
 	
 	
 	/*-----------ACCESSORY METHODS--------------*/
-	public String getUserName() {
-		return username;
-	}
-	public void setUserName(String userName) {
-		this.username = userName;
+	
+	public String getId() {
+		return this.id;
 	}
 	
-	public String getHashedPassword() {
-		return hashedPassword;
+	
+	public String getPassword() {
+		return password;
 	}
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Roles getRole() {
@@ -39,6 +42,24 @@ public class User {
 	}
 	public void setRole(Roles role) {
 		this.role = role;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 }
