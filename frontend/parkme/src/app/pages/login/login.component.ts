@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UnifiedLoginService } from 'src/app/services/unified-login.service';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   isLoading: boolean = false;
-  constructor(private unifiedLogin: UnifiedLoginService) {}
+  constructor(private unifiedLogin: UnifiedLoginService, private toastrService: ToastrService) {}
 
   ngOnInit(): void {}
 
@@ -24,11 +25,16 @@ export class LoginComponent implements OnInit {
 
     this.unifiedLogin.login(user).subscribe(
       (data) => {
-        console.log(data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('role', data.roles[0]);
+        this.toastrService.success('Successfully Logged In');
         this.isLoading = false;
       },
       (error) => {
-        console.log(error);
+        if (error.status == 401) {
+          this.toastrService.warning('Bad Credentials');
+        }
         this.isLoading = false;
       }
     );
