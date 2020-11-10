@@ -18,16 +18,17 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String id;
 
-	private String username;
 
 	private String email;
+	
+	private String username;
 
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(String id, String username, String email, String password,
+	public UserDetailsImpl(String id, String email, String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
@@ -43,8 +44,8 @@ public class UserDetailsImpl implements UserDetails {
 
 		return new UserDetailsImpl(
 				user.getId(), 
-				user.getUsername(), 
 				user.getEmail(),
+				user.getUsername(),
 				user.getPassword(), 
 				authorities);
 	}
@@ -61,15 +62,17 @@ public class UserDetailsImpl implements UserDetails {
 	public String getEmail() {
 		return email;
 	}
+	
+	
+	//username corresponds to email
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
 	@Override
 	public String getPassword() {
 		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		return username;
 	}
 
 	@Override
@@ -101,5 +104,6 @@ public class UserDetailsImpl implements UserDetails {
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
 	}
+
 
 }

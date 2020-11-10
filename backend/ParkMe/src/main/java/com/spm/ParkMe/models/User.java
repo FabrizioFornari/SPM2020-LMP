@@ -10,14 +10,14 @@ public class User {
 	
 	@Id private String id;
 	
+	private String email;
 	private String username;
 	private String password;
-	private String email;
 	private Roles role;
 	
-	public User(String username, String email, String password, Roles role) {
-		this.username = username;
+	public User(String email, String username, String password, Roles role) {
 		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.role = role;
 	}
@@ -29,12 +29,6 @@ public class User {
 		return this.id;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String userName) {
-		this.username = userName;
-	}
 	
 	public String getPassword() {
 		return password;
@@ -56,6 +50,16 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 }
