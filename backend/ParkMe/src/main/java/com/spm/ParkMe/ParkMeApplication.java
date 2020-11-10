@@ -1,23 +1,27 @@
 package com.spm.ParkMe;
 
-import org.springframework.boot.CommandLineRunner;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.spm.ParkMe.encryption.Encryptor;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.UserRepository;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 
 @SpringBootApplication
 public class ParkMeApplication implements CommandLineRunner {
+
 
 	@Autowired
 	private UserRepository repository;
@@ -25,9 +29,11 @@ public class ParkMeApplication implements CommandLineRunner {
 	@Autowired
 	PasswordEncoder encoder;
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(ParkMeApplication.class, args);
 	}
+
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -45,4 +51,5 @@ public class ParkMeApplication implements CommandLineRunner {
 			repository.save(user);
 		}
 	}
+
 }
