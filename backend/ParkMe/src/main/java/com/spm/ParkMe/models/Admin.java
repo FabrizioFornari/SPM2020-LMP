@@ -6,7 +6,7 @@ public class Admin {
 	private String lastName;
 	private String ssn;
 	private String email;
-	private Number phone;
+	private String phone;
 	
 	
 	/*-------Constructor------*/
@@ -33,10 +33,10 @@ public class Admin {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Number getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(Number phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getSsn() {

@@ -16,7 +16,7 @@ public class Driver {
 	private String lastName;
 	private String ssn;
 	private String email;
-	private Number phone;
+	private String phone;
 	private String plate;
 	private String vehicleType;
 	private String password;
@@ -86,13 +86,13 @@ public class Driver {
 
 
 
-	public Number getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
 
 
-	public void setPhone(Number phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -125,7 +125,7 @@ public class Driver {
 				&& this.getLastName() != "" 
 				&& this.getEmail() != ""
 				&& this.getPassword() != ""
-				&& this.getPhone() != null
+				&& this.getPhone() != ""
 				&& this.getPlate() != ""
 				&& this.getSsn() != ""
 				&& this.getVehicleType() != "");

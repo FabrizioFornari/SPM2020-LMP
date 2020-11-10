@@ -26,6 +26,7 @@ public class AdminController {
 
 	@Autowired
 	private ParkingManagerRepository repository;
+	@Autowired
 	private VigilantRepository vigilant_repository;
 	
 	@PostMapping("/api/parkingmanager/registration")
@@ -33,10 +34,10 @@ public class AdminController {
 	public ResponseEntity<String> parkingManagerRegistration(ParkingManager pmanager)  {
 		if(pmanager.isValid() == true) {
 			repository.save(pmanager);
-			System.out.println(pmanager);
+			
 			 return new ResponseEntity<String>("Parking Manager created successfully",  HttpStatus.CREATED);		
 		}else {
-		
+			
 			 return new ResponseEntity<String>("Try again something went wrong",  HttpStatus.BAD_REQUEST);
 		}
 		

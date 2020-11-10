@@ -6,7 +6,7 @@ public class ParkingManager {
 	private String lastName;
 	private String ssn;
 	private String email;
-	private Number phone;
+	private String phone;
 	private String password;
 	
 	
@@ -34,10 +34,10 @@ public class ParkingManager {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Number getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(Number phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getSsn() {
@@ -62,7 +62,7 @@ public class ParkingManager {
 				&& this.getLastName() != "" 
 				&& this.getEmail() != ""
 				&& this.getPassword() != ""
-				&& this.getPhone() != null
+				&& this.getPhone() != ""
 				&& this.getSsn() != ""
 				);
 	}
