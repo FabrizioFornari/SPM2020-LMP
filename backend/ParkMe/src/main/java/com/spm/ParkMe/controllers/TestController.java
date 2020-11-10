@@ -18,18 +18,18 @@ public class TestController {
 	@GetMapping("/driver")
 	@PreAuthorize("hasRole('DRIVER') or hasRole('ADMIN')")
 	public String userAccess() {
-		return "User Content.";
+		return "Driver Content.";
 	}
 
 	@GetMapping("/parking_manager")
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public String moderatorAccess() {
-		return "Moderator Board.";
+		return "Parking Manager Only.";
 	}
 
 	@GetMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String adminAccess() {
-		return "Admin Board.";
+		return "Admin Only.";
 	}
 }
