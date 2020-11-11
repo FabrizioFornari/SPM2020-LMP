@@ -1,5 +1,6 @@
 package com.spm.ParkMe.controllers;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Rule;
@@ -20,20 +21,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
+import org.springframework.web.util.NestedServletException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.enums.Roles;
@@ -42,6 +47,7 @@ import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
+import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
@@ -57,6 +63,10 @@ public class AuthControllerTest {
 	
 	@Mock
 	JwtUtils jwtUtils;
+	
+	@Mock
+	UserDetailsServiceImpl userService;
+	
 	
 	@Rule
 	public MockitoRule rule = MockitoJUnit.rule();
@@ -100,7 +110,7 @@ public class AuthControllerTest {
 		
 		Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenReturn(authentication);
 		
-		Mockito.when(jwtUtils.generateJwtToken(Mockito.any(Authentication.class))).thenReturn("xxx.yyy.zzz");
+		//Mockito.when(jwtUtils.generateJwtToken(Mockito.any(Authentication.class))).thenReturn("xxx.yyy.zzz");
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				"/api/auth/login").accept(
@@ -113,6 +123,21 @@ public class AuthControllerTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+	
+	@Test
+	public void loginFails() throws Exception{
+		
+		Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenThrow(BadCredentialsException.class);
+		
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/api/auth/login").accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonCredentials.write(driverCredentials).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+
+		assertThrows(NestedServletException.class, () -> mockMvc.perform(requestBuilder).andReturn());
 	}
 
 }
