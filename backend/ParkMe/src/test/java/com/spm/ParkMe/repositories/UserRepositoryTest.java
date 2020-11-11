@@ -17,6 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.User;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class UserRepositoryTest {
@@ -32,6 +35,12 @@ class UserRepositoryTest {
 	@Test
 	void findByUsernameReturnsEmptyWhenDBIsEmpty() {
 		assertEquals(userRepository.findByUsername(""), Optional.empty());
+	}
+	
+	@Test
+	void findByUsernameReturnsEmptyWhenTheUsernameDoesNotExist() {
+		userRepository.save(new User("a@a", "a@a", "A", Roles.ROLE_ADMIN));
+		assertEquals(userRepository.findByUsername("b@b"), Optional.empty());
 	}
 
 }
