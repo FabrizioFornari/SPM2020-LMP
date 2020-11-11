@@ -2,6 +2,8 @@ package com.spm.ParkMe.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -23,6 +27,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +48,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.enums.Roles;
@@ -48,9 +56,9 @@ import com.spm.ParkMe.models.Credentials;
 import com.spm.ParkMe.models.JwtResponse;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.UserRepository;
+import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
 import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
-import com.sun.el.stream.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
@@ -59,7 +67,16 @@ public class AuthControllerTest {
 	private MockMvc mockMvc;
 	
 	@Mock
-	private UserDetailsServiceImpl userService;
+	UserRepository userRepository;
+	
+	@Mock
+	AuthenticationManager authenticationManager;
+	
+	@Mock
+	JwtUtils jwtUtils;
+	
+	@Rule
+	public MockitoRule rule = MockitoJUnit.rule();
 	
 	@InjectMocks
     private AuthController authController;
@@ -67,8 +84,12 @@ public class AuthControllerTest {
 	
 	private JacksonTester<Credentials> jsonCredentials;
 	
-	private Credentials driverCredentials = new Credentials("rocche@park.it", "Rocche");
+	private Credentials driverCredentials;
+	private User driverUser;
+	private UserDetailsImpl principal;
+	private List<GrantedAuthority> authorities;
 	
+	@Autowired
 	PasswordEncoder encoder;
 	/*
 	private Credentials vigilantCredentials = new Credentials("cret@park.it", "Cret");
@@ -77,21 +98,25 @@ public class AuthControllerTest {
 	*/
 	
 	@BeforeEach
-	public void setup() {
+	public void setUp() {
+		driverCredentials = new Credentials("rocche@park.it", "Rocche");
+		driverUser = new User("rocche@park.it", "rocche@park.it", "Rocche", Roles.ROLE_DRIVER);
+		authorities = new ArrayList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
+		principal = new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it",  "Rocche", authorities);
 		JacksonTester.initFields(this, new ObjectMapper());
         mockMvc = MockMvcBuilders.standaloneSetup(authController)
                 .build();
 	}
 	
 	@Test
-	public void loginDriverUser() throws Exception{
-		System.out.println("PRONTI");
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
+	public void loginDriverUserReturnsOKStatus() throws Exception{
 		
-		Mockito.when(userService.loadUserByUsername("rocche@park.it"))
-         	.thenReturn(new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it", encoder.encode("Rocche"), authorities));
+		Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null);
 		
+		Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenReturn(authentication);
+		
+		Mockito.when(jwtUtils.generateJwtToken(Mockito.any(Authentication.class))).thenReturn("xxx.yyy.zzz");
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				"/api/auth/login").accept(
@@ -104,9 +129,6 @@ public class AuthControllerTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-
-		assertEquals("/api/auth/login",
-				response.getHeader(HttpHeaders.LOCATION));
 	}
 
 }
