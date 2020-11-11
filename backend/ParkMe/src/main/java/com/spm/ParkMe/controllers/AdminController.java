@@ -33,28 +33,28 @@ public class AdminController {
 	
 	@PostMapping("/api/parkingmanager/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public BodyBuilder parkingManagerRegistration(@RequestBody ParkingManager pmanager)  {
+	public ResponseEntity<?> parkingManagerRegistration(@RequestBody ParkingManager pmanager)  {
 		if(pmanager.isValid() == true) {
 			repository.save(pmanager);
 			
-			 return  ResponseEntity.ok();		
+			return new ResponseEntity<>("Parking Manager created successfully",  HttpStatus.CREATED);	
 		}else {
 			
-			 return  ResponseEntity.badRequest();
+			return new ResponseEntity<>("Try again something went wrong",  HttpStatus.BAD_REQUEST);	
 		}
 		
 	}
 	
 	@PostMapping("/api/vigilant/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public BodyBuilder vigilantRegistration(@RequestBody Vigilant vigilant)  {
+	public ResponseEntity<?> vigilantRegistration(@RequestBody Vigilant vigilant)  {
 		if(vigilant.isValid() == true) {
 			vigilant_repository.save(vigilant);
 			System.out.println(vigilant);
-			 return  ResponseEntity.ok();		
+			return new ResponseEntity<>("Parking Manager created successfully",  HttpStatus.CREATED);			
 		}else {
 		
-			 return   ResponseEntity.badRequest();
+			return new ResponseEntity<>("Try again something went wrong",  HttpStatus.BAD_REQUEST);	
 		}
 		
 	}
