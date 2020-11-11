@@ -25,14 +25,18 @@ public class JwtUtilsTest {
 	JwtUtils jwtUtils;
 	
 	private UserDetailsImpl principal;
+	private UserDetailsImpl principal2;
 	private Authentication authentication;
+	private Authentication authentication2;
 	
 	@BeforeEach
 	public void setUp() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
 		principal = new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it",  "Rocche", authorities);
+		principal2 = new UserDetailsImpl("id", "cret@park.it", "cret@park.it",  "Cret", authorities);
 		authentication = new UsernamePasswordAuthenticationToken(principal, null);
+		authentication2 = new UsernamePasswordAuthenticationToken(principal2, null);
 	}
 	
 	@Test
@@ -44,5 +48,12 @@ public class JwtUtilsTest {
 	public void getRightIdentityFromToken() {
 		String token = jwtUtils.generateJwtToken(authentication);
 		assertEquals(jwtUtils.getUserNameFromJwtToken(token), ((UserDetailsImpl)authentication.getPrincipal()).getUsername());
+	}
+	
+	@Test
+	public void tokensFromDifferentUsersAreDifferent() {
+		String token1 = jwtUtils.generateJwtToken(authentication);
+		String token2 = jwtUtils.generateJwtToken(authentication2);
+		assertNotEquals(jwtUtils.getUserNameFromJwtToken(token1), jwtUtils.getUserNameFromJwtToken(token2));
 	}
 }
