@@ -38,18 +38,24 @@ class UserRepositoryTest {
 	@Test
 	void addingAUserIntoTheDBIncreasesCount() {
 		userRepository.save(testUser);
-		assertEquals(userRepository.count(), 1);
+		assertEquals(1, userRepository.count());
 	}
 
 	@Test
 	void findByUsernameReturnsEmptyWhenDBIsEmpty() {
-		assertEquals(userRepository.findByUsername(""), Optional.empty());
+		assertEquals(Optional.empty(), userRepository.findByUsername(""));
 	}
 	
 	@Test
 	void findByUsernameReturnsEmptyWhenTheUsernameDoesNotExist() {
 		userRepository.save(testUser);
-		assertEquals(userRepository.findByUsername("b@b"), Optional.empty());
+		assertEquals(Optional.empty(), userRepository.findByUsername("b@b"));
+	}
+	
+	@Test
+	void findByUsernameReturnsAUserWhenExists() {
+		userRepository.save(testUser);
+		assertEquals(Optional.of(testUser), userRepository.findByUsername("a@a"));
 	}
 
 }
