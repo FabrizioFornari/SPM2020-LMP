@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,9 @@ public class DriverController {
 	
 
 	@PostMapping(path="api/registration",consumes = "application/json" )
-	public Driver registration(@RequestBody Driver driver,HttpServletResponse response) throws IOException {
-	if(driver.isValid() == true) {
+	public Driver registration(@Valid @RequestBody Driver driver,HttpServletResponse response) throws IOException {
+		
+		if(driver.isValid() == true) {
 		repository.save(driver);
 		System.out.println(driver);
 		return driver;

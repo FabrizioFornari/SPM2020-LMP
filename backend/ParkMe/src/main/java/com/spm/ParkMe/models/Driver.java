@@ -21,40 +21,50 @@ public class Driver {
 	@NotEmpty(message = "Surname may not be empty")	
 	private String lastName;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
-	@Pattern(regexp="/^(?:[A-Z][AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i;",message="Invalid Ssn format")  
+	@NotNull(message="ssn may not be null")
+	@NotEmpty(message = "ssn may not be empty")
+	@Pattern(regexp="^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$",message="Invalid Ssn format")  
 	private String ssn;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
-	@Pattern(regexp="/^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/",message="Invalid Email format")  
+	@NotNull(message="email may not be null")
+	@NotEmpty(message = "email may not be empty")
+	@Pattern(regexp="^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$",message="Invalid Email format")  
 	private String email;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
-	@Pattern(regexp="/^((00|\\+)39[\\. ]??)??3\\d{2}[\\. ]??\\d{6,7}$/", message="Invalid Pgone format")
+	@NotNull(message="phone may not be null")
+	@NotEmpty(message = "phone may not be empty")
+	@Pattern(regexp="^((\\+)39\\)|(00|\\+)39)?(38[890]|34[7-90]|36[680]|33[3-90]|32[89])\\d{7}$", message="Invalid Phone format")
 	private String phone;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
-	@Pattern(regexp="/[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}/g",message="Invalid Plate format")
+	@NotNull(message="plate may not be null")
+	@NotEmpty(message = "plate may not be empty")
+	@Pattern(regexp="([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}\\d{3}([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}",message="Invalid Plate format")
 	private String plate;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
+	@NotNull(message="vehicleType may not be null")
+	@NotEmpty(message = "vehicleType may not be empty")
 	private String vehicleType;
 	
-	@NotNull(message="Name may not be null")
-	@NotEmpty(message = "Name may not be empty")
+	@NotNull(message="password may not be null")
+	@NotEmpty(message = "password may not be empty")
 	@Size(min=1)
 	private String password;
 
 	
 	/*-------Constructor------*/
-	public Driver() {
+	public Driver(String firstName, String lastName, 
+					String ssn,String email,String phone,
+					String plate,String vehicleType,
+					String password) {
 		
-
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.ssn= ssn;
+		this.phone=phone;
+		this.email=email;
+		this.plate=plate;
+		this.vehicleType=vehicleType;
+		this.password=password;
 	}
 	
 	
