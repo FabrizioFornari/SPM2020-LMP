@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.repositories.ParkingManagerRepository;
@@ -37,11 +38,11 @@ public class AdminController {
 		if(pmanager.isValid() == true) {
 			repository.save(pmanager);
 			
-			return new ResponseEntity<>("Parking Manager created successfully",  HttpStatus.CREATED);	
+			return  ResponseEntity.ok(new MessageResponse("Parking Manager created successfully"));	
 		}else {
 			
-			return new ResponseEntity<>("Try again something went wrong",  HttpStatus.BAD_REQUEST);	
-		}
+			return   ResponseEntity.badRequest().body(new MessageResponse("Try again something went wrong"));
+					}
 		
 	}
 	
@@ -51,10 +52,9 @@ public class AdminController {
 		if(vigilant.isValid() == true) {
 			vigilant_repository.save(vigilant);
 			System.out.println(vigilant);
-			return new ResponseEntity<>("Parking Manager created successfully",  HttpStatus.CREATED);			
+			return  ResponseEntity.ok(new MessageResponse("Vigilant created successfully"));			
 		}else {
-		
-			return new ResponseEntity<>("Try again something went wrong",  HttpStatus.BAD_REQUEST);	
+			return   ResponseEntity.badRequest().body(new MessageResponse("Try again something went wrong"));
 		}
 		
 	}
