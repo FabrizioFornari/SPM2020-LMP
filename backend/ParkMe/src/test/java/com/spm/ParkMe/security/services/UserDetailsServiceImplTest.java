@@ -41,5 +41,13 @@ class UserDetailsServiceImplTest {
 		
 		assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("a@a"));
 	}
+	
+	@Test
+	void getUserWhenExistsInDB() {
+		Mockito.when(userRepository.findByUsername(Mockito.anyString()))
+		.thenReturn(Optional.of(new User("a@a", "a@a", "A", Roles.ROLE_ADMIN)));
+		
+		assertEquals(UserDetailsImpl.class, userService.loadUserByUsername("a@a").getClass());
+	}
 
 }
