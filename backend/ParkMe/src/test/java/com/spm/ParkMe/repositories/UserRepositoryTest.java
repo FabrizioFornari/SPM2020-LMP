@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -27,9 +28,17 @@ class UserRepositoryTest {
 	@Autowired
 	UserRepository userRepository;
 	
-	@Before
+	private User testUser = new User("a@a", "a@a", "A", Roles.ROLE_ADMIN);
+	
+	@BeforeEach
 	public void setUp() {
 		userRepository.deleteAll();
+	}
+	
+	@Test
+	void addingAUserIntoTheDBIncreasesCount() {
+		userRepository.save(testUser);
+		assertEquals(userRepository.count(), 1);
 	}
 
 	@Test
@@ -39,7 +48,7 @@ class UserRepositoryTest {
 	
 	@Test
 	void findByUsernameReturnsEmptyWhenTheUsernameDoesNotExist() {
-		userRepository.save(new User("a@a", "a@a", "A", Roles.ROLE_ADMIN));
+		userRepository.save(testUser);
 		assertEquals(userRepository.findByUsername("b@b"), Optional.empty());
 	}
 
