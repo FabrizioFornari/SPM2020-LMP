@@ -127,6 +127,7 @@ export class ParkmanVigRegistrationComponent implements OnInit {
             this.isLoading = false;
           },
           (error) => {
+            console.log(error);
             if (error.status == 401) {
               this.toastrService.warning('Bad Credentials');
             } else if (error.status == 403){

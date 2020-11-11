@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const REGISTER_API = 'http://localhost:8080/';
+const PM_REGISTER_API = 'http://localhost:8080/api/parkingmanager/registration';
+const VG_REGISTER_API = 'http://localhost:8080/api/vigilant/registration';
 const AUTH_TOKEN = `Bearer ${localStorage.getItem('token')}`;
 
 const httpOptions = {
@@ -23,7 +24,7 @@ export class ParkingManagerVigilantRegistrationService {
     phone: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(REGISTER_API, user, httpOptions);
+    return this.http.post(PM_REGISTER_API, user, httpOptions);
   }
 
   vRegister(user: {
@@ -34,6 +35,6 @@ export class ParkingManagerVigilantRegistrationService {
     phone: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(REGISTER_API, user, httpOptions);
+    return this.http.post(VG_REGISTER_API, user, httpOptions);
   }
 }
