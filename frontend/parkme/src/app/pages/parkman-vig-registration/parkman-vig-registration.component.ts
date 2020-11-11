@@ -37,7 +37,6 @@ export class ParkmanVigRegistrationComponent implements OnInit {
   ngOnInit(): void {}
 
   onRegisterSubmit() {
-
     const user = {
       firstName: this.firstName,
       lastName: this.lastName,
@@ -99,43 +98,55 @@ export class ParkmanVigRegistrationComponent implements OnInit {
       !this.passwordError
     ) {
       this.isLoading = true;
-      if (this.account == "Vigilant") {
+      if (this.account == 'Vigilant') {
         this.pmVgRegistrationService.vRegister(user).subscribe(
           () => {
-            this.toastrService.success(`${this.account} Successfully Registered`);
+            this.toastrService.success(
+              `${this.account} Successfully Registered`
+            );
             this.isLoading = false;
           },
           (error) => {
             if (error.status == 401) {
               this.toastrService.warning('Bad Credentials');
-            } else if (error.status == 403){
+            } else if (error.status == 403) {
               this.toastrService.warning('Forbidden');
-            } else if (error.status == 500){
+            } else if (error.status == 500) {
               this.toastrService.warning('Server Error');
-            } else if (error.status == 226){
+            } else if (error.status == 226) {
               this.toastrService.warning('Email Already in Use');
+            } else if ((error.status = 201)) {
+              this.toastrService.success(
+                `${this.account} Successfully Registered`
+              );
             } else {
               this.toastrService.warning('Unknown Error');
             }
             this.isLoading = false;
           }
         );
-      } else if (this.account == "Parking Manager") {
+      } else if (this.account == 'Parking Manager') {
         this.pmVgRegistrationService.pmRegister(user).subscribe(
           () => {
-            this.toastrService.success(`${this.account} Successfully Registered`);
+            this.toastrService.success(
+              `${this.account} Successfully Registered`
+            );
             this.isLoading = false;
           },
           (error) => {
             console.log(error);
             if (error.status == 401) {
               this.toastrService.warning('Bad Credentials');
-            } else if (error.status == 403){
+            } else if (error.status == 403) {
               this.toastrService.warning('Forbidden');
-            } else if (error.status == 500){
+            } else if (error.status == 500) {
               this.toastrService.warning('Server Error');
-            } else if (error.status == 226){
+            } else if (error.status == 226) {
               this.toastrService.warning('Email Already in Use');
+            } else if ((error.status = 201)) {
+              this.toastrService.success(
+                `${this.account} Successfully Registered`
+              );
             } else {
               this.toastrService.warning('Unknown Error');
             }
@@ -145,7 +156,6 @@ export class ParkmanVigRegistrationComponent implements OnInit {
       } else {
         return null;
       }
-  
     } else {
       return null;
     }
