@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,28 +33,28 @@ public class AdminController {
 	
 	@PostMapping("/api/parkingmanager/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> parkingManagerRegistration(@RequestBody ParkingManager pmanager)  {
+	public BodyBuilder parkingManagerRegistration(@RequestBody ParkingManager pmanager)  {
 		if(pmanager.isValid() == true) {
 			repository.save(pmanager);
 			
-			 return new ResponseEntity<String>("Parking Manager created successfully",  HttpStatus.CREATED);		
+			 return  ResponseEntity.ok();		
 		}else {
 			
-			 return new ResponseEntity<String>("Try again something went wrong",  HttpStatus.BAD_REQUEST);
+			 return  ResponseEntity.badRequest();
 		}
 		
 	}
 	
 	@PostMapping("/api/vigilant/registration")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> vigilantRegistration(@RequestBody Vigilant vigilant)  {
+	public BodyBuilder vigilantRegistration(@RequestBody Vigilant vigilant)  {
 		if(vigilant.isValid() == true) {
 			vigilant_repository.save(vigilant);
 			System.out.println(vigilant);
-			 return new ResponseEntity<String>("Vigilant created successfully",  HttpStatus.CREATED);		
+			 return  ResponseEntity.ok();		
 		}else {
 		
-			 return new ResponseEntity<String>("Try again something went wrong",  HttpStatus.BAD_REQUEST);
+			 return   ResponseEntity.badRequest();
 		}
 		
 	}
