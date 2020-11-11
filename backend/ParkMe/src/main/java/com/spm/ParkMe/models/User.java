@@ -1,12 +1,10 @@
 package com.spm.ParkMe.models;
 
-import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.spm.ParkMe.enums.Roles;
-import com.spm.ParkMe.security.services.UserDetailsImpl;
 
 @Document(collection = "users")
 public class User {
