@@ -8,33 +8,33 @@ export class ParkingManagerVigilantRegistrationValidationService {
   constructor() { }
 
   validateAccount(account: string) {
-    return account && account.trim() !== '';
+    return  account!== null && account.trim() !== '';
   }
 
   validateName(name: string) {
-    return name && name.trim() !== '';
+    return name!== null && name.trim() !== '';
   }
 
   validateSurname(surname: string) {
-    return surname && surname.trim() !== '';
+    return surname!== null && surname.trim() !== '';
   }
 
   validateSSN(ssn: string) {
     const re = /^(?:[A-Z][AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i;
-    return re.test(String(ssn).toLocaleLowerCase());
+    return true ? re.test(String(ssn).toLocaleLowerCase()) : false;
   }
 
   validateEmail(email: string) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    return true ? re.test(String(email).toLowerCase()) : false;
   }
 
   validatePhone(phone: string) {
     const re = /^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$/;
-    return re.test(String(phone));
+    return true ? re.test(String(phone)) : false;
   }
 
   validatePassword(password: string) {
-    return password && password.trim() !== '';
+    return password!== null  && password.trim() !== '';
   }
 }
