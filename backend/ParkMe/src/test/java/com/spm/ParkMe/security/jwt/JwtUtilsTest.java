@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.spm.ParkMe.security.services.UserDetailsImpl;
 
+import io.jsonwebtoken.SignatureException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class JwtUtilsTest {
@@ -55,5 +57,17 @@ public class JwtUtilsTest {
 		String token1 = jwtUtils.generateJwtToken(authentication);
 		String token2 = jwtUtils.generateJwtToken(authentication2);
 		assertNotEquals(jwtUtils.getUserNameFromJwtToken(token1), jwtUtils.getUserNameFromJwtToken(token2));
+	}
+	
+	@Test
+	public void validateCorrectToken() {
+		String token = jwtUtils.generateJwtToken(authentication);
+		assertTrue(jwtUtils.validateJwtToken(token));
+	}
+	
+	@Test
+	public void doNotValidateInvalidToken() {
+		String token = "some.invalid.token";
+		assertFalse(jwtUtils.validateJwtToken(token));
 	}
 }
