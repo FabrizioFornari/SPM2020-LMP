@@ -37,6 +37,12 @@ public class JwtUtilsTest {
 	
 	@Test
 	public void generatingTokenNotNull() {
-		assertNotNull(authentication);
+		assertNotNull(jwtUtils.generateJwtToken(authentication));
+	}
+	
+	@Test
+	public void getRightIdentityFromToken() {
+		String token = jwtUtils.generateJwtToken(authentication);
+		assertEquals(jwtUtils.getUserNameFromJwtToken(token), ((UserDetailsImpl)authentication.getPrincipal()).getUsername());
 	}
 }
