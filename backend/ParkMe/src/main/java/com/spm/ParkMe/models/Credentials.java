@@ -1,9 +1,13 @@
 package com.spm.ParkMe.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class Credentials {
 	
 	private String email;
 	private String password;
+	
+	public Credentials() {}
 	
 	public Credentials(String email, String password) {
 		this.email = email;

@@ -1,70 +1,12 @@
 package com.spm.ParkMe.models;
 
-public class ParkingManager {
+import com.spm.ParkMe.enums.Roles;
 
-	private String firstName;
-	private String lastName;
-	private String ssn;
-	private String email;
-	private String phone;
-	private String password;
-	
-	
-	/*-------Constructor------*/
-	public ParkingManager() {
-	
-	}
-	
-	/*------- ACCESSORY METHODS ---------*/
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getSsn() {
-		return ssn;
-	}
-	public void setSsn(String ssn) {
-		this.ssn = ssn;
-	}
-	
+public class ParkingManager extends User{
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
-	public boolean isValid() {
-		return (this.getFirstName() != null
-				&& this.getLastName() != null 
-				&& this.getEmail() != null
-				&& this.getPassword() != null
-				&& this.getPhone() != null
-				&& this.getSsn() != null
-				);
+	public ParkingManager(String username, String firstName, String lastName, String ssn, String phone, String email,
+			String password) {
+		super(username, firstName, lastName, ssn, phone, email, password, Roles.ROLE_PARKING_MANAGER);
 	}
 
 }
