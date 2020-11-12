@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
@@ -49,13 +50,28 @@ public class DriverTests {
 		assertEquals(driver.getPlate(), validPlate);
 		assertEquals(driver.getVehicleType(), "car");
 		assertEquals(driver.getPassword(), "password");
+		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
+		assertEquals(0, violations.size());
 	}
 	
 	@Test
-	public void createDriverWithInvalidSSN() {
-		Driver driver = new Driver("firstname", "lastname", "some invalid SSN", validEmail, validPhone, validPlate, "car", "password");
-		System.out.println(driver.getSsn());
+	public void createDriverWithNullSSNReturnsViolation() {
+		Driver driver = new Driver("firstname", "lastname", null, validEmail, validPhone, validPlate, "car", "password");
 		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
-		assertEquals("Invalid ssn format", violations.iterator().next().getMessage());
+		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("ssn may not be null"));
+	}
+	
+	@Test
+	public void createDriverWithEmptySSNReturnsViolation() {
+		Driver driver = new Driver("firstname", "lastname", "", validEmail, validPhone, validPlate, "car", "password");
+		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
+		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("ssn may not be empty"));
+	}
+	
+	@Test
+	public void createDriverWithInvalidSSNReturnsViolation() {
+		Driver driver = new Driver("firstname", "lastname", "some invalid SSN", validEmail, validPhone, validPlate, "car", "password");
+		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
+		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("Invalid ssn format"));
 	}
 }
