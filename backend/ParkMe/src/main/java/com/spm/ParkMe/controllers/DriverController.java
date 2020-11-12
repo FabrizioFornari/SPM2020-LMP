@@ -3,7 +3,6 @@ package com.spm.ParkMe.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,9 @@ public class DriverController {
 	
 
 	@PostMapping(path="api/registration",consumes = "application/json" )
-	public void registration(@Valid @RequestBody Driver driver,HttpServletResponse response) throws IOException {
-		repository.save(driver);		
+	public void registration(@Valid @RequestBody Driver driver) throws IOException {
+		repository.save(driver);
 	}
-	
 }
 	
 

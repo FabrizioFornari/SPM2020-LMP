@@ -1,14 +1,10 @@
-/**
- * 
- */
 package com.spm.ParkMe.models;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-
 import com.spm.ParkMe.enums.Roles;
-
 
 public class Driver extends User{
 	
@@ -20,6 +16,8 @@ public class Driver extends User{
 	@NotNull(message="Vehicle type must not be null")
 	@NotEmpty(message = "Vehicle type must not be empty")
 	private String vehicleType;
+	
+	public Driver() {}
 	
 	public Driver(String username, String firstName, String lastName, String ssn, String phone, String email, String password, String plate, String vehicleType) {
 		super(username, firstName, lastName, ssn, phone, email, password, Roles.ROLE_DRIVER);

@@ -51,6 +51,8 @@ public class User {
 	
 	private Roles role;
 	
+	public User() {}
+	
 	public User(String username, String firstName, String lastName, String ssn, String phone, String email, String password, Roles role) {
 		this.setUsername(username);
 		this.setFirstName(firstName);
