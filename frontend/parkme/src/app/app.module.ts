@@ -8,9 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverRegistrationComponent } from './pages/driver-registration/driver-registration.component';
+import { ParkmanVigRegistrationComponent } from './pages/parkman-vig-registration/parkman-vig-registration.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -19,7 +19,7 @@ export class DriverAuthService {
     lastName: string;
     ssn: string;
     email: string;
-    phone: number;
+    phone: string;
     plate: string;
     vehicleType: string;
     password: string;

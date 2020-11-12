@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onLoginSubmit() {
-    this.isLoading = true;
 
     const user = {
       email: this.email,
@@ -44,6 +43,7 @@ export class LoginComponent implements OnInit {
     }
 
     if (!this.emailError && !this.passwordError) {
+      this.isLoading = true;
       this.unifiedLogin.login(user).subscribe(
         (data) => {
           localStorage.setItem('token', data.token);
