@@ -20,15 +20,15 @@ public class AdminController {
 
 	@Autowired
 	private UserRepository repository;
-	
+		
 	@PostMapping("/api/parkingmanager/registration")
 	@PreAuthorize("hasRole('ADMIN')")
 	public void parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
 			repository.save(pmanager);
 	}
-	
-	@PostMapping("/api/vigilant/registration")
+
 	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/api/vigilant/registration")
 	public void vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
 		repository.save(vigilant);
 	}
