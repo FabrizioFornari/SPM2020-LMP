@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hamcrest.core.IsNull;
 import org.springframework.data.annotation.Id;
 
 public class Driver {
@@ -57,14 +58,14 @@ public class Driver {
 					String plate,String vehicleType,
 					String password) {
 		
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.ssn= ssn;
-		this.phone=phone;
-		this.email=email;
-		this.plate=plate;
-		this.vehicleType=vehicleType;
-		this.password=password;
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setSsn(ssn);
+		this.setPhone(phone);
+		this.setEmail(email);
+		this.setPlate(plate);
+		this.setVehicleType(vehicleType);
+		this.setPassword(password);
 	}
 	
 	
@@ -73,43 +74,76 @@ public class Driver {
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
+	public void setFirstName(String firstName) throws IllegalArgumentException{
+		if(firstName != null && firstName != "") {
+			this.firstName = firstName.trim();
+		}
+		else {
+			throw new IllegalArgumentException("First name is invalid");
+		}
 	}
 	
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
+		if(lastName != null && lastName != "") {
+			this.lastName = lastName.trim();
+		}
+		else {
+			throw new IllegalArgumentException("Last name is invalid");
+		}
 	}
 	
 	public String getSsn() {
 		return ssn;
 	}
 	public void setSsn(String ssn) {
-		this.ssn = ssn;
+		if(ssn != null && ssn != "" && 
+				ssn != "^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$") {
+			this.ssn = ssn;
+		}
+		else {
+			throw new IllegalArgumentException("SSN is invalid");
+		}
 	}
 	
 	public String getVehicleType() {
 		return vehicleType;
 	}
 	public void setVehicleType(String vehicleType) {
-		this.vehicleType = vehicleType.trim();
+		if(vehicleType != null && vehicleType != "") {
+			this.vehicleType = vehicleType.trim();
+		}
+		else {
+			throw new IllegalArgumentException("Vehicle type is invalid");
+		}
 	}
 	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		if(email != null && email != "" && 
+				email != "^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$") {
+			this.email = email;
+		}
+		else {
+			throw new IllegalArgumentException("Email is invalid");
+		}
 	}
 
 	public String getPlate() {
 		return plate;
 	}
 	public void setPlate(String plate) {
-		this.plate = plate;
+		if(plate != null && plate != "" && 
+				plate != "^([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}\\\\d{3}([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}") {
+			this.plate = plate;
+		}
+		else {
+			throw new IllegalArgumentException("Plate is invalid");
+		}
 	}
 
 	public String getPhone() {
@@ -117,7 +151,13 @@ public class Driver {
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		if(phone != null && phone != "" && 
+				phone != "^((\\\\+)39\\\\)|(00|\\\\+)39)?(38[890]|34[7-90]|36[680]|33[3-90]|32[89])\\\\d{7}$") {
+			this.phone = phone;
+		}
+		else {
+			throw new IllegalArgumentException("Phone is invalid");
+		}
 	}
 
 	public String getPassword() {
@@ -125,7 +165,12 @@ public class Driver {
 	}
 
 	public void setPassword(String password) {
-		this.password = password.trim();
+		if(password != null && password != "") {
+			this.password = password.trim();
+		}
+		else {
+			throw new IllegalArgumentException("Password is invalid");
+		}
 	}
 
 	public boolean isValid() {
