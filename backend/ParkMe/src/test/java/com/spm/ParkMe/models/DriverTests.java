@@ -1,4 +1,5 @@
 package com.spm.ParkMe.models;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,15 +7,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.executable.ExecutableValidator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -27,6 +25,8 @@ public class DriverTests {
 	private String validPlate;
 	private ValidatorFactory validatorFactory;
     private Validator validator;
+    
+    private Driver driver;
 	
 	@BeforeEach
 	public void setUp() {
@@ -34,13 +34,14 @@ public class DriverTests {
 		validEmail = "email@park.it";
 		validPhone = "+393333333333";
 		validPlate = "AA000AA";
+		driver = new Driver("firstname", "lastname", validSSN, validEmail, validPhone, validPlate, "car", "password");
 		validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
 	}
 	
 	@Test
 	public void createValidDriver() {
-		Driver driver = new Driver("firstname", "lastname", validSSN, validEmail, validPhone, validPlate, "car", "password");
+		//Driver driver = new Driver("firstname", "lastname", validSSN, validEmail, validPhone, validPlate, "car", "password");
 		assertEquals(driver.getClass(), Driver.class);
 		assertEquals(driver.getFirstName(), "firstname");
 		assertEquals(driver.getLastName(), "lastname");
@@ -50,28 +51,45 @@ public class DriverTests {
 		assertEquals(driver.getPlate(), validPlate);
 		assertEquals(driver.getVehicleType(), "car");
 		assertEquals(driver.getPassword(), "password");
-		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
-		assertEquals(0, violations.size());
+	}
+	
+	//firstname
+	@Test
+	public void createDriverWithNullFirstNameReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setFirstName(null));
 	}
 	
 	@Test
-	public void createDriverWithNullSSNReturnsViolation() {
-		Driver driver = new Driver("firstname", "lastname", null, validEmail, validPhone, validPlate, "car", "password");
-		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
-		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("ssn may not be null"));
+	public void createDriverWithEmptyFirstNameReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setFirstName(null));
+	}
+	
+	//lastname
+	
+	@Test
+	public void createDriverWithNullLastNameReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setLastName(null));
 	}
 	
 	@Test
-	public void createDriverWithEmptySSNReturnsViolation() {
-		Driver driver = new Driver("firstname", "lastname", "", validEmail, validPhone, validPlate, "car", "password");
-		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
-		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("ssn may not be empty"));
+	public void createDriverWithEmptyLastNameReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setLastName(""));
+	}
+	
+	//ssn
+	
+	@Test
+	public void createDriverWithNullSSNReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setSsn(null));
 	}
 	
 	@Test
-	public void createDriverWithInvalidSSNReturnsViolation() {
-		Driver driver = new Driver("firstname", "lastname", "some invalid SSN", validEmail, validPhone, validPlate, "car", "password");
-		Set<ConstraintViolation<Driver>> violations = validator.validate(driver);
-		assertTrue(violations.stream().map(v -> v.getMessage()).collect(Collectors.toList()).contains("Invalid ssn format"));
+	public void createDriverWithEmptySSNReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setSsn(""));
+	}
+	
+	@Test
+	public void createDriverWithInvalidSSNReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setSsn("some invalid SSN"));
 	}
 }

@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hamcrest.core.IsNull;
 import org.springframework.data.annotation.Id;
 
 public class Driver {
@@ -34,12 +33,12 @@ public class Driver {
 	
 	@NotNull(message="phone may not be null")
 	@NotEmpty(message = "phone may not be empty")
-	@Pattern(regexp="^((\\+)39\\)|(00|\\+)39)?(38[890]|34[7-90]|36[680]|33[3-90]|32[89])\\d{7}$", message="Invalid Phone format")
+	@Pattern(regexp="^((00|\\+)39[\\. ]??)??3\\d{2}[\\. ]??\\d{6,7}$", message="Invalid Phone format")
 	private String phone;
 	
 	@NotNull(message="plate may not be null")
 	@NotEmpty(message = "plate may not be empty")
-	@Pattern(regexp="([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}\\d{3}([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}",message="Invalid Plate format")
+	@Pattern(regexp="[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}",message="Invalid Plate format")
 	private String plate;
 	
 	@NotNull(message="vehicleType may not be null")
@@ -100,7 +99,7 @@ public class Driver {
 	}
 	public void setSsn(String ssn) {
 		if(ssn != null && ssn != "" && 
-				ssn != "^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$") {
+				ssn.matches("^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$")) {
 			this.ssn = ssn;
 		}
 		else {
@@ -125,7 +124,7 @@ public class Driver {
 	}
 	public void setEmail(String email) {
 		if(email != null && email != "" && 
-				email != "^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$") {
+				email.matches("^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$")) {
 			this.email = email;
 		}
 		else {
@@ -138,7 +137,7 @@ public class Driver {
 	}
 	public void setPlate(String plate) {
 		if(plate != null && plate != "" && 
-				plate != "^([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}\\\\d{3}([A-H]|[K-N]|[P]|[R-T]|[V]|[X-Z]){2}") {
+				plate.matches("[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}")) {
 			this.plate = plate;
 		}
 		else {
@@ -152,7 +151,7 @@ public class Driver {
 
 	public void setPhone(String phone) {
 		if(phone != null && phone != "" && 
-				phone != "^((\\\\+)39\\\\)|(00|\\\\+)39)?(38[890]|34[7-90]|36[680]|33[3-90]|32[89])\\\\d{7}$") {
+				phone.matches("^((00|\\+)39[\\. ]??)??3\\d{2}[\\. ]??\\d{6,7}$")) {
 			this.phone = phone;
 		}
 		else {
