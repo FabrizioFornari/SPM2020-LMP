@@ -51,7 +51,12 @@ public class Driver {
 	private String password;
 
 	
+	
 	/*-------Constructor------*/
+	public Driver() {
+		
+	}
+	
 	public Driver(String firstName, String lastName, 
 					String ssn,String email,String phone,
 					String plate,String vehicleType,

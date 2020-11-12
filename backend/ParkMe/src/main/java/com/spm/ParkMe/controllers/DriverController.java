@@ -34,22 +34,9 @@ public class DriverController {
 	
 
 	@PostMapping(path="api/registration",consumes = "application/json" )
-	public Driver registration(@Valid @RequestBody Driver driver,HttpServletResponse response) throws IOException {
-		
-		if(driver.isValid() == true) {
+	public void registration(@Valid @RequestBody Driver driver) throws IOException {
 		repository.save(driver);
-		System.out.println(driver);
-		return driver;
-	
-	}else {
-		response.sendError(400,"richiesta sbagliata");
 	}
-	return null;
-	
-			
-	
-	}
-	
 }
 	
 
