@@ -2,14 +2,12 @@
  * 
  */
 package com.spm.ParkMe.models;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+
 import com.spm.ParkMe.enums.Roles;
-
-
 
 
 public class Driver extends User{
@@ -39,6 +37,7 @@ public class Driver extends User{
 		}
 		else {
 			throw new IllegalArgumentException("Plate is invalid");
+
 		}
 	}
 	
@@ -46,7 +45,6 @@ public class Driver extends User{
 		return vehicleType;
 	}
 	public void setVehicleType(String vehicleType) {
-
 		if(vehicleType != null && vehicleType != "") {
 			this.vehicleType = vehicleType.trim();
 		}
