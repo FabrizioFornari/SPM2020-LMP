@@ -1,7 +1,9 @@
 package com.spm.ParkMe.models;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
+import  org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -90,6 +92,70 @@ public class DriverTests {
 	
 	@Test
 	public void createDriverWithInvalidSSNReturnsException() {
-		assertThrows(IllegalArgumentException.class, () -> driver.setSsn("some invalid SSN"));
+		assertThrows(IllegalArgumentException.class, () -> driver.setSsn("FGHGgvy66542d"));
 	}
+	
+	//email
+	public void creteDriverWithNullEmailReturnsException() {
+		assertThrows(IllegalArgumentException.class,()-> driver.setEmail(null));
+	}
+	
+	@Test
+	public void createDriverWithEmptyEmailReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setEmail(""));
+	}
+	@Test
+	public void createDriverWithInvalidEmailReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setSsn("prova1.com"));
+	}
+	
+	//Phone
+	public void creteDriverWithNullPhoneReturnsException() {
+		assertThrows(IllegalArgumentException.class,()-> driver.setPhone(null));
+	}
+	
+	@Test
+	public void createDriverWithEmptyPhoneReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setPhone(""));
+	}
+	@Test
+	public void createDriverWithInvalidPhoneReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setPhone("9735 302309"));
+	}
+	
+	//Plate
+	public void creteDriverWithNullPlateReturnsException() {
+		assertThrows(IllegalArgumentException.class,()-> driver.setPlate(null));
+	}
+	
+	@Test
+	public void createDriverWithEmptyPlateReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setPlate(""));
+	}
+	@Test
+	public void createDriverWithInvalidPlateReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setPlate("AB 122 SC"));
+	}
+	
+	//VehicleType
+	public void creteDriverWithNullVehicleTypeReturnsException() {
+		assertThrows(IllegalArgumentException.class,()-> driver.setVehicleType(null));
+	}
+	
+	@Test
+	public void createDriverWithEmptyVehicleTypeReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setVehicleType(""));
+	}
+
+	//Password
+	public void creteDriverWithNullPasswordReturnsException() {
+		assertThrows(IllegalArgumentException.class,()-> driver.setPassword(null));
+	}
+	
+	@Test
+	public void createDriverWithPasswordTypeReturnsException() {
+		assertThrows(IllegalArgumentException.class, () -> driver.setPassword(""));
+	}
+	
+	
 }
