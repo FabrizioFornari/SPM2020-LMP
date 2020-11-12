@@ -85,16 +85,10 @@ public class AuthControllerTest {
 	
 	@Autowired
 	PasswordEncoder encoder;
-	/*
-	private Credentials vigilantCredentials = new Credentials("cret@park.it", "Cret");
-	private Credentials parkingManagerCredentials = new Credentials("flash@park.it", "Flash");
-	private Credentials adminCredentials = new Credentials("fusaro@turbomondialismo.it", "Fusaro");
-	*/
 	
 	@BeforeEach
 	public void setUp() {
 		driverCredentials = new Credentials("rocche@park.it", "Rocche");
-		driverUser = new User("rocche@park.it", "rocche@park.it", "Rocche", Roles.ROLE_DRIVER);
 		authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
 		principal = new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it",  "Rocche", authorities);
