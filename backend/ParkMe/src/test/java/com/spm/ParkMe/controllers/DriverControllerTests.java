@@ -72,7 +72,7 @@ public class DriverControllerTests {
 	}
 	
 	@Test
-	public void registrationDriverReturnSaved() throws Exception {
+	public void registeringCorrectDriverReturnsOK() throws Exception {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
@@ -86,7 +86,7 @@ public class DriverControllerTests {
 	}
 	
 	@Test
-	public void failedRegistrationDriverReturnSaved() throws Exception {
+	public void registeringWrongDriverReturnsBadRequest() throws Exception {
 	
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				"/api/registration").accept(

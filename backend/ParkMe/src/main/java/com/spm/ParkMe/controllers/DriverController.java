@@ -19,16 +19,9 @@ import com.spm.ParkMe.repositories.UserRepository;
 @RestController
 public class DriverController {
 
-	
-	
-	
 	@Autowired
 	private UserRepository repository;
 	
-
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	
-
 	@PostMapping(path="api/registration",consumes = "application/json" )
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
 		repository.save(driver);
