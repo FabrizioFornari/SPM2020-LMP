@@ -45,7 +45,7 @@ class UserDetailsServiceImplTest {
 	@Test
 	void getUserWhenExistsInDB() {
 		Mockito.when(userRepository.findByUsername(Mockito.anyString()))
-		.thenReturn(Optional.of(new User("a@a", "a@a", "A", Roles.ROLE_ADMIN)));
+		.thenReturn(Optional.of(new User("a@a.it", "A", "A", "ZZZZZZ10A01A000Z", "+39 333 3333333", "a@a.it", "A", Roles.ROLE_ADMIN)));
 		
 		assertEquals(UserDetailsImpl.class, userService.loadUserByUsername("a@a").getClass());
 	}

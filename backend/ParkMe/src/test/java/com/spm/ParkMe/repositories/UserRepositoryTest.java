@@ -21,7 +21,7 @@ class UserRepositoryTest {
 	@Autowired
 	UserRepository userRepository;
 	
-	private User testUser = new User("a@a", "a@a", "A", Roles.ROLE_ADMIN);
+	private User testUser = new User("a@a.it", "A", "A", "ZZZZZZ10A01A000Z", "+39 333 3333333", "a@a.it", "A", Roles.ROLE_ADMIN);
 	
 	@BeforeEach
 	public void setUp() {
