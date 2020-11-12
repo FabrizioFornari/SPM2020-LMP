@@ -7,8 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.data.annotation.Id;
-
 import com.spm.ParkMe.enums.Roles;
 
 
