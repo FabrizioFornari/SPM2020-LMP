@@ -38,6 +38,7 @@ export class ParkmanVigRegistrationComponent implements OnInit {
 
   onRegisterSubmit() {
     const user = {
+      username: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
       ssn: this.ssn,

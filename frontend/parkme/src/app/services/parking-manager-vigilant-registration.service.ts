@@ -17,6 +17,7 @@ export class ParkingManagerVigilantRegistrationService {
   constructor(private http: HttpClient) {}
 
   pmRegister(user: {
+    username: string;
     firstName: string;
     lastName: string;
     ssn: string;
@@ -28,6 +29,7 @@ export class ParkingManagerVigilantRegistrationService {
   }
 
   vRegister(user: {
+    username: string;
     firstName: string;
     lastName: string;
     ssn: string;
