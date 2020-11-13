@@ -1,7 +1,10 @@
 package com.spm.ParkMe.models;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.spm.ParkMe.enums.Roles;
 
+@Document(collection = "users")
 public class Vigilant extends User{
 	
 	public Vigilant() {}
