@@ -103,8 +103,8 @@ public class ModificationControllerTest {
 	}
 	
 	@Test
-	@WithMockUser(roles= {"VIGILANT"})
-	public void emailChangeAuthorizedWithToken() throws Exception {
+	@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+	public void emailChangeAuthorizedWithTokenAndCorrectUser() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				"/api/modify/email").accept(
@@ -112,6 +112,18 @@ public class ModificationControllerTest {
 				.content(jsonMailInfo.write(mailInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	@WithMockUser(username="altro@park.it", roles= {"VIGILANT"})
+	public void emailChangeUnauthorizedWithTokenButWrongUser() throws Exception {
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/api/modify/email").accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonMailInfo.write(mailInfo).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 	
 	@Test
