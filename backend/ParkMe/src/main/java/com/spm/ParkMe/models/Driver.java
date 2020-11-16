@@ -4,13 +4,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.spm.ParkMe.constants.RegexConstants;
 import com.spm.ParkMe.enums.Roles;
 
 public class Driver extends User{
 	
 	@NotNull(message="Plate must not be null")
 	@NotEmpty(message = "Plate must not be empty")
-	@Pattern(regexp="[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}",message="Invalid Plate format")
+	@Pattern(regexp=RegexConstants.PLATE_REGEX,message="Invalid Plate format")
 	private String plate;
 	
 	@NotNull(message="Vehicle type must not be null")
@@ -30,7 +31,7 @@ public class Driver extends User{
 	}
 	public void setPlate(String plate) {
 		if(plate != null && plate != "" && 
-				plate.matches("[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}")) {
+				plate.matches(RegexConstants.PLATE_REGEX)) {
 			this.plate = plate;
 		}
 		else {

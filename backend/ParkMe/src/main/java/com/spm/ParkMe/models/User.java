@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.spm.ParkMe.constants.RegexConstants;
 import com.spm.ParkMe.enums.Roles;
 
 @Document(collection = "users")
@@ -26,22 +27,22 @@ public class User {
 	
 	@NotNull(message="SSN must not be null")
 	@NotEmpty(message = "SSN must not be empty")
-	@Pattern(regexp="^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$",message="Invalid SSN format")  
+	@Pattern(regexp=RegexConstants.SSN_REGEX, message="Invalid SSN format")  
 	private String ssn;
 	
 	@NotNull(message="Email must not be null")
 	@NotEmpty(message = "Email must not be empty")
-	@Pattern(regexp="^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$",message="Invalid Email format")  
+	@Pattern(regexp=RegexConstants.MAIL_REGEX, message="Invalid Email format")  
 	private String email;
 	
 	@NotNull(message="Username must not be null")
 	@NotEmpty(message = "Username must not be empty")
-	@Pattern(regexp="^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$",message="Invalid Email format")  
+	@Pattern(regexp=RegexConstants.MAIL_REGEX,message="Invalid Email format")  
 	private String username;
 	
 	@NotNull(message="Phone must not be null")
 	@NotEmpty(message = "Phone must not be empty")
-	@Pattern(regexp="^((00|\\+)39[\\. ]??)??3\\d{2}[\\. ]??\\d{6,7}$", message="Invalid Phone format")
+	@Pattern(regexp=RegexConstants.PHONE_REGEX, message="Invalid Phone format")
 	private String phone;
 	
 	@NotNull(message="Password must not be null")
@@ -97,7 +98,7 @@ public class User {
 	}
 	public void setEmail(String email) {
 		if(email != null && email != "" && 
-				email.matches("^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$")) {
+				email.matches(RegexConstants.MAIL_REGEX)) {
 			this.email = email;
 		}
 		else {
@@ -124,7 +125,7 @@ public class User {
 
 	public void setPhone(String phone) {
 		if(phone != null && phone != "" && 
-				phone.matches("^((00|\\+)39[\\. ]??)??3\\d{2}[\\. ]??\\d{6,7}$")) {
+				phone.matches(RegexConstants.PHONE_REGEX)) {
 			this.phone = phone;
 		}
 		else {
@@ -140,7 +141,7 @@ public class User {
 
 	public void setSsn(String ssn) {
 		if(ssn != null && ssn != "" && 
-				ssn.matches("^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})|([0-9]{11})$")) {
+				ssn.matches(RegexConstants.SSN_REGEX)) {
 			this.ssn = ssn;
 		}
 		else {
