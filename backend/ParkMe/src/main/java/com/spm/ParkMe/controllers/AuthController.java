@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.models.Credentials;
 import com.spm.ParkMe.models.JwtResponse;
+import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
@@ -44,12 +46,9 @@ public class AuthController {
 				new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		System.out.println(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+		User user = userRepository.findByUsername(userDetails.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userDetails.getEmail()));
+		return ResponseEntity.ok(new JwtResponse(jwt, user));
 	}
 
 }
