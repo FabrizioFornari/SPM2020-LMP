@@ -29,6 +29,7 @@ public class ModificationController {
 		User user = repository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is wrong."));
 		//delete user from db
 		repository.delete(user);
+		System.out.println(user.getEmail());
 		user.setEmail(mailInfo.getNewEmail());
 		repository.save(user);
 		return user;
