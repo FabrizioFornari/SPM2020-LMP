@@ -3,6 +3,7 @@ package com.spm.ParkMe.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.Credentials;
+import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.JwtResponse;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
@@ -35,6 +40,9 @@ public class AuthController {
 	UserRepository userRepository;
 	
 	@Autowired
+	DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
 	PasswordEncoder encoder;
 
 	@Autowired
@@ -48,7 +56,13 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		User user = userRepository.findByUsername(userDetails.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userDetails.getEmail()));
-		return ResponseEntity.ok(new JwtResponse(jwt, user));
+		JwtResponse response = new JwtResponse(jwt, user);
+		if(user.getRole() == Roles.ROLE_DRIVER) {
+			DriverInfo driverInfo = driverInfoRepository.findByUsername(user.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Driver Not Found with username: " + userDetails.getEmail()));
+			response.setPlate(driverInfo.getPlate());
+			response.setVehicleType(driverInfo.getVehicleType());
+		}
+		return ResponseEntity.ok(response);
 	}
 
 }
