@@ -42,8 +42,8 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.enums.Roles;
-import com.spm.ParkMe.models.Credentials;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.Credentials;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;

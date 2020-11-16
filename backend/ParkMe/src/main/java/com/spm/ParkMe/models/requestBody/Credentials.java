@@ -1,4 +1,4 @@
-package com.spm.ParkMe.models;
+package com.spm.ParkMe.models.requestBody;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
