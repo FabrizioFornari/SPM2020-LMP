@@ -9,36 +9,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.spm.ParkMe.enums.Roles;
 
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
+
 @SpringBootTest
 public class DriverTest {
-	
-	private String validSSN;
-	private String validEmail;
-	private String validPhone;
-	private String validPlate;
     
     private Driver driver;
 	
 	@BeforeEach
 	public void setUp() {
-		validSSN = "ZZZZZZ10A01A000Z";
-		validEmail = "email@park.it";
-		validPhone = "+393333333333";
-		validPlate = "AA000AA";
-		driver = new Driver(validEmail,"firstname", "lastname", validSSN, validPhone, validEmail, "password", validPlate, "car");
+		driver = new Driver(VALID_EMAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, VALID_EMAIL, VALID_PASSWORD, VALID_PLATE, VEHICLE_TYPE);
 	}
 	
 	@Test
 	public void createValidDriver() {
 		assertEquals(driver.getClass(), Driver.class);
-		assertEquals(driver.getFirstName(), "firstname");
-		assertEquals(driver.getLastName(), "lastname");
-		assertEquals(driver.getSsn(), validSSN);
-		assertEquals(driver.getEmail(), validEmail);
-		assertEquals(driver.getPhone(), validPhone);
-		assertEquals(driver.getPlate(), validPlate);
-		assertEquals(driver.getVehicleType(), "car");
-		assertEquals(driver.getPassword(), "password");
+		assertEquals(driver.getFirstName(), FIRSTNAME);
+		assertEquals(driver.getLastName(), LASTNAME);
+		assertEquals(driver.getSsn(), VALID_SSN);
+		assertEquals(driver.getEmail(), VALID_EMAIL);
+		assertEquals(driver.getPhone(), VALID_PHONE);
+		assertEquals(driver.getPlate(), VALID_PLATE);
+		assertEquals(driver.getVehicleType(), VEHICLE_TYPE);
+		assertEquals(driver.getPassword(), VALID_PASSWORD);
 	}
 	
 	//Plate
@@ -52,7 +45,7 @@ public class DriverTest {
 	}
 	@Test
 	public void createDriverWithInvalidPlateReturnsException() {
-		assertThrows(IllegalArgumentException.class, () -> driver.setPlate("AB 122 SC"));
+		assertThrows(IllegalArgumentException.class, () -> driver.setPlate(INVALID_PLATE));
 	}
 	
 	//VehicleType

@@ -1,6 +1,7 @@
 package com.spm.ParkMe.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ class UserRepositoryTest {
 	@Autowired
 	UserRepository userRepository;
 	
-	private User testUser = new User("a@a.it", "A", "A", "ZZZZZZ10A01A000Z", "+39 333 3333333", "a@a.it", "A", Roles.ROLE_ADMIN);
+	private User testUser = ADMIN_OBJECT;
 	
 	@BeforeEach
 	public void setUp() {
@@ -48,7 +49,7 @@ class UserRepositoryTest {
 	@Test
 	void findByUsernameReturnsAUserWhenExists() {
 		userRepository.save(testUser);
-		assertEquals(Optional.of(testUser), userRepository.findByUsername("a@a"));
+		assertEquals(Optional.of(testUser), userRepository.findByUsername(ADMIN_MAIL));
 	}
 
 }

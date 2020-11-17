@@ -3,6 +3,7 @@ package com.spm.ParkMe.security.jwt;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
 
 import io.jsonwebtoken.SignatureException;
@@ -34,9 +36,9 @@ public class JwtUtilsTest {
 	@BeforeEach
 	public void setUp() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
-		principal = new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it",  "Rocche", authorities);
-		principal2 = new UserDetailsImpl("id", "cret@park.it", "cret@park.it",  "Cret", authorities);
+		authorities.add(new SimpleGrantedAuthority(Roles.ROLE_DRIVER.name()));
+		principal = new UserDetailsImpl("id", DRIVER_MAIL, DRIVER_MAIL,  VALID_PASSWORD, authorities);
+		principal2 = new UserDetailsImpl("id", VIGILANT_MAIL, VIGILANT_MAIL,  VALID_PASSWORD, authorities);
 		authentication = new UsernamePasswordAuthenticationToken(principal, null);
 		authentication2 = new UsernamePasswordAuthenticationToken(principal2, null);
 	}

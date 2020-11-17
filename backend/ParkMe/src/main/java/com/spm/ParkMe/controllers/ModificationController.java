@@ -29,9 +29,11 @@ import com.spm.ParkMe.models.requestBody.Credentials;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
+import static com.spm.ParkMe.constants.EndpointContants.*;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/modify")
+@RequestMapping(MODIFICATION_ENDPOINT)
 public class ModificationController {
 	
 	@Autowired
@@ -43,7 +45,7 @@ public class ModificationController {
 	@Autowired
 	private PasswordEncoder encoder;
 	
-	@PostMapping("/email")
+	@PostMapping(EMAIL_MODIFICATION_ENDPOINT)
 	public ResponseEntity<User> modifyEmail(Authentication authentication, @Valid @RequestBody ChangeMailInfo mailInfo) {
 		String authenticatedUsername = authentication.getName();
 		if(authenticatedUsername.equals(mailInfo.getCurrentEmail())) {
@@ -61,7 +63,7 @@ public class ModificationController {
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 	}
 	
-	@PostMapping("/phone")
+	@PostMapping(PHONE_MODIFICATION_ENDPOINT)
 	public ResponseEntity<User> modifyPhone(Authentication authentication, @Valid @RequestBody ChangePhoneInfo phoneInfo ){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
@@ -70,8 +72,7 @@ public class ModificationController {
 	return ResponseEntity.ok(user);
 	}
 	
-
-	@PostMapping("/plateAndVehicleType")
+	@PostMapping(PLATE_VEHICLE_MODIFICATION_ENDPOINT)
 	public ResponseEntity<User> modifyPlateAndVehicleType(Authentication authentication, @Valid @RequestBody ChangePlateVehicleTypeInfo plateVehicleTypeInfo ){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
@@ -90,7 +91,8 @@ public class ModificationController {
 	}
 	
 
-	@PostMapping("/password")
+
+	@PostMapping(PASSWORD_MODIFICATION_ENDPOINT)
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with token's username."));
