@@ -67,6 +67,7 @@ public class ModificationController {
 		repository.save(user);
 	return ResponseEntity.ok(user);
 	}
+	
 	@PostMapping("/password")
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();

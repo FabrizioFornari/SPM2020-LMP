@@ -225,6 +225,8 @@ public class ModificationControllerTest {
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 	
+	//phone
+	
 		@Test
 		public void phoneChangeUnauthorizedWithoutToken() throws Exception {
 			
@@ -249,18 +251,6 @@ public class ModificationControllerTest {
 					.content(jsonPhoneInfo.write(phoneInfo).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
 			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
-		}
-		
-		@Test
-		@WithMockUser(username="altro@park.it", roles= {"VIGILANT"})
-		public void phoneChangeUnauthorizedWithTokenButWrongUser() throws Exception {
-			
-			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/api/modify/phone").accept(
-					MediaType.APPLICATION_JSON)
-					.content(jsonPhoneInfo.write(phoneInfo).getJson())
-					.contentType(MediaType.APPLICATION_JSON);
-			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 		}
 	
 		@Test
