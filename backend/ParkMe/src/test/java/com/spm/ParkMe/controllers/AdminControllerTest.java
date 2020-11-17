@@ -40,6 +40,8 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.spm.ParkMe.constants.EndpointContants.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
@@ -106,7 +108,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonVigilant.write(vigilant).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -119,7 +121,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonVigilant.write(vigilant).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -132,7 +134,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonVigilant.write(vigilant).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -145,7 +147,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongObject.write(wrongObject).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -157,7 +159,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonParkingManager.write(parkingManager).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -170,7 +172,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonParkingManager.write(parkingManager).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -183,7 +185,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonParkingManager.write(parkingManager).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -196,7 +198,7 @@ public class AdminControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/vigilant/registration").accept(
+				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongObject.write(wrongObject).getJson())
 				.contentType(MediaType.APPLICATION_JSON);

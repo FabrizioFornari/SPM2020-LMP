@@ -22,7 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
+
+import static com.spm.ParkMe.constants.EndpointContants.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,6 +34,9 @@ public class DriverControllerTests {
 	
 	@Mock
 	UserRepository userRepository;
+	
+	@Mock
+	DriverInfoRepository driverInfoRepository;
 	
 	@InjectMocks
     private DriverController driverController;
@@ -76,7 +82,7 @@ public class DriverControllerTests {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/registration").accept(
+				DRIVER_ENDPOINT + DRIVER_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonDriver.write(driver).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -89,7 +95,7 @@ public class DriverControllerTests {
 	public void registeringWrongDriverReturnsBadRequest() throws Exception {
 	
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/registration").accept(
+				DRIVER_ENDPOINT + DRIVER_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongDriver.write(wrongDriver).getJson())
 				.contentType(MediaType.APPLICATION_JSON);

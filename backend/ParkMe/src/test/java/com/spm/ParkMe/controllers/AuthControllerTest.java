@@ -49,6 +49,8 @@ import com.spm.ParkMe.security.jwt.JwtUtils;
 import com.spm.ParkMe.security.services.UserDetailsImpl;
 import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
 
+import static com.spm.ParkMe.constants.EndpointContants.*;
+
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
@@ -107,7 +109,7 @@ public class AuthControllerTest {
 		//Mockito.when(jwtUtils.generateJwtToken(Mockito.any(Authentication.class))).thenReturn("xxx.yyy.zzz");
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/auth/login").accept(
+				AUTH_ENDPOINT + LOGIN_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonCredentials.write(driverCredentials).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -126,7 +128,7 @@ public class AuthControllerTest {
 		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/auth/login").accept(
+				AUTH_ENDPOINT + LOGIN_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonCredentials.write(driverCredentials).getJson())
 				.contentType(MediaType.APPLICATION_JSON);

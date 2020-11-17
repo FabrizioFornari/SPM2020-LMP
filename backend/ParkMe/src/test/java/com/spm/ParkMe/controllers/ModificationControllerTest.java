@@ -40,6 +40,8 @@ import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
 import com.spm.ParkMe.repositories.UserRepository;
 
+import static com.spm.ParkMe.constants.EndpointContants.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
@@ -117,7 +119,7 @@ public class ModificationControllerTest {
 	public void emailChangeUnauthorizedWithoutToken() throws Exception {
 			
 			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/api/modify/email").accept(
+					MODIFICATION_ENDPOINT + EMAIL_MODIFICATION_ENDPOINT).accept(
 					MediaType.APPLICATION_JSON)
 					.content(jsonMailInfo.write(mailInfo).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
@@ -129,7 +131,7 @@ public class ModificationControllerTest {
 	public void emailChangeAuthorizedWithTokenAndCorrectUser() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/email").accept(
+				MODIFICATION_ENDPOINT + EMAIL_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonMailInfo.write(mailInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -145,7 +147,7 @@ public class ModificationControllerTest {
 	public void emailChangeUnauthorizedWithTokenButWrongUser() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/email").accept(
+				MODIFICATION_ENDPOINT + EMAIL_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonMailInfo.write(mailInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -158,7 +160,7 @@ public class ModificationControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/email").accept(
+				MODIFICATION_ENDPOINT + EMAIL_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongObject.write(wrongObject).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -172,7 +174,7 @@ public class ModificationControllerTest {
 		
 			
 			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/api/modify/password").accept(
+					MODIFICATION_ENDPOINT + PASSWORD_MODIFICATION_ENDPOINT).accept(
 					MediaType.APPLICATION_JSON)
 					.content(jsonPasswordInfo.write(passwordInfo).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
@@ -184,7 +186,7 @@ public class ModificationControllerTest {
 	public void passwordChangeAuthorizedWithTokenAndCorrectPassword() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/password").accept(
+				MODIFICATION_ENDPOINT + PASSWORD_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonPasswordInfo.write(passwordInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -205,7 +207,7 @@ public class ModificationControllerTest {
 		passwordInfo.setCurrentPassword("C");
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/password").accept(
+				MODIFICATION_ENDPOINT + PASSWORD_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonPasswordInfo.write(passwordInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -218,7 +220,7 @@ public class ModificationControllerTest {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				"/api/modify/password").accept(
+				MODIFICATION_ENDPOINT + PASSWORD_MODIFICATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongObject.write(wrongObject).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
@@ -232,7 +234,7 @@ public class ModificationControllerTest {
 			
 				
 				RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-						"/api/modify/phone").accept(
+						MODIFICATION_ENDPOINT + PHONE_MODIFICATION_ENDPOINT).accept(
 						MediaType.APPLICATION_JSON)
 						.content(jsonPhoneInfo.write(phoneInfo).getJson())
 						.contentType(MediaType.APPLICATION_JSON);
@@ -246,7 +248,7 @@ public class ModificationControllerTest {
 		public void phoneChangeAuthorizedWithTokenAndCorrectUser()  throws Exception {
 			
 			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/api/modify/phone").accept(
+					MODIFICATION_ENDPOINT + PHONE_MODIFICATION_ENDPOINT).accept(
 					MediaType.APPLICATION_JSON)
 					.content(jsonPhoneInfo.write(phoneInfo).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
@@ -257,7 +259,7 @@ public class ModificationControllerTest {
 		@WithMockUser(roles= {"VIGILANT"})
 		public void phoneChangeWithWrongBodyReturnsBadRequest() throws Exception {
 			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/api/modify/phone").accept(
+					MODIFICATION_ENDPOINT + PHONE_MODIFICATION_ENDPOINT).accept(
 					MediaType.APPLICATION_JSON)
 					.content(jsonWrongObject.write(wrongObject).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
