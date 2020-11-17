@@ -26,6 +26,7 @@ import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,40 +42,15 @@ public class DriverControllerTests {
 	@InjectMocks
     private DriverController driverController;
 	
-	private Driver driver;
 	private MockMvc mockMvc;
 	private JacksonTester<Driver> jsonDriver;
-	private WrongDriver wrongDriver;
-	private JacksonTester<WrongDriver> jsonWrongDriver;
-	
-	//create wrong class for testing 
-	public class WrongDriver {
-		private String firstName;
-		
-		public WrongDriver() {
-			
-		}
-		public WrongDriver(String name) {
-			this.setFirstName(name);
-		}
-		public String getFirstName() {
-			return firstName;
-		}
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-	}
+	private JacksonTester<WrongObject> jsonWrongObject;
 	
 	@BeforeEach
 	public void setUp() {
-		driver = new Driver("prova@park.it", "A", "A", "RSSMRA80A01F205X",
-							"+39 338 4283440", "prova@park.it", "A","AA000AA","car");
 		mockMvc = MockMvcBuilders.standaloneSetup(driverController)
                 .build();
 		JacksonTester.initFields(this, new ObjectMapper()); 
-		 
-		//setUP wrongDriver
-		wrongDriver = new WrongDriver("");
 	}
 	
 	@Test
@@ -84,7 +60,7 @@ public class DriverControllerTests {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonDriver.write(driver).getJson())
+				.content(jsonDriver.write(DRIVER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
@@ -97,7 +73,7 @@ public class DriverControllerTests {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonWrongDriver.write(wrongDriver).getJson())
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();

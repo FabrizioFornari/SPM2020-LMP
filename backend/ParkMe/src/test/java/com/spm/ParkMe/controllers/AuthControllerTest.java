@@ -50,6 +50,7 @@ import com.spm.ParkMe.security.services.UserDetailsImpl;
 import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
@@ -81,7 +82,6 @@ public class AuthControllerTest {
 	
 	//needed mocks to initialize in setup method
 	private Credentials driverCredentials;
-	private User driverUser;
 	private UserDetailsImpl principal;
 	private List<GrantedAuthority> authorities;
 	
@@ -90,10 +90,10 @@ public class AuthControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
-		driverCredentials = new Credentials("rocche@park.it", "Rocche");
+		driverCredentials = new Credentials(VALID_EMAIL, VALID_PASSWORD);
 		authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
-		principal = new UserDetailsImpl("id", "rocche@park.it", "rocche@park.it",  "Rocche", authorities);
+		authorities.add(new SimpleGrantedAuthority(Roles.ROLE_DRIVER.name()));
+		principal = new UserDetailsImpl("id", VALID_EMAIL, VALID_EMAIL,  VALID_PASSWORD, authorities);
 		JacksonTester.initFields(this, new ObjectMapper());
         mockMvc = MockMvcBuilders.standaloneSetup(authController)
                 .build();

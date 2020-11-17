@@ -22,4 +22,5 @@ public final class EndpointContants {
 	public static final String ADMIN_ENDPOINT = "/api/admin";
 	public static final String VIGILANT_REGISTRATION_ENDPOINT = "/registration/vigilant";
 	public static final String PARKING_MANAGER_REGISTRATION_ENDPOINT = "/registration/parkingManager";
+	
 }

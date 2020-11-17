@@ -41,6 +41,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -58,49 +59,20 @@ public class AdminControllerTest {
 	@Mock
 	UserRepository userRepository;
 	
-	private ParkingManager parkingManager;
-	private Vigilant vigilant;
 	
 	private MockMvc mockMvc;
 	
 	private JacksonTester<ParkingManager> jsonParkingManager;
 	private JacksonTester<Vigilant> jsonVigilant;
-	private WrongObject wrongObject;
 	private JacksonTester<WrongObject> jsonWrongObject;
-	
-	//create wrong class for testing 
-	public class WrongObject {
-		private String firstName;
-		
-		public WrongObject() {
-			
-		}
-		public WrongObject(String name) {
-			this.setFirstName(name);
-		}
-		public String getFirstName() {
-			return firstName;
-		}
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-	}
 	
 	@BeforeEach
 	public void setUp() {
-		parkingManager = new ParkingManager("prova@park.it", "A", "A", "RSSMRA80A01F205X",
-							"+39 338 4283440", "prova@park.it", "A");
-		vigilant = new Vigilant("prova@park.it", "A", "A", "RSSMRA80A01F205X",
-				"+39 338 4283440", "prova@park.it", "A");
-		
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
 		JacksonTester.initFields(this, new ObjectMapper()); 
-		 
-		//setUP wrongDriver
-		wrongObject = new WrongObject("");
 	}
 	
 	@Test
@@ -110,7 +82,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonVigilant.write(vigilant).getJson())
+				.content(jsonVigilant.write(VIGILANT_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
@@ -123,7 +95,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonVigilant.write(vigilant).getJson())
+				.content(jsonVigilant.write(VIGILANT_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isForbidden());
 	}
@@ -136,7 +108,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonVigilant.write(vigilant).getJson())
+				.content(jsonVigilant.write(VIGILANT_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -149,7 +121,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonWrongObject.write(wrongObject).getJson())
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
@@ -161,7 +133,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingManager.write(parkingManager).getJson())
+				.content(jsonParkingManager.write(PARKING_MANAGER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
@@ -174,7 +146,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingManager.write(parkingManager).getJson())
+				.content(jsonParkingManager.write(PARKING_MANAGER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isForbidden());
 	}
@@ -187,7 +159,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingManager.write(parkingManager).getJson())
+				.content(jsonParkingManager.write(PARKING_MANAGER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -200,7 +172,7 @@ public class AdminControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonWrongObject.write(wrongObject).getJson())
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
