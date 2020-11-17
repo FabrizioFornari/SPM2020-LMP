@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from 'src/app/modal/update-email/update-email.component';
+import { UpdatePhoneComponent } from 'src/app/modal/update-phone/update-phone.component';
 @Component({
   selector: 'app-account-info',
   templateUrl: './account-info.component.html',
@@ -36,6 +37,19 @@ export class AccountInfoComponent implements OnInit {
       },
       () => {
         console.log('Modal Update Email Closed');
+      }
+    );
+  }
+
+  openModalUpdatePhone() {
+    const modalRef = this.modalService.open(UpdatePhoneComponent);
+    modalRef.componentInstance.EMAIL = "(+39) 3741793372";
+    modalRef.result.then(
+      () => {
+        console.log('Modal Update Phone Closed');
+      },
+      () => {
+        console.log('Modal Update Phone Closed');
       }
     );
   }

@@ -17,7 +17,6 @@ export class UpdateEmailComponent implements OnInit {
   }
 
   updateEmail(form){
-    console.log(`Current Email: ${form.value.currentEmail}`);
     console.log(`New Email: ${form.value.newEmail}`);
     this.activeModal.dismiss();
   }

@@ -12,9 +12,10 @@ import { ParkmanVigRegistrationComponent } from './pages/parkman-vig-registratio
 import { AccountInfoComponent } from './pages/account-info/account-info.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from './modal/update-email/update-email.component';
+import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
