@@ -6,17 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
+
 import static com.spm.ParkMe.constants.EndpointContants.*;
+
+import java.util.List;
 
 @CrossOrigin(origins ="*", maxAge =3600)
 @RestController
@@ -25,6 +31,9 @@ public class AdminController {
 
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private HandicapPermitsRequestsRepository handicapRepository;;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -45,6 +54,12 @@ public class AdminController {
 		vigilant.setPassword(encoder.encode(vigilant.getPassword()));
 		vigilant.setRole(Roles.ROLE_VIGILANT);
 		repository.save(vigilant);
+	}
+	
+	@GetMapping(ADMIN_GET_HANDICAP_PERMITS_ENDPOINT)
+	@PreAuthorize("hasRole('ADMIN')")
+	public  List<HandicapPermitsRequest> allHandicapPermits()  {
+		return handicapRepository.findAll();
 	}
 	
 	
