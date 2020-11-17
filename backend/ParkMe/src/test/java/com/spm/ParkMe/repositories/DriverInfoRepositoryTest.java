@@ -1,6 +1,7 @@
 package com.spm.ParkMe.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class DriverInfoRepositoryTest {
 	@Autowired
 	DriverInfoRepository driverInfoRepository;
 	
-	private DriverInfo testDriverInfo = new DriverInfo(new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  "Rocche", "AA000AA", "car"));
+	private DriverInfo testDriverInfo = new DriverInfo(DRIVER_OBJECT);
 	
 	@BeforeEach
 	public void setUp() {
@@ -44,13 +45,13 @@ public class DriverInfoRepositoryTest {
 	@Test
 	void findByUsernameReturnsEmptyWhenTheDriverInfoDoesNotExist() {
 		driverInfoRepository.save(testDriverInfo);
-		assertEquals(Optional.empty(), driverInfoRepository.findByUsername("b@b"));
+		assertEquals(Optional.empty(), driverInfoRepository.findByUsername("random"));
 	}
 	
 	@Test
 	void findByUsernameReturnsADriverInfoWhenExists() {
 		driverInfoRepository.save(testDriverInfo);
-		assertEquals(Optional.of(testDriverInfo), driverInfoRepository.findByUsername("rocche@park.it"));
+		assertEquals(Optional.of(testDriverInfo), driverInfoRepository.findByUsername(DRIVER_MAIL));
 	}
 
 }
