@@ -56,7 +56,7 @@ public class AdminControllerTest {
     @Autowired
     private WebApplicationContext context;
 	
-	@Mock
+    @Autowired
 	UserRepository userRepository;
 	
 	

@@ -40,7 +40,7 @@ public class DriverController {
 		driverRepository.save(new DriverInfo(driver));
 	}
 	
-	@PostMapping(path="/handicapPermits", consumes="application(json")
+	@PostMapping(path="/handicapPermits", consumes="application/json")
 	public void handicapPermits(@Valid @RequestBody Driver driver)throws IOException {
 		handicapRepository.save(new HandicapPermitsRequest(driver.getUsername(), (int) Math.random()));
 	}

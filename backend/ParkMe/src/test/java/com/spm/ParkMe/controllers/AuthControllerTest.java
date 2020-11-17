@@ -2,6 +2,7 @@ package com.spm.ParkMe.controllers;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,11 +31,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
 import java.util.ArrayList;
@@ -42,7 +49,9 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.models.requestBody.Credentials;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.security.jwt.JwtUtils;
@@ -52,27 +61,19 @@ import com.spm.ParkMe.security.services.UserDetailsServiceImpl;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
-@RunWith(MockitoJUnitRunner.class)
-@ExtendWith(MockitoExtension.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+@WebAppConfiguration
+@SpringBootTest
 public class AuthControllerTest {
 	
 	private MockMvc mockMvc;
 	
-	@Mock
+	@Autowired
 	UserRepository userRepository;
 	
-	@Mock
-	AuthenticationManager authenticationManager;
-	
-	@Mock
-	JwtUtils jwtUtils;
-	
-	@Mock
-	UserDetailsServiceImpl userService;
-	
-	
-	@Rule
-	public MockitoRule rule = MockitoJUnit.rule();
+	@Autowired
+    private WebApplicationContext context;
 	
 	@InjectMocks
     private AuthController authController;
@@ -81,37 +82,32 @@ public class AuthControllerTest {
 	private JacksonTester<Credentials> jsonCredentials;
 	
 	//needed mocks to initialize in setup method
-	private Credentials driverCredentials;
-	private UserDetailsImpl principal;
-	private List<GrantedAuthority> authorities;
+	private Credentials vigilantCredentials;
 	
 	@Autowired
 	PasswordEncoder encoder;
 	
 	@BeforeEach
 	public void setUp() {
-		driverCredentials = new Credentials(VALID_EMAIL, VALID_PASSWORD);
-		authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(Roles.ROLE_DRIVER.name()));
-		principal = new UserDetailsImpl("id", VALID_EMAIL, VALID_EMAIL,  VALID_PASSWORD, authorities);
+		userRepository.deleteAll();
+		Vigilant vigilant = VIGILANT_OBJECT;
+		vigilant.setPassword(encoder.encode(VALID_PASSWORD));
+		userRepository.save(vigilant);
+		vigilantCredentials = new Credentials(VIGILANT_MAIL, VALID_PASSWORD);
 		JacksonTester.initFields(this, new ObjectMapper());
-        mockMvc = MockMvcBuilders.standaloneSetup(authController)
-                .build();
+		mockMvc = MockMvcBuilders
+	        .webAppContextSetup(context)
+	        .apply(springSecurity())
+	        .build();
 	}
 	
 	@Test
 	public void loginDriverUserReturnsOKStatus() throws Exception{
 		
-		Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null);
-		
-		Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenReturn(authentication);
-		
-		//Mockito.when(jwtUtils.generateJwtToken(Mockito.any(Authentication.class))).thenReturn("xxx.yyy.zzz");
-		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				AUTH_ENDPOINT + LOGIN_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonCredentials.write(driverCredentials).getJson())
+				.content(jsonCredentials.write(vigilantCredentials).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -124,16 +120,14 @@ public class AuthControllerTest {
 	@Test
 	public void loginFails() throws Exception{
 		
-		Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenThrow(BadCredentialsException.class);
-		
-		
+		vigilantCredentials.setEmail(DRIVER_MAIL);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				AUTH_ENDPOINT + LOGIN_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonCredentials.write(driverCredentials).getJson())
+				.content(jsonCredentials.write(vigilantCredentials).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 
-		assertThrows(NestedServletException.class, () -> mockMvc.perform(requestBuilder).andReturn());
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 
 }

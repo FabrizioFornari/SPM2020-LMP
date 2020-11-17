@@ -1,5 +1,8 @@
 package com.spm.ParkMe.constants;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.Admin;
 import com.spm.ParkMe.models.Driver;
@@ -23,6 +26,9 @@ public final class UserInfoConstants {
 	public static final String USERNAME = VALID_EMAIL;
 	public static final String FIRSTNAME = "Name";
 	public static final String LASTNAME = "Surname";
+	
+	@Autowired
+	PasswordEncoder encoder;
 
 	//create wrong class for testing 
 		public static class WrongObject {
