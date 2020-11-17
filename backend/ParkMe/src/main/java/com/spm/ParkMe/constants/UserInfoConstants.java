@@ -1,14 +1,21 @@
 package com.spm.ParkMe.constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.Admin;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
+
 
 public final class UserInfoConstants {
 	
@@ -59,4 +66,9 @@ public final class UserInfoConstants {
 	public static final Vigilant VIGILANT_OBJECT = new Vigilant(VIGILANT_MAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, VIGILANT_MAIL, VALID_PASSWORD);
 	public static final ParkingManager PARKING_MANAGER_OBJECT = new ParkingManager(PARKING_MANAGER_MAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, PARKING_MANAGER_MAIL, VALID_PASSWORD);
 	public static final User ADMIN_OBJECT = new User(ADMIN_MAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, ADMIN_MAIL, VALID_PASSWORD, Roles.ROLE_ADMIN);
+
+	
+
+	
+	
 }
