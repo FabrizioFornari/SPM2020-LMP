@@ -30,6 +30,7 @@ import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
+import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
 import com.spm.ParkMe.repositories.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,6 +56,10 @@ public class ModificationControllerTest {
 	private JacksonTester<ChangeMailInfo> jsonMailInfo;
 	private WrongObject wrongObject;
 	private JacksonTester<WrongObject> jsonWrongObject;
+	
+	
+	
+	
 	
 	//create wrong class for testing 
 	public class WrongObject {
@@ -138,4 +143,98 @@ public class ModificationControllerTest {
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
+	
+	
+	
+	
+	private JacksonTester<ChangePhoneInfo> jsonPhoneInfo;
+	private WrongObjectPhone wrongObjectPhone;
+	private ChangePhoneInfo phoneInfo;
+	private JacksonTester<WrongObjectPhone> jsonWrongObjectPhone;
+	
+	
+	//create wrong class for testing 
+		public class WrongObjectPhone {
+			private String phone;
+			
+			public WrongObjectPhone() {
+				
+			}
+			public WrongObjectPhone(String name) {
+				this.setFirstName(name);
+			}
+			public String getFirstName() {
+				return phone;
+			}
+			public void setFirstName(String firstName) {
+				this.phone = firstName;
+			}
+		}
+		
+		@BeforeEach
+		public void setUpPhone() {
+			userRepository.deleteAll();
+			testUser = new Vigilant("prova@park.it", "A", "A", "RSSMRA80A01F205X",
+					"+39 338 4283440", "prova@park.it", "A");
+			userRepository.save(testUser);
+			phoneInfo = new ChangePhoneInfo("+39 338 4283440", "+39 338 5555555");
+			mockMvc = MockMvcBuilders
+	                .webAppContextSetup(context)
+	                .apply(springSecurity())
+	                .build();
+			JacksonTester.initFields(this, new ObjectMapper()); 
+			 
+			wrongObjectPhone = new WrongObjectPhone("");
+		}
+		
+		@Test
+		public void phoneChangeUnauthorizedWithoutToken() throws Exception {
+			
+				
+				RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+						"/api/modify/phone").accept(
+						MediaType.APPLICATION_JSON)
+						.content(jsonPhoneInfo.write(phoneInfo).getJson())
+						.contentType(MediaType.APPLICATION_JSON);
+				mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+		
+		
+		
+		@Test
+		@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+		public void phoneChangeAuthorizedWithTokenAndCorrectUser()  throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPhoneInfo.write(phoneInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+		}
+		
+		@Test
+		@WithMockUser(username="altro@park.it", roles= {"VIGILANT"})
+		public void phoneChangeUnauthorizedWithTokenButWrongUser() throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPhoneInfo.write(phoneInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+	
+		@Test
+		@WithMockUser(roles= {"VIGILANT"})
+		public void phoneChangeWithWrongBodyReturnsBadRequest() throws Exception {
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonWrongObjectPhone.write(wrongObjectPhone).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
+		}
+		
+	
 }
