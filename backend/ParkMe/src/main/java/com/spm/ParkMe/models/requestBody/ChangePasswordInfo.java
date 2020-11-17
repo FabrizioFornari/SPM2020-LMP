@@ -31,7 +31,7 @@ public class ChangePasswordInfo {
 	}
 	public void setCurrentPassword(String password) {
 		if(password != null && password != "" && 
-				password.length() > 1) {
+				password.length() >= 1) {
 			this.currentPassword = password;
 		}
 		else {
@@ -44,7 +44,7 @@ public class ChangePasswordInfo {
 	}
 	public void setNewPassword(String password) {
 		if(password != null && password != "" && 
-				password.length() > 1) {
+				password.length() >= 1) {
 			this.newPassword = password;
 		}
 		else {

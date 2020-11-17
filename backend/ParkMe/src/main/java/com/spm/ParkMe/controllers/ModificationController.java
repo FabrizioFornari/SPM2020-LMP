@@ -62,11 +62,11 @@ public class ModificationController {
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with token's username."));
-		if(encoder.encode(passwordInfo.getCurrentPassword()) == user.getPassword()) {
+		if(encoder.matches(passwordInfo.getCurrentPassword(), user.getPassword())) {
 			user.setPassword(encoder.encode(passwordInfo.getNewPassword()));
 			repository.save(user);
 			return ResponseEntity.ok(user);
 		}
-		return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 	}
 }

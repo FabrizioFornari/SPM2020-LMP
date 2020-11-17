@@ -1,5 +1,7 @@
 package com.spm.ParkMe.controllers;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,13 +13,17 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -30,6 +36,7 @@ import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
+import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.repositories.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,12 +54,17 @@ public class ModificationControllerTest {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	PasswordEncoder encoder;
+	
 	private Vigilant testUser;
 	private ChangeMailInfo mailInfo;
+	private ChangePasswordInfo passwordInfo;
 	
 	private MockMvc mockMvc;
 	
 	private JacksonTester<ChangeMailInfo> jsonMailInfo;
+	private JacksonTester<ChangePasswordInfo> jsonPasswordInfo;
 	private WrongObject wrongObject;
 	private JacksonTester<WrongObject> jsonWrongObject;
 	
@@ -78,9 +90,10 @@ public class ModificationControllerTest {
 	public void setUp() {
 		userRepository.deleteAll();
 		testUser = new Vigilant("prova@park.it", "A", "A", "RSSMRA80A01F205X",
-				"+39 338 4283440", "prova@park.it", "A");
+				"+39 333 3333333", "prova@park.it", encoder.encode("A"));
 		userRepository.save(testUser);
 		mailInfo = new ChangeMailInfo("prova@park.it", "provetta@park.it");
+		passwordInfo = new ChangePasswordInfo("A", "B");
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -90,9 +103,10 @@ public class ModificationControllerTest {
 		wrongObject = new WrongObject("");
 	}
 	
+	//change email
+	
 	@Test
 	public void emailChangeUnauthorizedWithoutToken() throws Exception {
-		
 			
 			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 					"/api/modify/email").accept(
@@ -112,6 +126,10 @@ public class ModificationControllerTest {
 				.content(jsonMailInfo.write(mailInfo).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+		
+		//check new mail
+		User user = userRepository.findByUsername(mailInfo.getNewEmail()).orElseThrow();
+		assertEquals(user.getUsername(), mailInfo.getNewEmail());
 	}
 	
 	@Test
@@ -133,6 +151,66 @@ public class ModificationControllerTest {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				"/api/modify/email").accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonWrongObject.write(wrongObject).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+	
+	//change password
+	
+	@Test
+	public void passwordChangeUnauthorizedWithoutToken() throws Exception {
+		
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/password").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPasswordInfo.write(passwordInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+	
+	@Test
+	@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+	public void passwordChangeAuthorizedWithTokenAndCorrectPassword() throws Exception {
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/api/modify/password").accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonPasswordInfo.write(passwordInfo).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		
+		//check if changed password is correct
+		User user = userRepository.findByUsername("prova@park.it").orElseThrow();
+		assertTrue(encoder.matches("B", user.getPassword()));
+	}
+	
+	@Test
+	@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+	public void passwordChangeUnauthorizedWithTokenButWrongCurrentPassword() throws Exception {
+		
+		passwordInfo.setCurrentPassword("C");
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/api/modify/password").accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonPasswordInfo.write(passwordInfo).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+	
+	@Test
+	@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+	public void passwordChangeWithWrongBodyReturnsBadRequest() throws Exception {
+	
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/api/modify/password").accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonWrongObject.write(wrongObject).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
