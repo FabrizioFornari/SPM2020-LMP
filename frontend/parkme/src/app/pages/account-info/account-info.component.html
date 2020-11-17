@@ -12,8 +12,8 @@
                 width="150"
               />
               <div class="mt-3">
-                <h4>Mario Rossi</h4>
-                <p class="text-secondary mb-1">Role: Driver</p>
+                <h4>{{user.firstName}}</h4>
+                <p class="text-secondary mb-1">Role: {{user.roles}}</p>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
                   ></path></svg
                 >ID
               </h6>
-              <span class="text-secondary">068265469CB2</span>
+              <span class="text-secondary">{{user.id}}</span>
             </li>
             <li
               class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
@@ -68,7 +68,7 @@
                   ></path></svg
                 >SSN
               </h6>
-              <span class="text-secondary">RSSMRA80A01H501U</span>
+              <span class="text-secondary">{{user.ssn}}</span>
             </li>
             <li
               class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
@@ -93,7 +93,7 @@
                   ></path></svg
                 >First Name
               </h6>
-              <span class="text-secondary">Mario</span>
+              <span class="text-secondary">{{user.firstName}}</span>
             </li>
             <li
               class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
@@ -118,7 +118,7 @@
                   ></path></svg
                 >Last Name
               </h6>
-              <span class="text-secondary">Rossi</span>
+              <span class="text-secondary">{{user.lastName}}</span>
             </li>
             <li
               class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
@@ -143,7 +143,7 @@
                   ></path></svg
                 >Role
               </h6>
-              <span class="text-secondary">Driver</span>
+              <span class="text-secondary">{{user.roles}}</span>
             </li>
           </ul>
         </div>
@@ -155,21 +155,21 @@
               <div class="col-sm-3">
                 <h6 class="mb-0">Email</h6>
               </div>
-              <div class="col-sm-9 text-secondary">mario@park.it</div>
+              <div class="col-sm-9 text-secondary">{{user.email}}</div>
             </div>
             <hr />
             <div class="row">
               <div class="col-sm-3">
                 <h6 class="mb-0">Mobile</h6>
               </div>
-              <div class="col-sm-9 text-secondary">(+39) 3741793372</div>
+              <div class="col-sm-9 text-secondary">{{user.phone}}</div>
             </div>
             <hr />
             <div class="row">
               <div class="col-sm-3">
                 <h6 class="mb-0">Plate</h6>
               </div>
-              <div class="col-sm-9 text-secondary">FA345BE</div>
+              <div class="col-sm-9 text-secondary">{{user.plate}}</div>
             </div>
             <hr />
             <div class="row">
@@ -177,7 +177,7 @@
                 <h6 class="mb-0">Vehicle Type</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                4 Wheels Standard Vehicle
+                {{user.vehicleType}}
               </div>
             </div>
             <hr />

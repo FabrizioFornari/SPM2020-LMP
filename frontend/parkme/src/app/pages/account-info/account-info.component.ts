@@ -14,13 +14,26 @@ export class AccountInfoComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem("user"));
+  }
+
+  user = {
+    firstName: "",
+    lastName: "",
+    roles: "",
+    id: "",
+    ssn: "",
+    email: "",
+    phone: "",
+    plate: "",
+    vehicleType: ""
   }
 
 
 
   openModalUpdateEmail() {
     const modalRef = this.modalService.open(UpdateEmailComponent);
-    modalRef.componentInstance.EMAIL = "mario@park.it";
+    modalRef.componentInstance.EMAIL = this.user.email;
     modalRef.result.then(
       () => {
         console.log('Modal Update Email Closed');
@@ -33,7 +46,7 @@ export class AccountInfoComponent implements OnInit {
 
   openModalUpdatePhone() {
     const modalRef = this.modalService.open(UpdatePhoneComponent);
-    modalRef.componentInstance.PHONE = "(+39) 3741793372";
+    modalRef.componentInstance.PHONE = this.user.phone;
     modalRef.result.then(
       () => {
         console.log('Modal Update Phone Closed');
@@ -60,8 +73,8 @@ export class AccountInfoComponent implements OnInit {
 
   openModalUpdatePlateVehicle() {
     const modalRef = this.modalService.open(UpdateVehiclePlateComponent);
-    modalRef.componentInstance.PLATE = "FA345BE";
-    modalRef.componentInstance.VEHICLE = "4 Wheels Standard Vehicle";
+    modalRef.componentInstance.PLATE = this.user.plate;
+    modalRef.componentInstance.VEHICLE = this.user.vehicleType;
     modalRef.result.then(
       () => {
         console.log('Modal Update Plate/Vehicle Closed');
