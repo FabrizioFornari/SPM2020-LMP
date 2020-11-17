@@ -9,9 +9,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverRegistrationComponent } from './pages/driver-registration/driver-registration.component';
 import { ParkmanVigRegistrationComponent } from './pages/parkman-vig-registration/parkman-vig-registration.component';
+import { AccountInfoComponent } from './pages/account-info/account-info.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
