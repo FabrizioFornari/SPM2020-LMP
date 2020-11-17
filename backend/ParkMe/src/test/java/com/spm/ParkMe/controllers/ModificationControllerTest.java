@@ -32,12 +32,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.controllers.AdminControllerTest.WrongObject;
+import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
+import com.spm.ParkMe.models.requestBody.ChangePlateVehicleTypeInfo;
 import com.spm.ParkMe.repositories.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -59,15 +61,18 @@ public class ModificationControllerTest {
 	PasswordEncoder encoder;
 	
 	private Vigilant testUser;
+	private Driver testUserDriver;
 	private ChangeMailInfo mailInfo;
 	private ChangePasswordInfo passwordInfo;
 	private ChangePhoneInfo phoneInfo;
+	private ChangePlateVehicleTypeInfo plateVehicleTypeInfo;
 	
 	private MockMvc mockMvc;
 	
 	private JacksonTester<ChangeMailInfo> jsonMailInfo;
 	private JacksonTester<ChangePasswordInfo> jsonPasswordInfo;
 	private JacksonTester<ChangePhoneInfo> jsonPhoneInfo;
+	private JacksonTester<ChangePlateVehicleTypeInfo> jsonPlateVehicleTypeInfo;
 	private WrongObject wrongObject;
 	private JacksonTester<WrongObject> jsonWrongObject;
 	
@@ -98,10 +103,17 @@ public class ModificationControllerTest {
 		userRepository.deleteAll();
 		testUser = new Vigilant("prova@park.it", "A", "A", "RSSMRA80A01F205X",
 				"+39 333 3333333", "prova@park.it", encoder.encode("A"));
+		
+		testUserDriver= new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", 
+				"+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "car");
 		userRepository.save(testUser);
+		userRepository.save(testUserDriver);
+		
 		mailInfo = new ChangeMailInfo("prova@park.it", "provetta@park.it");
 		passwordInfo = new ChangePasswordInfo("A", "B");
+		
 		phoneInfo = new ChangePhoneInfo("+39 338 4283440", "+39 338 5555555");
+		plateVehicleTypeInfo= new ChangePlateVehicleTypeInfo("AA000AA", "AA000CC", "car","scooter");
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -263,5 +275,56 @@ public class ModificationControllerTest {
 					.contentType(MediaType.APPLICATION_JSON);
 			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 		}
+		
+		
+		
+		//Plate and Vehicle Type
+		@Test
+		public void plateVehicleTypeChangeUnauthorizedWithoutToken() throws Exception {
+				RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+						"/api/modify/plateAndVehicleType").accept(
+						MediaType.APPLICATION_JSON)
+						.content(jsonPlateVehicleTypeInfo.write(plateVehicleTypeInfo).getJson())
+						.contentType(MediaType.APPLICATION_JSON);
+				mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+		
+		@Test
+		@WithMockUser(username="rocche@park.it", roles= {"DRIVER"})
+		public void plateVehicleTypeChangeAuthorizedWithTokenAndCorrectUser()  throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/plateAndVehicleType").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPlateVehicleTypeInfo.write(plateVehicleTypeInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+		}
+		
+		@Test
+		@WithMockUser(username="altro@park.it", roles= {"VIGILANT"})
+		public void plateVehicleTypeChangeUnauthorizedWithTokenButWrongUser() throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/plateAndVehicleType").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPlateVehicleTypeInfo.write(plateVehicleTypeInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+		@Test
+		@WithMockUser(roles= {"DRIVER"})
+		public void plateVehicleTypeChangeWithWrongBodyReturnsBadRequest() throws Exception {
+		
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/plateAndVehicleType").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonWrongObject.write(wrongObject).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
+		}
+		
+		
 		
 }
