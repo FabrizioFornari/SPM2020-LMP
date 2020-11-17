@@ -22,6 +22,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
+import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
 import com.spm.ParkMe.models.requestBody.Credentials;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
@@ -58,6 +59,14 @@ public class ModificationController {
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 	}
 	
+	@PostMapping("/phone")
+	public ResponseEntity<User> modifyPhone(Authentication authentication, @Valid @RequestBody ChangePhoneInfo phoneInfo ){
+		String authenticatedUsername = authentication.getName();
+		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+		user.setPhone(phoneInfo.getNewPhone());
+		repository.save(user);
+	return ResponseEntity.ok(user);
+	}
 	@PostMapping("/password")
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();

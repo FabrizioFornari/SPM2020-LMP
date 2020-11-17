@@ -25,10 +25,10 @@ public class ChangePhoneInfo {
 	public ChangePhoneInfo(String currentPhone, String newPhone) {
 		
 		this.setCurrentPhone(currentPhone);
-		this.setNewEmail(newPhone);
+		this.setNewPhone(newPhone);
 	}
 	
-	public String getCurrentEmail() {
+	public String getCurrentPhone() {
 		return currentPhone;
 	}
 	public void setCurrentPhone(String phone) {
@@ -41,10 +41,10 @@ public class ChangePhoneInfo {
 		}
 	}
 	
-	public String getNewEmail() {
+	public String getNewPhone() {
 		return newPhone;
 	}
-	public void setNewEmail(String phone) {
+	public void setNewPhone(String phone) {
 		if(phone != null && phone != "" && 
 				phone.matches(RegexConstants.PHONE_REGEX)) {
 			this.newPhone = phone;
