@@ -112,7 +112,7 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(roles= {"DRIVER"})
-	public void handicapPermitsRequestwithWrongObject() throws Exception {
+	public void handicapPermitsRequestUnauthorizedWithWrongObject() throws Exception {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
@@ -124,7 +124,7 @@ public class DriverControllerTests {
 	}
 	
 	@Test
-	public void handicapPermitsRequestwithUnauthorizedWithoudToken() throws Exception {
+	public void handicapPermitsRequestUnauthorizedWithoutToken() throws Exception {
 	
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
@@ -137,7 +137,7 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(roles= {"DRIVER"})
-	public void handicapPermitsRequestwithTokenandCorrectObject() throws Exception {
+	public void handicapPermitsRequestwithTokenAndCorrectObject() throws Exception {
 	
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(

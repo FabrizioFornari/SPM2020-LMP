@@ -1,6 +1,7 @@
 package com.spm.ParkMe.security.services;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
 
 import java.util.Optional;
 
@@ -39,15 +40,15 @@ class UserDetailsServiceImplTest {
 	void throwErrorWhenUserDoesNotExist() {
 		Mockito.when(userRepository.findByUsername(Mockito.anyString())).thenReturn(Optional.empty());
 		
-		assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("a@a"));
+		assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername(ADMIN_MAIL));
 	}
 	
 	@Test
 	void getUserWhenExistsInDB() {
 		Mockito.when(userRepository.findByUsername(Mockito.anyString()))
-		.thenReturn(Optional.of(new User("a@a.it", "A", "A", "ZZZZZZ10A01A000Z", "+39 333 3333333", "a@a.it", "A", Roles.ROLE_ADMIN)));
+		.thenReturn(Optional.of(ADMIN_OBJECT));
 		
-		assertEquals(UserDetailsImpl.class, userService.loadUserByUsername("a@a").getClass());
+		assertEquals(UserDetailsImpl.class, userService.loadUserByUsername(ADMIN_MAIL).getClass());
 	}
 
 }
