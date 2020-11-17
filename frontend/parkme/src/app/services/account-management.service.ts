@@ -30,4 +30,11 @@ export class AccountManagementService {
   }): Observable<any> {
     return this.http.post(ACC_MAN_API + 'password', body, httpOptions);
   }
+
+  updatePhone(body: {
+    currentPhone: string;
+    newPhone: string;
+  }): Observable<any> {
+    return this.http.post(ACC_MAN_API + 'phone', body, httpOptions);
+  }
 }
