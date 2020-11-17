@@ -37,4 +37,15 @@ export class AccountManagementService {
   }): Observable<any> {
     return this.http.post(ACC_MAN_API + 'phone', body, httpOptions);
   }
+
+  updateVechiclePlate(body: {
+    currentPlate: string;
+    newPlate: string;
+    currentVehicleType: string;
+    newVehicleType: string;
+  }): Observable<any> {
+    return this.http.post(ACC_MAN_API + 'plateAndVehicleType', body, httpOptions);
+  }
+
+  
 }
