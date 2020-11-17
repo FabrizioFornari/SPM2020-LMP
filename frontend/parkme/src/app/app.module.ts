@@ -13,9 +13,10 @@ import { AccountInfoComponent } from './pages/account-info/account-info.componen
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from './modal/update-email/update-email.component';
 import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
+import { UpdatePasswordComponent } from './modal/update-password/update-password.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

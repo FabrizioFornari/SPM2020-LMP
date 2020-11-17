@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from 'src/app/modal/update-email/update-email.component';
+import { UpdatePasswordComponent } from 'src/app/modal/update-password/update-password.component';
 import { UpdatePhoneComponent } from 'src/app/modal/update-phone/update-phone.component';
 @Component({
   selector: 'app-account-info',
@@ -50,6 +51,19 @@ export class AccountInfoComponent implements OnInit {
       },
       () => {
         console.log('Modal Update Phone Closed');
+      }
+    );
+  }
+
+
+  openModalUpdatePassword() {
+    const modalRef = this.modalService.open(UpdatePasswordComponent);
+    modalRef.result.then(
+      () => {
+        console.log('Modal Update Password Closed');
+      },
+      () => {
+        console.log('Modal Update Password Closed');
       }
     );
   }
