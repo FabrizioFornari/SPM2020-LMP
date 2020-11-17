@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountManagementValidatorService } from 'src/app/services/account-management-validator.service';
@@ -60,7 +60,7 @@ export class UpdatePasswordComponent implements OnInit {
 
     if (!this.oldPasswordError && !this.newPasswordError && !this.repeatNewPasswordError) {
       this.isLoading = true;
-      this.toastrService.success('Email Updated');
+      this.toastrService.success('Password Updated');
       console.table(body);
       this.activeModal.dismiss();
       this.isLoading = false;
