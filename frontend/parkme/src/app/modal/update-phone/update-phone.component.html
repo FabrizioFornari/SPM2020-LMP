@@ -1,1 +1,17 @@
-<p>update-phone works!</p>
+<div class="modal-header">
+    <h4 class="modal-title">Update Phone</h4>
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Close</button>
+</div>
+<div class="modal-body">
+	<form #update="ngForm" (ngSubmit)="updatePhone(update)">
+		<div class="form-group">
+			<label>Current Phone</label>
+			<input [ngModel]="PHONE" type="text" class="form-control" name="currentPhone" disabled>
+		</div>
+		<div class="form-group">
+			<label>New Phone</label>
+			<input [ngModel]="newPhone" type="text" class="form-control" name="newPhone" placeholder="Enter new phone">
+		</div>
+		<button type="submit" class=" btn btn-block btn-success">Update</button>
+	</form>
+</div>

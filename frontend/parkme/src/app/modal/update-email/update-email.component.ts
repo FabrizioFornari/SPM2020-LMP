@@ -16,7 +16,7 @@ export class UpdateEmailComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateEmail(form){
+  updateEmail(form: { value: { newEmail: string; }; }){
     console.log(`New Email: ${form.value.newEmail}`);
     this.activeModal.dismiss();
   }

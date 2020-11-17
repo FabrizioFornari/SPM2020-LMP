@@ -43,7 +43,7 @@ export class AccountInfoComponent implements OnInit {
 
   openModalUpdatePhone() {
     const modalRef = this.modalService.open(UpdatePhoneComponent);
-    modalRef.componentInstance.EMAIL = "(+39) 3741793372";
+    modalRef.componentInstance.PHONE = "(+39) 3741793372";
     modalRef.result.then(
       () => {
         console.log('Modal Update Phone Closed');
