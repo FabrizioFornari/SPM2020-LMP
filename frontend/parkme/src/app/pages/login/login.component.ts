@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
       this.unifiedLogin.login(user).subscribe(
         (data) => {
           localStorage.setItem('token', data.token);
-          localStorage.setItem('email', data.email);
-          localStorage.setItem('role', data.roles[0]);
+          localStorage.setItem('user', JSON.stringify(data));
+
           this.toastrService.success('Successfully Logged In');
           this.isLoading = false;
         },

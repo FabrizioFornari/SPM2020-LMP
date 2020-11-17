@@ -10,9 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverRegistrationComponent } from './pages/driver-registration/driver-registration.component';
 import { ParkmanVigRegistrationComponent } from './pages/parkman-vig-registration/parkman-vig-registration.component';
 import { AccountInfoComponent } from './pages/account-info/account-info.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateEmailComponent } from './modal/update-email/update-email.component';
+import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
+import { UpdatePasswordComponent } from './modal/update-password/update-password.component';
+import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +29,7 @@ import { AccountInfoComponent } from './pages/account-info/account-info.componen
       positionClass: 'toast-top-right',
     }),
     BrowserAnimationsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
