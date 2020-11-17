@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
+import com.spm.ParkMe.models.requestBody.ChangePlateVehicleTypeInfo;
 import com.spm.ParkMe.models.requestBody.Credentials;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
@@ -70,6 +72,26 @@ public class ModificationController {
 	return ResponseEntity.ok(user);
 	}
 	
+	@PostMapping(PLATE_VEHICLE_MODIFICATION_ENDPOINT)
+	public ResponseEntity<User> modifyPlateAndVehicleType(Authentication authentication, @Valid @RequestBody ChangePlateVehicleTypeInfo plateVehicleTypeInfo ){
+		String authenticatedUsername = authentication.getName();
+		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+		if(user.getRole() == Roles.ROLE_DRIVER) {
+			DriverInfo driverInfo = driverInfoRepository.findByUsername(authenticatedUsername).orElseThrow(() -> new UsernameNotFoundException("The provided current email is not registrated in Driver Info collection."));
+			driverInfo.setPlate(plateVehicleTypeInfo.getNewPlate());
+			driverInfo.setVehicleType(plateVehicleTypeInfo.getNewVehicleType());
+			driverInfoRepository.save(driverInfo);
+			return ResponseEntity.ok(user);
+		}else {
+			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		
+	
+	}
+	
+
+
 	@PostMapping(PASSWORD_MODIFICATION_ENDPOINT)
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();
