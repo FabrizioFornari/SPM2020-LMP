@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountManagementValidatorService } from 'src/app/services/account-management-validator.service';
@@ -21,7 +22,8 @@ export class UpdateEmailComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private toastrService: ToastrService,
     private accManValid: AccountManagementValidatorService,
-    private accManSer: AccountManagementService
+    private accManSer: AccountManagementService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -44,6 +46,9 @@ export class UpdateEmailComponent implements OnInit {
         () => {
           this.toastrService.success('Successfully Updated Email');
           this.isLoading = false;
+          this.activeModal.dismiss();
+          localStorage.clear();
+          this.router.navigate(["/login"]);
         },
         (error) => {
           if (error.status == 401) {
@@ -58,7 +63,6 @@ export class UpdateEmailComponent implements OnInit {
             this.toastrService.warning('Unknown Error');
           }
           this.isLoading = false;
-          this.activeModal.dismiss();
         }
       );
     } else {
