@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.models.requestBody.Credentials;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -30,6 +33,9 @@ public class ModificationController {
 	
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private DriverInfoRepository driverInfoRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -42,6 +48,11 @@ public class ModificationController {
 			user.setUsername(mailInfo.getNewEmail());
 			user.setEmail(mailInfo.getNewEmail());
 			repository.save(user);
+			if(user.getRole() == Roles.ROLE_DRIVER) {
+				DriverInfo driverInfo = driverInfoRepository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is not registrated in Driver Info collection."));
+				driverInfo.setUsername(mailInfo.getNewEmail());
+				driverInfoRepository.save(driverInfo);
+			}
 			return ResponseEntity.ok(user);
 		}
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
