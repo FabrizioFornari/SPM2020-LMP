@@ -37,6 +37,7 @@ import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
+import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
 import com.spm.ParkMe.repositories.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,13 +61,19 @@ public class ModificationControllerTest {
 	private Vigilant testUser;
 	private ChangeMailInfo mailInfo;
 	private ChangePasswordInfo passwordInfo;
+	private ChangePhoneInfo phoneInfo;
 	
 	private MockMvc mockMvc;
 	
 	private JacksonTester<ChangeMailInfo> jsonMailInfo;
 	private JacksonTester<ChangePasswordInfo> jsonPasswordInfo;
+	private JacksonTester<ChangePhoneInfo> jsonPhoneInfo;
 	private WrongObject wrongObject;
 	private JacksonTester<WrongObject> jsonWrongObject;
+	
+	
+	
+	
 	
 	//create wrong class for testing 
 	public class WrongObject {
@@ -94,6 +101,7 @@ public class ModificationControllerTest {
 		userRepository.save(testUser);
 		mailInfo = new ChangeMailInfo("prova@park.it", "provetta@park.it");
 		passwordInfo = new ChangePasswordInfo("A", "B");
+		phoneInfo = new ChangePhoneInfo("+39 338 4283440", "+39 338 5555555");
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -216,4 +224,54 @@ public class ModificationControllerTest {
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
+	
+		@Test
+		public void phoneChangeUnauthorizedWithoutToken() throws Exception {
+			
+				
+				RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+						"/api/modify/phone").accept(
+						MediaType.APPLICATION_JSON)
+						.content(jsonPhoneInfo.write(phoneInfo).getJson())
+						.contentType(MediaType.APPLICATION_JSON);
+				mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+		
+		
+		
+		@Test
+		@WithMockUser(username="prova@park.it", roles= {"VIGILANT"})
+		public void phoneChangeAuthorizedWithTokenAndCorrectUser()  throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPhoneInfo.write(phoneInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+		}
+		
+		@Test
+		@WithMockUser(username="altro@park.it", roles= {"VIGILANT"})
+		public void phoneChangeUnauthorizedWithTokenButWrongUser() throws Exception {
+			
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonPhoneInfo.write(phoneInfo).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+		}
+	
+		@Test
+		@WithMockUser(roles= {"VIGILANT"})
+		public void phoneChangeWithWrongBodyReturnsBadRequest() throws Exception {
+			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+					"/api/modify/phone").accept(
+					MediaType.APPLICATION_JSON)
+					.content(jsonWrongObject.write(wrongObject).getJson())
+					.contentType(MediaType.APPLICATION_JSON);
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
+		}
+		
 }
