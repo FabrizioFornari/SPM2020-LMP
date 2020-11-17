@@ -29,6 +29,7 @@ export class AccountInfoComponent implements OnInit {
 
   openModalUpdateEmail() {
     const modalRef = this.modalService.open(UpdateEmailComponent);
+    modalRef.componentInstance.EMAIL = "mario@park.it";
     modalRef.result.then(
       () => {
         console.log('Modal Update Email Closed');

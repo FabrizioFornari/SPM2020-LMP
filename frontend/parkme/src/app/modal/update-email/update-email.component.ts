@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-update-email',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateEmailComponent implements OnInit {
 
-  constructor() { }
+  @Input() EMAIL: string;
+  newEmail: string;
+
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
+  }
+
+  updateEmail(form){
+    console.log(`Current Email: ${form.value.currentEmail}`);
+    console.log(`New Email: ${form.value.newEmail}`);
+    this.activeModal.dismiss();
   }
 
 }
