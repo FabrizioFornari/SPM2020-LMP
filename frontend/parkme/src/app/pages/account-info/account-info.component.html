@@ -155,7 +155,7 @@
               <div class="col-sm-3">
                 <h6 class="mb-0">Email</h6>
               </div>
-			  <div class="col-sm-9 text-secondary">mario@park.it</div>
+              <div class="col-sm-9 text-secondary">mario@park.it</div>
             </div>
             <hr />
             <div class="row">
@@ -177,21 +177,45 @@
                 <h6 class="mb-0">Vehicle Type</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                4 Wheels Standard Vehicle 
+                4 Wheels Standard Vehicle
               </div>
-			</div>
-			<hr />
-			<div class="row" style="margin-top: 2rem; margin-bottom: 2rem">
-				<div class="col">
-					<button type="button" class="btn btn-info btn-lg btn-block" (click)="changeEmail()">CHANGE EMAIL</button>
-					<button type="button" class="btn btn-danger btn-lg btn-block" (click)="changePassword()">CHANGE PASSWORD</button>
-					<button type="button" class="btn btn-success btn-lg btn-block" (click)="changePhone()">CHANGE PHONE NUMBER</button>
-					<button type="button" class="btn btn-warning btn-lg btn-block" (click)="changeVehicle_Plate()">CHANGE PLATE/VEHICLE</button>
-				</div>
-			</div>
+            </div>
+            <hr />
+            <div class="row" style="margin-top: 2rem; margin-bottom: 2rem">
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-info btn-lg btn-block"
+                  (click)="openModalUpdateEmail()"
+                >
+                  CHANGE EMAIL
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-lg btn-block"
+                  (click)="changePassword()"
+                >
+                  CHANGE PASSWORD
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success btn-lg btn-block"
+                  (click)="changePhone()"
+                >
+                  CHANGE PHONE NUMBER
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-lg btn-block"
+                  (click)="changeVehicle_Plate()"
+                >
+                  CHANGE PLATE/VEHICLE
+                </button>
+              </div>
+            </div>
           </div>
-        </div>          
-	  </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

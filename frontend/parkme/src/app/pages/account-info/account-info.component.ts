@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateEmailComponent } from 'src/app/modal/update-email/update-email.component';
 @Component({
   selector: 'app-account-info',
   templateUrl: './account-info.component.html',
@@ -7,14 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
-  changeEmail(){
-    console.log('Change Email');
-  }
 
   changePassword(){
     console.log('Change Password');
@@ -26,6 +24,19 @@ export class AccountInfoComponent implements OnInit {
 
   changeVehicle_Plate(){
     console.log('Change Vehicle/Plate');
+  }
+
+
+  openModalUpdateEmail() {
+    const modalRef = this.modalService.open(UpdateEmailComponent);
+    modalRef.result.then(
+      () => {
+        console.log('Modal Update Email Closed');
+      },
+      () => {
+        console.log('Modal Update Email Closed');
+      }
+    );
   }
 
 }
