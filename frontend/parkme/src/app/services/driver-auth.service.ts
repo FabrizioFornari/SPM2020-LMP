@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const DRIVER_AUTH_API = 'http://localhost:8080/api/';
+const DRIVER_AUTH_API = 'http://localhost:8080/api/driver/registration';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -24,6 +24,6 @@ export class DriverAuthService {
     vehicleType: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(DRIVER_AUTH_API + 'registration', user, httpOptions);
+    return this.http.post(DRIVER_AUTH_API, user, httpOptions);
   }
 }
