@@ -53,4 +53,15 @@ public class HandicapPermitsRequest {
 			throw new IllegalArgumentException("Timestamp is invalid");
 		}
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		HandicapPermitsRequest req = (HandicapPermitsRequest) o;
+		return(req.getUsername().equals(this.getUsername()) &&
+				req.getTimestamp() == this.getTimestamp());
+	}
 }
