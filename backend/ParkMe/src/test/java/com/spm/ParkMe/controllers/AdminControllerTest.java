@@ -76,9 +76,9 @@ public class AdminControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
-	
-		handicapPermits.add(new HandicapPermitsRequest(USERNAME,4));
-		handicapPermits.add(new HandicapPermitsRequest(USERNAME,5));
+		handicapPermitsRepository.deleteAll();
+		handicapPermits.add(new HandicapPermitsRequest("ciao",4));
+		handicapPermits.add(new HandicapPermitsRequest("ciao",5));
 		
 		handicapPermitsRepository.saveAll(handicapPermits);
 		mockMvc = MockMvcBuilders
@@ -203,23 +203,10 @@ public class AdminControllerTest {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(2, response.getContentAsString() );
+		assertEquals(2,jsonHandicapPermits.parse(response.getContentAsString()).getObject().size() );
 	} 
 	
-	@Test
-	@WithMockUser(roles= {"ADMIN"})
-	public List<HandicapPermitsRequest> requestHandicapPermitswithBadResponse() throws Exception {
 	
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				ADMIN_ENDPOINT + ADMIN_GET_HANDICAP_PERMITS_ENDPOINT).accept(
-				MediaType.APPLICATION_JSON)
-				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
-				.contentType(MediaType.APPLICATION_JSON);
-		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
-		return handicapPermits;
 		
-	} 
+};
 	
-	
-	
-}
