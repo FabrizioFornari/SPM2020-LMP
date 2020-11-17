@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const ACC_MAN_API = 'http://localhost:8080/api/modification/email';
+const ACC_MAN_API = 'http://localhost:8080/api/modification/';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,6 +21,13 @@ export class AccountManagementService {
     currentEmail: string;
     newEmail: string;
   }): Observable<any> {
-    return this.http.post(ACC_MAN_API, body, httpOptions);
+    return this.http.post(ACC_MAN_API + 'email', body, httpOptions);
+  }
+
+  updatePassword(body: {
+    currentPassword: string;
+    newPassword: string;
+  }): Observable<any> {
+    return this.http.post(ACC_MAN_API + 'password', body, httpOptions);
   }
 }
