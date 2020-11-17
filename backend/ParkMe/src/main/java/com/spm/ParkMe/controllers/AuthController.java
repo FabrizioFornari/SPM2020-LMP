@@ -1,6 +1,7 @@
 package com.spm.ParkMe.controllers;
 
 import java.util.List;
+import static com.spm.ParkMe.constants.EndpointContants.*;
 import java.util.stream.Collectors;
 
 import org.apache.catalina.connector.Response;
@@ -31,7 +32,7 @@ import com.spm.ParkMe.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(AUTH_ENDPOINT)
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -48,7 +49,7 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	@PostMapping("/login")
+	@PostMapping(LOGIN_ENDPOINT)
 	public ResponseEntity<?> authenticateUser(@RequestBody Credentials credentials) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword()));

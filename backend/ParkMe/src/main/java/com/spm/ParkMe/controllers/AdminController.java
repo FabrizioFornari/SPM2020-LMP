@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
@@ -15,9 +16,11 @@ import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.repositories.UserRepository;
 
+import static com.spm.ParkMe.constants.EndpointContants.*;
+
 @CrossOrigin(origins ="*", maxAge =3600)
 @RestController
-
+@RequestMapping(ADMIN_ENDPOINT)
 public class AdminController {
 
 	@Autowired
@@ -26,7 +29,7 @@ public class AdminController {
 	@Autowired
 	private PasswordEncoder encoder;
 		
-	@PostMapping("/api/parkingmanager/registration")
+	@PostMapping(PARKING_MANAGER_REGISTRATION_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
 	public void parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
 		pmanager.setUsername(pmanager.getEmail());
@@ -36,7 +39,7 @@ public class AdminController {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/api/vigilant/registration")
+	@PostMapping(VIGILANT_REGISTRATION_ENDPOINT)
 	public void vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
 		vigilant.setUsername(vigilant.getEmail());
 		vigilant.setPassword(encoder.encode(vigilant.getPassword()));

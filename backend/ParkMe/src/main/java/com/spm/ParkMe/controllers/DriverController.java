@@ -16,11 +16,11 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
-
+import static com.spm.ParkMe.constants.EndpointContants.*;
 
 
 @RestController
-@RequestMapping("/api/driver")
+@RequestMapping(DRIVER_ENDPOINT)
 public class DriverController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class DriverController {
 	@Autowired
 	private DriverInfoRepository driverRepository;
 	
-	@PostMapping(path="/registration",consumes = "application/json" )
+	@PostMapping(path=DRIVER_REGISTRATION_ENDPOINT,consumes = "application/json" )
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
 		repository.save(driver);
 		driverRepository.save(new DriverInfo(driver));
