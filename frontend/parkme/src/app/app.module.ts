@@ -14,9 +14,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from './modal/update-email/update-email.component';
 import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
 import { UpdatePasswordComponent } from './modal/update-password/update-password.component';
+import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

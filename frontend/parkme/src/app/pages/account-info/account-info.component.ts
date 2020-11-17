@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from 'src/app/modal/update-email/update-email.component';
 import { UpdatePasswordComponent } from 'src/app/modal/update-password/update-password.component';
 import { UpdatePhoneComponent } from 'src/app/modal/update-phone/update-phone.component';
+import { UpdateVehiclePlateComponent } from 'src/app/modal/update-vehicle-plate/update-vehicle-plate.component';
 @Component({
   selector: 'app-account-info',
   templateUrl: './account-info.component.html',
@@ -15,18 +16,6 @@ export class AccountInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  changePassword(){
-    console.log('Change Password');
-  }
-
-  changePhone(){
-    console.log('Change Phone');
-  }
-
-  changeVehicle_Plate(){
-    console.log('Change Vehicle/Plate');
-  }
 
 
   openModalUpdateEmail() {
@@ -64,6 +53,21 @@ export class AccountInfoComponent implements OnInit {
       },
       () => {
         console.log('Modal Update Password Closed');
+      }
+    );
+  }
+
+
+  openModalUpdatePlateVehicle() {
+    const modalRef = this.modalService.open(UpdateVehiclePlateComponent);
+    modalRef.componentInstance.PLATE = "FA345BE";
+    modalRef.componentInstance.VEHICLE = "4 Wheels Standard Vehicle";
+    modalRef.result.then(
+      () => {
+        console.log('Modal Update Plate/Vehicle Closed');
+      },
+      () => {
+        console.log('Modal Update Plate/Vehicle Closed');
       }
     );
   }
