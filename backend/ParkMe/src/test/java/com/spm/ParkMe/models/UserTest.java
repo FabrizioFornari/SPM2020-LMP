@@ -3,6 +3,8 @@ package com.spm.ParkMe.models;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import static com.spm.ParkMe.constants.UserInfoConstants.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,30 +14,23 @@ import com.spm.ParkMe.enums.Roles;
 @SpringBootTest
 public class UserTest {
 
-	private String validSSN;
-	private String validEmail;
-	private String validPhone;
-    
     private User user;
 	
 	@BeforeEach
 	public void setUp() {
-		validSSN = "ZZZZZZ10A01A000Z";
-		validEmail = "email@park.it";
-		validPhone = "+39 333 3333333";
-		user = new User(validEmail,"firstname", "lastname", validSSN, validPhone, validEmail, "password", Roles.ROLE_DRIVER);
+		user = new User(VALID_EMAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, VALID_EMAIL, VALID_PASSWORD, Roles.ROLE_DRIVER);
 	}
 	
 	@Test
 	public void createValidDriver() {
 		assertEquals(user.getClass(), User.class);
-		assertEquals(user.getUsername(), validEmail);
-		assertEquals(user.getFirstName(), "firstname");
-		assertEquals(user.getLastName(), "lastname");
-		assertEquals(user.getSsn(), validSSN);
-		assertEquals(user.getEmail(), validEmail);
-		assertEquals(user.getPhone(), validPhone);
-		assertEquals(user.getPassword(), "password");
+		assertEquals(user.getUsername(), VALID_EMAIL);
+		assertEquals(user.getFirstName(), FIRSTNAME);
+		assertEquals(user.getLastName(), LASTNAME);
+		assertEquals(user.getSsn(), VALID_SSN);
+		assertEquals(user.getEmail(), VALID_EMAIL);
+		assertEquals(user.getPhone(), VALID_PHONE);
+		assertEquals(user.getPassword(), VALID_PASSWORD);
 	}
 	
 	//firstname
@@ -75,7 +70,7 @@ public class UserTest {
 	
 	@Test
 	public void createUserWithInvalidSSNReturnsException() {
-		assertThrows(IllegalArgumentException.class, () -> user.setSsn("FGHGgvy66542d"));
+		assertThrows(IllegalArgumentException.class, () -> user.setSsn(INVALID_SSN));
 	}
 	
 	//email
@@ -90,7 +85,7 @@ public class UserTest {
 	
 	@Test
 	public void createUserWithInvalidEmailReturnsException() {
-		assertThrows(IllegalArgumentException.class, () -> user.setEmail("prova1.com"));
+		assertThrows(IllegalArgumentException.class, () -> user.setEmail(INVALID_EMAIL));
 	}
 	
 	//Phone
@@ -104,7 +99,7 @@ public class UserTest {
 	}
 	@Test
 	public void createUserWithInvalidPhoneReturnsException() {
-		assertThrows(IllegalArgumentException.class, () -> user.setPhone("9735 302309"));
+		assertThrows(IllegalArgumentException.class, () -> user.setPhone(INVALID_PHONE));
 	}
 	
 	//Password
