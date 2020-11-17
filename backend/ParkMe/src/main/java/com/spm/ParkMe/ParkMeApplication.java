@@ -32,7 +32,7 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	PasswordEncoder encoder;
-
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParkMeApplication.class, args);
