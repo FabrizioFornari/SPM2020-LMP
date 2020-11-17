@@ -20,8 +20,11 @@ public class HandicapPermitsRequest {
 	@NotNull(message="Timestamp must not be null")
 	private long timestamp;
 	
+	public HandicapPermitsRequest() {}
+	
 	public HandicapPermitsRequest(String username, long timestamp) {
-		
+		this.setUsername(username);
+		this.setTimestamp(timestamp);
 	}
 	
 	public String getUsername() {
