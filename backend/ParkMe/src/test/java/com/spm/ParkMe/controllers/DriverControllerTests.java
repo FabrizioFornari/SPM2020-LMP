@@ -33,8 +33,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
+import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
+import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
@@ -47,11 +49,14 @@ import static com.spm.ParkMe.constants.UserInfoConstants.*;
 @SpringBootTest
 public class DriverControllerTests {
 	
-	@Mock
+	@Autowired
 	UserRepository userRepository;
 	
-	@Mock
+	@Autowired
 	DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
+	HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
 	@InjectMocks
     private DriverController driverController;
@@ -74,6 +79,7 @@ public class DriverControllerTests {
 	public void setUp() {
 		userRepository.deleteAll();
 		driverInfoRepository.deleteAll();
+		handicapRequestsRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
 		
 		mockMvc = MockMvcBuilders
@@ -117,6 +123,7 @@ public class DriverControllerTests {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
@@ -130,13 +137,15 @@ public class DriverControllerTests {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void handicapPermitsRequestWithAlreadyHandicapReturnsConflict() throws Exception {
+	public void handicapPermitsRequestWithAlreadyHandicapReturnsIsAlreadyReported() throws Exception {
+		
 		DriverInfo infoWithHandicap = new DriverInfo(DRIVER_OBJECT);
 		infoWithHandicap.setHandicap(true);
 		driverInfoRepository.save(infoWithHandicap);
@@ -144,8 +153,24 @@ public class DriverControllerTests {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isAlreadyReported());
+	}
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void handicapPermitsRequestAlreadyExistingReturnsConflict() throws Exception {
+		
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
+		handicapRequestsRepository.save(new HandicapPermitsRequest(DRIVER_MAIL, 123456789, false, false));
+	
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isConflict());
 	}
 	
 }

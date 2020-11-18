@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,13 +15,17 @@ import { UpdateEmailComponent } from './modal/update-email/update-email.componen
 import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
 import { UpdatePasswordComponent } from './modal/update-password/update-password.component';
 import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
+import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
+import { HandicapPermitsListComponent } from './pages/handicap-permits-list/handicap-permits-list.component';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent, UploadHandicapComponent, HandicapPermitsListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 1500,
@@ -31,7 +35,7 @@ import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update
     BrowserAnimationsModule,
     NgbModule,
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

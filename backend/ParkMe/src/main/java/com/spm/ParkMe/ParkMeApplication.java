@@ -13,6 +13,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
+import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 
@@ -29,6 +30,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	private DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
+	private HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -57,6 +61,7 @@ public class ParkMeApplication implements CommandLineRunner {
 		}
 		driverInfoRepository.deleteAll();
 		driverInfoRepository.save(new DriverInfo(driver));
+		handicapRequestsRepository.deleteAll();
 	}
 
 }
