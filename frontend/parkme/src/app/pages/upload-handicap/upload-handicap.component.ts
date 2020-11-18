@@ -3,36 +3,27 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-upload-handicap',
   templateUrl: './upload-handicap.component.html',
-  styleUrls: ['./upload-handicap.component.css']
+  styleUrls: ['./upload-handicap.component.css'],
 })
 export class UploadHandicapComponent implements OnInit {
-
-  firstname: string = "Andrea";
-  lastname: string = "Falaschini";
-  ssn: string = "RSSMRA80A01F205X"
-  email: string = "flash@park.it";
-  phone: string = "3473917227";
-  plate: string = "ES943VB";
-  
+  userInfo = {
+    firstName: "",
+    lastName: "",
+    ssn: "",
+    email: "",
+    phone: "",
+    plate: ""
+  };
 
   isLoading: boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.userInfo = JSON.parse(localStorage.getItem("user"));
   }
 
+  ngOnInit(): void {}
 
-  onSubmit(){
-    const body = {
-      firstname: this.firstname,
-      lastname: this.lastname,
-      ssn: this.ssn,
-      email: this.email,
-      phone: this.phone,
-      plate: this.plate
-    }
-    alert(JSON.stringify(body));
+  onSubmit() {
+    alert(JSON.stringify(this.userInfo));
   }
-
 }
