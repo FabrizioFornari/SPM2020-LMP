@@ -10,6 +10,9 @@ public class AdminHandicapRequestAcceptance {
 	private boolean isAccepted;
 	
 	
+	public AdminHandicapRequestAcceptance() {
+		
+	}
 	public AdminHandicapRequestAcceptance(String username, boolean isAccepted ) {
 		this.username=username;
 		this.isAccepted=isAccepted;

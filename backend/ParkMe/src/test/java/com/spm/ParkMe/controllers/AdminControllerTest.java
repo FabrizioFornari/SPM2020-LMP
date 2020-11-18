@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
@@ -73,6 +74,8 @@ public class AdminControllerTest {
 	private JacksonTester<Vigilant> jsonVigilant;
 	private JacksonTester<WrongObject> jsonWrongObject;
 	private JacksonTester<List<HandicapPermitsRequest>> jsonHandicapPermits;
+	private JacksonTester<HandicapPermitsRequest> jsonHandicapPermit;
+	private JacksonTester <AdminHandicapRequestAcceptance> jsonAcceptance;
 	
 	@BeforeEach
 	public void setUp() {
@@ -210,16 +213,17 @@ public class AdminControllerTest {
 	@WithMockUser(roles = {"ADMIN"})
 	public void requestSetHandicapPermits() throws Exception {
 	
+		AdminHandicapRequestAcceptance acceptance = new AdminHandicapRequestAcceptance(DRIVER_MAIL,true);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + ADMIN_SET_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(DRIVER_MAIL)
-				.content("true")
+				.content(jsonAcceptance.write(acceptance).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertEquals(true,jsonHandicapPermit.parse(response.getContentAsString()).getObject().isAccepted());
 	} 
 	
 		
