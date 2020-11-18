@@ -1,13 +1,10 @@
 package com.spm.ParkMe.models;
 
-import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.spm.ParkMe.constants.RegexConstants;
 
 @Document(collection = "handicapPermitsRequests")
 public class HandicapPermitsRequest {
@@ -20,11 +17,17 @@ public class HandicapPermitsRequest {
 	@NotNull(message="Timestamp must not be null")
 	private long timestamp;
 	
+	private boolean isAccepted;
+	
+	private boolean isProcessed;
+	
 	public HandicapPermitsRequest() {}
 	
-	public HandicapPermitsRequest(String username, long timestamp) {
+	public HandicapPermitsRequest(String username, long timestamp, boolean isAccepted, boolean isProcessed) {
 		this.setUsername(username);
 		this.setTimestamp(timestamp);
+		this.setAccepted(isAccepted);
+		this.setProcessed(isProcessed);
 	}
 	
 	public String getUsername() {
@@ -52,5 +55,21 @@ public class HandicapPermitsRequest {
 		else {
 			throw new IllegalArgumentException("Timestamp is invalid");
 		}
+	}
+
+	public boolean isAccepted() {
+		return isAccepted;
+	}
+
+	public void setAccepted(boolean isAccepted) {
+		this.isAccepted = isAccepted;
+	}
+
+	public boolean isProcessed() {
+		return isProcessed;
+	}
+
+	public void setProcessed(boolean isProcessed) {
+		this.isProcessed = isProcessed;
 	}
 }
