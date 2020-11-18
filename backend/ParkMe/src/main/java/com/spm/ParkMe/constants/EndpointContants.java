@@ -23,4 +23,5 @@ public final class EndpointContants {
 	public static final String VIGILANT_REGISTRATION_ENDPOINT = "/registration/vigilant";
 	public static final String PARKING_MANAGER_REGISTRATION_ENDPOINT = "/registration/parkingManager";
 	public static final String ADMIN_GET_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits";
+	public static final String ADMIN_SET_HANDICAP_PERMITS_ENDPOINT= "/setting/handicapPermits";
 }
