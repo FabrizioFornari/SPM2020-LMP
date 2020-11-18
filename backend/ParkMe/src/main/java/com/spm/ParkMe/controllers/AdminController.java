@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
@@ -82,10 +83,10 @@ public class AdminController {
 	
 	@PostMapping(ADMIN_SET_HANDICAP_PERMITS_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> setHandicapPermits(@NotNull @RequestBody String username, boolean isAccepted ) {
-		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + username));
+	public ResponseEntity<?> setHandicapPermits(@NotNull @RequestBody AdminHandicapRequestAcceptance acceptance ) {
+		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + acceptance.getUsername()));
 		handicapPermits.setProcessed(true);
-		handicapPermits.setAccepted(isAccepted);
+		handicapPermits.setAccepted(acceptance.getIsAccepted());
 		return ResponseEntity.ok(handicapPermits);
 	}
 	
