@@ -195,7 +195,7 @@ public class AdminControllerTest {
 	public void requestHandicapPermitsReturnsList() throws Exception {
 	
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				ADMIN_ENDPOINT + ADMIN_GET_HANDICAP_PERMITS_ENDPOINT).accept(
+				ADMIN_ENDPOINT + ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
 				.content(jsonHandicapPermits.write(handicapPermits).getJson())
 				.contentType(MediaType.APPLICATION_JSON);

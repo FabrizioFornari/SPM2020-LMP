@@ -23,6 +23,7 @@ import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins ="*", maxAge =3600)
 @RestController
@@ -56,10 +57,22 @@ public class AdminController {
 		repository.save(vigilant);
 	}
 	
-	@GetMapping(ADMIN_GET_HANDICAP_PERMITS_ENDPOINT)
+	@GetMapping(ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
 	public  List<HandicapPermitsRequest> allHandicapPermits()  {
 		return handicapRepository.findAll();
+	}
+	
+	@GetMapping(ADMIN_GET_NOT_PROCESSED_HANDICAP_PERMITS_ENDPOINT)
+	@PreAuthorize("hasRole('ADMIN')")
+	public  List<HandicapPermitsRequest> notProcessedHandicapPermits()  {
+		return handicapRepository.findAll().stream().filter(req -> !req.isProcessed()).collect(Collectors.toList());
+	}
+	
+	@GetMapping(ADMIN_GET_PROCESSED_HANDICAP_PERMITS_ENDPOINT)
+	@PreAuthorize("hasRole('ADMIN')")
+	public  List<HandicapPermitsRequest> processedHandicapPermits()  {
+		return handicapRepository.findAll().stream().filter(req -> req.isProcessed()).collect(Collectors.toList());
 	}
 	
 	
