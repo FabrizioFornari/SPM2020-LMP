@@ -17,7 +17,6 @@ import { UpdatePasswordComponent } from './modal/update-password/update-password
 import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
 import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
 import { HandicapPermitsListComponent } from './pages/handicap-permits-list/handicap-permits-list.component';
-import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent, UploadHandicapComponent, HandicapPermitsListComponent],
@@ -35,7 +34,7 @@ import { DecimalPipe } from '@angular/common';
     BrowserAnimationsModule,
     NgbModule,
   ],
-  providers: [DecimalPipe],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

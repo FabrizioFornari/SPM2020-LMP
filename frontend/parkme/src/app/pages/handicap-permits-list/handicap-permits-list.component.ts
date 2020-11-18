@@ -1,42 +1,17 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { HandicapRequestDownloadService } from 'src/app/services/handicap-request-download.service';
 
-interface Country {
-  name: string;
-  area: number;
-  population: number;
+interface Permit {
+  username: string;
+  timestamp: string;
+  accepted: boolean;
+  processed: boolean;
 }
-
-const COUNTRIES: Country[] = [
-  {
-    name: 'Russia',
-
-    area: 17075200,
-    population: 146989754,
-  },
-  {
-    name: 'Canada',
-
-    area: 9976140,
-    population: 36624199,
-  },
-  {
-    name: 'United States',
-
-    area: 9629091,
-    population: 324459463,
-  },
-  {
-    name: 'China',
-    area: 9596960,
-    population: 1409517397,
-  },
-];
 
 @Component({
   selector: 'app-handicap-permits-list',
@@ -44,25 +19,44 @@ const COUNTRIES: Country[] = [
   styleUrls: ['./handicap-permits-list.component.css'],
 })
 export class HandicapPermitsListComponent implements OnInit {
-  countries$: Observable<Country[]>;
+
+  show: boolean = false;
+
+  PERMITS: Permit[] = [];
+
+  permits$: Observable<Permit[]>;
   filter = new FormControl('');
 
-  constructor(private pipe: DecimalPipe) {
-    this.countries$ = this.filter.valueChanges.pipe(
+  constructor(
+    private reqDown: HandicapRequestDownloadService
+  ) {
+    this.permits$ = this.filter.valueChanges.pipe(
       startWith(''),
-      map((text) => this.search(text, pipe))
+      map((text) => this.search(text))
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.reqDown.downloadRequest().subscribe(
+      (data) => {
+        data.forEach(element => {
+          element.timestamp = `${new Date(element.timestamp).toLocaleDateString("it-IT")} (${new Date(element.timestamp).toLocaleTimeString("it-IT")})`;
+        });
+        this.PERMITS = data;
+        this.show = true;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
-  search(text: string, pipe: PipeTransform): Country[] {
-    return COUNTRIES.filter((country) => {
+  search(text: string): Permit[] {
+    return this.PERMITS.filter((permit) => {
       const term = text.toLowerCase();
       return (
-        country.name.toLowerCase().includes(term) ||
-        pipe.transform(country.area).includes(term) ||
-        pipe.transform(country.population).includes(term)
+        permit.username.toLowerCase().includes(term) ||
+        permit.timestamp.toString().toLowerCase().includes(term)
       );
     });
   }
