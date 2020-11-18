@@ -32,6 +32,7 @@ import static com.spm.ParkMe.constants.EndpointContants.*;
 
 @RestController
 @RequestMapping(DRIVER_ENDPOINT)
+@CrossOrigin(origins = "*", maxAge=3600)
 public class DriverController {
 
 	@Autowired
@@ -50,7 +51,7 @@ public class DriverController {
 	}
 	
 	@PostMapping(path=DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes="application/json")
-	@PreAuthorize("hasRole('DRIVER')")
+	@PreAuthorize("hasRole('ROLE_DRIVER')")
 	public ResponseEntity uploadHandicapPermitsRequest(Authentication authentication)throws IOException {
 		String username = authentication.getName();
 		System.out.println(username);
