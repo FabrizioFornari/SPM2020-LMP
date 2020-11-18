@@ -53,6 +53,7 @@ public class DriverController {
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity uploadHandicapPermitsRequest(Authentication authentication)throws IOException {
 		String username = authentication.getName();
+		System.out.println(username);
 		DriverInfo driverInfo = driverRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("The user is not registered in DriverInfo collection."));
 		//check if he already has handicap set
 		if(driverInfo.getHandicap()) {
