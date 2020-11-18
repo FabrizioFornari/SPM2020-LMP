@@ -77,8 +77,8 @@ public class AdminControllerTest {
 	@BeforeEach
 	public void setUp() {
 		handicapPermitsRepository.deleteAll();
-		handicapPermits.add(new HandicapPermitsRequest("ciao",4));
-		handicapPermits.add(new HandicapPermitsRequest("ciao",5));
+		handicapPermits.add(new HandicapPermitsRequest(DRIVER_MAIL,444444444, false, false));
+		handicapPermits.add(new HandicapPermitsRequest(VIGILANT_MAIL, 45444444, false, false));
 		
 		handicapPermitsRepository.saveAll(handicapPermits);
 		mockMvc = MockMvcBuilders

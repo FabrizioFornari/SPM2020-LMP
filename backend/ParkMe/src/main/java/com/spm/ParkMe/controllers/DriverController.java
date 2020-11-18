@@ -42,7 +42,7 @@ public class DriverController {
 	
 	@PostMapping(path=DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes="application/json")
 	public void handicapPermits(@Valid @RequestBody Driver driver)throws IOException {
-		handicapRepository.save(new HandicapPermitsRequest(driver.getUsername(), (int) Math.random()));
+		handicapRepository.save(new HandicapPermitsRequest(driver.getUsername(), System.currentTimeMillis(), false, false));
 	}
 	
 }
