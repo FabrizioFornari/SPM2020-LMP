@@ -15,9 +15,10 @@ import { UpdateEmailComponent } from './modal/update-email/update-email.componen
 import { UpdatePhoneComponent } from './modal/update-phone/update-phone.component';
 import { UpdatePasswordComponent } from './modal/update-password/update-password.component';
 import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
+import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent],
+  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent, UploadHandicapComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
