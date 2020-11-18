@@ -1,6 +1,7 @@
 package com.spm.ParkMe.controllers;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -81,7 +82,7 @@ public class AdminController {
 	
 	@PostMapping(ADMIN_SET_HANDICAP_PERMITS_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> setHandicapPermits(@Valid @RequestBody String username, boolean isAccepted ) {
+	public ResponseEntity<?> setHandicapPermits(@NotNull @RequestBody String username, boolean isAccepted ) {
 		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + username));
 		handicapPermits.setProcessed(true);
 		handicapPermits.setAccepted(isAccepted);

@@ -206,6 +206,21 @@ public class AdminControllerTest {
 		assertEquals(2,jsonHandicapPermits.parse(response.getContentAsString()).getObject().size() );
 	} 
 	
+	@Test
+	@WithMockUser(roles = {"ADMIN"})
+	public void requestSetHandicapPermits() throws Exception {
+	
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				ADMIN_ENDPOINT + ADMIN_SET_HANDICAP_PERMITS_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON)
+				.content(DRIVER_MAIL)
+				.content("true")
+				.contentType(MediaType.APPLICATION_JSON);
+		
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	} 
 	
 		
 };
