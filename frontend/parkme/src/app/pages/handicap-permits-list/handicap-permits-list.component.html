@@ -16,7 +16,7 @@
           <th scope="col">Population</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style="cursor: pointer;">
         <tr *ngFor="let country of countries$ | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td>
