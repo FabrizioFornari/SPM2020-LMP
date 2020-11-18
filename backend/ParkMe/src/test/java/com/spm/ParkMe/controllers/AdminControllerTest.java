@@ -1,7 +1,8 @@
 package com.spm.ParkMe.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -31,12 +32,18 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -52,22 +59,28 @@ public class AdminControllerTest {
 	@InjectMocks
     private AdminController adminController;
 	
-
+	@Autowired
+	private HandicapPermitsRequestsRepository handicapPermitsRepository;
     @Autowired
     private WebApplicationContext context;
 	
     @Autowired
 	UserRepository userRepository;
-	
-	
+
 	private MockMvc mockMvc;
-	
+	private List<HandicapPermitsRequest> handicapPermits =new ArrayList<HandicapPermitsRequest>();
 	private JacksonTester<ParkingManager> jsonParkingManager;
 	private JacksonTester<Vigilant> jsonVigilant;
 	private JacksonTester<WrongObject> jsonWrongObject;
+	private JacksonTester<List<HandicapPermitsRequest>> jsonHandicapPermits;
 	
 	@BeforeEach
 	public void setUp() {
+		handicapPermitsRepository.deleteAll();
+		handicapPermits.add(new HandicapPermitsRequest(DRIVER_MAIL,444444444, false, false));
+		handicapPermits.add(new HandicapPermitsRequest(VIGILANT_MAIL, 45444444, false, false));
+		
+		handicapPermitsRepository.saveAll(handicapPermits);
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -176,4 +189,24 @@ public class AdminControllerTest {
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
-}
+	
+	@Test
+	@WithMockUser(roles= {"ADMIN"})
+	public void requestHandicapPermitsReturnsList() throws Exception {
+	
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				ADMIN_ENDPOINT + ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonHandicapPermits.write(handicapPermits).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertEquals(2,jsonHandicapPermits.parse(response.getContentAsString()).getObject().size() );
+	} 
+	
+	
+		
+};
+	

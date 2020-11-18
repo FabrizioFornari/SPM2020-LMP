@@ -30,8 +30,8 @@ public class HandicapPermitsRequestsRepositoryTest {
 	@BeforeEach
 	public void setUp() {
 		handicapRequestsrepository.deleteAll();
-		request1 = new HandicapPermitsRequest(VALID_EMAIL, 123456789);
-		request2 = new HandicapPermitsRequest(ADMIN_MAIL, 1234567890);
+		request1 = new HandicapPermitsRequest(VALID_EMAIL, 123456789, false, false);
+		request2 = new HandicapPermitsRequest(ADMIN_MAIL, 1234567890, false, true);
 	}
 	
 	@Test

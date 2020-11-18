@@ -73,6 +73,7 @@ public class DriverControllerTests {
 	@BeforeEach
 	public void setUp() {
 		userRepository.deleteAll();
+		driverInfoRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
 		
 		mockMvc = MockMvcBuilders
@@ -111,40 +112,40 @@ public class DriverControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(roles= {"DRIVER"})
-	public void handicapPermitsRequestUnauthorizedWithWrongObject() throws Exception {
-	
-		
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
-				MediaType.APPLICATION_JSON)
-				.content(jsonWrongObject.write(WRONG_OBJECT).getJson())
-				.contentType(MediaType.APPLICATION_JSON);
-		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isBadRequest());
-	}
-	
-	@Test
 	public void handicapPermitsRequestUnauthorizedWithoutToken() throws Exception {
-	
-		
+
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonDriver.write(DRIVER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 	
 	@Test
-	@WithMockUser(roles= {"DRIVER"})
-	public void handicapPermitsRequestwithTokenAndCorrectObject() throws Exception {
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void handicapPermitsRequestwithTokenAndCanRequestHandicapPermits() throws Exception {
+
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
 	
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonDriver.write(DRIVER_OBJECT).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void handicapPermitsRequestWithAlreadyHandicapReturnsConflict() throws Exception {
+		DriverInfo infoWithHandicap = new DriverInfo(DRIVER_OBJECT);
+		infoWithHandicap.setHandicap(true);
+		driverInfoRepository.save(infoWithHandicap);
+	
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				DRIVER_ENDPOINT + DRIVER_HANDICAP_PERMITS_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isAlreadyReported());
 	}
 	
 }

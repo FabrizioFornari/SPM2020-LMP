@@ -22,5 +22,8 @@ public final class EndpointContants {
 	public static final String ADMIN_ENDPOINT = "/api/admin";
 	public static final String VIGILANT_REGISTRATION_ENDPOINT = "/registration/vigilant";
 	public static final String PARKING_MANAGER_REGISTRATION_ENDPOINT = "/registration/parkingManager";
-	
+	public static final String ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits/all";
+	public static final String ADMIN_GET_NOT_PROCESSED_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits/notProcessed";
+	public static final String ADMIN_GET_PROCESSED_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits/processed";
+	public static final String ADMIN_SET_HANDICAP_PERMITS_ENDPOINT= "/setting/handicapPermits";
 }
