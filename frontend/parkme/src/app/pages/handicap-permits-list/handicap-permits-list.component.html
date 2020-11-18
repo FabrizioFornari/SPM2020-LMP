@@ -1,0 +1,44 @@
+<div class="table-container">
+  <form>
+    <div class="search">
+      <h5>Search Request:</h5>
+      <input class="search-input" size="30" type="text" [formControl]="filter" />
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Country</th>
+          <th scope="col">Area</th>
+          <th scope="col">Population</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries$ | async; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            <ngb-highlight
+              [result]="country.name"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="country.area | number"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="country.population | number"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
