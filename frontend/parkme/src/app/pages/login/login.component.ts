@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoginFormValidationService } from 'src/app/services/login-form-validation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private unifiedLogin: UnifiedLoginService,
     private toastrService: ToastrService,
-    private loginValidator: LoginFormValidationService
+    private loginValidator: LoginFormValidationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -46,11 +48,13 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       this.unifiedLogin.login(user).subscribe(
         (data) => {
+          localStorage.clear();
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data));
 
           this.toastrService.success('Successfully Logged In');
           this.isLoading = false;
+          this.router.navigate(['/account-info']);
         },
         (error) => {
           if (error.status == 401) {

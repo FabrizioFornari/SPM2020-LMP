@@ -48,6 +48,7 @@ public class ModificationController {
 	@PostMapping(EMAIL_MODIFICATION_ENDPOINT)
 	public ResponseEntity<User> modifyEmail(Authentication authentication, @Valid @RequestBody ChangeMailInfo mailInfo) {
 		String authenticatedUsername = authentication.getName();
+		System.out.println(authenticatedUsername);
 		if(authenticatedUsername.equals(mailInfo.getCurrentEmail())) {
 			User user = repository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is wrong."));
 			user.setUsername(mailInfo.getNewEmail());

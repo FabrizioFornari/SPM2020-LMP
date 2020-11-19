@@ -42,6 +42,7 @@ export class UpdateEmailComponent implements OnInit {
 
     if (!this.emailError) {
       this.isLoading = true;
+      console.table(body);
       this.accManSer.updateEmail(body).subscribe(
         () => {
           this.toastrService.success('Successfully Updated Email');

@@ -4,11 +4,7 @@ import { Observable } from 'rxjs';
 
 const DOWNLOAD_HANDICAP = 'http://localhost:8080/api/admin/handicapPermits/notProcessed';
 
-const AUTH_TOKEN = `Bearer ${localStorage.getItem('token')}`;
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': AUTH_TOKEN }),
-};
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +12,16 @@ export class HandicapRequestDownloadService {
 
   constructor(private http: HttpClient) { }
 
+  getHttpOpt(){
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }),
+    };
+  }
+
   downloadRequest(): Observable<any> {
-    return this.http.get(DOWNLOAD_HANDICAP, httpOptions);
+    return this.http.get(DOWNLOAD_HANDICAP, this.getHttpOpt());
   }
 }

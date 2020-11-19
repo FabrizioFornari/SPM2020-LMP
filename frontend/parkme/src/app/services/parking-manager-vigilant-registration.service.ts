@@ -4,17 +4,22 @@ import { Observable } from 'rxjs';
 
 const PM_REGISTER_API = 'http://localhost:8080/api/parkingmanager/registration';
 const VG_REGISTER_API = 'http://localhost:8080/api/vigilant/registration';
-const AUTH_TOKEN = `Bearer ${localStorage.getItem('token')}`;
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': AUTH_TOKEN }),
-};
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParkingManagerVigilantRegistrationService {
   constructor(private http: HttpClient) {}
+
+  getHttpOpt(){
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }),
+    };
+  }
 
   pmRegister(user: {
     username: string;
@@ -25,7 +30,7 @@ export class ParkingManagerVigilantRegistrationService {
     phone: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(PM_REGISTER_API, user, httpOptions);
+    return this.http.post(PM_REGISTER_API, user, this.getHttpOpt());
   }
 
   vRegister(user: {
@@ -37,6 +42,6 @@ export class ParkingManagerVigilantRegistrationService {
     phone: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(VG_REGISTER_API, user, httpOptions);
+    return this.http.post(VG_REGISTER_API, user, this.getHttpOpt());
   }
 }
