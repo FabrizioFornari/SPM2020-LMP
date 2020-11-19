@@ -1,3 +1,4 @@
+
 <div class="table-container">
   <form>
     <div class="search">
@@ -6,7 +7,7 @@
     </div>
   </form>
 
-  <div class="table-responsive" *ngIf="show">
+  <div class="table-responsive">
     <table class="table table-hover" style="text-align: center;">
       <thead class="thead-dark">
         <tr>
@@ -15,7 +16,7 @@
           <th scope="col">TimeStamp</th>
         </tr>
       </thead>
-      <tbody style="cursor: pointer;">
+      <tbody *ngIf="show" style="cursor: pointer;">
         <tr (click)="openRequest(permit)" *ngFor="let permit of permits$ | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td>

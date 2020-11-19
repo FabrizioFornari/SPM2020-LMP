@@ -41,6 +41,11 @@ export class HandicapPermitsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateEntry();
+  }
+
+  updateEntry(){
+    this.show = false;
     this.reqDown.downloadRequest().subscribe(
       (data) => {
         data.forEach(element => {
@@ -48,6 +53,7 @@ export class HandicapPermitsListComponent implements OnInit {
         });
         this.PERMITS = data;
         this.show = true;
+        console.table(data);
       },
       (error) => {
         console.log(error);
@@ -70,12 +76,12 @@ export class HandicapPermitsListComponent implements OnInit {
     modalRef.componentInstance.REQUEST = permit;
     modalRef.result.then(
       () => {
-        console.log('Modal Update Email Closed');
-        this.ngOnInit();
+        console.log('Modal Request Closed');
+        this.updateEntry();
       },
       () => {
-        console.log('Modal Update Email Closed');
-        this.ngOnInit();
+        console.log('Modal Request Closed');
+        this.updateEntry();
       }
     );
   }

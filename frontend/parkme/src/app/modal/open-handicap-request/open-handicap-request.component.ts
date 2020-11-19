@@ -21,7 +21,7 @@ export class OpenHandicapRequestComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  acceptRequest(req: { username: any; }){
+  acceptRequest(req: { username: string; }){
     this.isLoading = true;
     this.handleReq.acceptReq(req).subscribe(
       () => {
@@ -45,7 +45,7 @@ export class OpenHandicapRequestComponent implements OnInit {
     );
   }
 
-  declineRequest(req: { username: any; }){
+  declineRequest(req: { username: string; }){
     this.isLoading = true;
     this.handleReq.declineReq(req).subscribe(
       () => {

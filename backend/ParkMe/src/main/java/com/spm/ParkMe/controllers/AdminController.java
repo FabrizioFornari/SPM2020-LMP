@@ -87,6 +87,7 @@ public class AdminController {
 		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + acceptance.getUsername()));
 		handicapPermits.setProcessed(true);
 		handicapPermits.setAccepted(acceptance.getIsAccepted());
+		handicapRepository.save(handicapPermits);
 		return ResponseEntity.ok(handicapPermits);
 	}
 	
