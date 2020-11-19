@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HandicapRequestDownloadService } from 'src/app/services/handicap-request-download.service';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OpenHandicapRequestComponent } from 'src/app/modal/open-handicap-request/open-handicap-request.component';
+
 interface Permit {
   username: string;
   timestamp: string;
@@ -28,7 +31,8 @@ export class HandicapPermitsListComponent implements OnInit {
   filter = new FormControl('');
 
   constructor(
-    private reqDown: HandicapRequestDownloadService
+    private reqDown: HandicapRequestDownloadService,
+    private modalService: NgbModal
   ) {
     this.permits$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -61,7 +65,18 @@ export class HandicapPermitsListComponent implements OnInit {
     });
   }
 
-  openRequest(permit){
-    console.table(permit)
+  openRequest(permit: any){
+    const modalRef = this.modalService.open(OpenHandicapRequestComponent);
+    modalRef.componentInstance.REQUEST = permit;
+    modalRef.result.then(
+      () => {
+        console.log('Modal Update Email Closed');
+        this.ngOnInit();
+      },
+      () => {
+        console.log('Modal Update Email Closed');
+        this.ngOnInit();
+      }
+    );
   }
 }
