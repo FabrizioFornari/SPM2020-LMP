@@ -17,7 +17,11 @@ export class HandleHandicapRequestsService {
 
   constructor(private http: HttpClient) { }
 
-  pmRegister(body): Observable<any> {
+  acceptReq(body: { username: any; }): Observable<any> {
+    return this.http.post(HANDLE_REQUEST_API, body, httpOptions);
+  }
+
+  declineReq(body: { username: any; }): Observable<any> {
     return this.http.post(HANDLE_REQUEST_API, body, httpOptions);
   }
 }
