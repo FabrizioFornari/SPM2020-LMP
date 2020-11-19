@@ -17,9 +17,23 @@ import { UpdatePasswordComponent } from './modal/update-password/update-password
 import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update-vehicle-plate.component';
 import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
 import { HandicapPermitsListComponent } from './pages/handicap-permits-list/handicap-permits-list.component';
+import { OpenHandicapRequestComponent } from './modal/open-handicap-request/open-handicap-request.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DriverRegistrationComponent, ParkmanVigRegistrationComponent, AccountInfoComponent, UpdateEmailComponent, UpdatePhoneComponent, UpdatePasswordComponent, UpdateVehiclePlateComponent, UploadHandicapComponent, HandicapPermitsListComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    DriverRegistrationComponent,
+    ParkmanVigRegistrationComponent,
+    AccountInfoComponent,
+    UpdateEmailComponent,
+    UpdatePhoneComponent,
+    UpdatePasswordComponent,
+    UpdateVehiclePlateComponent,
+    UploadHandicapComponent,
+    HandicapPermitsListComponent,
+    OpenHandicapRequestComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

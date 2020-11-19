@@ -60,4 +60,8 @@ export class HandicapPermitsListComponent implements OnInit {
       );
     });
   }
+
+  openRequest(permit){
+    console.table(permit)
+  }
 }

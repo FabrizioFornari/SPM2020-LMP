@@ -16,7 +16,7 @@
         </tr>
       </thead>
       <tbody style="cursor: pointer;">
-        <tr *ngFor="let permit of permits$ | async; index as i">
+        <tr (click)="openRequest(permit)" *ngFor="let permit of permits$ | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td>
             <ngb-highlight
