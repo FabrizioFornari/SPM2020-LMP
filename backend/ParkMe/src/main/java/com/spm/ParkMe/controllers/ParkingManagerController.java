@@ -5,15 +5,17 @@ import static com.spm.ParkMe.constants.EndpointContants.ADMIN_GET_ALL_HANDICAP_P
 import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT;
 import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT;
 import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT;
-
-
+import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
@@ -37,20 +40,28 @@ public class ParkingManagerController {
 	private ParkingLotRepository parkingLotRepository;
 	
 	@PostMapping(path=PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public void createParkingLot(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
 		parkingLotRepository.save(parkingLot);
 	}
 	
 	@DeleteMapping(path=PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public void deleteParkingLot(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 		parkingLotRepository.delete(parkingLot);
 	}
 	
-	@GetMapping(path=PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT)
+	@GetMapping(path=PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT, consumes = "application/json")
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public  List<ParkingLot> allParkingLots()  {
 		return parkingLotRepository.findAll();
 	}
 	
-	
+	@GetMapping(path=PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT, consumes = "application/json")
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
+	public  List<ParkingLot> getParkingLotsForSpecificStreet(@Valid @RequestBody ParkingLot parkingLot)  {
+		String street= parkingLot.getStreet();
+		return (List<ParkingLot>) parkingLotRepository.findByStreet(street).orElseThrow();
+
+	}
 }

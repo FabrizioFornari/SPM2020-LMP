@@ -32,4 +32,5 @@ public final class EndpointContants {
 	public static final String PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT="/parkingLot/create";
 	public static final String PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT="/parkingLot/delete";
 	public static final String PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT="/parkingLots/all";
+	public static final String PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT=  "/parkingLots/getStreet";
 }
