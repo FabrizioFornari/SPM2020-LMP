@@ -19,17 +19,30 @@ public class Coordinates {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
 	}
+	
+	
 	/*------- ACCESSORY METHODS ---------*/
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setLatitude(Double latitude) {
+		if(latitude != null  ) {
+			this.latitude = latitude;
+		}
+		else {
+			throw new IllegalArgumentException("Latitude is invalid");
+			}
 	}
+	
 	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setLongitude(Double longitude) {
+		if(longitude != null ) {
+			this.longitude = longitude;
+		}
+		else {
+			throw new IllegalArgumentException("Longitude is invalid");
+			}
 	}
 }
