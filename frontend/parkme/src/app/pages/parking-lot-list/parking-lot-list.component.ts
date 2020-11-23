@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { InsertParkingLotComponent } from 'src/app/modal/insert-parking-lot/insert-parking-lot.component';
 
 interface Park {
   street: string;
@@ -61,6 +62,20 @@ export class ParkingLotListComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateEntry();
+  }
+
+  addParkingLot(){
+    const modalRef = this.modalService.open(InsertParkingLotComponent);
+    modalRef.result.then(
+      () => {
+        console.log('Modal Insert Closed');
+        this.updateEntry();
+      },
+      () => {
+        console.log('Modal Insert Closed');
+        this.updateEntry();
+      }
+    )
   }
 
   updateEntry(){

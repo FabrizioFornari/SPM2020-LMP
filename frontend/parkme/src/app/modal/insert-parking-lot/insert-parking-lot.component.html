@@ -1,0 +1,96 @@
+<div class="modal-header">
+	<h4 class="modal-title">Insert Parking Lot</h4>
+	<button
+	  type="button"
+	  class="btn btn-danger"
+	  (click)="activeModal.close('Close click')"
+	>
+	  Close
+	</button>
+  </div>
+  <div class="modal-body">
+	<form #insert="ngForm" (ngSubmit)="insertParkingLot(insert)">
+	  <div class="form-group">
+		<label>Street</label>
+		<input
+		  [ngModel]="street"
+		  type="text"
+		  class="form-control"
+		  name="street"
+		  placeholder="Enter street"
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>Number</label>
+		<input
+		  [ngModel]="number"
+		  type="text"
+		  class="form-control"
+		  name="number"
+		  placeholder="Enter Parking Number"
+		/>
+	  </div>
+
+	  <div class="form-group">
+		<p>isHandicap</p>
+		<select
+		  class="form-control"
+		  type="text"
+		  name="handicap"
+		  id="handicap"
+		  [(ngModel)]="handicap"
+		>
+		  <option *ngFor="let type of handicapType" [ngValue]="type">
+			{{ type }}
+		  </option>
+		</select>
+	  </div>
+
+	  <div class="form-group">
+		<label>Price</label>
+		<input
+		  [ngModel]="price"
+		  type="text"
+		  class="form-control"
+		  name="price"
+		  placeholder="Enter Price"
+		/>
+	  </div>
+	  
+	  <div class="form-group">
+		<p>Vehicle Type</p>
+		<select
+		  class="form-control"
+		  type="text"
+		  name="vehicle"
+		  id="vehicle"
+		  [(ngModel)]="vehicle"
+		>
+		  <option *ngFor="let type of vehicleType" [ngValue]="type">
+			{{ type }}
+		  </option>
+		</select>
+	  </div>
+
+	  <div class="form-group">
+		<label>Coordinates</label>
+		<input
+		  [ngModel]="coordinates"
+		  type="text"
+		  class="form-control"
+		  name="coordinates"
+		  placeholder="Enter Coordinates"
+		/>
+	  </div>
+	  <button type="submit" id="updateButton" class="btn btn-block btn-success">
+		INSERT
+		<span
+		  *ngIf="isLoading"
+		  class="spinner-border"
+		  role="status"
+		  aria-hidden="true"
+		></span>
+	  </button>
+	</form>
+  </div>
+  
