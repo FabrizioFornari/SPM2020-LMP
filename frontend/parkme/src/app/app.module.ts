@@ -18,6 +18,7 @@ import { UpdateVehiclePlateComponent } from './modal/update-vehicle-plate/update
 import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
 import { HandicapPermitsListComponent } from './pages/handicap-permits-list/handicap-permits-list.component';
 import { OpenHandicapRequestComponent } from './modal/open-handicap-request/open-handicap-request.component';
+import { ParkingLotListComponent } from './pages/parking-lot-list/parking-lot-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { OpenHandicapRequestComponent } from './modal/open-handicap-request/open
     UploadHandicapComponent,
     HandicapPermitsListComponent,
     OpenHandicapRequestComponent,
+    ParkingLotListComponent,
   ],
   imports: [
     BrowserModule,
