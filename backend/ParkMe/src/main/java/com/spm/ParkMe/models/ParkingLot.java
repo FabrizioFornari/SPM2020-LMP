@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 
+import com.spm.ParkMe.constants.RegexConstants;
+
 public class ParkingLot {
 
 	@Id private String id;
@@ -12,11 +14,11 @@ public class ParkingLot {
 	@NotEmpty(message = "Street must not be empty")
 	private String street;
 	@NotNull(message="numberOfParkingLot must not be null")
-	private int numberOfParkingLot;
+	private Integer numberOfParkingLot;
 	@NotNull(message="isHandicapParkingLot must not be null")
-	private boolean isHandicapParkingLot;
+	private Boolean isHandicapParkingLot;
 	@NotNull(message="Price PerHours must not be null")
-	private double pricePerHours;
+	private Double pricePerHours;
 	@NotNull(message="type Of Vehicle must not be null")
 	private String typeOfVehicle;
 	private Coordinates coordinates;
@@ -26,8 +28,8 @@ public class ParkingLot {
 		
 	}
 	 
-	public ParkingLot(String street, int numberOfParkingLot, boolean isHandicapParkingLot,double pricePerHours, String typeOfVehicle, Coordinates coordinates) {
-		this.street=street;
+	public ParkingLot(String street, Integer numberOfParkingLot, Boolean isHandicapParkingLot,Double pricePerHours, String typeOfVehicle, Coordinates coordinates) {
+		this.setStreet(street);
 		this.numberOfParkingLot=numberOfParkingLot;
 		this.isHandicapParkingLot=isHandicapParkingLot;
 		this.pricePerHours=pricePerHours;
@@ -39,33 +41,64 @@ public class ParkingLot {
 	public String getStreet() {
 		return street;
 	}
+	
 	public void setStreet(String street) {
-		this.street = street;
-	}
+		if(street != null && street != "" ) {
+			this.street = street;
+		}
+		else {
+			throw new IllegalArgumentException("Street is invalid");
+			}	
+		}
 	public int getNumberOfParkingLot() {
 		return numberOfParkingLot;
 	}
-	public void setNumberOfParkingLot(int numberOfParkingLot) {
-		this.numberOfParkingLot = numberOfParkingLot;
+	
+	public void setNumberOfParkingLot(Integer numberOfParkingLot) {
+		if(numberOfParkingLot != null) {
+			this.numberOfParkingLot = numberOfParkingLot;
+		}
+		else {
+			throw new IllegalArgumentException("numberOfParkingLot is invalid");
+			}	
 	}
-	public boolean isHandicapParkingLot() {
+	
+	public boolean getIsHandicapParkingLot() {
 		return isHandicapParkingLot;
 	}
-	public void setHandicapParkingLot(boolean isHandicapParkingLot) {
-		this.isHandicapParkingLot = isHandicapParkingLot;
+	public void setHandicapParkingLot(Boolean isHandicapParkingLot) {
+		if(isHandicapParkingLot != null) {
+			this.isHandicapParkingLot = isHandicapParkingLot;
+		}
+		else {
+			throw new IllegalArgumentException("isHandicapParkingLot is invalid");
+			}	
 	}
+	
 	public String getTypeOfVehicle() {
 		return typeOfVehicle;
 	}
 	public void setTypeOfVehicle(String typeOfVehicle) {
-		this.typeOfVehicle = typeOfVehicle;
+		if(typeOfVehicle != null) {
+			this.typeOfVehicle = typeOfVehicle;
+		}
+		else {
+			throw new IllegalArgumentException("typeOfVehicle is invalid");
+			}
 	}
+	
 	public double getPricePerHours() {
 		return pricePerHours;
 	}
-	public void setPricePerHours(double pricePerHours) {
-		this.pricePerHours = pricePerHours;
+	public void setPricePerHours(Double pricePerHours) {
+		if(pricePerHours != null) {
+			this.pricePerHours = pricePerHours;
+		}
+		else {
+			throw new IllegalArgumentException("pricePerHours is invalid");
+			}
 	}
+	
 	public Coordinates getCoordinates() {
 		return coordinates;
 	}
