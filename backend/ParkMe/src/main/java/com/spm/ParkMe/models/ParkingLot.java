@@ -30,11 +30,11 @@ public class ParkingLot {
 	 
 	public ParkingLot(String street, Integer numberOfParkingLot, Boolean isHandicapParkingLot,Double pricePerHours, String typeOfVehicle, Coordinates coordinates) {
 		this.setStreet(street);
-		this.numberOfParkingLot=numberOfParkingLot;
-		this.isHandicapParkingLot=isHandicapParkingLot;
-		this.pricePerHours=pricePerHours;
-		this.typeOfVehicle= typeOfVehicle;
-		this.coordinates=coordinates;
+		this.setNumberOfParkingLot(numberOfParkingLot);
+		this.setIsHandicapParkingLot(isHandicapParkingLot);
+		this.setPricePerHours(pricePerHours);
+		this.setTypeOfVehicle(typeOfVehicle);
+		this.setCoordinates(coordinates);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -66,7 +66,7 @@ public class ParkingLot {
 	public boolean getIsHandicapParkingLot() {
 		return isHandicapParkingLot;
 	}
-	public void setHandicapParkingLot(Boolean isHandicapParkingLot) {
+	public void setIsHandicapParkingLot(Boolean isHandicapParkingLot) {
 		if(isHandicapParkingLot != null) {
 			this.isHandicapParkingLot = isHandicapParkingLot;
 		}
