@@ -5,9 +5,21 @@ import javax.validation.constraints.NotNull;
 public class Coordinates {
 
 	@NotNull(message="Latitude must not be null")
-	private double latitude;
+	private Double latitude;
 	@NotNull(message="Longitude must not be null")
-	private double longitude;
+	private Double longitude;
+	
+	
+	
+	/*-------Constructor------*/
+	public Coordinates() {
+		
+	}
+	public Coordinates(Double latitude, Double longitude) {
+		this.setLatitude(latitude);
+		this.setLongitude(longitude);
+	}
+	/*------- ACCESSORY METHODS ---------*/
 	public double getLatitude() {
 		return latitude;
 	}
