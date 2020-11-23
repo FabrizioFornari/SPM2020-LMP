@@ -1,14 +1,23 @@
 package com.spm.ParkMe.models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 
 public class ParkingLot {
 
 	@Id private String id;
+	@NotNull(message="Street must not be null")
+	@NotEmpty(message = "Street must not be empty")
 	private String street;
+	@NotNull(message="numberOfParkingLot must not be null")
 	private int numberOfParkingLot;
+	@NotNull(message="isHandicapParkingLot must not be null")
 	private boolean isHandicapParkingLot;
+	@NotNull(message="Price PerHours must not be null")
 	private double pricePerHours;
+	@NotNull(message="type Of Vehicle must not be null")
 	private String typeOfVehicle;
 	private Coordinates coordinates;
 	
