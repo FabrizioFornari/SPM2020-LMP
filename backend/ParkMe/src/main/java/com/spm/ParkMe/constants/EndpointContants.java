@@ -26,4 +26,10 @@ public final class EndpointContants {
 	public static final String ADMIN_GET_NOT_PROCESSED_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits/notProcessed";
 	public static final String ADMIN_GET_PROCESSED_HANDICAP_PERMITS_ENDPOINT= "/handicapPermits/processed";
 	public static final String ADMIN_SET_HANDICAP_PERMITS_ENDPOINT= "/setting/handicapPermits";
+	
+	//Parking Lot controller
+	public static final String PARKINGLOT_ENDPOINT="api/parkingLot";
+	public static final String PARKINGLOT_CREATE_ENDPOINT="/create";
+	public static final String PARKINGLOT_DELETE_ENDPOINT="/delete";
+
 }
