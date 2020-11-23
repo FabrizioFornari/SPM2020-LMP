@@ -1,1 +1,67 @@
-<p>parking-lot-list works!</p>
+
+<div class="table-container">
+	<form>
+	  <div class="search">
+		<h5>Search Parking Lot:</h5>
+		<input class="search-input" size="30" type="text" [formControl]="filter" />
+	  </div>
+	</form>
+  
+	<div class="table-responsive">
+	  <table class="table table-hover" style="text-align: center;">
+		<thead class="thead-dark">
+		  <tr>
+			<th scope="row">#</th>
+			<th scope="col">Street</th>
+			<th scope="col">Parking Number</th>
+			<th scope="col">isHandicap</th>
+			<th scope="col">Price</th>
+			<th scope="col">Vehicle Type</th>
+			<th scope="col">Coordinates</th>
+		  </tr>
+		</thead>
+		<tbody *ngIf="show" style="cursor: pointer;">
+		  <tr (click)="openRequest(park)" *ngFor="let park of parks$ | async; index as i">
+			<th scope="row">{{ i + 1 }}</th>
+			<td>
+			  <ngb-highlight
+				[result]="park.street"
+				[term]="filter.value"
+			  ></ngb-highlight>
+			</td>
+			<td>
+			  <ngb-highlight
+				[result]="park.number"
+				[term]="filter.value"
+			  ></ngb-highlight>
+			</td>
+			<td>
+				<ngb-highlight
+				  [result]="park.isHandicap"
+				  [term]="filter.value"
+				></ngb-highlight>
+			  </td>
+			  <td>
+				<ngb-highlight
+				  [result]="park.price"
+				  [term]="filter.value"
+				></ngb-highlight>
+			  </td>
+			  <td>
+				<ngb-highlight
+				  [result]="park.vehicleType"
+				  [term]="filter.value"
+				></ngb-highlight>
+			  </td>
+			  <td>
+				<ngb-highlight
+				  [result]="park.coordinates"
+				  [term]="filter.value"
+				></ngb-highlight>
+			  </td>
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
+  </div>
+  
