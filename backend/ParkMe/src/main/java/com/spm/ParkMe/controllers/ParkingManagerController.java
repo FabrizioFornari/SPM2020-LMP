@@ -59,13 +59,14 @@ public class ParkingManagerController {
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> updateParkingLot(@Valid @RequestBody ChangeParkingLot changeParkingLot) throws IOException {
 		//first get the parking lots for the street
-		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(changeParkingLot.getStreet());
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(changeParkingLot.getOldStreet());
 		//check if there is already a parking lot with specified number
-		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getNumberOfParkingLot()).collect(Collectors.toList());
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getOldNumberOfParkingLot()).collect(Collectors.toList());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			ParkingLot parkingLotToChange = parkingLotsWithSameNumber.get(0);
 			parkingLotRepository.delete(parkingLotToChange);
-			parkingLotRepository.save(changeParkingLot.getParkinglot());
+			parkingLotRepository.save(new ParkingLot(changeParkingLot.getNewStreet(), changeParkingLot.getNewNumberOfParkingLot(), changeParkingLot.isNewIsHandicapParkingLot(), changeParkingLot.getNewPricePerHours(),
+					changeParkingLot.getNewTypeOfVehicle(), changeParkingLot.getNewCoordinates()));
 			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
 		}
 		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);

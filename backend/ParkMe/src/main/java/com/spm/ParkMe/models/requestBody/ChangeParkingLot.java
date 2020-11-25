@@ -3,65 +3,113 @@ package com.spm.ParkMe.models.requestBody;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.ParkingLot;
 
 public class ChangeParkingLot {
 
 	@NotNull(message="street must not be null")
 	@NotEmpty(message = "street must not be empty")
-	private String street;
+	private String oldStreet;
+	
 	@NotNull(message="numberOfParkingLot must not be null")
-	private Integer numberOfParkingLot;
-	@NotNull(message="parkinglot must not be null")
-	private ParkingLot parkinglot;
+	private Integer oldNumberOfParkingLot;
+	
+	private String newStreet;
+	private Integer newNumberOfParkingLot;
+	private boolean newIsHandicapParkingLot;
+	private Double newPricePerHours;
+	private String newTypeOfVehicle;
+	private Coordinates newCoordinates;
 	
 	/*-------Constructor------*/
 	public ChangeParkingLot() {
 		
 	}
 	
-	public ChangeParkingLot(String street, Integer numberOfParkingLot, ParkingLot parkinglot ) {
-		this.setNumberOfParkingLot(numberOfParkingLot);
-		this.setParkinglot(parkinglot);
-		this.setStreet(street);
+	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates) {
+		this.setOldNumberOfParkingLot(numberOfParkingLot);
+		this.setOldStreet(street);
+		this.setNewStreet(newStreet);
+		this.setNewNumberOfParkingLot(newNumberOfParkingLot);
+		this.setNewIsHandicapParkingLot(newIsHandicapParkingLot);
+		this.setNewPricePerHours(newpricePerHours);
+		this.setNewTypeOfVehicle(newTypeOfVehicle);
+		this.setNewCoordinates(newCoordinates);
 	}	
 	
 	
 	/*------- ACCESSORY METHODS ---------*/
 
-	public Integer getNumberOfParkingLot() {
-		return numberOfParkingLot;
+	public Integer getOldNumberOfParkingLot() {
+		return oldNumberOfParkingLot;
 	}
-	public void setNumberOfParkingLot(Integer numberOfParkingLot) {
+	public void setOldNumberOfParkingLot(Integer numberOfParkingLot) {
 		if(numberOfParkingLot != null  ) {
-			this.numberOfParkingLot = numberOfParkingLot;
+			this.oldNumberOfParkingLot = numberOfParkingLot;
 		}
 		else {
 			throw new IllegalArgumentException("numberOfParkingLot is invalid");
 			}
 	}
 	
-	public String getStreet() {
-		return street;
+	public String getOldStreet() {
+		return oldStreet;
 	}
-	public void setStreet(String street) {
+	public void setOldStreet(String street) {
 		if(street != null && street!="" ) {
-			this.street = street;
+			this.oldStreet = street;
 		}
 		else {
 			throw new IllegalArgumentException("street is invalid");
 			}
 	}
-	
-	public ParkingLot getParkinglot() {
-		return parkinglot;
+
+	public String getNewStreet() {
+		return newStreet;
 	}
-	public void setParkinglot(ParkingLot parkinglot) {
-		if(parkinglot != null  ) {
-			this.parkinglot = parkinglot;
-		}
-		else {
-			throw new IllegalArgumentException("parkinglot is invalid");
-			}
+
+	public void setNewStreet(String newStreet) {
+		this.newStreet = newStreet;
+	}
+
+	public Integer getNewNumberOfParkingLot() {
+		return newNumberOfParkingLot;
+	}
+
+	public void setNewNumberOfParkingLot(Integer newNumberOfParkingLot) {
+		this.newNumberOfParkingLot = newNumberOfParkingLot;
+	}
+
+	public boolean isNewIsHandicapParkingLot() {
+		return newIsHandicapParkingLot;
+	}
+
+	public void setNewIsHandicapParkingLot(boolean newIsHandicapParkingLot) {
+		this.newIsHandicapParkingLot = newIsHandicapParkingLot;
+	}
+
+	public Double getNewPricePerHours() {
+		return newPricePerHours;
+	}
+
+	public void setNewPricePerHours(Double newPricePerHours) {
+		this.newPricePerHours = newPricePerHours;
+	}
+
+	public String getNewTypeOfVehicle() {
+		return newTypeOfVehicle;
+	}
+
+	public void setNewTypeOfVehicle(String newTypeOfVehicle) {
+		this.newTypeOfVehicle = newTypeOfVehicle;
+	}
+
+	public Coordinates getNewCoordinates() {
+		return newCoordinates;
+	}
+
+	public void setNewCoordinates(Coordinates newCoordinates) {
+		this.newCoordinates = newCoordinates;
 	}
 }
