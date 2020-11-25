@@ -1,11 +1,6 @@
 package com.spm.ParkMe.controllers;
 
-import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT;
+import static com.spm.ParkMe.constants.EndpointContants.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +28,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 
 @RestController
@@ -56,6 +53,22 @@ public class ParkingManagerController {
 		}
 		parkingLotRepository.save(parkingLot);
 		return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+	}
+	
+	@PutMapping(path=PARKING_MANAGER_UPDATE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
+	public ResponseEntity<?> updateParkingLot(@Valid @RequestBody ChangeParkingLot changeParkingLot) throws IOException {
+		//first get the parking lots for the street
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(changeParkingLot.getStreet());
+		//check if there is already a parking lot with specified number
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getNumberOfParkingLot()).collect(Collectors.toList());
+		if(!parkingLotsWithSameNumber.isEmpty()) {
+			ParkingLot parkingLotToChange = parkingLotsWithSameNumber.get(0);
+			parkingLotRepository.delete(parkingLotToChange);
+			parkingLotRepository.save(changeParkingLot.getParkinglot());
+			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+		}
+		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping(path=PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
