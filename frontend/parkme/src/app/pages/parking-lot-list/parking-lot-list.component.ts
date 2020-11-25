@@ -64,7 +64,6 @@ export class ParkingLotListComponent implements OnInit {
       (data) => {
         this.PARKS = data;
         this.show = true;
-        console.table(data);
       },
       (error) => {
         console.log(error);
