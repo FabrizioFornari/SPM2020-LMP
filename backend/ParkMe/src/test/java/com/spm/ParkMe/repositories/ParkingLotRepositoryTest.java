@@ -36,5 +36,19 @@ public class ParkingLotRepositoryTest {
 		parkingLotRepository.save(testParkingLot);
 		assertEquals(1, parkingLotRepository.count());
 	}
+	
+	@Test
+	void findByStreetReturnsAParkingLotWhenExists() {
+		parkingLotRepository.save(testParkingLot);
+		assertEquals(testParkingLot, parkingLotRepository.findByStreet("via aldo moro, 32"));
+	}
+	
+	@Test
+	void deleteAParkingLotIntoTheDBIndecreasesCount() {
+		parkingLotRepository.save(testParkingLot);
+		parkingLotRepository.delete(testParkingLot);
+		assertEquals(0, parkingLotRepository.count());
+	}
+	
 
 }
