@@ -4,67 +4,45 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InsertParkingLotComponent } from 'src/app/modal/insert-parking-lot/insert-parking-lot.component';
+import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 interface Park {
   street: string;
-  number: string;
-  isHandicap: string;
-  price: string;
-  vehicleType: string,
-  coordinates: string
+  numberOfParkingLot: number;
+  isHandicapParkingLot: boolean;
+  pricePerHours: number;
+  typeOfVehicle: string;
+  coordinates: {
+    latitude: number,
+    longitude: number
+  };
 }
 
 @Component({
   selector: 'app-parking-lot-list',
   templateUrl: './parking-lot-list.component.html',
-  styleUrls: ['./parking-lot-list.component.css']
+  styleUrls: ['./parking-lot-list.component.css'],
 })
 export class ParkingLotListComponent implements OnInit {
-
   show: boolean = false;
 
-  PARKS: Park[] = [
-    {
-      street: "Via Roma",
-      number: "0101",
-      isHandicap: "true",
-      price: "€5",
-      vehicleType: "4 Wheels Standard",
-      coordinates: "	41,9109 ; 12,4818"
-    },
-    {
-      street: "Via Milano",
-      number: "0202",
-      isHandicap: "false",
-      price: "€4",
-      vehicleType: "4 Wheels Big",
-      coordinates: "45,4773 ; 9,1815"
-    },
-    {
-      street: "Via Napoli",
-      number: "0303",
-      isHandicap: "true",
-      price: "€6",
-      vehicleType: "2 Wheels Standard",
-      coordinates: "40,863 ; 14,2767"
-    }
-  ];
+  PARKS: Park[] = [];
 
   parks$: Observable<Park[]>;
   filter = new FormControl('');
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private parkingService: ParkingLotServiceService) {
     this.parks$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text))
     );
-   }
+  }
 
   ngOnInit(): void {
     this.updateEntry();
   }
 
-  addParkingLot(){
+  addParkingLot() {
     const modalRef = this.modalService.open(InsertParkingLotComponent);
     modalRef.result.then(
       () => {
@@ -75,42 +53,34 @@ export class ParkingLotListComponent implements OnInit {
         console.log('Modal Insert Closed');
         this.updateEntry();
       }
-    )
+    );
   }
 
-  updateEntry(){
+  updateEntry() {
     this.show = true;
-    /* this.show = false;
-    this.reqDown.downloadRequest().subscribe(
+     this.show = false;
+    this.parkingService.getList().subscribe(
       (data) => {
-        data.forEach(element => {
-          element.timestamp = `${new Date(element.timestamp).toLocaleDateString("it-IT")} (${new Date(element.timestamp).toLocaleTimeString("it-IT")})`;
-        });
-        this.PERMITS = data;
+        this.PARKS = data;
         this.show = true;
         console.table(data);
       },
       (error) => {
         console.log(error);
       }
-    ); */
+    );
   }
 
   search(text: string): Park[] {
     return this.PARKS.filter((park) => {
       const term = text.toLowerCase();
       return (
-        park.street.toLowerCase().includes(term) ||
-        park.number.includes(term) ||
-        park.isHandicap.toLowerCase().includes(term) ||
-        park.price.includes(term) ||
-        park.vehicleType.toLowerCase().includes(term) ||
-        park.coordinates.includes(term)
+        park.street.toLowerCase().includes(term)
       );
     });
   }
 
-  openRequest(park: any){
+  openRequest(park: any) {
     alert(JSON.stringify(park));
     /* const modalRef = this.modalService.open(OpenHandicapRequestComponent);
     modalRef.componentInstance.REQUEST = permit;
@@ -125,5 +95,4 @@ export class ParkingLotListComponent implements OnInit {
       }
     ); */
   }
-
 }

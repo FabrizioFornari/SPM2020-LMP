@@ -50,7 +50,7 @@ public class ParkingManagerController {
 		//check if there is already a parking lot with specified number
 		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == parkingLot.getNumberOfParkingLot()).collect(Collectors.toList());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
-			return new ResponseEntity<ParkingLot>(HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<ParkingLot>(HttpStatus.CONFLICT);
 		}
 		parkingLotRepository.save(parkingLot);
 		return new ResponseEntity<ParkingLot>(HttpStatus.OK);

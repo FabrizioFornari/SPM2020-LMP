@@ -9,12 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.enums.Roles;
+import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 
@@ -34,6 +37,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	private HandicapPermitsRequestsRepository handicapRequestsRepository;
+	
+	@Autowired
+	private ParkingLotRepository parkingLotRepository;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -72,6 +78,9 @@ public class ParkMeApplication implements CommandLineRunner {
 		for (HandicapPermitsRequest req : requests) {
 			handicapRequestsRepository.save(req);
 		}
+		
+		ParkingLot parkingLot = new ParkingLot("Via Madonna delle Carceri",1, false, 0.50, "2 Wheels Standard Vehicle", new Coordinates(1.0, 1.0));
+		parkingLotRepository.save(parkingLot);
 	}
 
 }
