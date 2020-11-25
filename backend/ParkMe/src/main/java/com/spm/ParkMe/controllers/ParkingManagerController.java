@@ -61,7 +61,7 @@ public class ParkingManagerController {
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public  List<ParkingLot> getParkingLotsForSpecificStreet(@Valid @RequestBody ParkingLot parkingLot)  {
 		String street= parkingLot.getStreet();
-		return (List<ParkingLot>) parkingLotRepository.findByStreet(street).orElseThrow();
+		return parkingLotRepository.findByStreet(street);
 
 	}
 }
