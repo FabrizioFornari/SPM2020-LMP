@@ -65,10 +65,10 @@ public class ParkingManagerController {
 		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getOldNumberOfParkingLot()).collect(Collectors.toList());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			ParkingLot parkingLotToChange = parkingLotsWithSameNumber.get(0);
-			if(changeParkingLot.getNewStreet() != null) {
+			if(changeParkingLot.getNewStreet() != null && changeParkingLot.getNewStreet() != "") {
 				parkingLotToChange.setStreet(changeParkingLot.getNewStreet());
 			}
-			if(changeParkingLot.getNewStreet() != null) {
+			if(changeParkingLot.getNewStreet() != null && changeParkingLot.getNewStreet() != "") {
 				parkingLotToChange.setStreet(changeParkingLot.getNewStreet());
 			}
 			if(changeParkingLot.getNewNumberOfParkingLot() != null) {
@@ -80,16 +80,16 @@ public class ParkingManagerController {
 			if(changeParkingLot.getNewPricePerHours() != null) {
 				parkingLotToChange.setPricePerHours(changeParkingLot.getNewPricePerHours());
 			}
-			if(changeParkingLot.getNewTypeOfVehicle() != null) {
+			if(changeParkingLot.getNewTypeOfVehicle() != null && changeParkingLot.getNewTypeOfVehicle() != "") {
 				parkingLotToChange.setTypeOfVehicle(changeParkingLot.getNewTypeOfVehicle());
 			}
 			String newLatitude = parkingLotToChange.getCoordinates().getLatitude();
 			String newLongitude = parkingLotToChange.getCoordinates().getLongitude();
-			if(changeParkingLot.getNewLatitude() != null) {
+			if(changeParkingLot.getNewLatitude() != null && changeParkingLot.getNewLatitude() != "") {
 				newLatitude = changeParkingLot.getNewLatitude() ;
 			}
-			if(changeParkingLot.getNewLongitude() != null) {
-				newLatitude = changeParkingLot.getNewLongitude() ;
+			if(changeParkingLot.getNewLongitude() != null && changeParkingLot.getNewLongitude() != "") {
+				newLongitude = changeParkingLot.getNewLongitude() ;
 			}
 			parkingLotToChange.setCoordinates(new Coordinates(newLatitude, newLongitude));
 			parkingLotRepository.save(parkingLotToChange);
