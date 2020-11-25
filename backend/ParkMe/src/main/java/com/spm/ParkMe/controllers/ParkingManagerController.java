@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.models.DriverInfo;
@@ -58,8 +60,14 @@ public class ParkingManagerController {
 	
 	@DeleteMapping(path=PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
-	public void deleteParkingLot(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-		parkingLotRepository.delete(parkingLot);
+	public ResponseEntity<?> deleteParkingLot(@NotNull @RequestParam String street , @NotNull @RequestParam Integer numberOfParkingLot)throws IOException {
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(street);
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == numberOfParkingLot).collect(Collectors.toList());
+		if(!parkingLotsWithSameNumber.isEmpty()) {
+			parkingLotRepository.delete(parkingLotsWithSameNumber.get(0));
+			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+		}
+		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping(path=PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT, consumes = "application/json")
@@ -75,4 +83,7 @@ public class ParkingManagerController {
 		return parkingLotRepository.findByStreet(street);
 
 	}
+	
+	
+
 }
