@@ -17,7 +17,7 @@ public class ChangeParkingLot {
 	
 	private String newStreet;
 	private Integer newNumberOfParkingLot;
-	private boolean newIsHandicapParkingLot;
+	private Boolean newIsHandicapParkingLot;
 	private Double newPricePerHours;
 	private String newTypeOfVehicle;
 	private Coordinates newCoordinates;
@@ -27,7 +27,7 @@ public class ChangeParkingLot {
 		
 	}
 	
-	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates) {
+	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates) {
 		this.setOldNumberOfParkingLot(numberOfParkingLot);
 		this.setOldStreet(street);
 		this.setNewStreet(newStreet);
@@ -81,11 +81,11 @@ public class ChangeParkingLot {
 		this.newNumberOfParkingLot = newNumberOfParkingLot;
 	}
 
-	public boolean isNewIsHandicapParkingLot() {
+	public Boolean isNewIsHandicapParkingLot() {
 		return newIsHandicapParkingLot;
 	}
 
-	public void setNewIsHandicapParkingLot(boolean newIsHandicapParkingLot) {
+	public void setNewIsHandicapParkingLot(Boolean newIsHandicapParkingLot) {
 		this.newIsHandicapParkingLot = newIsHandicapParkingLot;
 	}
 

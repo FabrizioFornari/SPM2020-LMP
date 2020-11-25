@@ -64,9 +64,28 @@ public class ParkingManagerController {
 		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getOldNumberOfParkingLot()).collect(Collectors.toList());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			ParkingLot parkingLotToChange = parkingLotsWithSameNumber.get(0);
-			parkingLotRepository.delete(parkingLotToChange);
-			parkingLotRepository.save(new ParkingLot(changeParkingLot.getNewStreet(), changeParkingLot.getNewNumberOfParkingLot(), changeParkingLot.isNewIsHandicapParkingLot(), changeParkingLot.getNewPricePerHours(),
-					changeParkingLot.getNewTypeOfVehicle(), changeParkingLot.getNewCoordinates()));
+			if(changeParkingLot.getNewStreet() != null) {
+				parkingLotToChange.setStreet(changeParkingLot.getNewStreet());
+			}
+			if(changeParkingLot.getNewStreet() != null) {
+				parkingLotToChange.setStreet(changeParkingLot.getNewStreet());
+			}
+			if(changeParkingLot.getNewNumberOfParkingLot() != null) {
+				parkingLotToChange.setNumberOfParkingLot(changeParkingLot.getNewNumberOfParkingLot());
+			}
+			if(changeParkingLot.isNewIsHandicapParkingLot() != null) {
+				parkingLotToChange.setIsHandicapParkingLot(changeParkingLot.isNewIsHandicapParkingLot());
+			}
+			if(changeParkingLot.getNewPricePerHours() != null) {
+				parkingLotToChange.setPricePerHours(changeParkingLot.getNewPricePerHours());
+			}
+			if(changeParkingLot.getNewTypeOfVehicle() != null) {
+				parkingLotToChange.setTypeOfVehicle(changeParkingLot.getNewTypeOfVehicle());
+			}
+			if(changeParkingLot.getNewCoordinates() != null) {
+				parkingLotToChange.setCoordinates(changeParkingLot.getNewCoordinates());
+			}
+			parkingLotRepository.save(parkingLotToChange);
 			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
 		}
 		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);
