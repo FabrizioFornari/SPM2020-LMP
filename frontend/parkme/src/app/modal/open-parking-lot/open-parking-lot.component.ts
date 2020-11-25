@@ -85,15 +85,15 @@ export class OpenParkingLotComponent implements OnInit {
     }
 
     const body = {
-      street: form.value.newStreet,
-      numberOfParkingLot: form.value.newNumberOfParkingLot,
-      isHandicapParkingLot: handicapBool,
-      pricePerHours: form.value.newPricePerHours,
-      typeOfVehicle: form.value.vehicleType,
-      coordinates: {
-        latitude: form.value.newLatitude,
-        longitude: form.value.newLongitude,
-      },
+      newStreet: form.value.newStreet,
+      newNumberOfParkingLot: form.value.newNumberOfParkingLot,
+      newIsHandicapParkingLot: handicapBool,
+      newPricePerHours: form.value.newPricePerHours,
+      newTypeOfVehicle: form.value.vehicleType,
+      newLatitude: form.value.newLatitude,
+      newLongitude: form.value.newLongitude,
+      oldStreet: this.PARK.street,
+      oldNumberOfParkingLot: this.PARK.numberOfParkingLot,
     };
 
     this.parkingLotService.updateParking(body).subscribe(
