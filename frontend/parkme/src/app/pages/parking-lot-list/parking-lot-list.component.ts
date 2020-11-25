@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InsertParkingLotComponent } from 'src/app/modal/insert-parking-lot/insert-parking-lot.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
+import { OpenParkingLotComponent } from 'src/app/modal/open-parking-lot/open-parking-lot.component';
 
 interface Park {
   street: string;
@@ -81,9 +82,8 @@ export class ParkingLotListComponent implements OnInit {
   }
 
   openRequest(park: any) {
-    alert(JSON.stringify(park));
-    /* const modalRef = this.modalService.open(OpenHandicapRequestComponent);
-    modalRef.componentInstance.REQUEST = permit;
+    const modalRef = this.modalService.open(OpenParkingLotComponent);
+    modalRef.componentInstance.PARK = park;
     modalRef.result.then(
       () => {
         console.log('Modal Request Closed');
@@ -93,6 +93,6 @@ export class ParkingLotListComponent implements OnInit {
         console.log('Modal Request Closed');
         this.updateEntry();
       }
-    ); */
+    );
   }
 }
