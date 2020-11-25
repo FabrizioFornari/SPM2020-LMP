@@ -20,6 +20,7 @@ import { HandicapPermitsListComponent } from './pages/handicap-permits-list/hand
 import { OpenHandicapRequestComponent } from './modal/open-handicap-request/open-handicap-request.component';
 import { ParkingLotListComponent } from './pages/parking-lot-list/parking-lot-list.component';
 import { InsertParkingLotComponent } from './modal/insert-parking-lot/insert-parking-lot.component';
+import { OpenParkingLotComponent } from './modal/open-parking-lot/open-parking-lot.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { InsertParkingLotComponent } from './modal/insert-parking-lot/insert-par
     OpenHandicapRequestComponent,
     ParkingLotListComponent,
     InsertParkingLotComponent,
+    OpenParkingLotComponent,
   ],
   imports: [
     BrowserModule,

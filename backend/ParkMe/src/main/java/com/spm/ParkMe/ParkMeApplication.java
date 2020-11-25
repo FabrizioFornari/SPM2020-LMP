@@ -80,7 +80,7 @@ public class ParkMeApplication implements CommandLineRunner {
 		}
 		
 		parkingLotRepository.deleteAll();
-		ParkingLot parkingLot = new ParkingLot("Via Madonna delle Carceri",1, false, 0.50, "2 Wheels Standard Vehicle", new Coordinates(1.0, 1.0));
+		ParkingLot parkingLot = new ParkingLot("Via Madonna delle Carceri",1, false, 0.50, "2 Wheels Standard Vehicle", new Coordinates("110.110", "130.130"));
 		parkingLotRepository.save(parkingLot);
 	}
 

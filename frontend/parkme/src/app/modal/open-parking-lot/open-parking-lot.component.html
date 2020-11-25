@@ -1,0 +1,180 @@
+<div class="modal-header">
+  <h4 class="modal-title">Update Parking Lot {{ PARK.numberOfParkingLot }}</h4>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>
+<div class="modal-body">
+  <form #update="ngForm" (ngSubmit)="updateParking(update)">
+    <div class="form-group">
+      <label>Current Street</label>
+      <input
+        [ngModel]="PARK.street"
+        type="text"
+        class="form-control"
+        name="currentStreet"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>New Street</label>
+      <input
+        [ngModel]="newStreet"
+        type="text"
+        class="form-control"
+        name="newStreet"
+        placeholder="Enter new Street"
+      />
+	</div>
+	<div class="form-group">
+		<label>Current Parking Number</label>
+		<input
+		  [ngModel]="PARK.numberOfParkingLot"
+		  type="text"
+		  class="form-control"
+		  name="currentNumberOfParkingLot"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>New Parking Lot Number</label>
+		<input
+		  [ngModel]="newNumberOfParkingLot"
+		  type="text"
+		  class="form-control"
+		  name="newNumberOfParkingLot"
+		  placeholder="Enter new Parking Lot Number"
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>Current Handicap State</label>
+		<input
+		  [ngModel]="PARK.isHandicapParkingLot"
+		  type="text"
+		  class="form-control"
+		  name="currentisHandicapParkingLot"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<p>isHandicap</p>
+		<select
+		  class="form-control"
+		  type="text"
+		  name="isHandicapParkingLot"
+		  id="isHandicapParkingLot"
+		  [(ngModel)]="newIsHandicapParkingLot"
+		>
+		  <option *ngFor="let type of handicapType" [ngValue]="type">
+			{{ type }}
+		  </option>
+		</select>
+	  </div>
+	  <div class="form-group">
+		<label>Current Parking Price</label>
+		<input
+		  [ngModel]="PARK.pricePerHours"
+		  type="text"
+		  class="form-control"
+		  name="currentPricePerHours"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>New Parking Price</label>
+		<input
+		  [ngModel]="newPricePerHours"
+		  type="text"
+		  class="form-control"
+		  name="newPricePerHours"
+		  placeholder="Enter new Parking Lot Price"
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>Current Vehicle Type</label>
+		<input
+		  [ngModel]="PARK.typeOfVehicle"
+		  type="text"
+		  class="form-control"
+		  name="currentVehicleType"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<p>Vehicle Type</p>
+		<select
+		  class="form-control"
+		  type="text"
+		  name="vehicleType"
+		  id="vehicleType"
+		  [(ngModel)]="newTypeOfVehicle"
+		>
+		  <option *ngFor="let type of vehicleType" [ngValue]="type">
+			{{ type }}
+		  </option>
+		</select>
+	  </div>
+	  <div class="form-group">
+		<label>Current Latitude</label>
+		<input
+		  [ngModel]="PARK.coordinates.latitude"
+		  type="text"
+		  class="form-control"
+		  name="currentLatitude"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>New Latitude</label>
+		<input
+		  [ngModel]="newLatitude"
+		  type="text"
+		  class="form-control"
+		  name="newLatitude"
+		  placeholder="Enter new Latitude"
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>Current Longitude</label>
+		<input
+		  [ngModel]="PARK.coordinates.longitude"
+		  type="text"
+		  class="form-control"
+		  name="currentLongitude"
+		  disabled
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>New Longitude</label>
+		<input
+		  [ngModel]="newLongitude"
+		  type="text"
+		  class="form-control"
+		  name="newLongitude"
+		  placeholder="Enter new Longitude"
+		/>
+	  </div>
+    <button type="submit" id="updateButton" class="btn btn-block btn-success">
+      Update
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+	</button>
+	<button  id="updateButton" class="btn btn-block btn-danger">
+		Delete Parking Lot
+		<span
+		  *ngIf="isLoading"
+		  class="spinner-border"
+		  role="status"
+		  aria-hidden="true"
+		></span>
+	  </button>
+  </form>
+</div>
