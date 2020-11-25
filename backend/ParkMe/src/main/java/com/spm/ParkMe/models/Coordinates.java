@@ -1,13 +1,16 @@
 package com.spm.ParkMe.models;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Coordinates {
 
 	@NotNull(message="Latitude must not be null")
-	private Double latitude;
+	@NotEmpty(message = "Latitude must not be empty")
+	private String latitude;
 	@NotNull(message="Longitude must not be null")
-	private Double longitude;
+	@NotEmpty(message = "Longitude must not be empty")
+	private String longitude;
 	
 	
 	
@@ -15,18 +18,18 @@ public class Coordinates {
 	public Coordinates() {
 		
 	}
-	public Coordinates(Double latitude, Double longitude) {
+	public Coordinates(String latitude, String longitude) {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
 	}
 	
 	
 	/*------- ACCESSORY METHODS ---------*/
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Double latitude) {
-		if(latitude != null  ) {
+	public void setLatitude(String latitude) {
+		if(latitude != null && latitude !="" ) {
 			this.latitude = latitude;
 		}
 		else {
@@ -34,11 +37,11 @@ public class Coordinates {
 			}
 	}
 	
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Double longitude) {
-		if(longitude != null ) {
+	public void setLongitude(String longitude) {
+		if(longitude != null && longitude !="" ) {
 			this.longitude = longitude;
 		}
 		else {
