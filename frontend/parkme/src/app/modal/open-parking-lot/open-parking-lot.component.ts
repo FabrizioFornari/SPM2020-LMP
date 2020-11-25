@@ -80,7 +80,7 @@ export class OpenParkingLotComponent implements OnInit {
 
     if (form.value.isHandicapParkingLot == 'True') {
       handicapBool = true;
-    } else {
+    } else if(form.value.isHandicapParkingLot == 'False') {
       handicapBool = false;
     }
 
@@ -95,6 +95,8 @@ export class OpenParkingLotComponent implements OnInit {
       oldStreet: this.PARK.street,
       oldNumberOfParkingLot: this.PARK.numberOfParkingLot,
     };
+
+    console.log(body);
 
     this.parkingLotService.updateParking(body).subscribe(
       () => {
