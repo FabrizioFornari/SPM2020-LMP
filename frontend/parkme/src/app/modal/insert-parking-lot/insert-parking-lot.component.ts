@@ -42,8 +42,8 @@ export class InsertParkingLotComponent implements OnInit {
       isHandicapParkingLot: string;
       pricePerHours: number;
       typeOfVehicle: string;
-      latitude: number;
-      longitude: number;
+      latitude: string;
+      longitude: string;
     };
   }) {
     this.isLoading = true;

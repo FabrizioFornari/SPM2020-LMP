@@ -32,7 +32,7 @@ export class ParkingLotServiceService {
     isHandicapParkingLot: boolean;
     pricePerHours: number;
     typeOfVehicle: string;
-    coordinates: { latitude: number; longitude: number };
+    coordinates: { latitude: string; longitude: string };
   }): Observable<any> {
     return this.http.post(
       PARKING_LOT_API + 'parkingLot/create',
