@@ -40,4 +40,29 @@ export class ParkingLotServiceService {
       this.getHttpOpt()
     );
   }
+
+  updateParking(body: {
+    street: string;
+    numberOfParkingLot: number;
+    isHandicapParkingLot: boolean;
+    pricePerHours: number;
+    typeOfVehicle: string;
+    coordinates: { latitude: string; longitude: string };
+  }): Observable<any> {
+    return this.http.post(
+      PARKING_LOT_API + 'parkingLot/update',
+      body,
+      this.getHttpOpt()
+    );
+  }
+
+  deleteParking(body: {
+    street: string;
+    numberOfParkingLot: number;
+  }): Observable<any> {
+    return this.http.delete(
+      PARKING_LOT_API + `parkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
+      this.getHttpOpt()
+    );
+  }
 }

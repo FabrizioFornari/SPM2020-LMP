@@ -167,14 +167,14 @@
         aria-hidden="true"
       ></span>
 	</button>
-	<button  id="updateButton" class="btn btn-block btn-danger">
-		Delete Parking Lot
-		<span
-		  *ngIf="isLoading"
-		  class="spinner-border"
-		  role="status"
-		  aria-hidden="true"
-		></span>
-	  </button>
   </form>
+  <button (click)="deleteParking(PARK)"  id="deleteButton" class="btn btn-block btn-danger">
+	Delete Parking Lot
+	<span
+	  *ngIf="isLoading"
+	  class="spinner-border"
+	  role="status"
+	  aria-hidden="true"
+	></span>
+  </button>
 </div>

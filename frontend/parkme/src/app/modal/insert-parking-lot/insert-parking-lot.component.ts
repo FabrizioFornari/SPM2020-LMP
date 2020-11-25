@@ -78,6 +78,8 @@ export class InsertParkingLotComponent implements OnInit {
           this.toastrService.warning('Forbidden');
         } else if (error.status == 500) {
           this.toastrService.warning('Server Error');
+        }else if (error.status == 400) {
+          this.toastrService.warning('Every Field must be filled');
         } else {
           this.toastrService.warning('Unknown Error');
         }

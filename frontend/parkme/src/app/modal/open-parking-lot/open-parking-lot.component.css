@@ -7,6 +7,16 @@
 	align-content: center;
 }
 
+#deleteButton{
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: center;
+}
+
 .modal-body{
     height: 80vh;
     overflow-y: auto;
