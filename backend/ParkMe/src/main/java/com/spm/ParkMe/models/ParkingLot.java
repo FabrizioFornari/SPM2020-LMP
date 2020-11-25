@@ -21,6 +21,7 @@ public class ParkingLot {
 	private Double pricePerHours;
 	@NotNull(message="type Of Vehicle must not be null")
 	private String typeOfVehicle;
+	@NotNull(message="Coordinates must not be null")
 	private Coordinates coordinates;
 	
 	/*-------Constructor------*/
