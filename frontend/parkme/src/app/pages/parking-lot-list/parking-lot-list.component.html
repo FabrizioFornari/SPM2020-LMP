@@ -24,7 +24,8 @@
           <th scope="col">isHandicap</th>
           <th scope="col">Price</th>
           <th scope="col">Vehicle Type</th>
-          <th scope="col">Coordinates</th>
+          <th scope="col">Latitude</th>
+          <th scope="col">Longitude</th>
         </tr>
       </thead>
       <tbody *ngIf="show" style="cursor: pointer">
@@ -41,31 +42,37 @@
           </td>
           <td>
             <ngb-highlight
-              [result]="park.number"
+              [result]="park.numberOfParkingLot"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
           <td>
             <ngb-highlight
-              [result]="park.isHandicap"
+              [result]="park.isHandicapParkingLot"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
           <td>
             <ngb-highlight
-              [result]="park.price"
+              [result]="park.pricePerHours"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
           <td>
             <ngb-highlight
-              [result]="park.vehicleType"
+              [result]="park.typeOfVehicle"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
           <td>
             <ngb-highlight
-              [result]="park.coordinates"
+              [result]="park.coordinates.latitude"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="park.coordinates.longitude"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
