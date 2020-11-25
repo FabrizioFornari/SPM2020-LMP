@@ -23,10 +23,10 @@
 	  <div class="form-group">
 		<label>Number</label>
 		<input
-		  [ngModel]="number"
-		  type="text"
+		  [ngModel]="numberOfParkingLot"
+		  type="number"
 		  class="form-control"
-		  name="number"
+		  name="numberOfParkingLot"
 		  placeholder="Enter Parking Number"
 		/>
 	  </div>
@@ -36,9 +36,9 @@
 		<select
 		  class="form-control"
 		  type="text"
-		  name="handicap"
-		  id="handicap"
-		  [(ngModel)]="handicap"
+		  name="isHandicapParkingLot"
+		  id="isHandicapParkingLot"
+		  [(ngModel)]="isHandicapParkingLot"
 		>
 		  <option *ngFor="let type of handicapType" [ngValue]="type">
 			{{ type }}
@@ -49,10 +49,10 @@
 	  <div class="form-group">
 		<label>Price</label>
 		<input
-		  [ngModel]="price"
-		  type="text"
+		  [ngModel]="pricePerHours"
+		  type="number"
 		  class="form-control"
-		  name="price"
+		  name="pricePerHours"
 		  placeholder="Enter Price"
 		/>
 	  </div>
@@ -62,9 +62,9 @@
 		<select
 		  class="form-control"
 		  type="text"
-		  name="vehicle"
-		  id="vehicle"
-		  [(ngModel)]="vehicle"
+		  name="typeOfVehicle"
+		  id="typeOfVehicle"
+		  [(ngModel)]="typeOfVehicle"
 		>
 		  <option *ngFor="let type of vehicleType" [ngValue]="type">
 			{{ type }}
@@ -73,13 +73,23 @@
 	  </div>
 
 	  <div class="form-group">
-		<label>Coordinates</label>
+		<label>Latitude</label>
 		<input
-		  [ngModel]="coordinates"
-		  type="text"
+		  [ngModel]="latitude"
+		  type="number"
 		  class="form-control"
-		  name="coordinates"
-		  placeholder="Enter Coordinates"
+		  name="latitude"
+		  placeholder="Enter Latitude"
+		/>
+	  </div>
+	  <div class="form-group">
+		<label>Longitude</label>
+		<input
+		  [ngModel]="longitude"
+		  type="number"
+		  class="form-control"
+		  name="longitude"
+		  placeholder="Enter Longitude"
 		/>
 	  </div>
 	  <button type="submit" id="updateButton" class="btn btn-block btn-success">
