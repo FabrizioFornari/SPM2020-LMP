@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
@@ -82,9 +83,15 @@ public class ParkingManagerController {
 			if(changeParkingLot.getNewTypeOfVehicle() != null) {
 				parkingLotToChange.setTypeOfVehicle(changeParkingLot.getNewTypeOfVehicle());
 			}
-			if(changeParkingLot.getNewCoordinates() != null) {
-				parkingLotToChange.setCoordinates(changeParkingLot.getNewCoordinates());
+			String newLatitude = parkingLotToChange.getCoordinates().getLatitude();
+			String newLongitude = parkingLotToChange.getCoordinates().getLongitude();
+			if(changeParkingLot.getNewLatitude() != null) {
+				newLatitude = changeParkingLot.getNewLatitude() ;
 			}
+			if(changeParkingLot.getNewLongitude() != null) {
+				newLatitude = changeParkingLot.getNewLongitude() ;
+			}
+			parkingLotToChange.setCoordinates(new Coordinates(newLatitude, newLongitude));
 			parkingLotRepository.save(parkingLotToChange);
 			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
 		}

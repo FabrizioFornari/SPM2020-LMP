@@ -20,14 +20,16 @@ public class ChangeParkingLot {
 	private Boolean newIsHandicapParkingLot;
 	private Double newPricePerHours;
 	private String newTypeOfVehicle;
-	private Coordinates newCoordinates;
+	private String newLatitude;
+	private String newLongitude;
 	
 	/*-------Constructor------*/
 	public ChangeParkingLot() {
 		
 	}
 	
-	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates) {
+	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates
+			, String newLatitude, String newLongitude) {
 		this.setOldNumberOfParkingLot(numberOfParkingLot);
 		this.setOldStreet(street);
 		this.setNewStreet(newStreet);
@@ -35,7 +37,8 @@ public class ChangeParkingLot {
 		this.setNewIsHandicapParkingLot(newIsHandicapParkingLot);
 		this.setNewPricePerHours(newpricePerHours);
 		this.setNewTypeOfVehicle(newTypeOfVehicle);
-		this.setNewCoordinates(newCoordinates);
+		this.setNewLatitude(newLatitude);
+		this.setNewLongitude(newLongitude);
 	}	
 	
 	
@@ -105,11 +108,20 @@ public class ChangeParkingLot {
 		this.newTypeOfVehicle = newTypeOfVehicle;
 	}
 
-	public Coordinates getNewCoordinates() {
-		return newCoordinates;
+
+	public String getNewLatitude() {
+		return newLatitude;
 	}
 
-	public void setNewCoordinates(Coordinates newCoordinates) {
-		this.newCoordinates = newCoordinates;
+	public void setNewLatitude(String newLatitude) {
+		this.newLatitude = newLatitude;
+	}
+
+	public String getNewLongitude() {
+		return newLongitude;
+	}
+
+	public void setNewLongitude(String newLongitude) {
+		this.newLongitude = newLongitude;
 	}
 }
