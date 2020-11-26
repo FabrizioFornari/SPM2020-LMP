@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 
 const PARKING_LOT_API = 'http://localhost:8080/api/parkingManager/';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class ParkingLotServiceService {
   constructor(private http: HttpClient) {}
+
 
   getHttpOpt() {
     return {
