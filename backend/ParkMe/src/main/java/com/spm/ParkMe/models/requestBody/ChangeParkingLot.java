@@ -28,7 +28,7 @@ public class ChangeParkingLot {
 		
 	}
 	
-	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle, Coordinates newCoordinates
+	public ChangeParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newpricePerHours, String newTypeOfVehicle
 			, String newLatitude, String newLongitude) {
 		this.setOldNumberOfParkingLot(numberOfParkingLot);
 		this.setOldStreet(street);

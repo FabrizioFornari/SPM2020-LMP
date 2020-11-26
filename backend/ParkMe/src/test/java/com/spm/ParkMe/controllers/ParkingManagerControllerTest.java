@@ -43,6 +43,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
@@ -69,9 +70,11 @@ public class ParkingManagerControllerTest {
     private WebApplicationContext context;
 	
 	private ParkingLot testParkingLot;
+	private ChangeParkingLot testChangeParkingLot;
 	
 	private MockMvc mockMvc;
 	private JacksonTester<ParkingLot> jsonParkingLot;
+	private JacksonTester<ChangeParkingLot> jsonChangeParkingLot;
 	
 	
 	@BeforeEach
@@ -118,7 +121,7 @@ public class ParkingManagerControllerTest {
 	
 	@Test 
 	@WithMockUser(username = PARKING_MANAGER_MAIL, roles= {"PARKING_MANAGER"})
-	void deletedParkingLotReturnsConflictWhenWrongNumber() throws Exception {
+	void deletedParkingLotReturnsOKWhenDeleted() throws Exception {
 		parkingLotRepository.save(PARKINGLOT_OBJECT);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
 				PARKING_MANAGER_ENDPOINT + PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT).accept(
@@ -128,4 +131,21 @@ public class ParkingManagerControllerTest {
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
+	
+	
+	
+	@Test 
+	@WithMockUser(username = PARKING_MANAGER_MAIL, roles= {"PARKING_MANAGER"})
+	void updateParkingLotReturnsOKWhenUpdated() throws Exception {
+		parkingLotRepository.save(PARKINGLOT_OBJECT);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
+				PARKING_MANAGER_ENDPOINT + PARKING_MANAGER_UPDATE_PARKINGLOT_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonChangeParkingLot.write(CHANGE_PARKINGLOT_OBJECT).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+	
 }
