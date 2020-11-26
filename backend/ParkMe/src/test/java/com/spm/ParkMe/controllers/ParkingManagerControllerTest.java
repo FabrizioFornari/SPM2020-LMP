@@ -115,4 +115,17 @@ public class ParkingManagerControllerTest {
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
 	}
+	
+	@Test 
+	@WithMockUser(username = PARKING_MANAGER_MAIL, roles= {"PARKING_MANAGER"})
+	void deletedParkingLotReturnsConflictWhenWrongNumber() throws Exception {
+		parkingLotRepository.save(PARKINGLOT_OBJECT);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
+				PARKING_MANAGER_ENDPOINT + PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT).accept(
+				MediaType.APPLICATION_JSON).param("street",VALID_STREET).param("numberOfParkingLot","3")
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
 }
