@@ -20,7 +20,7 @@ import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
-
+import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 
 
 
@@ -80,10 +80,14 @@ public class ParkMeApplication implements CommandLineRunner {
 		}
 		
 		parkingLotRepository.deleteAll();
-
 		
-		ParkingLot parkingLot = new ParkingLot("Via Madonna delle Carceri",1, false, 0.50, "2 Wheels Standard Vehicle", new Coordinates("1.0", "1.0"));
-		parkingLotRepository.save(parkingLot);
+		parkingLotRepository.save(PARKING_1);
+		parkingLotRepository.save(PARKING_2);
+		parkingLotRepository.save(PARKING_3);
+		parkingLotRepository.save(PARKING_4);
+		parkingLotRepository.save(PARKING_5);
+		parkingLotRepository.save(PARKING_6);
+		parkingLotRepository.save(PARKING_7);
 	}
 
 }
