@@ -21,6 +21,8 @@ import { OpenHandicapRequestComponent } from './modal/open-handicap-request/open
 import { ParkingLotListComponent } from './pages/parking-lot-list/parking-lot-list.component';
 import { InsertParkingLotComponent } from './modal/insert-parking-lot/insert-parking-lot.component';
 import { OpenParkingLotComponent } from './modal/open-parking-lot/open-parking-lot.component';
+import { MapComponent } from './pages/map/map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { OpenParkingLotComponent } from './modal/open-parking-lot/open-parking-l
     ParkingLotListComponent,
     InsertParkingLotComponent,
     OpenParkingLotComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { OpenParkingLotComponent } from './modal/open-parking-lot/open-parking-l
     }),
     BrowserAnimationsModule,
     NgbModule,
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent],

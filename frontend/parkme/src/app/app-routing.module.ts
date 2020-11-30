@@ -4,6 +4,7 @@ import { AccountInfoComponent } from './pages/account-info/account-info.componen
 import { DriverRegistrationComponent } from './pages/driver-registration/driver-registration.component';
 import { HandicapPermitsListComponent } from './pages/handicap-permits-list/handicap-permits-list.component';
 import { LoginComponent } from './pages/login/login.component';
+import { MapComponent } from './pages/map/map.component';
 import { ParkingLotListComponent } from './pages/parking-lot-list/parking-lot-list.component';
 import { ParkmanVigRegistrationComponent } from './pages/parkman-vig-registration/parkman-vig-registration.component';
 import { UploadHandicapComponent } from './pages/upload-handicap/upload-handicap.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'handicap-upload', component: UploadHandicapComponent},
   { path: 'handicap-download', component: HandicapPermitsListComponent},
   { path: 'parking-lot-list', component: ParkingLotListComponent},
-  { path: '', redirectTo: '/parking-lot-list', pathMatch: 'full' },
+  { path: 'map', component: MapComponent},
+  { path: '', redirectTo: '/map', pathMatch: 'full' },
 ];
 
 @NgModule({
