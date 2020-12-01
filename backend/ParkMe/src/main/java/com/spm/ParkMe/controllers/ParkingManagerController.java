@@ -45,10 +45,7 @@ public class ParkingManagerController {
 	@PostMapping(path=PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> createParkingLot(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		//first get the parking lots for the street
-		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(parkingLot.getStreet());
-		//check if there is already a parking lot with specified number
-		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == parkingLot.getNumberOfParkingLot()).collect(Collectors.toList());
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			return new ResponseEntity<ParkingLot>(HttpStatus.CONFLICT);
 		}
@@ -59,10 +56,7 @@ public class ParkingManagerController {
 	@PutMapping(path=PARKING_MANAGER_UPDATE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> updateParkingLot(@Valid @RequestBody ChangeParkingLot changeParkingLot) throws IOException {
-		//first get the parking lots for the street
-		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(changeParkingLot.getOldStreet());
-		//check if there is already a parking lot with specified number
-		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == changeParkingLot.getOldNumberOfParkingLot()).collect(Collectors.toList());
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLotRepository.findByStreetAndNumberOfParkingLot(changeParkingLot.getOldStreet(), changeParkingLot.getOldNumberOfParkingLot());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			ParkingLot parkingLotToChange = parkingLotsWithSameNumber.get(0);
 			if(changeParkingLot.getNewStreet() != null && changeParkingLot.getNewStreet() != "") {
@@ -101,8 +95,7 @@ public class ParkingManagerController {
 	@DeleteMapping(path=PARKING_MANAGER_DELETE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> deleteParkingLot(@NotNull @RequestParam String street , @NotNull @RequestParam Integer numberOfParkingLot)throws IOException {
-		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(street);
-		List<ParkingLot> parkingLotsWithSameNumber = parkingLots.stream().filter(lot -> lot.getNumberOfParkingLot() == numberOfParkingLot).collect(Collectors.toList());
+		List<ParkingLot> parkingLotsWithSameNumber = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			parkingLotRepository.delete(parkingLotsWithSameNumber.get(0));
 			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
