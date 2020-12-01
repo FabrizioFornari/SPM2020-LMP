@@ -181,7 +181,7 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void setStatusParkingLotWithBookedWhenStatusEqualToFree() throws Exception {
+	public void setStatusParkingLotAsBookedWhenStatusEqualToFree() throws Exception {
 		parkingLotRepository.save(PARKINGLOT_OBJECT);
 	
 		System.out.println(PARKINGLOT_OBJECT.getStatus());
@@ -199,7 +199,7 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void setStatusParkingLotWithFreeWhenStatusDifferentFromFree() throws Exception {
+	public void setStatusParkingLotAsFreeWhenStatusDifferentFromFree() throws Exception {
 		parkingLotRepository.save(PARKINGLOT_OBJECT);
 		PARKINGLOT_OBJECT.setStatus(Status.BOOKED);
 		System.out.println(PARKINGLOT_OBJECT.getStatus());
@@ -215,7 +215,7 @@ public class DriverControllerTests {
 	}
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void setStatusParkingLotWithOccupiedWhenStatusEqualToBooked() throws Exception {
+	public void setStatusParkingLotAsOccupiedWhenStatusEqualToBooked() throws Exception {
 		parkingLotRepository.save(PARKINGLOT_OBJECT);
 		PARKINGLOT_OBJECT.setStatus(Status.BOOKED);
 		System.out.println(PARKINGLOT_OBJECT.getStatus());
@@ -232,7 +232,7 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void setStatusParkingLotWithDisabledWhenStatusDifferentFromOccupiedAndBooked() throws Exception {
+	public void setStatusParkingLotAsDisabledWhenStatusDifferentFromOccupiedAndBooked() throws Exception {
 		parkingLotRepository.save(PARKINGLOT_OBJECT);
 		System.out.println(PARKINGLOT_OBJECT.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
