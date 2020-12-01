@@ -10,7 +10,9 @@ public final class EndpointContants {
 	public static final String DRIVER_ENDPOINT = "/api/driver";
 	public static final String DRIVER_REGISTRATION_ENDPOINT = "/registration";
 	public static final String DRIVER_HANDICAP_PERMITS_ENDPOINT = "/requestHandicapPermits";
-	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS="/setStatusParkingLot";
+	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED="/setStatusBooked";
+	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE="/setStatusFree";
+	
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";

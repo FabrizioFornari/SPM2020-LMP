@@ -76,7 +76,7 @@ public class DriverController {
 		return new ResponseEntity(HttpStatus.OK); 
 	}
 	
-	@PutMapping(path=DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes="application/json")
+	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity setStatusParkingLotWithBooked(ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() == Status.FREE)
@@ -89,6 +89,22 @@ public class DriverController {
 				}
 			
 		}
+	
+	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE, consumes="application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotWithFree(ParkingLot parkingLot)throws IOException {
+			if(parkingLot.getStatus() != Status.FREE)
+				{
+				parkingLot.setStatus(Status.FREE);
+				return new ResponseEntity(HttpStatus.OK); 
+				}else
+				{
+					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+				}
+			
+	}
+	
+	
 	
 }
 	
