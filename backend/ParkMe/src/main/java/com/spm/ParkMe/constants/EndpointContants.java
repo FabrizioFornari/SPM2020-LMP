@@ -10,6 +10,7 @@ public final class EndpointContants {
 	public static final String DRIVER_ENDPOINT = "/api/driver";
 	public static final String DRIVER_REGISTRATION_ENDPOINT = "/registration";
 	public static final String DRIVER_HANDICAP_PERMITS_ENDPOINT = "/requestHandicapPermits";
+	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS="/setStatusParkingLot";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";
@@ -34,4 +35,6 @@ public final class EndpointContants {
 	public static final String PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT="/parkingLots/all";
 	public static final String PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT=  "/parkingLots/getStreet";
 	public static final String PARKING_MANAGER_UPDATE_PARKINGLOT_ENDPOINT= "/parkingLot/update";
+
+	
 }

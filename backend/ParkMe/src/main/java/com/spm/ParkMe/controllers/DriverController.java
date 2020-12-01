@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
@@ -41,6 +45,9 @@ public class DriverController {
 	@Autowired
 	private DriverInfoRepository driverRepository;
 	
+	
+	@Autowired 
+	private ParkingLotRepository parkingLotRepository;
 	@Autowired 
 	private HandicapPermitsRequestsRepository handicapRepository;
 
@@ -67,6 +74,8 @@ public class DriverController {
 		handicapRepository.save(new HandicapPermitsRequest(username, System.currentTimeMillis(), false, false));
 		return new ResponseEntity(HttpStatus.OK); 
 	}
+	
+	
 	
 }
 	
