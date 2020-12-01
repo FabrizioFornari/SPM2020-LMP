@@ -10,11 +10,6 @@ body {
   font-family: 'Roboto Mono', monospace !important;
 }
 
-.leafletPopUp{
-	font-size: 16px;
-  font-family: 'Roboto Mono', monospace !important;
-}
-
 .marker-pin-occupied {
   width: 30px;
   height: 30px;

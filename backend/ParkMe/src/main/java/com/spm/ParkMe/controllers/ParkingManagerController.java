@@ -110,11 +110,9 @@ public class ParkingManagerController {
 	}
 	
 	@GetMapping(path=PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT, consumes = "application/json")
-	@PreAuthorize("hasRole('PARKING_MANAGER')")
-	public  List<ParkingLot> getParkingLotsForSpecificStreet(@Valid @RequestBody ParkingLot parkingLot)  {
-		String street= parkingLot.getStreet();
+	@PreAuthorize("hasRole('PARKING_MANAGER') or hasRole('DRIVER')")
+	public  List<ParkingLot> getParkingLotsForSpecificStreet(@NotNull @RequestParam String street)  {
 		return parkingLotRepository.findByStreet(street);
-
 	}
 	
 	

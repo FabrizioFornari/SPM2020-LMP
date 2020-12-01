@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone  } from '@angular/core';
 import {
   Content,
   divIcon,
@@ -7,8 +7,8 @@ import {
   Layer,
   marker,
   Popup,
-  TileLayer,
   tileLayer,
+  Tooltip,
 } from 'leaflet';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
@@ -40,33 +40,14 @@ export class MapComponent implements OnInit {
 
   // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
   options = {
-    layers: [
-      this.streetMaps,
-      this.wMaps,
-      /* this.superconti,
-      this.lodovici,
-      this.eurospin,
-      this.contram,
-      this.handicapFree,
-      this.handicapOccupied,
-      this.paymentFree,
-      this.paymentOccupied,
-      this.freeFree,
-      this.freeOccupied */
-    ],
+    layers: [this.streetMaps],
     zoom: 16,
     center: latLng([43.14367132147207, 13.067582838096936]),
   };
 
-  //set options for popup
-  popOptions = {
-    closeButton: false,
-    className: 'leafletPopUp',
-  };
-
   streetsLayers = [];
 
-  constructor(private parkingService: ParkingLotServiceService) {}
+  constructor(private parkingService: ParkingLotServiceService, private zone: NgZone) {}
 
   ngOnInit(): void {
     this.parkingService.driverGetStreetList().subscribe(
@@ -88,7 +69,7 @@ export class MapComponent implements OnInit {
                   shadowUrl: 'leaflet/marker-shadow.png',
                 }),
               }
-            ).bindPopup(item.street, this.popOptions);
+            ).bindTooltip(item.street.toString()).on('click', (() => this.getParks(item.street)));
             this.streetsLayers.push(markerItem);
           }
         );
@@ -97,5 +78,36 @@ export class MapComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+
+  getParks(street: string | ((layer: Layer) => Content) | HTMLElement | Popup){
+    this.parkingService.driverGetParkingLots(street).subscribe(
+      (success) => {
+        console.log(success);
+        let markers = [];
+        success.forEach(
+          (item: { coordinates: { latitude: number; longitude: number; }; numberOfParkingLot: { toString: () => string | HTMLElement | ((layer: Layer) => Content) | Tooltip; }; }) => {
+            let markerItem = marker(
+              [item.coordinates.latitude, item.coordinates.longitude],
+              {
+                icon: icon({
+                  iconSize: [25, 41],
+                  iconAnchor: [13, 41],
+                  iconUrl: 'leaflet/marker-icon.png',
+                  iconRetinaUrl: 'leaflet/marker-icon-2x.png',
+                  shadowUrl: 'leaflet/marker-shadow.png',
+                }),
+              }
+            ).bindTooltip(item.numberOfParkingLot.toString());
+            markers.push(markerItem);
+          }
+        );
+        this.zone.run(() => this.streetsLayers = markers);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 }

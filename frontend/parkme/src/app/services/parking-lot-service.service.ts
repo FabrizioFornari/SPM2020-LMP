@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Popup, Layer, Content } from 'leaflet';
 
 const PARKING_LOT_API = 'http://localhost:8080/api/parkingManager/';
 
 const DRIVER_STREET_API = "http://localhost:8080/api/driver/streets";
-
+const DRIVER_PARKS_API = "http://localhost:8080/api/parkingManager/parkingLots/getStreet"
 
 @Injectable({
   providedIn: 'root',
@@ -77,5 +78,9 @@ export class ParkingLotServiceService {
 
   driverGetStreetList(): Observable<any>{
     return this.http.get(DRIVER_STREET_API, this.getHttpOpt());
+  }
+
+  driverGetParkingLots(street: string | HTMLElement | Popup | ((layer: Layer) => Content)): Observable<any>{
+    return this.http.get(DRIVER_PARKS_API + `?street=${street}`, this.getHttpOpt());
   }
 }
