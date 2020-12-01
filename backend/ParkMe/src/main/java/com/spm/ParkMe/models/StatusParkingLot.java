@@ -1,10 +1,14 @@
 package com.spm.ParkMe.models;
 
+import javax.validation.constraints.NotNull;
+
+import com.spm.ParkMe.constants.RegexConstants;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.Status;
 
 public class StatusParkingLot {
 
+	@NotNull(message="Password must not be null")
 	private ParkingLot parkingLot;
 	private Status status; 
 	
@@ -25,7 +29,12 @@ public class StatusParkingLot {
 	}
 
 	public void setParkingLot(ParkingLot parkingLot) {
-		this.parkingLot = parkingLot;
+		if(parkingLot != null ) {
+			this.parkingLot = parkingLot;
+		}
+		else {
+			throw new IllegalArgumentException("parkingLot is invalid");
+		}
 	}
 
 	public Status getStatus() {
