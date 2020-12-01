@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
@@ -191,5 +192,25 @@ public class DriverControllerTests {
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
-		assertEquals(HttpStatus.OK.value(), response.getStatus());	}
+		assertEquals(HttpStatus.OK.value(), response.getStatus());	
+		
+	}
+	
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void setStatusParkingLotWithFreeWhenStatusDifferentFromFree() throws Exception {
+		parkingLotRepository.save(PARKINGLOT_OBJECT);
+		PARKINGLOT_OBJECT.setStatus(Status.BOOKED);
+		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
+				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE).accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());	
+		
+	}
 }
