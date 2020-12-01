@@ -1,0 +1,14 @@
+.map{
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 79vw;
+	height: 79vh;
+	border-radius: 8px;
+	border: 6px solid #0078A8;
+}
+
+
+  

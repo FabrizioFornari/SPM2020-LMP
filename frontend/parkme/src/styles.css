@@ -8,3 +8,8 @@ body {
   background-color: #343a40 !important;
   font-family: 'Roboto Mono', monospace !important;
 }
+
+.leafletPopUp{
+	font-size: 16px;
+  font-family: 'Roboto Mono', monospace !important;
+}
