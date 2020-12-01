@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone  } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import {
   Content,
   divIcon,
@@ -47,7 +47,10 @@ export class MapComponent implements OnInit {
 
   streetsLayers = [];
 
-  constructor(private parkingService: ParkingLotServiceService, private zone: NgZone) {}
+  constructor(
+    private parkingService: ParkingLotServiceService,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.parkingService.driverGetStreetList().subscribe(
@@ -69,7 +72,9 @@ export class MapComponent implements OnInit {
                   shadowUrl: 'leaflet/marker-shadow.png',
                 }),
               }
-            ).bindTooltip(item.street.toString()).on('click', (() => this.getParks(item.street)));
+            )
+              .bindTooltip(item.street.toString())
+              .on('click', () => this.getParks(item.street));
             this.streetsLayers.push(markerItem);
           }
         );
@@ -80,34 +85,75 @@ export class MapComponent implements OnInit {
     );
   }
 
-
-  getParks(street: string | ((layer: Layer) => Content) | HTMLElement | Popup){
+  getParks(street: string | ((layer: Layer) => Content) | HTMLElement | Popup) {
     this.parkingService.driverGetParkingLots(street).subscribe(
       (success) => {
         console.log(success);
         let markers = [];
         success.forEach(
-          (item: { coordinates: { latitude: number; longitude: number; }; numberOfParkingLot: { toString: () => string | HTMLElement | ((layer: Layer) => Content) | Tooltip; }; }) => {
-            let markerItem = marker(
-              [item.coordinates.latitude, item.coordinates.longitude],
-              {
-                icon: icon({
-                  iconSize: [25, 41],
-                  iconAnchor: [13, 41],
-                  iconUrl: 'leaflet/marker-icon.png',
-                  iconRetinaUrl: 'leaflet/marker-icon-2x.png',
-                  shadowUrl: 'leaflet/marker-shadow.png',
-                }),
-              }
-            ).bindTooltip(item.numberOfParkingLot.toString());
-            markers.push(markerItem);
+          (item) => {
+            if (item.status !== "DISABLED") {
+              let markerItem = this.createMarker(item);
+              markers.push(markerItem);
+            }
           }
         );
-        this.zone.run(() => this.streetsLayers = markers);
+        this.zone.run(() => (this.streetsLayers = markers));
       },
       (error) => {
         console.log(error);
       }
-    )
+    );
+  }
+
+  createMarker(item) {
+    let html = '';
+    if (
+      !item.isHandicapParkingLot &&
+      item.status == 'FREE' &&
+      item.pricePerHours == 0 
+      
+    ) {
+      html =
+        "<div class='marker-pin-free'></div><i class='material-icons'>stop_circle</i>";
+    } else if (
+      !item.isHandicapParkingLot &&
+      item.status == 'BOOKED' &&
+      item.pricePerHours == 0
+    ) {
+      html =
+        "<div class='marker-pin-occupied'></div><i class='material-icons'>stop_circle</i>";
+    } else if (
+      !item.isHandicapParkingLot &&
+      item.status == 'FREE' &&
+      item.pricePerHours > 0
+    ) {
+      html =
+        "<div class='marker-pin-free'></div><i class='material-icons'>monetization_on</i>";
+    } else if (
+      !item.isHandicapParkingLot &&
+      item.status == 'BOOKED' &&
+      item.pricePerHours > 0
+    ) {
+      html =
+        "<div class='marker-pin-occupied'></div><i class='material-icons'>monetization_on</i>";
+    } else if (item.isHandicapParkingLot && item.status == 'FREE') {
+      html =
+        "<div class='marker-pin-free'></div><i class='material-icons'>accessible_forward</i>";
+    } else if (item.isHandicapParkingLot && item.status == 'BOOKED') {
+      html =
+        "<div class='marker-pin-occupied'></div><i class='material-icons'>accessible_forward</i>";
+    } else {
+      console.table(item);
+    }
+
+    return marker([item.coordinates.latitude, item.coordinates.longitude], {
+      icon: divIcon({
+        className: 'custom-div-icon',
+        html: html,
+        iconSize: [30, 42],
+        iconAnchor: [15, 42],
+      }),
+    }).bindTooltip(item.numberOfParkingLot.toString());
   }
 }
