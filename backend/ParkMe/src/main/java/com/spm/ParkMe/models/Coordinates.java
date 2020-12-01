@@ -48,4 +48,16 @@ public class Coordinates {
 			throw new IllegalArgumentException("Longitude is invalid");
 			}
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Coordinates coordinates = (Coordinates) o;
+		return(coordinates.getLatitude().equals(this.getLatitude()) &&
+				coordinates.getLongitude().equals(this.getLongitude())); 
+		
+	}
 }

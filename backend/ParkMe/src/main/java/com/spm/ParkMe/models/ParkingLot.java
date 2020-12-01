@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
 import com.spm.ParkMe.constants.RegexConstants;
+import com.spm.ParkMe.enums.Status;
 
 public class ParkingLot {
 
@@ -24,6 +25,8 @@ public class ParkingLot {
 	@NotNull(message="Coordinates must not be null")
 	private Coordinates coordinates;
 	
+	private Status status;
+	
 	/*-------Constructor------*/
 	public ParkingLot() {
 		
@@ -36,6 +39,7 @@ public class ParkingLot {
 		this.setPricePerHours(pricePerHours);
 		this.setTypeOfVehicle(typeOfVehicle);
 		this.setCoordinates(coordinates);
+		this.setStatus(Status.FREE);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -106,4 +110,30 @@ public class ParkingLot {
 	public void setCoordinates(Coordinates coordinates) {
 		this.coordinates = coordinates;
 	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ParkingLot parkingLot = (ParkingLot) o;
+		return(parkingLot.getStreet().equals(this.getStreet()) &&
+				((Boolean)parkingLot.getIsHandicapParkingLot()).equals((Boolean)this.getIsHandicapParkingLot()) &&
+				parkingLot.getCoordinates().equals(this.getCoordinates()) &&
+				((Integer)parkingLot.getNumberOfParkingLot()).equals((Integer)this.getNumberOfParkingLot())&&
+				((Double) parkingLot.getPricePerHours()).equals((Double) this.getPricePerHours())&&
+				parkingLot.getStatus().equals( this.getStatus())&&
+				parkingLot.getTypeOfVehicle().equals(this.getTypeOfVehicle()));
+		
+	}
+
 }
