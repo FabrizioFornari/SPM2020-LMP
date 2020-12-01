@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 const PARKING_LOT_API = 'http://localhost:8080/api/parkingManager/';
 
+const DRIVER_STREET_API = "http://localhost:8080/api/driver/streets";
+
 
 @Injectable({
   providedIn: 'root',
@@ -70,5 +72,10 @@ export class ParkingLotServiceService {
         `parkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
       this.getHttpOpt()
     );
+  }
+
+
+  driverGetStreetList(): Observable<any>{
+    return this.http.get(DRIVER_STREET_API, this.getHttpOpt());
   }
 }
