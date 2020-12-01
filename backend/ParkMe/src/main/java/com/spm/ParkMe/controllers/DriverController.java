@@ -107,6 +107,21 @@ public class DriverController {
 	}
 	
 	
+	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED, consumes="application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotWithOccupied(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+			if(parkingLot.getStatus() == Status.BOOKED)
+				{
+				parkingLot.setStatus(Status.OCCUPIED);
+				return new ResponseEntity(HttpStatus.OK); 
+				}else
+				{
+					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+				}
+			
+	}
+	
+	
 	
 }
 	
