@@ -53,5 +53,7 @@ public class DriverInfoRepositoryTest {
 		driverInfoRepository.save(testDriverInfo);
 		assertEquals(Optional.of(testDriverInfo), driverInfoRepository.findByUsername(DRIVER_MAIL));
 	}
+	
+	
 
 }

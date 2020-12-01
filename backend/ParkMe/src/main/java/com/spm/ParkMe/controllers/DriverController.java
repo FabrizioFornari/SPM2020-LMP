@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
@@ -75,7 +76,19 @@ public class DriverController {
 		return new ResponseEntity(HttpStatus.OK); 
 	}
 	
-	
+	@PutMapping(path=DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes="application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotWithBooked(ParkingLot parkingLot)throws IOException {
+			if(parkingLot.getStatus() == Status.FREE)
+				{
+				parkingLot.setStatus(Status.BOOKED);
+				return new ResponseEntity(HttpStatus.OK); 
+				}else
+				{
+					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+				}
+			
+		}
 	
 }
 	
