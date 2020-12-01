@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { icon, latLng, Map, marker, point, polyline, tileLayer } from 'leaflet';
+import { icon, latLng, marker, tileLayer } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -52,6 +52,72 @@ export class MapComponent implements OnInit {
     }),
   });
 
+  // Marker for the parking lot at Eurospin (for handicap, free)
+  handicapFree = marker([43.14509139916818, 13.06653403554103], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/handicapCircleGreen.png',
+      iconRetinaUrl: '../../assets/handicapCircleGreen.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
+  // Marker for the parking lot at Eurospin (for handicap, occupied)
+  handicapOccupied = marker([43.1450620992383, 13.067087786987548], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/handicapCircleRed.png',
+      iconRetinaUrl: '../../assets/handicapCircleRed.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
+  // Marker for the parking lot at Eurospin (payment, free)
+  paymentFree = marker([43.14488784147042, 13.067358322045388], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/cashGreenCircle.png',
+      iconRetinaUrl: '../../assets/cashGreenCircle.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
+  // Marker for the parking lot at Eurospin (payment, occupied)
+  paymentOccupied = marker([43.14470587265168, 13.067335072938858], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/cashRedCircle.png',
+      iconRetinaUrl: '../../assets/cashRedCircle.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
+  // Marker for the parking lot at Eurospin (free, free)
+  freeFree = marker([43.14463339339508, 13.066867977253052], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/greenCircle.png',
+      iconRetinaUrl: '../../assets/greenCircle.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
+  // Marker for the parking lot at Eurospin (free, occupied)
+  freeOccupied = marker([43.14478760447626, 13.066692552176484], {
+    icon: icon({
+      iconSize: [32, 32],
+      iconAnchor: [32, 32],
+      iconUrl: '../../assets/redCircle.png',
+      iconRetinaUrl: '../../assets/redCircle.png',
+      shadowUrl: 'leaflet/marker-shadow.png',
+    }),
+  });
+
   // Marker for the parking lot at Contram
   contram = marker([43.142463059981274, 13.077146597785206], {
     icon: icon({
@@ -85,6 +151,12 @@ export class MapComponent implements OnInit {
       this.lodovici,
       this.eurospin,
       this.contram,
+      this.handicapFree,
+      this.handicapOccupied,
+      this.paymentFree,
+      this.paymentOccupied,
+      this.freeFree,
+      this.freeOccupied
     ],
     zoom: 16,
     center: latLng([43.14367132147207, 13.067582838096936]),
@@ -103,5 +175,11 @@ export class MapComponent implements OnInit {
     this.eurospin.bindPopup('Eurospin', this.popOptions);
     this.lodovici.bindPopup('Polo Lodovici', this.popOptions);
     this.contram.bindPopup('Contram', this.popOptions);
+    this.freeOccupied.bindPopup('Occupied, No Cash', this.popOptions);
+    this.freeFree.bindPopup('Free, No Cash', this.popOptions);
+    this.handicapOccupied.bindPopup('Occupied, Handicap Only', this.popOptions);
+    this.handicapFree.bindPopup('Free, Handicap Only', this.popOptions);
+    this.paymentOccupied.bindPopup('Occupied, Payment', this.popOptions);
+    this.paymentFree.bindPopup('Free, Payment', this.popOptions);
   }
 }
