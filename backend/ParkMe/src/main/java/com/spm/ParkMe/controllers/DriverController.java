@@ -80,7 +80,7 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotWithBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+	public ResponseEntity setStatusParkingLotAsBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 
 		if(parkingLot.getStatus() ==(Status.FREE))
 				{
@@ -96,7 +96,7 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotWithFree(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+	public ResponseEntity setStatusParkingLotAsFree(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() != Status.FREE)
 				{
 				parkingLot.setStatus(Status.FREE);
@@ -110,7 +110,7 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotWithOccupied(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+	public ResponseEntity setStatusParkingLotAsOccupied(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() == Status.BOOKED)
 				{
 				parkingLot.setStatus(Status.OCCUPIED);
@@ -129,6 +129,20 @@ public class DriverController {
 				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(), parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(infos);
+	}
+	
+	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED, consumes="application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotAsDisabled(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+			if(parkingLot.getStatus() != Status.BOOKED && parkingLot.getStatus()!= Status.OCCUPIED)
+				{
+				parkingLot.setStatus(Status.DISABLED);
+				return new ResponseEntity(HttpStatus.OK); 
+				}else
+				{
+					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+				}
+			
 	}
 	
 	
