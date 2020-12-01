@@ -78,9 +78,12 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotWithBooked(ParkingLot parkingLot)throws IOException {
-			if(parkingLot.getStatus() == Status.FREE)
+	public ResponseEntity setStatusParkingLotWithBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
+		System.out.println(parkingLot.getStatus());
+
+		if(parkingLot.getStatus() ==(Status.FREE))
 				{
+				System.out.println("SONO IN BOOKED");
 				parkingLot.setStatus(Status.BOOKED);
 				return new ResponseEntity(HttpStatus.OK); 
 				}else

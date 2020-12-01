@@ -34,14 +34,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
 import static com.spm.ParkMe.constants.UserInfoConstants.*;
-
+import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -55,6 +57,8 @@ public class DriverControllerTests {
 	@Autowired
 	DriverInfoRepository driverInfoRepository;
 	
+	@Autowired
+	ParkingLotRepository parkingLotRepository;
 	@Autowired
 	HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
@@ -71,6 +75,7 @@ public class DriverControllerTests {
 	private MockMvc mockMvc;
 	private JacksonTester<Driver> jsonDriver;
 	private JacksonTester<WrongObject> jsonWrongObject;
+	private JacksonTester<ParkingLot> jsonParkingLot;
 	
 	
 		
@@ -173,4 +178,18 @@ public class DriverControllerTests {
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isConflict());
 	}
 	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void setStatusParkingLotWithBookedWhenStatusEqualToFree() throws Exception {
+		parkingLotRepository.save(PARKINGLOT_OBJECT);
+	
+		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
+				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED).accept(
+				MediaType.APPLICATION_JSON)
+				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());	}
 }
