@@ -29,6 +29,7 @@ public class ParkingLotRepositoryTest {
 	@BeforeEach
 	public void setUp() {
 		parkingLotRepository.deleteAll();
+		
 	}
 	
 	@Test
@@ -40,7 +41,7 @@ public class ParkingLotRepositoryTest {
 	@Test
 	void findByStreetReturnsAParkingLotWhenExists() {
 		parkingLotRepository.save(testParkingLot);
-		assertEquals(testParkingLot, parkingLotRepository.findByStreet("via aldo moro, 32"));
+		assertEquals(testParkingLot, parkingLotRepository.findByStreet(VALID_STREET).get(0));
 	}
 	
 	@Test
@@ -48,6 +49,12 @@ public class ParkingLotRepositoryTest {
 		parkingLotRepository.save(testParkingLot);
 		parkingLotRepository.delete(testParkingLot);
 		assertEquals(0, parkingLotRepository.count());
+	}
+	
+	@Test 
+	void findByStreetAndNumberOfParkingLotWhenParkingLotExist() {
+		parkingLotRepository.save(testParkingLot);
+		assertEquals(testParkingLot, parkingLotRepository.findByStreetAndNumberOfParkingLot(VALID_STREET,VALID_NUMBROFPARKINGLOT).get(0));
 	}
 	
 
