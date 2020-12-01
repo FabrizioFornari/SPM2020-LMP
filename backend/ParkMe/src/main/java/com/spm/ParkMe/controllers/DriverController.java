@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AccountStatusUserDetailsCheck
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
@@ -118,6 +120,15 @@ public class DriverController {
 					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
 				}
 			
+	}
+
+	@GetMapping(path=DRIVER_GET_ALL_STREETS)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<List<StreetInfo>> getAllStreetInfos() {
+		List<StreetInfo> infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
+				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(), parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
+				.collect(Collectors.toList());
+		return ResponseEntity.ok(infos);
 	}
 	
 	
