@@ -13,7 +13,8 @@ public final class EndpointContants {
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED="/setStatusBooked";
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE="/setStatusFree";
 	public static final String DRIVER_GET_ALL_STREETS = "/streets";
-	
+	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED="/setStatusOccupied";
+	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED="/setStatusDisabled";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";
