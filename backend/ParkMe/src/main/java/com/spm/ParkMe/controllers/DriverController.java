@@ -101,8 +101,10 @@ public class DriverController {
 	public ResponseEntity setStatusParkingLotAsFree(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() != Status.FREE)
 				{
-				
-				parkingLotRepository.save(parkingLot);
+				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+				ParkingLot park= parks.get(0); 
+				park.setStatus(Status.FREE);
+				parkingLotRepository.save(park);
 				return new ResponseEntity(HttpStatus.OK); 
 				}else
 				{
