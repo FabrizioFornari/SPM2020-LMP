@@ -2,11 +2,7 @@
   <h5 class="modal-title">
     Parking Lot #{{ PARKINGLOT.numberOfParkingLot }} Selected
   </h5>
-  <button
-    type="button"
-    class="btn btn-danger"
-    (click)="activeModal.dismiss()"
-  >
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">
     Close
   </button>
 </div>
@@ -23,8 +19,19 @@
   <p>Street: {{ PARKINGLOT.street }}</p>
   <p>Vehicle: {{ PARKINGLOT.typeOfVehicle }}</p>
   <p>Price: ${{ PARKINGLOT.pricePerHours }}/h</p>
-  <button (click)="bookAPark(PARKINGLOT)" type="button" class="btn btn-success btn-block">
+  <button
+    (click)="bookAPark(PARKINGLOT)"
+    [disabled]="PARKINGLOT.status != 'FREE'"
+    type="button"
+    class="btn btn-success btn-block"
+  >
     Confirm Booking
   </button>
-  <button (click)="backButton()" type="button" class="btn btn-secondary btn-block">Back</button>
+  <button
+    (click)="backButton()"
+    type="button"
+    class="btn btn-secondary btn-block"
+  >
+    Back
+  </button>
 </div>
