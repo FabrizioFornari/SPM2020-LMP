@@ -8,11 +8,9 @@ import {
   Layer,
   marker,
   Popup,
-  tileLayer,
-  Tooltip,
+  tileLayer
 } from 'leaflet';
 import { ConfirmParkingLotComponent } from 'src/app/modal/confirm-parking-lot/confirm-parking-lot.component';
-import { OpenParkingLotComponent } from 'src/app/modal/open-parking-lot/open-parking-lot.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 @Component({
@@ -57,6 +55,7 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.streetsLayers = [];
     this.parkingService.driverGetStreetList().subscribe(
       (success) => {
         console.log(success);
@@ -167,9 +166,11 @@ export class MapComponent implements OnInit {
     modalRef.result.then(
       () => {
         console.log('Modal Confirm Parking Lot Closed');
+        this.ngOnInit();
       },
       () => {
         console.log('Modal Confirm Parking Lot Closed');
+        this.ngOnInit();
       }
     );
   }

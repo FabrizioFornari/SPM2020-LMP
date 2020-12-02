@@ -23,7 +23,7 @@
   <p>Street: {{ PARKINGLOT.street }}</p>
   <p>Vehicle: {{ PARKINGLOT.typeOfVehicle }}</p>
   <p>Price: ${{ PARKINGLOT.pricePerHours }}/h</p>
-  <button type="button" class="btn btn-success btn-block">
+  <button (click)="bookAPark(PARKINGLOT)" type="button" class="btn btn-success btn-block">
     Confirm Booking
   </button>
   <button type="button" class="btn btn-secondary btn-block">Back</button>

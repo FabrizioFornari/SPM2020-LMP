@@ -85,7 +85,7 @@ export class ParkingLotServiceService {
     return this.http.get(DRIVER_PARKS_API + `?street=${street}`, this.getHttpOpt());
   }
 
-  driverBookParkingLot(parkingLot): Observable<any>{
+  driverBookParkingLot(parkingLot: any): Observable<any>{
     return this.http.put(DRIVER_BOOKING, parkingLot, this.getHttpOpt());
   }
 }
