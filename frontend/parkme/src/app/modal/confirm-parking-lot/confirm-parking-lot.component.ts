@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
+
+
+const GOOGLE_MAPS = "https://www.google.com/maps/dir//";
+
 
 @Component({
   selector: 'app-confirm-parking-lot',
@@ -23,6 +26,7 @@ export class ConfirmParkingLotComponent implements OnInit {
       (success) => {
         console.log(success);
         this.activeModal.dismiss();
+        window.open(GOOGLE_MAPS + `${parking.coordinates.latitude},${parking.coordinates.longitude}`);
       },
       (error) => {
         console.log(error);
