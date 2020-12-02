@@ -27,6 +27,8 @@ public class ParkingLot {
 	
 	private Status status;
 	
+	private String username;
+	
 	/*-------Constructor------*/
 	public ParkingLot() {
 		
@@ -40,6 +42,7 @@ public class ParkingLot {
 		this.setTypeOfVehicle(typeOfVehicle);
 		this.setCoordinates(coordinates);
 		this.setStatus(Status.FREE);
+		this.setUsername(null);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -134,6 +137,14 @@ public class ParkingLot {
 				parkingLot.getStatus().equals( this.getStatus())&&
 				parkingLot.getTypeOfVehicle().equals(this.getTypeOfVehicle()));
 		
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

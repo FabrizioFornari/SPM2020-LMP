@@ -81,12 +81,13 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity  setStatusParkingLotAsBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-		if(parkingLot.getStatus() ==(Status.FREE))
+	public ResponseEntity  setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot)throws IOException {
+		if(parkingLot.getStatus() == (Status.FREE))
 				{
 				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
 				ParkingLot park= parks.get(0); 
 				park.setStatus(Status.BOOKED);
+				park.setUsername(authentication.getName());
 				parkingLotRepository.save(park);
 				return new ResponseEntity(HttpStatus.OK); 				
 				}else
@@ -104,6 +105,7 @@ public class DriverController {
 				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
 				ParkingLot park= parks.get(0); 
 				park.setStatus(Status.FREE);
+				park.setUsername(null);
 				parkingLotRepository.save(park);
 				return new ResponseEntity(HttpStatus.OK); 
 				}else
