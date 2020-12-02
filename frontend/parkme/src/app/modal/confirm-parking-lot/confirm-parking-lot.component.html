@@ -1,14 +1,30 @@
 <div class="modal-header">
-	<h4 class="modal-title">Insert Parking Lot</h4>
-	<button
-	  type="button"
-	  class="btn btn-danger"
-	  (click)="activeModal.close('Close click')"
-	>
-	  Close
-	</button>
-  </div>
-  <div class="modal-body">
-	<h1>{{STREET}}</h1>
-  </div>
-  
+  <h5 class="modal-title">
+    Parking Lot #{{ PARKINGLOT.numberOfParkingLot }} Selected
+  </h5>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    Status:
+    <span *ngIf="PARKINGLOT.status != 'FREE'" style="color: red">{{
+      PARKINGLOT.status
+    }}</span>
+    <span *ngIf="PARKINGLOT.status == 'FREE'" style="color: green">{{
+      PARKINGLOT.status
+    }}</span>
+  </p>
+  <p>Street: {{ PARKINGLOT.street }}</p>
+  <p>Vehicle: {{ PARKINGLOT.typeOfVehicle }}</p>
+  <p>Price: ${{ PARKINGLOT.pricePerHours }}/h</p>
+  <button type="button" class="btn btn-success btn-block">
+    Confirm Booking
+  </button>
+  <button type="button" class="btn btn-secondary btn-block">Back</button>
+</div>

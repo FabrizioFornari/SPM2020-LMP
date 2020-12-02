@@ -7,7 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./confirm-parking-lot.component.css']
 })
 export class ConfirmParkingLotComponent implements OnInit {
-  @Input() STREET;
+  @Input() PARKINGLOT: any;
 
   constructor(
     public activeModal: NgbActiveModal,) { }

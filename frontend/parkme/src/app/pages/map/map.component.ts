@@ -97,7 +97,7 @@ export class MapComponent implements OnInit {
         success.forEach(
           (item) => {
             if (item.status !== "DISABLED") {
-              let markerItem = this.createMarker(item).on('click', () => this.zone.run(() => this.openModalBookParking(item.street)));
+              let markerItem = this.createMarker(item).on('click', () => this.zone.run(() => this.openModalBookParking(item)));
               markers.push(markerItem);
             }
           }
@@ -161,9 +161,9 @@ export class MapComponent implements OnInit {
     }).bindTooltip(item.numberOfParkingLot.toString());
   }
 
-  openModalBookParking(street) {
+  openModalBookParking(street: any) {
     let modalRef = this.modalService.open(ConfirmParkingLotComponent);
-    modalRef.componentInstance.STREET = street;
+    modalRef.componentInstance.PARKINGLOT = street;
     modalRef.result.then(
       () => {
         console.log('Modal Confirm Parking Lot Closed');
