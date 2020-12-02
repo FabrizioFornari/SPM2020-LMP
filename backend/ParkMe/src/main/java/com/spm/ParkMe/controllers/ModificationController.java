@@ -97,6 +97,8 @@ public class ModificationController {
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with token's username."));
+		System.out.println(user.getPassword());
+		System.out.println(passwordInfo.getCurrentPassword());
 		if(encoder.matches(passwordInfo.getCurrentPassword(), user.getPassword())) {
 			user.setPassword(encoder.encode(passwordInfo.getNewPassword()));
 			repository.save(user);

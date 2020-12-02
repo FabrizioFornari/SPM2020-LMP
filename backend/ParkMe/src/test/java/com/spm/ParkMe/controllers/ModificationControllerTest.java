@@ -33,6 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.constants.UserInfoConstants.WrongObject;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
@@ -40,6 +41,7 @@ import com.spm.ParkMe.models.requestBody.ChangeMailInfo;
 import com.spm.ParkMe.models.requestBody.ChangePasswordInfo;
 import com.spm.ParkMe.models.requestBody.ChangePhoneInfo;
 import com.spm.ParkMe.models.requestBody.ChangePlateVehicleTypeInfo;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
@@ -61,6 +63,9 @@ public class ModificationControllerTest {
 	UserRepository userRepository;
 	
 	@Autowired
+	DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
 	PasswordEncoder encoder;
 	
 	private Vigilant testUser;
@@ -69,6 +74,8 @@ public class ModificationControllerTest {
 	private ChangePasswordInfo passwordInfo;
 	private ChangePhoneInfo phoneInfo;
 	private ChangePlateVehicleTypeInfo plateVehicleTypeInfo;
+	
+	private Vigilant vigilant;
 	
 	private MockMvc mockMvc;
 	
@@ -82,8 +89,11 @@ public class ModificationControllerTest {
 	@BeforeEach
 	public void setUp() {
 		userRepository.deleteAll();
-		userRepository.save(VIGILANT_OBJECT);
+		driverInfoRepository.deleteAll();
+		vigilant = new Vigilant(VIGILANT_MAIL, FIRSTNAME, LASTNAME, VALID_SSN, VALID_PHONE, VIGILANT_MAIL, encoder.encode(VALID_PASSWORD));
+		userRepository.save(vigilant);
 		userRepository.save(DRIVER_OBJECT);
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
 		
 		mailInfo = new ChangeMailInfo(VIGILANT_MAIL, "provetta@park.it");
 		passwordInfo = new ChangePasswordInfo(VALID_PASSWORD, "B");
@@ -111,7 +121,7 @@ public class ModificationControllerTest {
 	}
 	
 	@Test
-	@WithMockUser(username="VIGILANT_MAIL", roles= {"VIGILANT"})
+	@WithMockUser(username=VIGILANT_MAIL, roles= {"VIGILANT"})
 	public void emailChangeAuthorizedWithTokenAndCorrectUser() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
