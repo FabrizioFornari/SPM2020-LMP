@@ -63,6 +63,7 @@ public class DriverControllerTests {
 	@Autowired
 	HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
+	
 	@InjectMocks
     private DriverController driverController;
 	
@@ -77,7 +78,7 @@ public class DriverControllerTests {
 	private JacksonTester<Driver> jsonDriver;
 	private JacksonTester<WrongObject> jsonWrongObject;
 	private JacksonTester<ParkingLot> jsonParkingLot;
-	
+	private ParkingLot parkingLot;
 	
 		
 	
@@ -86,8 +87,9 @@ public class DriverControllerTests {
 		userRepository.deleteAll();
 		driverInfoRepository.deleteAll();
 		handicapRequestsRepository.deleteAll();
+		parkingLotRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
-		
+		parkingLot= new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, VALID_TYPEOFVEHICLE, VALID_COORDINATES);
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -182,31 +184,31 @@ public class DriverControllerTests {
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsBookedWhenStatusEqualToFree() throws Exception {
-		parkingLotRepository.save(PARKINGLOT_OBJECT);
+		
+		parkingLotRepository.save(parkingLot);
 	
-		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.content(jsonParkingLot.write(parkingLot).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
-		assertEquals(HttpStatus.OK.value(), response.getStatus());	
-		
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 	
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsFreeWhenStatusDifferentFromFree() throws Exception {
-		parkingLotRepository.save(PARKINGLOT_OBJECT);
-		PARKINGLOT_OBJECT.setStatus(Status.BOOKED);
-		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		parkingLotRepository.save(parkingLot);
+		parkingLot.setStatus(Status.BOOKED);
+		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.content(jsonParkingLot.write(parkingLot).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
@@ -216,13 +218,13 @@ public class DriverControllerTests {
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsOccupiedWhenStatusEqualToBooked() throws Exception {
-		parkingLotRepository.save(PARKINGLOT_OBJECT);
-		PARKINGLOT_OBJECT.setStatus(Status.BOOKED);
-		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		parkingLotRepository.save(parkingLot);
+		parkingLot.setStatus(Status.BOOKED);
+		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.content(jsonParkingLot.write(parkingLot).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
@@ -233,12 +235,12 @@ public class DriverControllerTests {
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsDisabledWhenStatusDifferentFromOccupiedAndBooked() throws Exception {
-		parkingLotRepository.save(PARKINGLOT_OBJECT);
-		System.out.println(PARKINGLOT_OBJECT.getStatus());
+		parkingLotRepository.save(parkingLot);
+		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED).accept(
 				MediaType.APPLICATION_JSON)
-				.content(jsonParkingLot.write(PARKINGLOT_OBJECT).getJson())
+				.content(jsonParkingLot.write(parkingLot).getJson())
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();

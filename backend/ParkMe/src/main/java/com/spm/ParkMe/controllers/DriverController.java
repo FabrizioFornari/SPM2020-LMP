@@ -3,6 +3,7 @@ package com.spm.ParkMe.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -80,26 +81,28 @@ public class DriverController {
 	
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-
+	public ResponseEntity  setStatusParkingLotAsBooked(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 		if(parkingLot.getStatus() ==(Status.FREE))
 				{
-				
-				parkingLot.setStatus(Status.BOOKED);
-				return new ResponseEntity(HttpStatus.OK); 
+				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+				ParkingLot park= parks.get(0); 
+				park.setStatus(Status.BOOKED);
+				parkingLotRepository.save(park);
+				return new ResponseEntity(HttpStatus.OK); 				
 				}else
 				{
-					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+					return new ResponseEntity(HttpStatus.CONFLICT); 						
 				}
-			
+				
 		}
-	
+
 	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE, consumes="application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity setStatusParkingLotAsFree(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() != Status.FREE)
 				{
-				parkingLot.setStatus(Status.FREE);
+				
+				parkingLotRepository.save(parkingLot);
 				return new ResponseEntity(HttpStatus.OK); 
 				}else
 				{
