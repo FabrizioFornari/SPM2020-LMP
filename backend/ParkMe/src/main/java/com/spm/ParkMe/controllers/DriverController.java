@@ -118,7 +118,10 @@ public class DriverController {
 	public ResponseEntity setStatusParkingLotAsOccupied(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
 			if(parkingLot.getStatus() == Status.BOOKED)
 				{
-				parkingLot.setStatus(Status.OCCUPIED);
+				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+				ParkingLot park= parks.get(0); 
+				park.setStatus(Status.OCCUPIED);				
+				parkingLotRepository.save(park);
 				return new ResponseEntity(HttpStatus.OK); 
 				}else
 				{
