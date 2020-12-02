@@ -126,7 +126,9 @@ public class DriverController {
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<List<StreetInfo>> getAllStreetInfos() {
 		List<StreetInfo> infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
-				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(), parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
+				.map(street -> new StreetInfo(
+						parkingLotRepository.findByStreet(street).get(0).getStreet(),
+						parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(infos);
 	}
