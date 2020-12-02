@@ -1,6 +1,5 @@
 package com.spm.ParkMe.controllers;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -37,134 +36,123 @@ import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
-
 @RestController
 @RequestMapping(DRIVER_ENDPOINT)
-@CrossOrigin(origins = "*", maxAge=3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class DriverController {
 
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Autowired
 	private DriverInfoRepository driverRepository;
-	
-	
-	@Autowired 
+
+	@Autowired
 	private ParkingLotRepository parkingLotRepository;
-	@Autowired 
+	@Autowired
 	private HandicapPermitsRequestsRepository handicapRepository;
 
-	@PostMapping(path=DRIVER_REGISTRATION_ENDPOINT,consumes = "application/json" )
+	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
 		repository.save(driver);
 		driverRepository.save(new DriverInfo(driver));
 	}
-	
-	@PostMapping(path=DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes="application/json")
+
+	@PostMapping(path = DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity uploadHandicapPermitsRequest(Authentication authentication)throws IOException {
+	public ResponseEntity uploadHandicapPermitsRequest(Authentication authentication) throws IOException {
 		String username = authentication.getName();
-		DriverInfo driverInfo = driverRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("The user is not registered in DriverInfo collection."));
-		//check if he already has handicap set
-		if(driverInfo.getHandicap()) {
+		DriverInfo driverInfo = driverRepository.findByUsername(username).orElseThrow(
+				() -> new UsernameNotFoundException("The user is not registered in DriverInfo collection."));
+		// check if he already has handicap set
+		if (driverInfo.getHandicap()) {
 			return new ResponseEntity(HttpStatus.ALREADY_REPORTED);
 		}
-		//check if the user has already sent a request
-		List<HandicapPermitsRequest> userPendingRequests =  handicapRepository.findAll().stream().filter(req -> !req.isProcessed() && req.getUsername().equals(username)).collect(Collectors.toList());
-		if(userPendingRequests.size() > 0) {
+		// check if the user has already sent a request
+		List<HandicapPermitsRequest> userPendingRequests = handicapRepository.findAll().stream()
+				.filter(req -> !req.isProcessed() && req.getUsername().equals(username)).collect(Collectors.toList());
+		if (userPendingRequests.size() > 0) {
 			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
 		handicapRepository.save(new HandicapPermitsRequest(username, System.currentTimeMillis(), false, false));
-		return new ResponseEntity(HttpStatus.OK); 
+		return new ResponseEntity(HttpStatus.OK);
 	}
-	
-	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes="application/json")
+
+	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity  setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot)throws IOException {
-		if(parkingLot.getStatus() == (Status.FREE))
-				{
-				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
-				ParkingLot park= parks.get(0); 
-				park.setStatus(Status.BOOKED);
-				park.setUsername(authentication.getName());
-				parkingLotRepository.save(park);
-				return new ResponseEntity(HttpStatus.OK); 				
-				}else
-				{
-					return new ResponseEntity(HttpStatus.CONFLICT); 						
-				}
-				
+	public ResponseEntity setStatusParkingLotAsBooked(Authentication authentication,
+			@Valid @RequestBody ParkingLot parkingLot) throws IOException {
+		if (parkingLot.getStatus() == (Status.FREE) && parkingLotRepository.findByUsername(authentication.getName()).isEmpty()) {
+			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
+					parkingLot.getNumberOfParkingLot());
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.BOOKED);
+			park.setUsername(authentication.getName());
+			parkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
 
-	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE, consumes="application/json")
-	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsFree(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-			if(parkingLot.getStatus() != Status.FREE)
-				{
-				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
-				ParkingLot park= parks.get(0); 
-				park.setStatus(Status.FREE);
-				park.setUsername(null);
-				parkingLotRepository.save(park);
-				return new ResponseEntity(HttpStatus.OK); 
-				}else
-				{
-					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
-				}
-			
-	}
-	
-	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED, consumes="application/json")
-	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsOccupied(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-			if(parkingLot.getStatus() == Status.BOOKED)
-				{
-				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
-				ParkingLot park= parks.get(0); 
-				park.setStatus(Status.OCCUPIED);				
-				parkingLotRepository.save(park);
-				return new ResponseEntity(HttpStatus.OK); 
-				}else
-				{
-					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
-				}
-			
-	}
-	
-	@PutMapping(path=DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED, consumes="application/json")
-	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsDisabled(@Valid @RequestBody ParkingLot parkingLot)throws IOException {
-			if(parkingLot.getStatus() != Status.BOOKED && parkingLot.getStatus()!= Status.OCCUPIED)
-				{
-				List<ParkingLot> parks= parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
-				ParkingLot park= parks.get(0); 
-				park.setStatus(Status.DISABLED);				
-				parkingLotRepository.save(park);
-			
-				return new ResponseEntity(HttpStatus.OK); 
-				}else
-				{
-					return new ResponseEntity(HttpStatus.BAD_REQUEST); 
-				}
 	}
 
-	@GetMapping(path=DRIVER_GET_ALL_STREETS)
+	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotAsFree(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
+		if (parkingLot.getStatus() != Status.FREE) {
+			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
+					parkingLot.getNumberOfParkingLot());
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.FREE);
+			park.setUsername(null);
+			parkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotAsOccupied(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
+		if (parkingLot.getStatus() == Status.BOOKED) {
+			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
+					parkingLot.getNumberOfParkingLot());
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.OCCUPIED);
+			parkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotAsDisabled(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
+		if (parkingLot.getStatus() != Status.BOOKED && parkingLot.getStatus() != Status.OCCUPIED) {
+			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
+					parkingLot.getNumberOfParkingLot());
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.DISABLED);
+			parkingLotRepository.save(park);
+
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(path = DRIVER_GET_ALL_STREETS)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<List<StreetInfo>> getAllStreetInfos() {
 		List<StreetInfo> infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
-				.map(street -> new StreetInfo(
-						parkingLotRepository.findByStreet(street).get(0).getStreet(),
+				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
 						parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(infos);
 	}
-	
-	
-			
-	
-	
-	
-}
-	
 
+}
