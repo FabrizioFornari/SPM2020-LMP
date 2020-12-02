@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Content,
   divIcon,
@@ -10,6 +11,8 @@ import {
   tileLayer,
   Tooltip,
 } from 'leaflet';
+import { ConfirmParkingLotComponent } from 'src/app/modal/confirm-parking-lot/confirm-parking-lot.component';
+import { OpenParkingLotComponent } from 'src/app/modal/open-parking-lot/open-parking-lot.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 @Component({
@@ -49,7 +52,8 @@ export class MapComponent implements OnInit {
 
   constructor(
     private parkingService: ParkingLotServiceService,
-    private zone: NgZone
+    private zone: NgZone,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +97,7 @@ export class MapComponent implements OnInit {
         success.forEach(
           (item) => {
             if (item.status !== "DISABLED") {
-              let markerItem = this.createMarker(item);
+              let markerItem = this.createMarker(item).on('click', () => this.zone.run(() => this.openModalBookParking(item.street)));
               markers.push(markerItem);
             }
           }
@@ -155,5 +159,18 @@ export class MapComponent implements OnInit {
         iconAnchor: [15, 42],
       }),
     }).bindTooltip(item.numberOfParkingLot.toString());
+  }
+
+  openModalBookParking(street) {
+    let modalRef = this.modalService.open(ConfirmParkingLotComponent);
+    modalRef.componentInstance.STREET = street;
+    modalRef.result.then(
+      () => {
+        console.log('Modal Confirm Parking Lot Closed');
+      },
+      () => {
+        console.log('Modal Confirm Parking Lot Closed');
+      }
+    );
   }
 }
