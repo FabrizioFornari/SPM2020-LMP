@@ -169,8 +169,7 @@ export class MapComponent implements OnInit {
         this.ngOnInit();
       },
       () => {
-        console.log('Modal Confirm Parking Lot Closed');
-        this.ngOnInit();
+        console.log('Modal Confirm Parking Lot Dismissed');
       }
     );
   }

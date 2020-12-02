@@ -25,7 +25,7 @@ export class ConfirmParkingLotComponent implements OnInit {
     this.parkingService.driverBookParkingLot(parking).subscribe(
       (success) => {
         console.log(success);
-        this.activeModal.dismiss();
+        this.activeModal.close();
         window.open(GOOGLE_MAPS + `${parking.coordinates.latitude},${parking.coordinates.longitude}`);
       },
       (error) => {
@@ -33,5 +33,9 @@ export class ConfirmParkingLotComponent implements OnInit {
         this.activeModal.dismiss();
       }
     );
+  }
+
+  backButton(){
+    this.activeModal.dismiss();
   }
 }
