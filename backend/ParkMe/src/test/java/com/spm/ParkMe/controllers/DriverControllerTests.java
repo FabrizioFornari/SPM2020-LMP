@@ -93,6 +93,7 @@ public class DriverControllerTests {
 		driverInfoRepository.deleteAll();
 		handicapRequestsRepository.deleteAll();
 		parkingLotRepository.deleteAll();
+		parkingLotBookingRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
 		parkingLot= new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, CAR, VALID_COORDINATES);
 		mockMvc = MockMvcBuilders
@@ -202,6 +203,9 @@ public class DriverControllerTests {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertEquals(1, parkingLotBookingRepository.count());
+		assertEquals(1, parkingLotBookingRepository.findByUsername(DRIVER_MAIL).size());
+		assertEquals(DRIVER_MAIL, parkingLotBookingRepository.findByUsername(DRIVER_MAIL).get(0).getUsername());
 	}
 	
 	
@@ -210,7 +214,6 @@ public class DriverControllerTests {
 	public void setStatusParkingLotAsFreeWhenStatusDifferentFromFree() throws Exception {
 		parkingLotRepository.save(parkingLot);
 		parkingLot.setStatus(Status.BOOKED);
-		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE).accept(
 				MediaType.APPLICATION_JSON)
@@ -226,7 +229,6 @@ public class DriverControllerTests {
 	public void setStatusParkingLotAsOccupiedWhenStatusEqualToBooked() throws Exception {
 		parkingLotRepository.save(parkingLot);
 		parkingLot.setStatus(Status.BOOKED);
-		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED).accept(
 				MediaType.APPLICATION_JSON)
@@ -242,7 +244,6 @@ public class DriverControllerTests {
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsDisabledWhenStatusDifferentFromOccupiedAndBooked() throws Exception {
 		parkingLotRepository.save(parkingLot);
-		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED).accept(
 				MediaType.APPLICATION_JSON)

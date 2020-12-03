@@ -23,7 +23,10 @@ public class ParkingLotBooking {
 	public ParkingLotBooking() {}
 	
 	public ParkingLotBooking(String street, Integer numberOfParkingLot, String username, long timestamp) {
-		
+		this.setStreet(street);
+		this.setNumberOfParkingLot(numberOfParkingLot);
+		this.setUsername(username);
+		this.setTimestamp(timestamp);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
