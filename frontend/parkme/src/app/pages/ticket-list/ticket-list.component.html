@@ -1,9 +1,21 @@
 <div class="wrapper">
-  <!-- <div class="current-booking"><h1>CURRENT BOOKING</h1></div> -->
-  <div (click)="newBooking()" class="new-booking">
+  <div class="current-booking">
+    <div class="info">
+      <p>Street: Via Test</p>
+      <p>Parking #2435</p>
+      <p>Booking Date: 04/12/2020 10:45</p>
+    </div>
+    <div class="buttons">
+      <button (click)="confirm()" type="button" class="btn btn-success btn-lg">Confirm</button>
+      <button (click)="maps()" type="button" class="btn btn-info btn-lg">Maps</button>
+      <button (click)="cancel()" type="button" class="btn btn-danger btn-lg">Cancel</button>
+    </div>
+  </div>
+
+  <!-- <div (click)="newBooking()" class="new-booking">
     New Booking
     <i class="material-icons"> add_to_photos </i>
-  </div>
+  </div> -->
 
   <div class="ticket-list">
     <div class="table-responsive">
@@ -45,29 +57,15 @@
             <td>2453</td>
             <td>04/12/2020 10:45</td>
             <td>€3.90</td>
-		  </tr>
-		  <tr (click)="ticketClick()">
-            <th scope="row">9</th>
-            <td>Via Test</td>
-            <td>2453</td>
-            <td>04/12/2020 10:45</td>
-            <td>€3.90</td>
-		  </tr>
-		  <tr (click)="ticketClick()">
-            <th scope="row">10</th>
-            <td>Via Test</td>
-            <td>2453</td>
-            <td>04/12/2020 10:45</td>
-            <td>€3.90</td>
-		  </tr>
-		  <tr (click)="ticketClick()">
+          </tr>
+          <tr (click)="ticketClick()">
             <th scope="row">11</th>
             <td>Via Test</td>
             <td>2453</td>
             <td>04/12/2020 10:45</td>
             <td>€3.90</td>
-		  </tr>
-		  <tr (click)="ticketClick()">
+          </tr>
+          <tr (click)="ticketClick()">
             <th scope="row">12</th>
             <td>Via Test</td>
             <td>2453</td>

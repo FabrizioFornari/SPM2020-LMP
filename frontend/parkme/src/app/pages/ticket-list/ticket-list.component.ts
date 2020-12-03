@@ -20,4 +20,16 @@ export class TicketListComponent implements OnInit {
     alert("Row Clicked");
   }
 
+  confirm(){
+    alert("Confirmed");
+  }
+
+  maps(){
+    alert("Maps");
+  }
+
+  cancel(){
+    alert("Cancelled");
+  }
+
 }
