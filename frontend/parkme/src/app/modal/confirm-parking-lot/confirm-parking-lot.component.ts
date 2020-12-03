@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 const GOOGLE_MAPS = "https://www.google.com/maps/dir//";
 
@@ -16,7 +16,8 @@ export class ConfirmParkingLotComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private parkingService: ParkingLotServiceService
+    private parkingService: ParkingLotServiceService,
+    private toastrService: ToastrService,
   ) {}
 
   ngOnInit(): void {}
@@ -30,6 +31,9 @@ export class ConfirmParkingLotComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        if (error.status == 409) {
+          this.toastrService.warning('You have already book a spot!');
+        }
         this.activeModal.dismiss();
       }
     );
