@@ -24,6 +24,7 @@ import { OpenParkingLotComponent } from './modal/open-parking-lot/open-parking-l
 import { MapComponent } from './pages/map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ConfirmParkingLotComponent } from './modal/confirm-parking-lot/confirm-parking-lot.component';
+import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ConfirmParkingLotComponent } from './modal/confirm-parking-lot/confirm-
     OpenParkingLotComponent,
     MapComponent,
     ConfirmParkingLotComponent,
+    TicketListComponent,
   ],
   imports: [
     BrowserModule,

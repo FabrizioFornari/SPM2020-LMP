@@ -1,0 +1,81 @@
+<div class="wrapper">
+  <!-- <div class="current-booking"><h1>CURRENT BOOKING</h1></div> -->
+  <div (click)="newBooking()" class="new-booking">
+    New Booking
+    <i class="material-icons"> add_to_photos </i>
+  </div>
+
+  <div class="ticket-list">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr (click)="ticketClick()">
+            <th scope="col">#</th>
+            <th scope="col">Street</th>
+            <th scope="col">Parking#</th>
+            <th scope="col">Expiration</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="ticketClick()">
+            <th scope="row">1</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+          </tr>
+          <tr (click)="ticketClick()">
+            <th scope="row">2</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+          </tr>
+          <tr (click)="ticketClick()">
+            <th scope="row">3</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+          </tr>
+          <tr (click)="ticketClick()">
+            <th scope="row">8</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+		  </tr>
+		  <tr (click)="ticketClick()">
+            <th scope="row">9</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+		  </tr>
+		  <tr (click)="ticketClick()">
+            <th scope="row">10</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+		  </tr>
+		  <tr (click)="ticketClick()">
+            <th scope="row">11</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+		  </tr>
+		  <tr (click)="ticketClick()">
+            <th scope="row">12</th>
+            <td>Via Test</td>
+            <td>2453</td>
+            <td>04/12/2020 10:45</td>
+            <td>€3.90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

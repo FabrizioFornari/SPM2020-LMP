@@ -1,0 +1,64 @@
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.current-booking {
+  margin-top: 2rem;
+  height: 20%;
+  width: 80%;
+  background: grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border-radius: 15px;
+}
+
+.new-booking {
+  margin-top: 2rem;
+  height: 20%;
+  width: 60%;
+  background: #18a558;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #c4dbe0;
+  border: 5px solid #c4dbe0;
+}
+
+.new-booking:hover {
+	background: #c4dbe0;
+	cursor: pointer;
+	color: #18a558;
+	border: 5px solid #18a558;
+  }
+
+
+.material-icons {
+  margin-left: 1rem;
+  font-size: 48px;
+}
+
+.ticket-list {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  height: 80%;
+  width: 80%;
+  background: #c4dbe0;
+  border-radius: 15px;
+  overflow-y: auto;
+  text-align: center;
+  cursor: pointer;
+}
