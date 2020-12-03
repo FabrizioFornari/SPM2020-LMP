@@ -39,6 +39,7 @@ import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -60,6 +61,10 @@ public class DriverControllerTests {
 	
 	@Autowired
 	ParkingLotRepository parkingLotRepository;
+	
+	@Autowired
+	ParkingLotBookingRepository parkingLotBookingRepository;
+	
 	@Autowired
 	HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
@@ -89,7 +94,7 @@ public class DriverControllerTests {
 		handicapRequestsRepository.deleteAll();
 		parkingLotRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
-		parkingLot= new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, VALID_TYPEOFVEHICLE, VALID_COORDINATES);
+		parkingLot= new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, CAR, VALID_COORDINATES);
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -185,9 +190,10 @@ public class DriverControllerTests {
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void setStatusParkingLotAsBookedWhenStatusEqualToFree() throws Exception {
 		
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
+		
 		parkingLotRepository.save(parkingLot);
 	
-		System.out.println(parkingLot.getStatus());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
 				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED).accept(
 				MediaType.APPLICATION_JSON)

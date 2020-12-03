@@ -24,7 +24,7 @@ public class ParkingLotRepositoryTest {
 	@Autowired 
 	ParkingLotRepository parkingLotRepository;
 
-	private ParkingLot testParkingLot = new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, VALID_TYPEOFVEHICLE, VALID_COORDINATES);
+	private ParkingLot testParkingLot = new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, CAR, VALID_COORDINATES);
 
 	@BeforeEach
 	public void setUp() {

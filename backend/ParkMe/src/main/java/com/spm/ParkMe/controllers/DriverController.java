@@ -87,7 +87,7 @@ public class DriverController {
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<String> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if (parkingLot.getStatus() == (Status.FREE) && !parkingLotBookingRepository.existsByUsername(authentication.getName()) && parkingLot.getTypeOfVehicle() == driverRepository.findByUsername(authentication.getName()).get().getVehicleType()) {
+		if (parkingLot.getStatus() == (Status.FREE) && !parkingLotBookingRepository.existsByUsername(authentication.getName()) && parkingLot.getTypeOfVehicle().equals(driverRepository.findByUsername(authentication.getName()).get().getVehicleType())) {
 			//set parking lot status as booked
 			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
 					parkingLot.getNumberOfParkingLot());

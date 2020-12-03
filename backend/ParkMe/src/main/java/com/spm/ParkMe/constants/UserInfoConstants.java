@@ -29,7 +29,7 @@ public final class UserInfoConstants {
 	public static final String INVALID_PHONE = "12313";
 	public static final String VALID_PLATE = "AA000AA";
 	public static final String INVALID_PLATE = "MYPLATEISAWESOME";
-	public static final String VEHICLE_TYPE = "CAR";
+	public static final String VEHICLE_TYPE = "4 Wheels Standard Vehicle";
 	public static final String USERNAME = VALID_EMAIL;
 	public static final String FIRSTNAME = "Name";
 	public static final String LASTNAME = "Surname";

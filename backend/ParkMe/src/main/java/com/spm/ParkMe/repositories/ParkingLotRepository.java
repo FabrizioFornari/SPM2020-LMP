@@ -17,5 +17,4 @@ public interface ParkingLotRepository extends MongoRepository<ParkingLot, String
 	@Query("{'street':?0, 'numberOfParkingLot': ?1}")
 	public List<ParkingLot> findByStreetAndNumberOfParkingLot(String street, int numberOfParkingLot);
 	
-	public List<ParkingLot> findByUsername(String username);
 }
