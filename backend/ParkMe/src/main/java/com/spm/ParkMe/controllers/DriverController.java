@@ -28,10 +28,12 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
@@ -49,6 +51,10 @@ public class DriverController {
 
 	@Autowired
 	private ParkingLotRepository parkingLotRepository;
+	
+	@Autowired
+	private ParkingLotBookingRepository parkingLotBookingRepository;
+	
 	@Autowired
 	private HandicapPermitsRequestsRepository handicapRepository;
 
@@ -80,16 +86,20 @@ public class DriverController {
 
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsBooked(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if (parkingLot.getStatus() == (Status.FREE)) {
+	public ResponseEntity<String> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
+		if (parkingLot.getStatus() == (Status.FREE) && !parkingLotBookingRepository.existsByUsername(authentication.getName()) && parkingLot.getTypeOfVehicle() == driverRepository.findByUsername(authentication.getName()).get().getVehicleType()) {
+			//set parking lot status as booked
 			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
 					parkingLot.getNumberOfParkingLot());
 			ParkingLot park = parks.get(0);
 			park.setStatus(Status.BOOKED);
 			parkingLotRepository.save(park);
-			return new ResponseEntity(HttpStatus.OK);
+			//create a booking object
+			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis());
+			parkingLotBookingRepository.save(booking);
+			return new ResponseEntity<String>("Parking Lot successfully booked", HttpStatus.OK);
 		} else {
-			return new ResponseEntity(HttpStatus.CONFLICT);
+			return new ResponseEntity<String>("Can not book this parking lot. Problems can be:\n-Parking Lot is already booked/occupied\n-You already booked a parking lot\n-You have not a vehicle type compatible with the parking lot.", HttpStatus.CONFLICT);
 		}
 
 	}
