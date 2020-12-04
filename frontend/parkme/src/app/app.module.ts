@@ -26,6 +26,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ConfirmParkingLotComponent } from './modal/confirm-parking-lot/confirm-parking-lot.component';
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
 import { ModalBookingModeChoiceComponent } from './modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
+import { CoordinatesModalComponent } from './modal/coordinates-modal/coordinates-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ModalBookingModeChoiceComponent } from './modal/modal-booking-mode-choi
     ConfirmParkingLotComponent,
     TicketListComponent,
     ModalBookingModeChoiceComponent,
+    CoordinatesModalComponent,
   ],
   imports: [
     BrowserModule,

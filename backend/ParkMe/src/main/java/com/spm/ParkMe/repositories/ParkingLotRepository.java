@@ -17,4 +17,7 @@ public interface ParkingLotRepository extends MongoRepository<ParkingLot, String
 	@Query("{'street':?0, 'numberOfParkingLot': ?1}")
 	public List<ParkingLot> findByStreetAndNumberOfParkingLot(String street, int numberOfParkingLot);
 	
+	@Query("{'isHandicapParkingLot':?0, 'typeOfVehicle':?1, 'status': 'FREE'}")
+	public List<ParkingLot> findCompatibleFreeParkingLots(boolean isHandicap, String vehicleType);
+	
 }

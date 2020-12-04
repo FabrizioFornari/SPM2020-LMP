@@ -310,4 +310,21 @@ public class DriverControllerTests {
 	
 	}
 	
+	public void getNearestParkingLot() throws Exception {
+		
+
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
+		
+		parkingLotRepository.save(PARKING_1);
+		parkingLotRepository.save(PARKING_4);
+		parkingLotRepository.save(PARKING_6);
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				DRIVER_ENDPOINT + DRIVER_GET_NEAREST_PARKING_LOT + "?latitude=43.13855141977651&longitude=13.067303960460176");
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		ParkingLot p = jsonParkingLot.parse(response.getContentAsString()).getObject();
+		assertEquals(PARKING_6, p);
+	}
 }

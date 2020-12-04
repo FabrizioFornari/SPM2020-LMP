@@ -3,6 +3,8 @@
   class="map"
   leaflet
   [leafletOptions]="options"
+  [leafletZoom]="customZoom"
+  [leafletCenter]="customCenter"
   [leafletLayersControl]="layersControl"
   [leafletLayers]="streetsLayers"
   (leafletClick)="automaticSearchFromClick($event)"
