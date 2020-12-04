@@ -36,6 +36,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -252,6 +253,35 @@ public class DriverControllerTests {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());	
+		
+	}
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void getParkingLotBookingReturnsOK() throws Exception {
+		
+		parkingLotRepository.save(parkingLot);
+		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates()));
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				DRIVER_ENDPOINT + DRIVER_GET_CURRENT_BOOKING).accept(
+				MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());	
+		
+	}
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void getParkingLotBookingReturnsNotFound() throws Exception {
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				DRIVER_ENDPOINT + DRIVER_GET_CURRENT_BOOKING).accept(
+				MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
 		
 	}
 }

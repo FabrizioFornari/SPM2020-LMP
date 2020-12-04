@@ -174,6 +174,7 @@ public class DriverController {
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<ParkingLotBooking> getCurrentBooking(Authentication authentication) {
 		List<ParkingLotBooking> bookings = parkingLotBookingRepository.findByUsername(authentication.getName());
+		System.out.println(bookings.size());
 		if(bookings.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
