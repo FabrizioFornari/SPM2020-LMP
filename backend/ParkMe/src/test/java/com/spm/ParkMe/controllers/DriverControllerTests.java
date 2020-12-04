@@ -296,7 +296,18 @@ public class DriverControllerTests {
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 		
-	}
+	}	
 	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void deleteParkingLotBookingReturnsNotFound() throws Exception {
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
+				DRIVER_ENDPOINT + DRIVER_DELETE_CURRENT_BOOKING);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+		
+	
+	}
 	
 }
