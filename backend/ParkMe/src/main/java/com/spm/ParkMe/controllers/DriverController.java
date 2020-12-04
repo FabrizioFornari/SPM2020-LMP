@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Status;
@@ -182,5 +184,29 @@ public class DriverController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(bookings.get(0));
+	}
+	
+	@GetMapping(path = DRIVER_GET_NEAREST_PARKING_LOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<ParkingLot> getNearestParkingLot(Authentication authentication, @NotNull @RequestParam double latitude, @NotNull @RequestParam double longitude) {
+		DriverInfo driverInfo = driverRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("Driver info Not Found with username: " + authentication.getName()));
+		List<ParkingLot> compatibleParkingLots = parkingLotRepository.findCompatibleFreeParkingLots(driverInfo.getHandicap(), driverInfo.getVehicleType());
+		if(compatibleParkingLots.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		else {
+			double min = 10000000.0;
+			int index = 0;
+			for(int i = 0; i < compatibleParkingLots.size(); i++) {
+				double parkLat = Double.parseDouble(compatibleParkingLots.get(0).getCoordinates().getLatitude());
+				double parkLng = Double.parseDouble(compatibleParkingLots.get(0).getCoordinates().getLongitude());
+				double distance = Math.hypot(Math.abs(latitude - parkLat), Math.abs(longitude - parkLng));
+				if(distance < min) {
+					min = distance;
+					index = i;
+				}
+			}
+			return ResponseEntity.ok(compatibleParkingLots.get(index));
+		}
 	}
 }
