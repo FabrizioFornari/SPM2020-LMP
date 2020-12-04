@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { ModalBookingModeChoiceComponent } from 'src/app/modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
@@ -17,7 +18,8 @@ export class TicketListComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private parkingService: ParkingLotServiceService
+    private parkingService: ParkingLotServiceService,
+    private toastrService: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,17 @@ export class TicketListComponent implements OnInit {
   }
 
   cancel() {
-    alert('Cancelled');
+    this.parkingService.driverCancelBooking().subscribe(
+      (success) => {
+        console.log(success);
+        this.isCurrentBooking = false;
+        this.toastrService.success('Successfully Deleted');
+        this.ngOnInit();
+      },
+      (error) => {
+        console.log(error);
+        this.toastrService.warning('Error while deleting Booking');
+      }
+    )
   }
 }

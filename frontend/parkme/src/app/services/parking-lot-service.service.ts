@@ -10,6 +10,7 @@ const DRIVER_PARKS_API = "http://localhost:8080/api/parkingManager/parkingLots/g
 const DRIVER_BOOKING = "http://localhost:8080/api/driver/setStatusBooked";
 const DRIVER_CURRENT_BOOKING = "http://localhost:8080/api/driver/booking";
 const DRIVER_NEAREST_PARKING = "http://localhost:8080/api/driver/nearestParkingLot";
+const DRIVER_CANCEL = "http://localhost:8080/api/driver/deleteBooking";
 
 @Injectable({
   providedIn: 'root',
@@ -97,5 +98,9 @@ export class ParkingLotServiceService {
 
   driverGetNearestParkingLot(lat: number, lng: number): Observable<any>{
     return this.http.get(`${DRIVER_NEAREST_PARKING}?latitude=${lat}&longitude=${lng}`, this.getHttpOpt());
+  }
+
+  driverCancelBooking(): Observable<any> {
+    return this.http.delete(DRIVER_CANCEL, this.getHttpOpt());
   }
 }
