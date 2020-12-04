@@ -284,4 +284,19 @@ public class DriverControllerTests {
 		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
 		
 	}
+	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void deleteParkingLotBookingReturnsOK() throws Exception {
+		parkingLotRepository.save(parkingLot);
+		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates()));
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
+				DRIVER_ENDPOINT + DRIVER_DELETE_CURRENT_BOOKING);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		
+	}
+	
+	
 }

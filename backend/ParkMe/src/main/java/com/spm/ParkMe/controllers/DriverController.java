@@ -184,7 +184,7 @@ public class DriverController {
 		return ResponseEntity.ok(bookings.get(0));
 	}
 	
-	@DeleteMapping(path= DRIVER_DELETE_CURRENT_BOOKING, consumes = "application/json")
+	@DeleteMapping(path= DRIVER_DELETE_CURRENT_BOOKING)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity  deleteParkingLotBooking(Authentication authentication){
 		String username= authentication.getName();
