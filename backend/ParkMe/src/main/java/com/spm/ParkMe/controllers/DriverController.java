@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AccountStatusUserDetailsCheck
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -177,10 +178,31 @@ public class DriverController {
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<ParkingLotBooking> getCurrentBooking(Authentication authentication) {
 		List<ParkingLotBooking> bookings = parkingLotBookingRepository.findByUsername(authentication.getName());
-		System.out.println(bookings.size());
 		if(bookings.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(bookings.get(0));
+	}
+	
+	@DeleteMapping(path= DRIVER_DELETE_CURRENT_BOOKING, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity  deleteParkingLotBooking(Authentication authentication){
+		String username= authentication.getName();
+		List<ParkingLotBooking> bookings= parkingLotBookingRepository.findByUsername(username);
+		if(!bookings.isEmpty()) {
+			ParkingLotBooking booking= bookings.get(0);
+			Integer numberOfParkingLot=booking.getNumberOfParkingLot();
+			String street=booking.getStreet();
+			parkingLotBookingRepository.delete(booking);
+			List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			ParkingLot parkingLot= parkingLots.get(0);
+			parkingLot.setStatus(Status.FREE);
+			parkingLotRepository.save(parkingLot);
+			return new ResponseEntity(HttpStatus.OK);
+		}else
+			return new ResponseEntity(HttpStatus.NOT_FOUND); 
+		 
+		
+		
 	}
 }
