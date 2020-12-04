@@ -1,17 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBookingModeChoiceComponent } from 'src/app/modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
+import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
+
+const GOOGLE_MAPS = 'https://www.google.com/maps/dir//';
 
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
-  styleUrls: ['./ticket-list.component.css']
+  styleUrls: ['./ticket-list.component.css'],
 })
 export class TicketListComponent implements OnInit {
+  isCurrentBooking: boolean = false;
 
-  constructor(private modalService: NgbModal) { }
+  currentBooking;
+
+  constructor(
+    private modalService: NgbModal,
+    private parkingService: ParkingLotServiceService
+  ) {}
 
   ngOnInit(): void {
+    this.getCurrentBooking();
   }
 
   newBooking() {
@@ -26,21 +36,37 @@ export class TicketListComponent implements OnInit {
     );
   }
 
-
-  ticketClick(){
-    alert("Row Clicked");
+  getCurrentBooking() {
+    this.parkingService.driverGetCurrentBooking().subscribe(
+      (success) => {
+        console.log(success);
+        this.currentBooking = success;
+        this.currentBooking.timestamp = `${new Date(
+          this.currentBooking.timestamp
+        ).toLocaleDateString('it-IT')} (${new Date(
+          this.currentBooking.timestamp
+        ).toLocaleTimeString('it-IT')})`;
+        this.isCurrentBooking = true;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  confirm(){
-    alert("Confirmed");
+  ticketClick() {
+    alert('Row Clicked');
   }
 
-  maps(){
-    alert("Maps");
+  confirm() {
+    alert('Confirmed');
   }
 
-  cancel(){
-    alert("Cancelled");
+  maps(lat: any, long: any) {
+    window.open(GOOGLE_MAPS + `${lat},${long}`);
   }
 
+  cancel() {
+    alert('Cancelled');
+  }
 }

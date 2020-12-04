@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 import { ToastrService } from 'ngx-toastr';
-
-const GOOGLE_MAPS = 'https://www.google.com/maps/dir//';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-parking-lot',
@@ -16,7 +15,8 @@ export class ConfirmParkingLotComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     private parkingService: ParkingLotServiceService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -26,10 +26,7 @@ export class ConfirmParkingLotComponent implements OnInit {
       (success) => {
         this.toastrService.success(success.message);
         this.activeModal.close();
-        window.open(
-          GOOGLE_MAPS +
-            `${parking.coordinates.latitude},${parking.coordinates.longitude}`
-        );
+        this.router.navigate(['/ticket-list']);
       },
       (error) => {
         console.log(error);

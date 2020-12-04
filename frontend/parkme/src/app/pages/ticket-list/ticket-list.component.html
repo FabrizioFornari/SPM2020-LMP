@@ -1,18 +1,33 @@
 <div class="wrapper">
-  <!-- <div class="current-booking">
+  <div *ngIf="isCurrentBooking" class="current-booking">
     <div class="info">
-      <p>Street: Via Test</p>
-      <p>Parking #2435</p>
-      <p>Booking Date: 04/12/2020 10:45</p>
+      <p>Street: {{ currentBooking.street }}</p>
+      <p>Parking #{{ currentBooking.numberOfParkingLot }}</p>
+      <p>Booking Date: {{ currentBooking.timestamp }}</p>
     </div>
     <div class="buttons">
-      <button (click)="confirm()" type="button" class="btn btn-success btn-lg">Confirm</button>
-      <button (click)="maps()" type="button" class="btn btn-info btn-lg">Maps</button>
-      <button (click)="cancel()" type="button" class="btn btn-danger btn-lg">Cancel</button>
+      <button (click)="confirm()" type="button" class="btn btn-success btn-lg">
+        Confirm
+      </button>
+      <button
+        (click)="
+          maps(
+            currentBooking.coordinates.latitude,
+            currentBooking.coordinates.longitude
+          )
+        "
+        type="button"
+        class="btn btn-info btn-lg"
+      >
+        Maps
+      </button>
+      <button (click)="cancel()" type="button" class="btn btn-danger btn-lg">
+        Cancel
+      </button>
     </div>
-  </div> -->
+  </div>
 
-  <div (click)="newBooking()" class="new-booking">
+  <div *ngIf="!isCurrentBooking" (click)="newBooking()" class="new-booking">
     New Booking
     <i class="material-icons"> add_to_photos </i>
   </div>
