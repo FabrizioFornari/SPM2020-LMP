@@ -13,12 +13,12 @@ export class ModalBookingModeChoiceComponent implements OnInit {
   ngOnInit(): void {}
 
   manual() {
-    this.router.navigate(['/map', {state: {automatic: false}}]);
+    this.router.navigateByUrl('/map', { state: { automatic: false } });
     this.activeModal.dismiss();
   }
 
   automatic() {
-    this.router.navigate(['/map', {state: {automatic: true}}]);
+    this.router.navigateByUrl('/map', { state: { automatic: true } });
     this.activeModal.dismiss();
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Content,
@@ -48,6 +49,7 @@ export class MapComponent implements OnInit {
 
   streetsLayers = [];
 
+
   constructor(
     private parkingService: ParkingLotServiceService,
     private zone: NgZone,
@@ -55,6 +57,7 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(history.state.automatic);
     this.streetsLayers = [];
     this.parkingService.driverGetStreetList().subscribe(
       (success) => {
