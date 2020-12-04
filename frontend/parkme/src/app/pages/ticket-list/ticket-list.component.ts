@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBookingModeChoiceComponent } from 'src/app/modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
 
 @Component({
   selector: 'app-ticket-list',
@@ -7,14 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
-  newBooking(){
-    alert('NEW BOOKING');
+  newBooking() {
+    const modalRef = this.modalService.open(ModalBookingModeChoiceComponent);
+    modalRef.result.then(
+      () => {
+        console.log('Modal  Closed');
+      },
+      () => {
+        console.log('Modal  Dismissed');
+      }
+    );
   }
+
 
   ticketClick(){
     alert("Row Clicked");
