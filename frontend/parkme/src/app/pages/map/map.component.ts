@@ -40,11 +40,14 @@ export class MapComponent implements OnInit {
     },
   };
 
+  customZoom: number = 16;
+  customCenter = latLng([43.14367132147207, 13.067582838096936]);
+
   // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
   options = {
     layers: [this.streetMaps],
-    zoom: 16,
-    center: latLng([43.14367132147207, 13.067582838096936]),
+    zoom: this.customZoom,
+    center: this.customCenter,
   };
 
   streetsLayers = [];
@@ -86,8 +89,11 @@ export class MapComponent implements OnInit {
               .bindTooltip(item.street.toString())
               .on('click', () =>
                 this.automatic
-                  ? this.automaticSearch(item.coordinates.latitude, item.coordinates.longitude)
-                  : this.getParks(item.street)
+                  ? this.automaticSearch(
+                      item.coordinates.latitude,
+                      item.coordinates.longitude
+                    )
+                  : this.getParks(item)
               );
             this.streetsLayers.push(markerItem);
           }
@@ -99,19 +105,25 @@ export class MapComponent implements OnInit {
     );
   }
 
-  automaticSearchFromClick(e){
+  automaticSearchFromClick(e) {
     if (this.automatic) {
       this.automaticSearch(e.latlng.lat, e.latlng.lng);
     } else return null;
   }
 
-  automaticSearch(latitude, longitude) {
+  automaticSearch(latitude: number, longitude: number) {
     alert(`${latitude} / ${longitude}`);
   }
 
-
-  getParks(street: string | ((layer: Layer) => Content) | HTMLElement | Popup) {
-    this.parkingService.driverGetParkingLots(street).subscribe(
+  getParks(streetInfo: { coordinates: any; street: any; }) {
+    this.zone.run(() => {
+      this.customZoom = 18.5;
+      this.customCenter = latLng([
+        streetInfo.coordinates.latitude,
+        streetInfo.coordinates.longitude,
+      ]);
+    });
+    this.parkingService.driverGetParkingLots(streetInfo.street).subscribe(
       (success) => {
         console.log(success);
         let markers = [];
