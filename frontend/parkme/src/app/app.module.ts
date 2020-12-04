@@ -56,7 +56,7 @@ import { ModalBookingModeChoiceComponent } from './modal/modal-booking-mode-choi
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      timeOut: 1500,
+      timeOut: 5000,
       preventDuplicates: true,
       positionClass: 'toast-top-right',
     }),

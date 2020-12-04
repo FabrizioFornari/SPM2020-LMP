@@ -17,6 +17,7 @@ import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -42,6 +43,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	private ParkingLotRepository parkingLotRepository;
 	
 	@Autowired
+	private ParkingLotBookingRepository parkingLotBookingRepository;
+	
+	@Autowired
 	PasswordEncoder encoder;
 	
 
@@ -61,7 +65,7 @@ public class ParkMeApplication implements CommandLineRunner {
 				new User("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), Roles.ROLE_DRIVER),
 				new User("flash@park.it", "Andrea", "Falaschini", "ZZZZZZ10A01A000Z", "+39 333 3333333","flash@park.it",  encoder.encode("Flash"), Roles.ROLE_PARKING_MANAGER),
 				new User("fusaro@turbomondialismo.it","Diego", "Fusaro", "ZZZZZZ10A01A000Z", "+39 333 3333333","fusaro@turbomondialismo.it", encoder.encode("Fusaro"), Roles.ROLE_ADMIN), };
-		Driver driver = new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "car");
+		Driver driver = new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "4 Wheels Standard Vehicle");
 		Driver driver2 = new Driver("gino@park.it", "Gino", "Ginetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","gino@park.it",  encoder.encode("Gino"), "BB000AA", "car");
 		repository.deleteAll();
 		for (User user : users) {
@@ -88,6 +92,8 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotRepository.save(PARKING_5);
 		parkingLotRepository.save(PARKING_6);
 		parkingLotRepository.save(PARKING_7);
+		
+		parkingLotBookingRepository.deleteAll();
 	}
 
 }

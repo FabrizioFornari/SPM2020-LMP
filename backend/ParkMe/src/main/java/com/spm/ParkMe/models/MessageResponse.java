@@ -6,7 +6,7 @@ public class MessageResponse {
 
 	//Costructor
 	public MessageResponse(String message) {
-		message= this.message;
+		this.message = message;
 		
 	}
 	

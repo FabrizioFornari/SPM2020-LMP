@@ -27,6 +27,7 @@ import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.User;
@@ -86,7 +87,7 @@ public class DriverController {
 
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity<String> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
+	public ResponseEntity<?> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
 		if(parkingLot.getStatus() != (Status.FREE)) {
 			return new ResponseEntity<String>("Parking Lot is already booked or occupied.", HttpStatus.CONFLICT);
 		}
@@ -106,7 +107,7 @@ public class DriverController {
 			//create a booking object
 			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis());
 			parkingLotBookingRepository.save(booking);
-			return ResponseEntity.ok("Parking Lot successfully booked");
+			return ResponseEntity.ok(new MessageResponse("Parking Lot Successfully Booked"));
 		}
 
 	}
