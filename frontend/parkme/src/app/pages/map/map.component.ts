@@ -12,6 +12,7 @@ import {
   tileLayer,
 } from 'leaflet';
 import { ConfirmParkingLotComponent } from 'src/app/modal/confirm-parking-lot/confirm-parking-lot.component';
+import { CoordinatesModalComponent } from 'src/app/modal/coordinates-modal/coordinates-modal.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 @Component({
@@ -112,7 +113,7 @@ export class MapComponent implements OnInit {
   }
 
   automaticSearch(latitude: number, longitude: number) {
-    alert(`${latitude} / ${longitude}`);
+    this.zone.run( () => this.openModalCoordinates(latitude, longitude));
   }
 
   getParks(streetInfo: { coordinates: any; street: any; }) {
@@ -203,6 +204,20 @@ export class MapComponent implements OnInit {
       },
       () => {
         console.log('Modal Confirm Parking Lot Dismissed');
+      }
+    );
+  }
+
+  openModalCoordinates(lat: number, lng: number) {
+    let modalRef = this.modalService.open(CoordinatesModalComponent);
+    modalRef.componentInstance.LAT = lat;
+    modalRef.componentInstance.LNG = lng;
+    modalRef.result.then(
+      () => {
+        console.log('Modal Closed');
+      },
+      () => {
+        console.log('Modal Dismissed');
       }
     );
   }
