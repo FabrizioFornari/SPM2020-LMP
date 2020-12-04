@@ -105,7 +105,7 @@ public class DriverController {
 			park.setStatus(Status.BOOKED);
 			parkingLotRepository.save(park);
 			//create a booking object
-			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis());
+			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis(), parkingLot.getCoordinates());
 			parkingLotBookingRepository.save(booking);
 			return ResponseEntity.ok(new MessageResponse("Parking Lot Successfully Booked"));
 		}
@@ -170,4 +170,13 @@ public class DriverController {
 		return ResponseEntity.ok(infos);
 	}
 
+	@GetMapping(path = DRIVER_GET_CURRENT_BOOKING)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<ParkingLotBooking> getCurrentBooking(Authentication authentication) {
+		List<ParkingLotBooking> bookings = parkingLotBookingRepository.findByUsername(authentication.getName());
+		if(bookings.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(bookings.get(0));
+	}
 }

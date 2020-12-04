@@ -15,6 +15,7 @@ public final class EndpointContants {
 	public static final String DRIVER_GET_ALL_STREETS = "/streets";
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED="/setStatusOccupied";
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED="/setStatusDisabled";
+	public static final String DRIVER_GET_CURRENT_BOOKING = "/booking";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";

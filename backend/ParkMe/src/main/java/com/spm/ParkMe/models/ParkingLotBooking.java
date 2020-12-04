@@ -19,14 +19,17 @@ public class ParkingLotBooking {
 	private String username;
 	@NotNull(message="Timestamp must not be null")
 	private long timestamp;
+	@NotNull(message="Coordinates must not be null")
+	private Coordinates coordinates;
 	
 	public ParkingLotBooking() {}
 	
-	public ParkingLotBooking(String street, Integer numberOfParkingLot, String username, long timestamp) {
+	public ParkingLotBooking(String street, Integer numberOfParkingLot, String username, long timestamp, Coordinates coordinates) {
 		this.setStreet(street);
 		this.setNumberOfParkingLot(numberOfParkingLot);
 		this.setUsername(username);
 		this.setTimestamp(timestamp);
+		this.setCoordinates(coordinates);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -80,6 +83,13 @@ public class ParkingLotBooking {
 			throw new IllegalArgumentException("timestamp is invalid");
 			}	
 	}
+
+	public Coordinates getCoordinates() {
+		return coordinates;
+	}
+	public void setCoordinates(Coordinates coordinates) {
+		this.coordinates = coordinates;
+	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -91,7 +101,8 @@ public class ParkingLotBooking {
 		return(booking.getStreet().equals(this.getStreet()) &&
 				((Integer)booking.getNumberOfParkingLot()).equals((Integer)this.getNumberOfParkingLot()) &&
 				booking.getUsername().equals(this.getUsername()) &&
-				((Long)booking.getTimestamp()).equals((Long)this.getTimestamp()));
+				((Long)booking.getTimestamp()).equals((Long)this.getTimestamp()) &&
+				booking.getCoordinates().equals(this.getCoordinates()));
 		
 	}
 }
