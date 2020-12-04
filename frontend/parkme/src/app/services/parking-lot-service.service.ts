@@ -8,6 +8,7 @@ const PARKING_LOT_API = 'http://localhost:8080/api/parkingManager/';
 const DRIVER_STREET_API = "http://localhost:8080/api/driver/streets";
 const DRIVER_PARKS_API = "http://localhost:8080/api/parkingManager/parkingLots/getStreet"
 const DRIVER_BOOKING = "http://localhost:8080/api/driver/setStatusBooked";
+const DRIVER_CURRENT_BOOKING = "http://localhost:8080/api/driver/booking";
 
 @Injectable({
   providedIn: 'root',
@@ -87,5 +88,9 @@ export class ParkingLotServiceService {
 
   driverBookParkingLot(parkingLot: any): Observable<any>{
     return this.http.put(DRIVER_BOOKING, parkingLot, this.getHttpOpt());
+  }
+
+  driverGetCurrentBooking(): Observable<any>{
+    return this.http.get(DRIVER_CURRENT_BOOKING, this.getHttpOpt());
   }
 }
