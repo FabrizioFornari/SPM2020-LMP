@@ -87,7 +87,16 @@ public class DriverController {
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<String> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if (parkingLot.getStatus() == (Status.FREE) && !parkingLotBookingRepository.existsByUsername(authentication.getName()) && parkingLot.getTypeOfVehicle().equals(driverRepository.findByUsername(authentication.getName()).get().getVehicleType())) {
+		if(parkingLot.getStatus() != (Status.FREE)) {
+			return new ResponseEntity<String>("Parking Lot is already booked or occupied.", HttpStatus.CONFLICT);
+		}
+		else if(parkingLotBookingRepository.existsByUsername(authentication.getName())) {
+			return new ResponseEntity<String>("You already have booked a parking lot. If you want to book a different one, please cancel the current booking.", HttpStatus.CONFLICT);
+		}
+		else if(!parkingLot.getTypeOfVehicle().equals(driverRepository.findByUsername(authentication.getName()).get().getVehicleType())) {
+			return new ResponseEntity<String>("Your vehicle can not be parked in this parking lot.", HttpStatus.CONFLICT);
+		}
+		else {
 			//set parking lot status as booked
 			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
 					parkingLot.getNumberOfParkingLot());
@@ -97,9 +106,7 @@ public class DriverController {
 			//create a booking object
 			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis());
 			parkingLotBookingRepository.save(booking);
-			return new ResponseEntity<String>("Parking Lot successfully booked", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("Can not book this parking lot. Problems can be:\n-Parking Lot is already booked/occupied\n-You already booked a parking lot\n-You have not a vehicle type compatible with the parking lot.", HttpStatus.CONFLICT);
+			return ResponseEntity.ok("Parking Lot successfully booked");
 		}
 
 	}
