@@ -57,5 +57,16 @@ public class ParkingLotRepositoryTest {
 		assertEquals(testParkingLot, parkingLotRepository.findByStreetAndNumberOfParkingLot(VALID_STREET,VALID_NUMBROFPARKINGLOT).get(0));
 	}
 	
+	@Test
+	void findCompatibleFreeParkingLotReturnsParkingLots(){
+		parkingLotRepository.save(testParkingLot);                             
+		assertEquals(testParkingLot, parkingLotRepository.findCompatibleFreeParkingLots(false, CAR).get(0));
+	}
+	
+	@Test
+	void findCompatibleFreeParkingLotReturnsEmpty(){
+		parkingLotRepository.save(testParkingLot);                             
+		assertEquals(0, parkingLotRepository.findCompatibleFreeParkingLots(true, CAR).size());
+	}
 
 }
