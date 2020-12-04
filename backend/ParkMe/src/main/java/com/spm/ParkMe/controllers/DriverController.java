@@ -198,8 +198,8 @@ public class DriverController {
 			double min = 10000000.0;
 			int index = 0;
 			for(int i = 0; i < compatibleParkingLots.size(); i++) {
-				double parkLat = Double.parseDouble(compatibleParkingLots.get(0).getCoordinates().getLatitude());
-				double parkLng = Double.parseDouble(compatibleParkingLots.get(0).getCoordinates().getLongitude());
+				double parkLat = Double.parseDouble(compatibleParkingLots.get(i).getCoordinates().getLatitude());
+				double parkLng = Double.parseDouble(compatibleParkingLots.get(i).getCoordinates().getLongitude());
 				double distance = Math.hypot(Math.abs(latitude - parkLat), Math.abs(longitude - parkLng));
 				if(distance < min) {
 					min = distance;
