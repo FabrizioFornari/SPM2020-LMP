@@ -19,11 +19,12 @@ import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 
-
+import static com.spm.ParkMe.constants.ParkingLotTicketConstants.*;
 
 
 @SpringBootApplication
@@ -41,6 +42,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ParkingLotRepository parkingLotRepository;
+	
+	@Autowired
+	private ParkingLotTicketRepository parkingLotTicketRepository;
 	
 	@Autowired
 	private ParkingLotBookingRepository parkingLotBookingRepository;
@@ -92,6 +96,8 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotRepository.save(PARKING_5);
 		parkingLotRepository.save(PARKING_6);
 		parkingLotRepository.save(PARKING_7);
+		
+		
 		
 		parkingLotBookingRepository.deleteAll();
 	}

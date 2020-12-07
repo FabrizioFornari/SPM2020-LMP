@@ -251,4 +251,10 @@ public class DriverController {
 				
 	}
 	
+	
+	@PostMapping(path = DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public void createParkingLotTicket(@Valid @RequestBody ParkingLotTicket parkingLotTicket)throws IOException{
+		parkingLotTicketRepository.save(parkingLotTicket);
+	}
 }

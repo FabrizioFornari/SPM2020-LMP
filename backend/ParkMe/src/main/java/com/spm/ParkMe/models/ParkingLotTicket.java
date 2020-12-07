@@ -23,12 +23,12 @@ public class ParkingLotTicket {
 		
 	}
 	
-	public ParkingLotTicket(String street,Integer numberOfParkingLot,String username,Double moneySpent,long expiringTimestamp ) {
+	public ParkingLotTicket(String street,Integer numberOfParkingLot,String username,Double moneySpent,long expiringTimestamp2 ) {
 		this.street=street;
 		this.numberOfParkingLot=numberOfParkingLot;
 		this.username=username;
 		this.moneySpent=moneySpent;
-		this.expiringTimestamp=expiringTimestamp;
+		this.expiringTimestamp=expiringTimestamp2;
 	}
 	
 	
