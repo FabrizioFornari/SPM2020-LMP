@@ -241,13 +241,8 @@ public class DriverController {
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<List<ParkingLotTicket>> getAllParkingLotTickets(Authentication authentication){
 		List<ParkingLotTicket> parkingLotTickets= parkingLotTicketRepository.findByUsername(authentication.getName());
-		if(parkingLotTickets.isEmpty())
-		{
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		else {
+	
 			return ResponseEntity.ok(parkingLotTickets);
-		}
 				
 	}
 	
