@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -58,10 +59,12 @@ export class MapComponent implements OnInit {
   constructor(
     private parkingService: ParkingLotServiceService,
     private zone: NgZone,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Map');
     if (history.state.automatic != null) {
       this.automatic = history.state.automatic;
     }

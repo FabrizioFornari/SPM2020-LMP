@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmailComponent } from 'src/app/modal/update-email/update-email.component';
 import { UpdatePasswordComponent } from 'src/app/modal/update-password/update-password.component';
@@ -7,29 +8,27 @@ import { UpdateVehiclePlateComponent } from 'src/app/modal/update-vehicle-plate/
 @Component({
   selector: 'app-account-info',
   templateUrl: './account-info.component.html',
-  styleUrls: ['./account-info.component.css']
+  styleUrls: ['./account-info.component.css'],
 })
 export class AccountInfoComponent implements OnInit {
-
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private titleService: Title) {}
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.titleService.setTitle('ParkMe | Account Info');
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   user = {
-    firstName: "",
-    lastName: "",
-    roles: "",
-    id: "",
-    ssn: "",
-    email: "",
-    phone: "",
-    plate: "",
-    vehicleType: ""
-  }
-
-
+    firstName: '',
+    lastName: '',
+    roles: '',
+    id: '',
+    ssn: '',
+    email: '',
+    phone: '',
+    plate: '',
+    vehicleType: '',
+  };
 
   openModalUpdateEmail() {
     const modalRef = this.modalService.open(UpdateEmailComponent);
@@ -57,7 +56,6 @@ export class AccountInfoComponent implements OnInit {
     );
   }
 
-
   openModalUpdatePassword() {
     const modalRef = this.modalService.open(UpdatePasswordComponent);
     modalRef.result.then(
@@ -69,7 +67,6 @@ export class AccountInfoComponent implements OnInit {
       }
     );
   }
-
 
   openModalUpdatePlateVehicle() {
     const modalRef = this.modalService.open(UpdateVehiclePlateComponent);
@@ -84,5 +81,4 @@ export class AccountInfoComponent implements OnInit {
       }
     );
   }
-
 }

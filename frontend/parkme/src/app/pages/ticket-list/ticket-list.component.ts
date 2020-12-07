@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ModalBookingModeChoiceComponent } from 'src/app/modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
@@ -20,9 +21,11 @@ export class TicketListComponent implements OnInit {
     private modalService: NgbModal,
     private parkingService: ParkingLotServiceService,
     private toastrService: ToastrService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Ticket List');
     this.getCurrentBooking();
   }
 

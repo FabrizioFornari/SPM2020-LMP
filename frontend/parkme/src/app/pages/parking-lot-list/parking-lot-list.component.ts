@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InsertParkingLotComponent } from 'src/app/modal/insert-parking-lot/insert-parking-lot.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 import { OpenParkingLotComponent } from 'src/app/modal/open-parking-lot/open-parking-lot.component';
+import { Title } from '@angular/platform-browser';
 
 interface Park {
   street: string;
@@ -14,8 +15,8 @@ interface Park {
   pricePerHours: number;
   typeOfVehicle: string;
   coordinates: {
-    latitude: number,
-    longitude: number
+    latitude: number;
+    longitude: number;
   };
 }
 
@@ -32,7 +33,11 @@ export class ParkingLotListComponent implements OnInit {
   parks$: Observable<Park[]>;
   filter = new FormControl('');
 
-  constructor(private modalService: NgbModal, private parkingService: ParkingLotServiceService) {
+  constructor(
+    private modalService: NgbModal,
+    private parkingService: ParkingLotServiceService,
+    private titleService: Title
+  ) {
     this.parks$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text))
@@ -40,6 +45,7 @@ export class ParkingLotListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Park List');
     this.updateEntry();
   }
 
@@ -59,7 +65,7 @@ export class ParkingLotListComponent implements OnInit {
 
   updateEntry() {
     this.show = true;
-     this.show = false;
+    this.show = false;
     this.parkingService.getList().subscribe(
       (data) => {
         this.PARKS = data;
@@ -74,9 +80,7 @@ export class ParkingLotListComponent implements OnInit {
   search(text: string): Park[] {
     return this.PARKS.filter((park) => {
       const term = text.toLowerCase();
-      return (
-        park.street.toLowerCase().includes(term)
-      );
+      return park.street.toLowerCase().includes(term);
     });
   }
 

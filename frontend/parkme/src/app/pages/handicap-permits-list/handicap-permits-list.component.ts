@@ -8,6 +8,7 @@ import { HandicapRequestDownloadService } from 'src/app/services/handicap-reques
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OpenHandicapRequestComponent } from 'src/app/modal/open-handicap-request/open-handicap-request.component';
+import { Title } from '@angular/platform-browser';
 
 interface Permit {
   username: string;
@@ -32,7 +33,8 @@ export class HandicapPermitsListComponent implements OnInit {
 
   constructor(
     private reqDown: HandicapRequestDownloadService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private titleService: Title
   ) {
     this.permits$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -41,6 +43,7 @@ export class HandicapPermitsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Handicap DW');
     this.updateEntry();
   }
 

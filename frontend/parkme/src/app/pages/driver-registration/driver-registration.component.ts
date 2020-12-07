@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DriverAuthService } from 'src/app/services/driver-auth.service';
 import { DriverRegistrationValidationService } from 'src/app/services/driver-registration-validation.service';
 import { ToastrService } from "ngx-toastr";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-driver-registration',
@@ -36,10 +37,13 @@ export class DriverRegistrationComponent implements OnInit {
   constructor(
     private driverAuthService: DriverAuthService,
     private registerValidate: DriverRegistrationValidationService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private titleService: Title
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Driver Register');
+  }
 
   onLoginSubmit() {
 

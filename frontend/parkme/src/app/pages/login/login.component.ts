@@ -3,6 +3,7 @@ import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoginFormValidationService } from 'src/app/services/login-form-validation.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,13 @@ export class LoginComponent implements OnInit {
     private unifiedLogin: UnifiedLoginService,
     private toastrService: ToastrService,
     private loginValidator: LoginFormValidationService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Login');
+  }
 
   onLoginSubmit() {
 

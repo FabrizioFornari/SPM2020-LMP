@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { ParkingManagerVigilantRegistrationValidationService } from 'src/app/services/parking-manager-vigilant-registration-validation.service';
 import { ParkingManagerVigilantRegistrationService } from 'src/app/services/parking-manager-vigilant-registration.service';
@@ -31,10 +32,13 @@ export class ParkmanVigRegistrationComponent implements OnInit {
   constructor(
     private pmVgRegistrationValidator: ParkingManagerVigilantRegistrationValidationService,
     private pmVgRegistrationService: ParkingManagerVigilantRegistrationService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private titleService: Title
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | PM-VIG Register');
+  }
 
   onRegisterSubmit() {
     const user = {

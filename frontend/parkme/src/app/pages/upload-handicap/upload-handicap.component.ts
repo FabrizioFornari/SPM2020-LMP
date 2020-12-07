@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UploadHandicapServiceService } from 'src/app/services/upload-handicap-service.service';
 
@@ -21,10 +22,12 @@ export class UploadHandicapComponent implements OnInit {
 
   constructor(
     private uploadHandicap: UploadHandicapServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('ParkMe | Handicap UP');
     this.userInfo = JSON.parse(localStorage.getItem('user'));
   }
 
