@@ -254,7 +254,23 @@ public class DriverController {
 	
 	@PostMapping(path = DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public void createParkingLotTicket(@Valid @RequestBody ParkingLotTicket parkingLotTicket)throws IOException{
-		parkingLotTicketRepository.save(parkingLotTicket);
+	public ResponseEntity createParkingLotTicket(@Valid @RequestBody ParkingLotTicket parkingLotTicket)throws IOException{
+		List<ParkingLot> parkingLots=parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
+		List<ParkingLotBooking> parkingLotBookings= parkingLotBookingRepository.findByUsername(parkingLotTicket.getUsername());
+
+		if(!parkingLots.isEmpty() && !parkingLotBookings.isEmpty()) {
+			ParkingLot parkingLot=parkingLots.get(0);
+			parkingLot.setStatus(Status.OCCUPIED);
+			ParkingLotBooking parkingLotBooking= parkingLotBookings.get(0);
+			parkingLotBookingRepository.delete(parkingLotBooking);
+			parkingLotRepository.save(parkingLot);
+			parkingLotTicketRepository.save(parkingLotTicket);
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 }
