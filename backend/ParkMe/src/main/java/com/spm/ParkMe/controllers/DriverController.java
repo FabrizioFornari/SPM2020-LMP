@@ -116,7 +116,7 @@ public class DriverController {
 			park.setStatus(Status.BOOKED);
 			parkingLotRepository.save(park);
 			//create a booking object
-			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis(), parkingLot.getCoordinates());
+			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis(), parkingLot.getCoordinates(), parkingLot.getPricePerHour());
 			parkingLotBookingRepository.save(booking);
 			return ResponseEntity.ok(new MessageResponse("Parking Lot Successfully Booked"));
 		}

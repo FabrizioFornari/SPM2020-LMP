@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
 import com.spm.ParkMe.constants.RegexConstants;
+import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 
 public class ParkingLot {
@@ -19,13 +20,14 @@ public class ParkingLot {
 	@NotNull(message="isHandicapParkingLot must not be null")
 	private Boolean isHandicapParkingLot;
 	@NotNull(message="Price PerHours must not be null")
-	private Double pricePerHours;
+	private Double pricePerHour;
 	@NotNull(message="type Of Vehicle must not be null")
 	private String typeOfVehicle;
 	@NotNull(message="Coordinates must not be null")
 	private Coordinates coordinates;
 	
 	private Status status;
+	private SensorState sensorState;
 	
 	/*-------Constructor------*/
 	public ParkingLot() {
@@ -36,10 +38,11 @@ public class ParkingLot {
 		this.setStreet(street);
 		this.setNumberOfParkingLot(numberOfParkingLot);
 		this.setIsHandicapParkingLot(isHandicapParkingLot);
-		this.setPricePerHours(pricePerHours);
+		this.setPricePerHour(pricePerHours);
 		this.setTypeOfVehicle(typeOfVehicle);
 		this.setCoordinates(coordinates);
 		this.setStatus(Status.FREE);
+		this.setSensorState(SensorState.OFF);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -92,12 +95,12 @@ public class ParkingLot {
 			}
 	}
 	
-	public double getPricePerHours() {
-		return pricePerHours;
+	public double getPricePerHour() {
+		return pricePerHour;
 	}
-	public void setPricePerHours(Double pricePerHours) {
-		if(pricePerHours != null) {
-			this.pricePerHours = pricePerHours;
+	public void setPricePerHour(Double pricePerHour) {
+		if(pricePerHour != null) {
+			this.pricePerHour = pricePerHour;
 		}
 		else {
 			throw new IllegalArgumentException("pricePerHours is invalid");
@@ -134,6 +137,14 @@ public class ParkingLot {
 				parkingLot.getStatus().equals( this.getStatus())&&
 				parkingLot.getTypeOfVehicle().equals(this.getTypeOfVehicle()));
 		
+	}
+
+	public SensorState getSensorState() {
+		return sensorState;
+	}
+
+	public void setSensorState(SensorState sensorState) {
+		this.sensorState = sensorState;
 	}
 
 }

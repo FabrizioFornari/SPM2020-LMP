@@ -21,15 +21,18 @@ public class ParkingLotBooking {
 	private long timestamp;
 	@NotNull(message="Coordinates must not be null")
 	private Coordinates coordinates;
+	@NotNull(message="Price PerHours must not be null")
+	private Double pricePerHour;
 	
 	public ParkingLotBooking() {}
 	
-	public ParkingLotBooking(String street, Integer numberOfParkingLot, String username, long timestamp, Coordinates coordinates) {
+	public ParkingLotBooking(String street, Integer numberOfParkingLot, String username, long timestamp, Coordinates coordinates, Double pricePerHour) {
 		this.setStreet(street);
 		this.setNumberOfParkingLot(numberOfParkingLot);
 		this.setUsername(username);
 		this.setTimestamp(timestamp);
 		this.setCoordinates(coordinates);
+		this.setPricePerHour(pricePerHour);
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
@@ -89,6 +92,18 @@ public class ParkingLotBooking {
 	}
 	public void setCoordinates(Coordinates coordinates) {
 		this.coordinates = coordinates;
+	}
+	
+	public double getPricePerHour() {
+		return pricePerHour;
+	}
+	public void setPricePerHour(Double pricePerHour) {
+		if(pricePerHour != null) {
+			this.pricePerHour = pricePerHour;
+		}
+		else {
+			throw new IllegalArgumentException("pricePerHours is invalid");
+			}
 	}
 	
 	@Override
