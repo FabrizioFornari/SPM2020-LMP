@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BuyTicketComponent } from 'src/app/modal/buy-ticket/buy-ticket.component';
 import { ModalBookingModeChoiceComponent } from 'src/app/modal/modal-booking-mode-choice/modal-booking-mode-choice.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
@@ -14,8 +15,14 @@ const GOOGLE_MAPS = 'https://www.google.com/maps/dir//';
 })
 export class TicketListComponent implements OnInit {
   isCurrentBooking: boolean = false;
+  
+  isCurrentTicket: boolean = false;
 
   currentBooking;
+
+  currentTicket;
+
+  ticketHistory = [];
 
   constructor(
     private modalService: NgbModal,
@@ -27,6 +34,7 @@ export class TicketListComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('ParkMe | Ticket List');
     this.getCurrentBooking();
+    this.getTicketHistory();
   }
 
   newBooking() {
@@ -59,12 +67,19 @@ export class TicketListComponent implements OnInit {
     );
   }
 
-  ticketClick() {
-    alert('Row Clicked');
-  }
-
-  confirm() {
-    alert('Confirmed');
+  confirm(curBook) {
+      let modalRef = this.modalService.open(BuyTicketComponent);
+      modalRef.componentInstance.CURRENT_BOOKING = curBook;
+      modalRef.result.then(
+        () => {
+          console.log('Modal Confirm Parking Lot Closed');
+          this.ngOnInit();
+        },
+        () => {
+          console.log('Modal Confirm Parking Lot Dismissed');
+          this.ngOnInit();
+        }
+      );
   }
 
   maps(lat: any, long: any) {
@@ -84,5 +99,34 @@ export class TicketListComponent implements OnInit {
         this.toastrService.warning('Error while deleting Booking');
       }
     )
+  }
+
+
+  getTicketHistory(){
+    this.parkingService.driverGetTicketHistory().subscribe(
+      (success) => {
+        console.log(success);
+        success.forEach(element => {
+          let readable_date = `${new Date(
+            element.expiringTimestamp
+          ).toLocaleDateString('it-IT')} (${new Date(
+            element.expiringTimestamp
+          ).toLocaleTimeString('it-IT')})`;
+          if (element.expiringTimestamp > Date.now()) {
+            this.currentTicket = element;
+            this.currentTicket.expiringTimestamp = readable_date;
+            this.isCurrentTicket = true;
+          } else {
+            element.expiringTimestamp = readable_date;
+            this.ticketHistory.push(element);
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+        this.ticketHistory = [];
+      }
+    )
+      console.log(this.ticketHistory);
   }
 }

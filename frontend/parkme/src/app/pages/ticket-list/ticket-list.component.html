@@ -4,9 +4,10 @@
       <p>Street: {{ currentBooking.street }}</p>
       <p>Parking #{{ currentBooking.numberOfParkingLot }}</p>
       <p>Booking Date: {{ currentBooking.timestamp }}</p>
+      <p>Price/h: €{{ currentBooking.pricePerHour }}</p>
     </div>
     <div class="buttons">
-      <button (click)="confirm()" type="button" class="btn btn-success btn-lg">
+      <button (click)="confirm(currentBooking)" type="button" class="btn btn-success btn-lg">
         Confirm
       </button>
       <button
@@ -27,7 +28,23 @@
     </div>
   </div>
 
-  <div *ngIf="!isCurrentBooking" (click)="newBooking()" class="new-booking">
+  <div *ngIf="isCurrentTicket" class="current-booking">
+    <div class="info">
+      <h3>Current Ticket</h3>
+      <p>Street: {{currentTicket.street}}</p>
+      <p>Parking #{{currentTicket.numberOfParkingLot}}</p>
+      <p>Cost: €{{currentTicket.moneySpent}}</p>
+      <p>Expire At: {{currentTicket.expiringTimestamp}}</p>
+    </div>
+    <div class="buttons">
+      <button type="button" class="btn btn-success btn-lg">
+        Refresh
+      </button>
+      
+    </div>
+  </div>
+
+  <div *ngIf="!isCurrentBooking && !isCurrentTicket" (click)="newBooking()" class="new-booking">
     New Booking
     <i class="material-icons"> add_to_photos </i>
   </div>
@@ -40,17 +57,19 @@
             <th scope="col">#</th>
             <th scope="col">Street</th>
             <th scope="col">Parking#</th>
-            <th scope="col">Expiration</th>
+            <th scope="col">Username</th>
             <th scope="col">Cost</th>
+            <th scope="col">Expiration</th>
           </tr>
         </thead>
         <tbody>
-          <tr (click)="ticketClick()">
-            <th scope="row">12</th>
-            <td>Via Test</td>
-            <td>2453</td>
-            <td>04/12/2020 10:45</td>
-            <td>€3.90</td>
+          <tr *ngFor="let ticket of ticketHistory; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ticket.street}}</td>
+            <td>{{ticket.numberOfParkingLot}}</td>
+            <td>{{ticket.username}}</td>
+            <td>{{ticket.moneySpent}}</td>
+            <td>{{ticket.expiringTimestamp}}</td>
           </tr>
         </tbody>
       </table>

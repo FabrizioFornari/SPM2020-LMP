@@ -152,28 +152,28 @@ export class MapComponent implements OnInit {
     if (
       !item.isHandicapParkingLot &&
       item.status == 'FREE' &&
-      item.pricePerHours == 0
+      item.pricePerHour == 0
     ) {
       html =
         "<div class='marker-pin-free'></div><i class='material-icons'>stop_circle</i>";
     } else if (
       !item.isHandicapParkingLot &&
       item.status == 'BOOKED' &&
-      item.pricePerHours == 0
+      item.pricePerHour == 0
     ) {
       html =
         "<div class='marker-pin-occupied'></div><i class='material-icons'>stop_circle</i>";
     } else if (
       !item.isHandicapParkingLot &&
       item.status == 'FREE' &&
-      item.pricePerHours > 0
+      item.pricePerHour > 0
     ) {
       html =
         "<div class='marker-pin-free'></div><i class='material-icons'>monetization_on</i>";
     } else if (
       !item.isHandicapParkingLot &&
       item.status == 'BOOKED' &&
-      item.pricePerHours > 0
+      item.pricePerHour > 0
     ) {
       html =
         "<div class='marker-pin-occupied'></div><i class='material-icons'>monetization_on</i>";
