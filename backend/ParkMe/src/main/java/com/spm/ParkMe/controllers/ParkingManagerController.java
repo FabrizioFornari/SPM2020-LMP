@@ -72,7 +72,7 @@ public class ParkingManagerController {
 				parkingLotToChange.setIsHandicapParkingLot(changeParkingLot.isNewIsHandicapParkingLot());
 			}
 			if(changeParkingLot.getNewPricePerHours() != null) {
-				parkingLotToChange.setPricePerHours(changeParkingLot.getNewPricePerHours());
+				parkingLotToChange.setPricePerHour(changeParkingLot.getNewPricePerHours());
 			}
 			if(changeParkingLot.getNewTypeOfVehicle() != null && changeParkingLot.getNewTypeOfVehicle() != "") {
 				parkingLotToChange.setTypeOfVehicle(changeParkingLot.getNewTypeOfVehicle());
