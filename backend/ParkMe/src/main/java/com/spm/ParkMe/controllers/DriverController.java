@@ -33,12 +33,14 @@ import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
@@ -61,6 +63,9 @@ public class DriverController {
 	
 	@Autowired
 	private HandicapPermitsRequestsRepository handicapRepository;
+	
+	@Autowired
+	private ParkingLotTicketRepository parkingLotTicketRepository;
 
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
@@ -230,4 +235,20 @@ public class DriverController {
 			return ResponseEntity.ok(compatibleParkingLots.get(index));
 		}
 	}
+	
+	
+	@GetMapping(path = DRIVER_GET_ALL_DRIVER_TICKET_PARKINGLOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<List<ParkingLotTicket>> getAllParkingLotTickets(Authentication authentication){
+		List<ParkingLotTicket> parkingLotTickets= parkingLotTicketRepository.findByUsername(authentication.getName());
+		if(parkingLotTickets.isEmpty())
+		{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		else {
+			return ResponseEntity.ok(parkingLotTickets);
+		}
+				
+	}
+	
 }
