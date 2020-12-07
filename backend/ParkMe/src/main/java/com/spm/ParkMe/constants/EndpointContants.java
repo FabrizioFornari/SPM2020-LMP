@@ -18,7 +18,7 @@ public final class EndpointContants {
 	public static final String DRIVER_GET_CURRENT_BOOKING = "/booking";
 	public static final String DRIVER_DELETE_CURRENT_BOOKING ="/deleteBooking";
 	public static final String DRIVER_GET_NEAREST_PARKING_LOT = "/nearestParkingLot";
-	public static final String DRIVER_GET_ALL_DRIVER_TICKET_PARKINGLOT="/gellAllTicketParkingLot";
+	public static final String DRIVER_GET_ALL_DRIVER_TICKET_PARKINGLOT="/getAllTicketParkingLot";
 	public static final String DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT="/createParkingLotTicket";
 
 	//modification controller
