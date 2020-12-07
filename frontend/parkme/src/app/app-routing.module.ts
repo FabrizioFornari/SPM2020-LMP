@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'parking-lot-list', component: ParkingLotListComponent},
   { path: 'map', component: MapComponent},
   { path: 'ticket-list', component: TicketListComponent},
-  { path: '', redirectTo: '/ticket-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/account-info', pathMatch: 'full' },
 ];
 
 @NgModule({

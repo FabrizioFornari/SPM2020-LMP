@@ -1,0 +1,121 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="/"><span class="material-icons">
+	directions_car
+	</span>ParkMe</a>
+  <button
+    class="navbar-toggler ml-auto hidden-sm-up float-xs-right"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarColor01"
+    aria-controls="navbarColor01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="material-icons"> menu </span>
+  </button>
+
+  <div class="collapse navbar-collapse text-center" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li
+        class="nav-item"
+        data-toggle="collapse"
+        data-target=".navbar-collapse.show"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <h6 class="nav-link" [routerLink]="['/login']">
+          Login <span class="sr-only"></span>
+        </h6>
+      </li>
+      <li
+        class="nav-item"
+        data-toggle="collapse"
+        data-target=".navbar-collapse.show"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <h6 class="nav-link" [routerLink]="['/driver-register']">
+          Driver-Register <span class="sr-only"></span>
+        </h6>
+	  </li>
+	  
+	  <li
+        class="nav-item"
+        data-toggle="collapse"
+        data-target=".navbar-collapse.show"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <h6 class="nav-link" [routerLink]="['/pm_v-register']">
+         PM/V-Register <span class="sr-only"></span>
+        </h6>
+	  </li>
+	  <li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/account-info']">
+	   Info <span class="sr-only"></span>
+	  </h6>
+	</li>
+	<li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/handicap-upload']">
+	   Handicap Up <span class="sr-only"></span>
+	  </h6>
+	</li>
+	<li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/handicap-download']">
+	   Handicap DW <span class="sr-only"></span>
+	  </h6>
+	</li>
+	<li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/parking-lot-list']">
+	   Park List <span class="sr-only"></span>
+	  </h6>
+	</li>
+	<li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/map']">
+	   Map <span class="sr-only"></span>
+	  </h6>
+	</li>
+	<li
+	  class="nav-item"
+	  data-toggle="collapse"
+	  data-target=".navbar-collapse.show"
+	  [routerLinkActive]="['active']"
+	  [routerLinkActiveOptions]="{ exact: true }"
+	>
+	  <h6 class="nav-link" [routerLink]="['/ticket-list']">
+	   Ticket List <span class="sr-only"></span>
+	  </h6>
+	</li>
+    </ul>
+  </div>
+</nav>

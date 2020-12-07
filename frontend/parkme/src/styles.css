@@ -2,10 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+:root {
+  overflow-x: hidden;
+}
+
 html,
 body {
   height: 100vh;
-  width: 100wh;
+  width: 100vw;
   background-color: #343a40 !important;
   font-family: 'Roboto Mono', monospace !important;
 }
