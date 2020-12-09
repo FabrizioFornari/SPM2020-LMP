@@ -36,6 +36,7 @@ public class DriverParkingLotTest {
 		
 	    driver = new ChromeDriver();
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    driver.manage().window().maximize();
 	    //250ms frequency of pulling
 	}
 
