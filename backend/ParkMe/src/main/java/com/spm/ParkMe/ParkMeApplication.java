@@ -24,6 +24,7 @@ import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
+import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
 
 
@@ -102,7 +103,7 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotBookingRepository.deleteAll();
 		
 		parkingLotTicketRepository.deleteAll();
-		parkingLotTicketRepository.save(PARKING_TICKET);
+		parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
 	}
 
 }
