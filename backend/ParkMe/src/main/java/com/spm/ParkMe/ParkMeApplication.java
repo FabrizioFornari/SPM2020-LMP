@@ -98,6 +98,11 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotRepository.save(PARKING_6);
 		parkingLotRepository.save(PARKING_7);
 		
+		parkingLotRepository.save(PARKING_8);
+		parkingLotRepository.save(PARKING_9);
+		parkingLotRepository.save(PARKING_10);
+		parkingLotRepository.save(PARKING_11);
+		
 		
 		
 		parkingLotBookingRepository.deleteAll();

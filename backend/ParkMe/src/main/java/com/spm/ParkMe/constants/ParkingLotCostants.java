@@ -16,6 +16,7 @@ import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 public class ParkingLotCostants {
 
 	public static final String STREET = "via Madonna delle Carceri";
+	public static final String STREET2 = "via Aldo Moro";
 	public static final String CAR = "4 Wheels Standard Vehicle";
 	public static final String MOTORCYCLE = "2 Wheels Vehicle";
 
@@ -45,6 +46,11 @@ public class ParkingLotCostants {
 	public static final ParkingLot PARKING_5 = new ParkingLot(STREET, 5, false, 0.0, CAR, new Coordinates("43.13957176408314", "13.068219081101638"));
 	public static final ParkingLot PARKING_6 = new ParkingLot(STREET, 6, false, 1.0, CAR, new Coordinates("43.13952577029873", "13.068314299516688"));
 	public static final ParkingLot PARKING_7 = new ParkingLot(STREET, 7, true, 0.0, CAR, new Coordinates("43.139561488878996", "13.068390071917397"));
+	
+	public static final ParkingLot PARKING_8 = new ParkingLot(STREET2, 8, false, 1.0, CAR, new Coordinates("43.141510369283516", "13.067885567988407"));
+	public static final ParkingLot PARKING_9 = new ParkingLot(STREET2, 9, false, 1.0, CAR, new Coordinates("43.14122658629402", "13.06735449063123"));
+	public static final ParkingLot PARKING_10 = new ParkingLot(STREET2, 10, false, 0.0, CAR, new Coordinates("43.14130878564028", "13.067475190030587"));
+	public static final ParkingLot PARKING_11 = new ParkingLot(STREET2, 11, true, 0.0, CAR, new Coordinates("43.14135967089449", "13.067767550797923"));
 
 	//ParkingLot Booking
 
