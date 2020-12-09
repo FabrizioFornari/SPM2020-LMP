@@ -20,7 +20,8 @@ public final class EndpointContants {
 	public static final String DRIVER_GET_NEAREST_PARKING_LOT = "/nearestParkingLot";
 	public static final String DRIVER_GET_ALL_DRIVER_TICKET_PARKINGLOT="/getAllTicketParkingLot";
 	public static final String DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT="/createParkingLotTicket";
-
+	public static final String DRIVER_SET_SENSOR_PARKINGLOT="/setSensorParkingLot";
+	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";
 	public static final String EMAIL_MODIFICATION_ENDPOINT = "/email";
