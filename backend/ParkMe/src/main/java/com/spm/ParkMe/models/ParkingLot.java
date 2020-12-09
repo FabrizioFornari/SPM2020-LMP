@@ -133,7 +133,7 @@ public class ParkingLot {
 				((Boolean)parkingLot.getIsHandicapParkingLot()).equals((Boolean)this.getIsHandicapParkingLot()) &&
 				parkingLot.getCoordinates().equals(this.getCoordinates()) &&
 				((Integer)parkingLot.getNumberOfParkingLot()).equals((Integer)this.getNumberOfParkingLot())&&
-				((Double) parkingLot.getPricePerHours()).equals((Double) this.getPricePerHours())&&
+				((Double) parkingLot.getPricePerHour()).equals((Double) this.getPricePerHour())&&
 				parkingLot.getStatus().equals( this.getStatus())&&
 				parkingLot.getTypeOfVehicle().equals(this.getTypeOfVehicle()));
 		

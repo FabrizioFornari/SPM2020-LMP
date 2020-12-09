@@ -14,6 +14,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -24,7 +25,6 @@ import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 
-import static com.spm.ParkMe.constants.ParkingLotTicketConstants.*;
 
 
 @SpringBootApplication
@@ -100,6 +100,8 @@ public class ParkMeApplication implements CommandLineRunner {
 		
 		
 		parkingLotBookingRepository.deleteAll();
+		
+		parkingLotTicketRepository.deleteAll();
 	}
 
 }
