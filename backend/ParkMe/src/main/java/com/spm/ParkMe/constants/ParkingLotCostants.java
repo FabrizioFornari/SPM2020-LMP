@@ -8,7 +8,10 @@ import org.springframework.data.annotation.Id;
 import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
+import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
 public class ParkingLotCostants {
 
@@ -42,4 +45,11 @@ public class ParkingLotCostants {
 	public static final ParkingLot PARKING_5 = new ParkingLot(STREET, 5, false, 0.0, CAR, new Coordinates("43.13957176408314", "13.068219081101638"));
 	public static final ParkingLot PARKING_6 = new ParkingLot(STREET, 6, false, 1.0, CAR, new Coordinates("43.13952577029873", "13.068314299516688"));
 	public static final ParkingLot PARKING_7 = new ParkingLot(STREET, 7, true, 0.0, CAR, new Coordinates("43.139561488878996", "13.068390071917397"));
+
+	//ParkingLot Booking
+
+	public static final ParkingLotBooking PARKING_BOOKING= new ParkingLotBooking(STREET, 4, DRIVER_MAIL, 1604574216000L, new Coordinates("43.139696044989535", "13.0685489928145"), 0.0 );
+
+	//ParkingLot Ticket
+	public static final ParkingLotTicket PARKING_TICKET= new ParkingLotTicket(STREET, 4, DRIVER_MAIL, 0.0, 1604581416000L);
 }

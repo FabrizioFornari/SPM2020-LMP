@@ -332,7 +332,19 @@ public class DriverControllerTests {
 	}
 	
 	
-
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void getAllParkingLotTickets() throws Exception {
 	
-
+		parkingLotTicketRepository.save(PARKING_TICKET);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				DRIVER_ENDPOINT + DRIVER_GET_ALL_DRIVER_TICKET_PARKINGLOT);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(1, parkingLotTicketRepository.count());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	
+	}
+	
+	
 }
