@@ -108,6 +108,9 @@ public class DriverController {
 		else if(parkingLot.getIsHandicapParkingLot() && !driverRepository.findByUsername(authentication.getName()).get().getHandicap()) {
 			return new ResponseEntity<String>("You have no permission to park in a hanidcap parking lot.", HttpStatus.CONFLICT);
 		}
+		else if(!parkingLotTicketRepository.findByUsername(authentication.getName()).isEmpty()) {
+			return new ResponseEntity<String>("You already have bought a ticket. You can book a new parking lot when you will free the current one.", HttpStatus.CONFLICT);
+		}
 		else {
 			//set parking lot status as booked
 			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
