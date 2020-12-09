@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Content,
@@ -64,6 +63,13 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.zone.run(() => {
+      this.customZoom = 16;
+      this.customCenter = latLng([43.14367132147207, 13.067582838096936]);
+    });
+
+
     this.titleService.setTitle('ParkMe | Map');
     if (history.state.automatic != null) {
       this.automatic = history.state.automatic;
@@ -107,6 +113,10 @@ export class MapComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  backButton(){
+    this.ngOnInit();
   }
 
   automaticSearchFromClick(e) {

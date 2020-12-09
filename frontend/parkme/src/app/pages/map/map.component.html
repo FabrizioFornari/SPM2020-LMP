@@ -1,5 +1,4 @@
-
-  <div
+<div
   class="map"
   leaflet
   [leafletOptions]="options"
@@ -8,5 +7,14 @@
   [leafletLayersControl]="layersControl"
   [leafletLayers]="streetsLayers"
   (leafletClick)="automaticSearchFromClick($event)"
-></div>
-  
+>
+  <div class="leaflet-bottom leaflet-left" style="pointer-events: auto;">
+    <input
+      type="button"
+      id="back-button"
+      value="Back"
+      (click)="backButton()"
+      class="btnStyle span3 leaflet-control"
+    />
+  </div>
+</div>
