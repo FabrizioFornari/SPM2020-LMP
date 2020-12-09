@@ -21,7 +21,11 @@
   <p>Price: ${{ PARKINGLOT.pricePerHours }}/h</p>
   <button
     (click)="bookAPark(PARKINGLOT)"
-    [disabled]="PARKINGLOT.status != 'FREE'"
+    [disabled]="
+      PARKINGLOT.status != 'FREE' ||
+      userInfo.vehicleType != PARKINGLOT.typeOfVehicle ||
+      (!userInfo.isHandicap && PARKINGLOT.isHandicapParkingLot)
+    "
     type="button"
     class="btn btn-success btn-block"
   >

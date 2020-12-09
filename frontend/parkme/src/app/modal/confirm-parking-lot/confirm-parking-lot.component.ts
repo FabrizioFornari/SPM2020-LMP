@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class ConfirmParkingLotComponent implements OnInit {
   @Input() PARKINGLOT: any;
 
+  userInfo;
+
   constructor(
     public activeModal: NgbActiveModal,
     private parkingService: ParkingLotServiceService,
@@ -19,7 +21,9 @@ export class ConfirmParkingLotComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userInfo = JSON.parse(localStorage.getItem("user"));
+  }
 
   bookAPark(parking: any) {
     this.parkingService.driverBookParkingLot(parking).subscribe(
