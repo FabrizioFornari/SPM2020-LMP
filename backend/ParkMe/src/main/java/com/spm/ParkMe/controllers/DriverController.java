@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
@@ -272,4 +273,28 @@ public class DriverController {
 		}
 		
 	}
+	
+	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setParkingLotSensor(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot,  @NotNull @RequestParam boolean state) {
+		List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+	
+		if(!parkingLots.isEmpty()) {
+			
+			ParkingLot parkingLot = parkingLots.get(0);
+			if(state)
+			{
+				parkingLot.setSensorState(SensorState.ON);
+			}else
+			{
+				parkingLot.setSensorState(SensorState.OFF);
+			}
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
 }
