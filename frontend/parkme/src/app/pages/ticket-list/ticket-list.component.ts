@@ -104,6 +104,7 @@ export class TicketListComponent implements OnInit {
 
 
   getTicketHistory(){
+    this.ticketHistory = [];
     this.parkingService.driverGetTicketHistory().subscribe(
       (success) => {
         console.log(success);

@@ -158,7 +158,7 @@ export class MapComponent implements OnInit {
         "<div class='marker-pin-free'></div><i class='material-icons'>stop_circle</i>";
     } else if (
       !item.isHandicapParkingLot &&
-      item.status == 'BOOKED' &&
+      item.status != 'FREE' &&
       item.pricePerHour == 0
     ) {
       html =
@@ -172,7 +172,7 @@ export class MapComponent implements OnInit {
         "<div class='marker-pin-free'></div><i class='material-icons'>monetization_on</i>";
     } else if (
       !item.isHandicapParkingLot &&
-      item.status == 'BOOKED' &&
+      item.status != 'FREE' &&
       item.pricePerHour > 0
     ) {
       html =
