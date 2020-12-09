@@ -66,7 +66,7 @@ public class DriverController {
 	
 	@Autowired
 	private ParkingLotTicketRepository parkingLotTicketRepository;
-
+	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
 		repository.save(driver);

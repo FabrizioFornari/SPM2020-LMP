@@ -42,6 +42,7 @@ import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
@@ -69,6 +70,8 @@ public class DriverControllerTests {
 	@Autowired
 	HandicapPermitsRequestsRepository handicapRequestsRepository;
 	
+	@Autowired 
+	private ParkingLotTicketRepository parkingLotTicketRepository;
 	
 	@InjectMocks
     private DriverController driverController;
@@ -261,7 +264,7 @@ public class DriverControllerTests {
 	public void getParkingLotBookingReturnsOK() throws Exception {
 		
 		parkingLotRepository.save(parkingLot);
-		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates()));
+		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates(), parkingLot.getPricePerHour()));
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				DRIVER_ENDPOINT + DRIVER_GET_CURRENT_BOOKING).accept(
@@ -289,7 +292,7 @@ public class DriverControllerTests {
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void deleteParkingLotBookingReturnsOK() throws Exception {
 		parkingLotRepository.save(parkingLot);
-		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates()));
+		parkingLotBookingRepository.save(new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), DRIVER_MAIL, System.currentTimeMillis(), parkingLot.getCoordinates(), parkingLot.getPricePerHour()));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
 				DRIVER_ENDPOINT + DRIVER_DELETE_CURRENT_BOOKING);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -327,4 +330,9 @@ public class DriverControllerTests {
 		ParkingLot p = jsonParkingLot.parse(response.getContentAsString()).getObject();
 		assertEquals(PARKING_6, p);
 	}
+	
+	
+
+	
+
 }
