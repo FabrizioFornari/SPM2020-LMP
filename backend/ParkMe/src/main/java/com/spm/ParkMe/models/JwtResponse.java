@@ -16,6 +16,7 @@ public class JwtResponse {
 	private String lastName;
 	private String plate;
 	private String vehicleType;
+	private Boolean isHandicap;
 	
 	private String role;
 	
@@ -31,6 +32,7 @@ public class JwtResponse {
 		this.setRoles(user.getRole().name());
 		this.plate = null;
 		this.vehicleType = null;
+		this.setIsHandicap(null);
 	}
 
 	public String getToken() {
@@ -119,5 +121,13 @@ public class JwtResponse {
 
 	public void setVehicleType(String vehicleType) {
 		this.vehicleType = vehicleType;
+	}
+
+	public Boolean getIsHandicap() {
+		return isHandicap;
+	}
+
+	public void setIsHandicap(Boolean isHandicap) {
+		this.isHandicap = isHandicap;
 	}
 }

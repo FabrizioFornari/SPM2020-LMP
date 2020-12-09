@@ -62,6 +62,7 @@ public class AuthController {
 			DriverInfo driverInfo = driverInfoRepository.findByUsername(user.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Driver Not Found with username: " + userDetails.getEmail()));
 			response.setPlate(driverInfo.getPlate());
 			response.setVehicleType(driverInfo.getVehicleType());
+			response.setIsHandicap(driverInfo.getHandicap());
 		}
 		return ResponseEntity.ok(response);
 	}
