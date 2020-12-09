@@ -102,6 +102,7 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotBookingRepository.deleteAll();
 		
 		parkingLotTicketRepository.deleteAll();
+		parkingLotTicketRepository.save(PARKING_TICKET);
 	}
 
 }
