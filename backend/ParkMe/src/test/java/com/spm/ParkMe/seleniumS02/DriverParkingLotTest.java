@@ -74,7 +74,7 @@ public class DriverParkingLotTest {
 
 	    WebDriverWait wait = new WebDriverWait(driver, 3);
 	    wait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd).executeScript("return window.localStorage.getItem(\"token\")") != null);
-	    driver.findElement(By.xpath("//div[@id='navbarColor01']/ul/li[9]/h6")).click();
+	    driver.get("http://localhost:4200/ticket-list");
 	    Thread.sleep(2000);
 	    driver.findElement(By.xpath("//div/div")).click();
 	    Thread.sleep(2000);
@@ -99,7 +99,46 @@ public class DriverParkingLotTest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
 	    Thread.sleep(2000);
 	    driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
+	    Thread.sleep(3000);
+  }
+	
+	@Test
+	@Order(2)
+	public void bookAndBuyTicket() throws Exception {
+		driver.get("http://localhost:4200/login");
+	    driver.findElement(By.xpath("//label")).click();
+	    driver.findElement(By.id("inputEmail")).clear();
+	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
 	    Thread.sleep(2000);
+	    driver.findElement(By.id("inputPassword")).clear();
+	    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+	    WebDriverWait wait = new WebDriverWait(driver, 3);
+	    wait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd).executeScript("return window.localStorage.getItem(\"token\")") != null);
+	    driver.get("http://localhost:4200/ticket-list");
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("//div/div")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("//app-map/div")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.id("inputHour")).click();
+	    Thread.sleep(2000);
+	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("4");
+	    Thread.sleep(2000);
+	    driver.findElement(By.id("inputHour")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.id("updateButton")).click();
+	    Thread.sleep(3000);
   }
 
 }

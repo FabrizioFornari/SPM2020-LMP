@@ -63,6 +63,7 @@ export class TicketListComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        this.isCurrentBooking = false;
       }
     );
   }
