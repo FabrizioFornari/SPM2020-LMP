@@ -37,6 +37,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -87,8 +88,9 @@ public class DriverControllerTests {
 	private JacksonTester<Driver> jsonDriver;
 	private JacksonTester<WrongObject> jsonWrongObject;
 	private JacksonTester<ParkingLot> jsonParkingLot;
+	private JacksonTester<ParkingLotTicket> jsonParkingLotTicket;
 	private ParkingLot parkingLot;
-	
+	private ParkingLotTicket parkingLotTicket;
 		
 	
 	@BeforeEach
@@ -98,6 +100,7 @@ public class DriverControllerTests {
 		handicapRequestsRepository.deleteAll();
 		parkingLotRepository.deleteAll();
 		parkingLotBookingRepository.deleteAll();
+		parkingLotTicketRepository.deleteAll();
 		userRepository.save(DRIVER_OBJECT);
 		parkingLot= new ParkingLot(VALID_STREET, VALID_NUMBROFPARKINGLOT, VALID_ISHANDICAPPARKINGLOT, VALID_PRICEPERHOURS, CAR, VALID_COORDINATES);
 		mockMvc = MockMvcBuilders
@@ -346,5 +349,23 @@ public class DriverControllerTests {
 	
 	}
 	
+	@Test
+	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
+	public void createParkingLotTicketAndSetParkingLotStatusAsOccupied() throws Exception {
 	
+		parkingLotBookingRepository.save(PARKING_BOOKING);
+		parkingLotRepository.save(PARKING_4);
+		parkingLotTicket = PARKING_TICKET;
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				DRIVER_ENDPOINT + DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT).accept(
+						MediaType.APPLICATION_JSON)
+						.content(jsonParkingLotTicket.write(parkingLotTicket).getJson())
+						.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(1, parkingLotTicketRepository.count());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	
+	}
 }

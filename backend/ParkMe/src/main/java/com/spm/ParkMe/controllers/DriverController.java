@@ -257,6 +257,7 @@ public class DriverController {
 			ParkingLot parkingLot=parkingLots.get(0);
 			parkingLot.setStatus(Status.OCCUPIED);
 			ParkingLotBooking parkingLotBooking= parkingLotBookings.get(0);
+
 			parkingLotBookingRepository.delete(parkingLotBooking);
 			parkingLotRepository.save(parkingLot);
 			parkingLotTicketRepository.save(parkingLotTicket);
