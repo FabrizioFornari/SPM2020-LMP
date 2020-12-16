@@ -1,11 +1,13 @@
 package com.spm.ParkMe.notifications;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.google.common.net.HttpHeaders;
 import com.spm.ParkMe.models.User;
@@ -30,7 +32,7 @@ public class NotificationsController {
     }
 
     @MessageMapping("/start")
-    public void start(StompHeaderAccessor stompHeaderAccessor, Authentication authentication) {
+    public void start(StompHeaderAccessor stompHeaderAccessor) {
     	String token = stompHeaderAccessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
     	User user = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token)).orElseThrow(() -> new UsernameNotFoundException("User Not Found with token: " + token));
     	UserSession session = new UserSession(user, stompHeaderAccessor.getSessionId());
@@ -41,4 +43,12 @@ public class NotificationsController {
     public void stop(StompHeaderAccessor stompHeaderAccessor) {
         dispatcher.remove(stompHeaderAccessor.getSessionId());
     }
+    
+
+	@EventListener
+	public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
+	    String sessionId = event.getSessionId();
+	    System.out.println("Disconnecting " + sessionId + "!");
+	    this.dispatcher.remove(sessionId);
+	}
 }

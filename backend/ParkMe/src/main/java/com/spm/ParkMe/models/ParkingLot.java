@@ -46,6 +46,10 @@ public class ParkingLot {
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
+	public String getId() {
+		return id;
+	}
+	
 	public String getStreet() {
 		return street;
 	}

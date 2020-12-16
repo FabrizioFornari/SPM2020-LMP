@@ -49,12 +49,6 @@ public class NotificationDispatcher {
 	    }
 	}
 	
-	@EventListener
-	public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
-	    String sessionId = event.getSessionId();
-	    System.out.println("Disconnecting " + sessionId + "!");
-	    remove(sessionId);
-	}
 	
 	public void add(UserSession session)
 	{
