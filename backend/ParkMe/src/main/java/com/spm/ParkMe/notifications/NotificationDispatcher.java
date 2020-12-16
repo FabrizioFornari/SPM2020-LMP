@@ -1,7 +1,9 @@
 package com.spm.ParkMe.notifications;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.management.Notification;
 
@@ -14,12 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.spm.ParkMe.models.MessageResponse;
+import com.spm.ParkMe.models.UserSession;
 
 @Service
 public class NotificationDispatcher {
 
 	
-	private Set<String> listeners = new HashSet<>();
+	private Set<UserSession> listeners = new HashSet<>();
 	private SimpMessagingTemplate template;
 
 	public NotificationDispatcher(SimpMessagingTemplate template) {
@@ -29,16 +32,16 @@ public class NotificationDispatcher {
 	
 	@Scheduled(fixedDelay = 2000)
 	public void dispatch() {
-	    for (String listener : listeners) {
-	        System.out.println("Sending notification to " + listener);
+	    for (UserSession listener : listeners) {
+	        System.out.println("Sending notification to " + listener.getUser().getUsername());
 
 	        SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-	        headerAccessor.setSessionId(listener);
+	        headerAccessor.setSessionId(listener.getSessionID());
 	        headerAccessor.setLeaveMutable(true);
 
 	        int value = (int) Math.round(Math.random() * 100d);
 	        template.convertAndSendToUser(
-	                listener, 
+	                listener.getSessionID(), 
 	                "/notification/item",
 	                //new Notification(Integer.toString(value)),
 	                new MessageResponse("prova: " + Integer.toString(value)),
@@ -53,12 +56,15 @@ public class NotificationDispatcher {
 	    remove(sessionId);
 	}
 	
-	public void add(String listener)
+	public void add(UserSession session)
 	{
-		this.listeners.add(listener);
+		this.listeners.add(session);
 	}
 	
-	public void remove(String listener) {
-		this.listeners.remove(listener);
+	public void remove(String sessionID) {
+		List<UserSession> sessions = this.listeners.stream().filter(l -> l.getSessionID().equals(sessionID)).collect(Collectors.toList());
+		if(!sessions.isEmpty()) {
+			this.listeners.remove(sessions.get(0));
+		}
 	}
 }

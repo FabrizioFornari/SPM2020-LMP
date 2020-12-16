@@ -48,7 +48,7 @@ export class NotificationService {
   }
   startNotifications() {
     if (this.client && this.client.connected) {
-      this.client.publish({ destination: '/swns/start' });
+      this.client.publish({ destination: '/swns/start', headers: {'Authorization':localStorage.getItem('token')} });
     }
   }
   stopNotifications() {
