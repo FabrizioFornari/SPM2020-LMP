@@ -37,6 +37,21 @@
     <version>6.0.13.Final</version>  
 </dependency>  
 
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-websocket</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+
 <dependency> 
        <groupId>com.google.code.gson</groupId> 
        <artifactId>gson</artifactId> 
@@ -94,6 +109,8 @@
 
 
 	</dependencies>
+
+
 
 	<build>
 		<plugins>
