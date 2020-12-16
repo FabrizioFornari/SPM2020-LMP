@@ -5,10 +5,12 @@ import java.util.Set;
 
 import javax.management.Notification;
 
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.spm.ParkMe.models.MessageResponse;
 
@@ -40,5 +42,21 @@ public class NotificationDispatcher {
 	                new MessageResponse("prova: " + Integer.toString(value)),
 	                headerAccessor.getMessageHeaders());
 	    }
+	}
+	
+	@EventListener
+	public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
+	    String sessionId = event.getSessionId();
+	    System.out.println("Disconnecting " + sessionId + "!");
+	    remove(sessionId);
+	}
+	
+	public void add(String listener)
+	{
+		this.listeners.add(listener);
+	}
+	
+	public void remove(String listener) {
+		this.listeners.remove(listener);
 	}
 }
