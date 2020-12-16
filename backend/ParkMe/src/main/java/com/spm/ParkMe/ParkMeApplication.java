@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.enums.Roles;
@@ -29,6 +30,7 @@ import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
 
 @SpringBootApplication
+@EnableScheduling
 public class ParkMeApplication implements CommandLineRunner {
 
 
