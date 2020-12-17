@@ -187,7 +187,6 @@ public class User {
 			return false;
 		User user = (User) o;
 		return(user.getEmail().equals(this.getEmail()) &&
-				user.getId().equals(this.getId()) &&
 				user.getPassword().equals(this.getPassword()) &&
 				user.getRole().equals(this.getRole()));
 	}
