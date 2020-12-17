@@ -29,8 +29,8 @@ export class NavbarComponent implements OnInit {
 
 }
 
-  onLogoutClick(){
-    console.log('logout');
+  notification(){
+    console.log('notification');
   }
 
 }
