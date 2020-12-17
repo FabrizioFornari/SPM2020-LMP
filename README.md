@@ -2,4 +2,4 @@
 
 
 [Jenkins]
-[![Build Status](http://localhost:8080/job/spm/badge/icon)](http://localhost:8080/job/spm/)
+[![Build Status](http://localhost:8080/buildStatus/icon?job=spm)](http://localhost:8080/job/spm/)
