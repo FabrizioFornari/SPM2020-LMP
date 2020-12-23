@@ -48,4 +48,5 @@ public final class EndpointContants {
 
 	//Notification Controller
 	public static final String NOTIFICATION_ENDPOINT="/api/notification";
+	public static final String NOTIFICATION_SET_STATUS ="/setStatusNotification";
 }
