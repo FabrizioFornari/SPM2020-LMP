@@ -95,4 +95,19 @@ public class Notification {
 			throw new IllegalArgumentException("timeStamp is invalid");
 			}	
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Notification notification = (Notification) o;
+		return(notification.getText().equals(this.getText()) &&
+				(notification.getUsername()).equals(this.getUsername()) &&
+				notification.getStatusNotification().equals(this.getStatusNotification()) &&
+				((Long)notification.getTimestamp()).equals((Long)this.getTimestamp())&&
+				(notification.getCategoryNotification().equals(this.getCategoryNotification())));
+		
+	}
 }
