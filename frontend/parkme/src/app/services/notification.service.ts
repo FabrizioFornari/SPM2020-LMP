@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 
 import { RxStomp } from '@stomp/rx-stomp';
 import * as SockJS from 'sockjs-client';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
