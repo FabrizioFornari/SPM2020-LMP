@@ -46,5 +46,6 @@ public final class EndpointContants {
 	public static final String PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT=  "/parkingLots/getStreet";
 	public static final String PARKING_MANAGER_UPDATE_PARKINGLOT_ENDPOINT= "/parkingLot/update";
 
-	
+	//Notification Controller
+	public static final String NOTIFICATION_ENDPOINT="/api/notification";
 }
