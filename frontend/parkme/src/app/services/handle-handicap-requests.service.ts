@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const HANDLE_REQUEST_API = 'http://localhost:8080/api/admin/setting/handicapPermits';
+const HANDLE_REQUEST_API = '/api/admin/setting/handicapPermits';
 
 
 
