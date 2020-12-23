@@ -48,9 +48,6 @@ public class NotificationController {
 	@GetMapping(path= NOTIFICATION_GET_ALL_USER_NOTIFICATIONS, consumes ="application/json")
 	public ResponseEntity<List<Notification>> getAllUserNotifications(@NotNull @RequestParam String username)throws IOException{
 		List<Notification> notifications =notificationRepository.findByUsername(username);
-		if(notifications.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return ResponseEntity.ok(notifications);
 	
 	}
