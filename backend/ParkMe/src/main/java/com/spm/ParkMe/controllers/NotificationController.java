@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,16 @@ public class NotificationController {
 		Notification notification =  notificationRepository.findById(id).orElseThrow();
 		notification.setStatusNotification(statusNotification);
 		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	@GetMapping(path= NOTIFICATION_GET_ALL_USER_NOTIFICATIONS, consumes ="application/json")
+	public ResponseEntity<List<Notification>> getAllUserNotifications(@NotNull @RequestParam String username)throws IOException{
+		List<Notification> notifications =notificationRepository.findByUsername(username);
+		if(notifications.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(notifications);
+	
 	}
 	
 	
