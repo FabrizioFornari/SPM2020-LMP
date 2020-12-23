@@ -26,14 +26,27 @@ public class DriverParkingLotTest {
 
 	private static StringBuffer verificationErrors = new StringBuffer();
 
+	private static String projectPath;
+
     
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		
 		 
-		System.setProperty("webdriver.chrome.driver","src/test/java/com/spm/ParkMe/seleniumS02/chromedriver.exe");
+		projectPath = System.getProperty("user.dir");
+		String OS = System.getProperty("os.name");
+		if(OS.equals("Mac OS X")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
+		}
+		if(OS.contains("Windows")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\windows\\chromedriver.exe");
+		}
+		if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
+		}
 		
+	    //250ms frequency of pulling		
 	    driver = new ChromeDriver();
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    driver.manage().window().maximize();
