@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.management.Notification;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.spm.ParkMe.models.MessageResponse;
+import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.UserSession;
 import com.spm.ParkMe.repositories.NotificationRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
@@ -50,6 +49,7 @@ public class NotificationDispatcher {
 	                "/notification/item",
 	                notification,
 	                headerAccessor.getMessageHeaders());
+	        notificationRepository.save(notification);
 		}
 	}
 	
