@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.management.Notification;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -17,9 +18,17 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.UserSession;
+import com.spm.ParkMe.repositories.NotificationRepository;
+import com.spm.ParkMe.repositories.UserSessionRepository;
 
 @Service
 public class NotificationDispatcher {
+	
+	@Autowired
+	NotificationRepository notificationRepository;
+	
+	@Autowired
+	UserSessionRepository userSessionRepository;
 
 	
 	private Set<UserSession> listeners = new HashSet<>();
@@ -28,25 +37,20 @@ public class NotificationDispatcher {
 	public NotificationDispatcher(SimpMessagingTemplate template) {
 	    this.template = template;
 	}
-
 	
-	@Scheduled(fixedDelay = 2000)
-	public void dispatch() {
-	    for (UserSession listener : listeners) {
-	        System.out.println("Sending notification to " + listener.getUser().getUsername());
-
-	        SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-	        headerAccessor.setSessionId(listener.getSessionID());
+	public void sendNotificationToUser(String username, Notification notification) {
+		List<UserSession> sessions = userSessionRepository.findByUsername(username);
+		if(!sessions.isEmpty()) {
+			String sessionID = sessions.get(0).getSessionID();
+			SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+	        headerAccessor.setSessionId(sessionID);
 	        headerAccessor.setLeaveMutable(true);
-
-	        int value = (int) Math.round(Math.random() * 100d);
 	        template.convertAndSendToUser(
-	                listener.getSessionID(), 
+	                sessionID, 
 	                "/notification/item",
-	                //new Notification(Integer.toString(value)),
-	                new MessageResponse("prova: " + Integer.toString(value)),
+	                notification,
 	                headerAccessor.getMessageHeaders());
-	    }
+		}
 	}
 	
 	
