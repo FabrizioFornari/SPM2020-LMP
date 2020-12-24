@@ -26,6 +26,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
 import com.spm.ParkMe.repositories.NotificationRepository;
 
 @RestController
@@ -39,9 +40,9 @@ public class NotificationController {
 	
 	
 	@PutMapping(path = NOTIFICATION_SET_STATUS, consumes = "application/json")
-	public ResponseEntity setNotificationStatus(@NotNull @RequestParam String id, @NotNull @RequestParam StatusNotification statusNotification ) throws IOException {
-		Notification notification =  notificationRepository.findById(id).orElseThrow();
-		notification.setStatusNotification(statusNotification);
+	public ResponseEntity setNotificationStatus(@Valid @RequestBody  ChangeNotificationStatusInfo changeNotificationStatusInfo ) throws IOException {
+		Notification notification =  notificationRepository.findById(changeNotificationStatusInfo.getId()).orElseThrow();
+		notification.setStatusNotification(changeNotificationStatusInfo.getStatusNotification());
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	
