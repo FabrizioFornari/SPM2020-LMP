@@ -32,7 +32,7 @@ public class Notification {
 		this.setText(text);
 		this.setUsername(username);
 		this.setTimeStamp(timeStamp);
-		this.setStatusNotification(null);
+		this.setStatusNotification(statusNotification.NEW);
 		this.setCategoryNotification(null);
 	}
 	
