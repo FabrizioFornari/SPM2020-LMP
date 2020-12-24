@@ -23,5 +23,6 @@ public class NotificationConstants {
 
 	
 	public static final Notification NOTIFICATION_1 = new Notification(TEXT, USERNAME, TIMESTAMP);
+	public static final Notification NOTIFICATION_2 = new Notification(TEXT, USERNAME, TIMESTAMP);
 	
 }
