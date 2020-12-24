@@ -11,6 +11,8 @@ import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_OBJECT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +42,6 @@ import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
 import com.spm.ParkMe.repositories.NotificationRepository;
 
-import static com.spm.ParkMe.constants.EndpointContants.DRIVER_ENDPOINT;
-import static com.spm.ParkMe.constants.EndpointContants.DRIVER_REGISTRATION_ENDPOINT;
 import static com.spm.ParkMe.constants.NotificationConstants.*;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
@@ -68,6 +68,8 @@ public class NotificationControllerTest {
 			notificationRepository.deleteAll();
 			
 			notificationRepository.save(NOTIFICATION_1);
+			notificationRepository.save(NOTIFICATION_2);
+
 			mockMvc = MockMvcBuilders
 	                .webAppContextSetup(context)
 	                .apply(springSecurity())
@@ -91,4 +93,21 @@ public class NotificationControllerTest {
 		MockHttpServletResponse response = result.getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
+	
+	@Test
+	@WithMockUser(username = USERNAME, roles= {"DRIVER"})
+	public void getAllUserNotificationsReturnsListNotifications() throws Exception {
+	
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+				NOTIFICATION_ENDPOINT + NOTIFICATION_GET_ALL_USER_NOTIFICATIONS).accept(
+				MediaType.APPLICATION_JSON).param("username", USERNAME)
+				.contentType(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		List<Notification> notifications= notificationRepository.findByUsername(USERNAME);
+		assertEquals(2, notifications.size());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+	
+	
 }
