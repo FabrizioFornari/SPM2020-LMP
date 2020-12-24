@@ -33,8 +33,21 @@ class ParkingLotManagementTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		
 		projectPath = System.getProperty("user.dir");
+		
+	}
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+		driver.quit();
+	    String verificationErrorString = verificationErrors.toString();
+	    if (!"".equals(verificationErrorString)) {
+	      fail(verificationErrorString);
+	    }
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
 		String OS = System.getProperty("os.name");
 		if(OS.equals("Mac OS X")) {
 			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
@@ -51,19 +64,6 @@ class ParkingLotManagementTest {
 	    driver = new ChromeDriver();
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    //250ms frequency of pulling
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-		//driver.quit();
-	    String verificationErrorString = verificationErrors.toString();
-	    if (!"".equals(verificationErrorString)) {
-	      fail(verificationErrorString);
-	    }
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
 	}
 
 	@AfterEach

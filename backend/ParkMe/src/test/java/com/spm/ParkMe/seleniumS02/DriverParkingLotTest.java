@@ -32,25 +32,8 @@ public class DriverParkingLotTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		
-		 
 		projectPath = System.getProperty("user.dir");
-		String OS = System.getProperty("os.name");
-		if(OS.equals("Mac OS X")) {
-			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
-		}
-		if(OS.contains("Windows")) {
-			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\windows\\chromedriver.exe");
-		}
-		if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
-			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
-		}
 		
-	    //250ms frequency of pulling		
-	    driver = new ChromeDriver();
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    driver.manage().window().maximize();
-	    //250ms frequency of pulling
 	}
 
 	@AfterAll
@@ -64,6 +47,22 @@ public class DriverParkingLotTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		String OS = System.getProperty("os.name");
+		if(OS.equals("Mac OS X")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
+		}
+		if(OS.contains("Windows")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\windows\\chromedriver.exe");
+		}
+		if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
+		}
+		
+		 
+		
+	    driver = new ChromeDriver();
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    //250ms frequency of pulling
 	}
 
 	@AfterEach
