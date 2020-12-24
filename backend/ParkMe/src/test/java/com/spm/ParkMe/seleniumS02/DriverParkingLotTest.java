@@ -38,11 +38,6 @@ public class DriverParkingLotTest {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		driver.quit();
-	    String verificationErrorString = verificationErrors.toString();
-	    if (!"".equals(verificationErrorString)) {
-	      fail(verificationErrorString);
-	    }
 	}
 
 	@BeforeEach
@@ -67,6 +62,11 @@ public class DriverParkingLotTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		driver.quit();
+	    String verificationErrorString = verificationErrors.toString();
+	    if (!"".equals(verificationErrorString)) {
+	      fail(verificationErrorString);
+	    }
 	}
 	
 

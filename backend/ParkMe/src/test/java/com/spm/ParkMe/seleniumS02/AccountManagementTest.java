@@ -38,11 +38,6 @@ class AccountManagementTest {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		driver.quit();
-	    String verificationErrorString = verificationErrors.toString();
-	    if (!"".equals(verificationErrorString)) {
-	      fail(verificationErrorString);
-	    }
 	}
 
 	@BeforeEach
@@ -67,6 +62,11 @@ class AccountManagementTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		driver.quit();
+	    String verificationErrorString = verificationErrors.toString();
+	    if (!"".equals(verificationErrorString)) {
+	      fail(verificationErrorString);
+	    }
 	}
 	
 
