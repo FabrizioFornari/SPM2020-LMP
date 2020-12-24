@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const PM_REGISTER_API = 'http://localhost:8080/api/parkingmanager/registration';
-const VG_REGISTER_API = 'http://localhost:8080/api/vigilant/registration';
+const PM_REGISTER_API = '/api/parkingmanager/registration';
+const VG_REGISTER_API = '/api/vigilant/registration';
 
 
 @Injectable({

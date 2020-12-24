@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const HANDICAP_UPLOAD_API =
-  'http://localhost:8080/api/driver/requestHandicapPermits';
+const HANDICAP_UPLOAD_API = '/api/driver/requestHandicapPermits';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +14,7 @@ export class UploadHandicapServiceService {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     };
   }
