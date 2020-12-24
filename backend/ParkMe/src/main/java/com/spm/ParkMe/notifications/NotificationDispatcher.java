@@ -56,13 +56,18 @@ public class NotificationDispatcher {
 	
 	public void add(UserSession session)
 	{
-		this.listeners.add(session);
+		List<UserSession> sessions = userSessionRepository.findByUsername(session.getUser().getUsername());
+		//if there are other sessions, delete them and save the new one
+		for(UserSession s : sessions) {
+			userSessionRepository.delete(s);
+		}
+		userSessionRepository.save(session);
 	}
 	
 	public void remove(String sessionID) {
-		List<UserSession> sessions = this.listeners.stream().filter(l -> l.getSessionID().equals(sessionID)).collect(Collectors.toList());
-		if(!sessions.isEmpty()) {
-			this.listeners.remove(sessions.get(0));
+		List<UserSession> sessions = userSessionRepository.findBySessionID(sessionID);
+		for(UserSession s : sessions) {
+			userSessionRepository.delete(s);
 		}
 	}
 }
