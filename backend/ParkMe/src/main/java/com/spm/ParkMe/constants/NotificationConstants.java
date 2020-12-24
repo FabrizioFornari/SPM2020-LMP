@@ -9,6 +9,7 @@ import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.StatusNotification;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
 
 public class NotificationConstants {
 
@@ -22,5 +23,5 @@ public class NotificationConstants {
 
 	
 	public static final Notification NOTIFICATION_1 = new Notification(TEXT, USERNAME, TIMESTAMP);
-
+	
 }
