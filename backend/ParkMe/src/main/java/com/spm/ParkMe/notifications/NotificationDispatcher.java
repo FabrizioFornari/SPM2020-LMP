@@ -29,8 +29,6 @@ public class NotificationDispatcher {
 	@Autowired
 	UserSessionRepository userSessionRepository;
 
-	
-	private Set<UserSession> listeners = new HashSet<>();
 	private SimpMessagingTemplate template;
 
 	public NotificationDispatcher(SimpMessagingTemplate template) {
