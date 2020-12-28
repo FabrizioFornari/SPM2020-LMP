@@ -29,7 +29,7 @@ export class NotificationService {
       .watch('/user/notification/item')
       .pipe(
         map((response: any) => {
-          const text: string = JSON.parse(response.body).message;
+          const text: string = JSON.parse(response.body).text;
           console.log('Got ' + text);
           return text;
         })
