@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
+import com.spm.ParkMe.managers.AbusiveOccupationManager;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
@@ -36,6 +37,7 @@ import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.SensorChangeInfo;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -67,6 +69,9 @@ public class DriverController {
 	
 	@Autowired
 	private ParkingLotTicketRepository parkingLotTicketRepository;
+	
+	@Autowired
+	private AbusiveOccupationManager abusiveOccupationManager;
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
@@ -278,20 +283,27 @@ public class DriverController {
 	
 	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setParkingLotSensor(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot,  @NotNull @RequestParam boolean state) {
-		List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+	public ResponseEntity setParkingLotSensor(@NotNull @RequestBody SensorChangeInfo sensorChangeInfo) {
+		List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 	
 		if(!parkingLots.isEmpty()) {
 			
 			ParkingLot parkingLot = parkingLots.get(0);
-			if(state)
+			if(sensorChangeInfo.getState() == SensorState.ON)
 			{
-				parkingLot.setSensorState(SensorState.ON);
-			}else
-			{
-				parkingLot.setSensorState(SensorState.OFF);
+				Thread thread = new Thread(() -> {
+					try {
+						Thread.sleep(10000);
+						abusiveOccupationManager.sendDriverNotification(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				});
+				thread.start();
 			}
-			return new ResponseEntity(HttpStatus.OK);
+			parkingLot.setSensorState(sensorChangeInfo.getState());
+			parkingLotRepository.save(parkingLot);
+			return new ResponseEntity(new MessageResponse("Sensor status changed"), HttpStatus.OK);
 		}
 		else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);

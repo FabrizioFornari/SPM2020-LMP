@@ -3,10 +3,10 @@ package com.spm.ParkMe.managers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.Status;
-import com.spm.ParkMe.enums.StatusNotification;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
@@ -14,17 +14,18 @@ import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 
+@Component
 public class AbusiveOccupationManager {
 
 	
 	@Autowired
-	NotificationDispatcher notificationDispatcher;
+	private NotificationDispatcher notificationDispatcher;
 	
 	@Autowired
-	ParkingLotRepository parkingLotRepository;
+	private ParkingLotRepository parkingLotRepository;
 	
 	@Autowired
-	ParkingLotBookingRepository parkingLotBookingRepository;
+	private ParkingLotBookingRepository parkingLotBookingRepository;
 	
 	//--------- CONSTRUCTOR --------- //
 	public AbusiveOccupationManager() {
@@ -32,21 +33,25 @@ public class AbusiveOccupationManager {
 	}
 	
 	
-	public Status getStatusParkingLot(String street, int numberOfParkingLot)
+	private Status getStatusParkingLot(String street, Integer numberOfParkingLot)
 	{
-		List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
-		ParkingLot parkingLot = parkingLots.get(0);
-		return parkingLot.getStatus();
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!parkingLots.isEmpty()) {
+			ParkingLot parkingLot = parkingLots.get(0);
+			return parkingLot.getStatus();
+		}
+		else {
+			return null;
+		}
 	}
 	
-	public void sendDriverNotification(String street, int numberOfParkingLot) {
-		if(getStatusParkingLot( street,  numberOfParkingLot).equals(Status.OCCUPIED)) {
+	public void sendDriverNotification(String street, Integer numberOfParkingLot) {
+		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED)) {
 			List<ParkingLotBooking> parkingLotsBooking= parkingLotBookingRepository.findByStreetAndNumberOfParkingLotBooking(street, numberOfParkingLot);
-			
 			if(!parkingLotsBooking.isEmpty()) {
 				ParkingLotBooking parkingLotBooking = parkingLotsBooking.get(0);
 				String username = parkingLotBooking.getUsername();
-				Notification notification = new Notification("",username, System.currentTimeMillis());
+				Notification notification = new Notification("Your parking lot has been occupied. Is that you?",username, System.currentTimeMillis());
 				notification.setCategoryNotification(CategoryNotification.PARKING);
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
