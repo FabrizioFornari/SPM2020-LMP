@@ -59,7 +59,9 @@ public class AbusiveOccupationManager {
 		}
 	}
 	
+	
 	public void sendNotificationToDriver(String street, Integer numberOfParkingLot) {
+		this.solved=false;
 		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED) || this.getParkingLotSensorState(street, numberOfParkingLot).equals(SensorState.OFF)) {
 			this.solved = true;
 			return;
@@ -77,6 +79,18 @@ public class AbusiveOccupationManager {
 	}
 
 
+	public void  sendNotificationToVigilant(String street, Integer numberOfParkingLot) {
+		if(!this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED) && this.getParkingLotSensorState(street, numberOfParkingLot).equals(SensorState.ON))
+		{
+			notificationDispatcher.sendNotificationToOneVigilant(street, numberOfParkingLot);
+		}else
+		{
+			this.solved=true;
+			return;
+		}
+		
+	}
+	
 	public boolean isSolved() {
 		return solved;
 	}
@@ -85,4 +99,5 @@ public class AbusiveOccupationManager {
 	public void setSolved(boolean solved) {
 		this.solved = solved;
 	}
+	
 }
