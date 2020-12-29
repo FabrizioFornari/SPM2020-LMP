@@ -23,6 +23,7 @@ import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.UserRepository;
+import com.spm.ParkMe.repositories.UserSessionRepository;
 
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
@@ -51,6 +52,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ParkingLotBookingRepository parkingLotBookingRepository;
+	
+	@Autowired
+	private UserSessionRepository userSessionRepository;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -111,6 +115,8 @@ public class ParkMeApplication implements CommandLineRunner {
 		
 		parkingLotTicketRepository.deleteAll();
 		parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
+		
+		userSessionRepository.deleteAll();
 	}
 
 }

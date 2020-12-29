@@ -56,7 +56,6 @@ public class NotificationDispatcher {
 	public void sendNotificationToOneVigilant(String street, Integer numberOfParkingLot) {
 	
 		List<UserSession> vigilantsSessions= userSessionRepository.findAll().stream().filter(session -> session.getUser().getRole().equals(Roles.ROLE_VIGILANT)).collect(Collectors.toList());
-		
 		if(!vigilantsSessions.isEmpty()) {
 			String sessionID = vigilantsSessions.get(0).getSessionID();
 			String username = vigilantsSessions.get(0).getUser().getUsername();
