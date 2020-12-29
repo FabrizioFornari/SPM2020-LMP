@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,8 @@ public class NotificationController {
 	}
 	
 	@GetMapping(path= NOTIFICATION_GET_ALL_USER_NOTIFICATIONS, consumes ="application/json")
-	public ResponseEntity<List<Notification>> getAllUserNotifications(@NotNull @RequestParam String username)throws IOException{
+	public ResponseEntity<List<Notification>> getAllUserNotifications(Authentication authentication)throws IOException{
+		String username = authentication.getName();
 		List<Notification> notifications =notificationRepository.findByUsername(username);
 		return ResponseEntity.ok(notifications);
 	

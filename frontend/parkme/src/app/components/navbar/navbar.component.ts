@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  notificationsList = [];
+
+  constructor(private unifiedlogin: UnifiedLoginService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -27,10 +31,34 @@ export class NavbarComponent implements OnInit {
       );
   });
 
+  this.unifiedlogin.loggedIn$.subscribe((value: boolean)=> {
+    if (value) {
+      this.notification();
+    } else {
+      return null;
+    }
+  })
+
 }
 
   notification(){
-    console.log('notification');
+    this.notificationService.getNotificationFromDB().subscribe(
+      (data) => {
+        console.log(data);
+        data.forEach(element => {
+          let readable_date = `${new Date(
+            element.timestamp
+          ).toLocaleDateString('it-IT')} (${new Date(
+            element.timestamp
+          ).toLocaleTimeString('it-IT')})`;
+          element.timestamp = readable_date;
+          this.notificationsList.push(element);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
 }
