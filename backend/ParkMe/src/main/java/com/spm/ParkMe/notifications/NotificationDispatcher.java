@@ -14,6 +14,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import com.spm.ParkMe.enums.CategoryNotification;
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.UserSession;
@@ -39,6 +41,27 @@ public class NotificationDispatcher {
 		List<UserSession> sessions = userSessionRepository.findByUsername(username);
 		if(!sessions.isEmpty()) {
 			String sessionID = sessions.get(0).getSessionID();
+			SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+	        headerAccessor.setSessionId(sessionID);
+	        headerAccessor.setLeaveMutable(true);
+	        template.convertAndSendToUser(
+	                sessionID, 
+	                "/notification/item",
+	                notification,
+	                headerAccessor.getMessageHeaders());
+	        notificationRepository.save(notification);
+		}
+	}
+	
+	public void sendNotificationToOneVigilant(String street, Integer numberOfParkingLot) {
+	
+		List<UserSession> vigilantsSessions= userSessionRepository.findAll().stream().filter(session -> session.getUser().getRole().equals(Roles.ROLE_VIGILANT)).collect(Collectors.toList());
+		
+		if(!vigilantsSessions.isEmpty()) {
+			String sessionID = vigilantsSessions.get(0).getSessionID();
+			String username = vigilantsSessions.get(0).getUser().getUsername();
+			Notification notification = new Notification("An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis());
+			notification.setCategoryNotification(CategoryNotification.PARKING);
 			SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
 	        headerAccessor.setSessionId(sessionID);
 	        headerAccessor.setLeaveMutable(true);
