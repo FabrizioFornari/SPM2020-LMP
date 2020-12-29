@@ -297,7 +297,7 @@ public class DriverController {
 						abusiveOccupationManager.sendNotificationToDriver(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 						if(!abusiveOccupationManager.isSolved()) {
 							Thread.sleep(10000);
-							//send notification to vigilant
+							abusiveOccupationManager.sendNotificationToVigilant(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
