@@ -59,7 +59,7 @@ public class AbusiveOccupationManager {
 		}
 	}
 	
-	public void sendDriverNotification(String street, Integer numberOfParkingLot) {
+	public void sendNotificationToDriver(String street, Integer numberOfParkingLot) {
 		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED) || this.getParkingLotSensorState(street, numberOfParkingLot).equals(SensorState.OFF)) {
 			this.solved = true;
 			return;

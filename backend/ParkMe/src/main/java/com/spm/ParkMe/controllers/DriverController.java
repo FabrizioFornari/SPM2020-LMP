@@ -294,7 +294,7 @@ public class DriverController {
 				Thread thread = new Thread(() -> {
 					try {
 						Thread.sleep(10000);
-						abusiveOccupationManager.sendDriverNotification(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+						abusiveOccupationManager.sendNotificationToDriver(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 						if(!abusiveOccupationManager.isSolved()) {
 							Thread.sleep(10000);
 							//send notification to vigilant
