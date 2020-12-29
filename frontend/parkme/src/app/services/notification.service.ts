@@ -16,7 +16,7 @@ export class NotificationService {
       this.client = new RxStomp();
       this.client.configure({
         webSocketFactory: () =>
-          new SockJS(`http://localhost:8080/notifications`),
+          new SockJS(`/notifications`),
         debug: (msg: string) => console.log(msg),
       });
       this.client.activate();
