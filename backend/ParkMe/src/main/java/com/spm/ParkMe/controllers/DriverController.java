@@ -295,6 +295,10 @@ public class DriverController {
 					try {
 						Thread.sleep(10000);
 						abusiveOccupationManager.sendDriverNotification(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+						if(!abusiveOccupationManager.isSolved()) {
+							Thread.sleep(10000);
+							//send notification to vigilant
+						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

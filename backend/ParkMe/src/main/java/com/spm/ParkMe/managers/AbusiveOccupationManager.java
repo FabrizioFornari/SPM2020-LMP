@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.spm.ParkMe.enums.CategoryNotification;
+import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
@@ -27,9 +28,11 @@ public class AbusiveOccupationManager {
 	@Autowired
 	private ParkingLotBookingRepository parkingLotBookingRepository;
 	
+	private boolean solved;
+	
 	//--------- CONSTRUCTOR --------- //
 	public AbusiveOccupationManager() {
-		
+		this.setSolved(false);
 	}
 	
 	
@@ -45,8 +48,23 @@ public class AbusiveOccupationManager {
 		}
 	}
 	
+	private SensorState getParkingLotSensorState(String street, Integer numberOfParkingLot) {
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!parkingLots.isEmpty()) {
+			ParkingLot parkingLot = parkingLots.get(0);
+			return parkingLot.getSensorState();
+		}
+		else {
+			return null;
+		}
+	}
+	
 	public void sendDriverNotification(String street, Integer numberOfParkingLot) {
-		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED)) {
+		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED) || this.getParkingLotSensorState(street, numberOfParkingLot).equals(SensorState.OFF)) {
+			this.solved = true;
+			return;
+		}
+		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.BOOKED)) {
 			List<ParkingLotBooking> parkingLotsBooking= parkingLotBookingRepository.findByStreetAndNumberOfParkingLotBooking(street, numberOfParkingLot);
 			if(!parkingLotsBooking.isEmpty()) {
 				ParkingLotBooking parkingLotBooking = parkingLotsBooking.get(0);
@@ -56,5 +74,15 @@ public class AbusiveOccupationManager {
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
 		}
+	}
+
+
+	public boolean isSolved() {
+		return solved;
+	}
+
+
+	public void setSolved(boolean solved) {
+		this.solved = solved;
 	}
 }
