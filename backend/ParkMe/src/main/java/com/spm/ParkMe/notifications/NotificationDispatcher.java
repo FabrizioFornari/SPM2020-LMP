@@ -18,8 +18,10 @@ import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.Notification;
+import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.UserSession;
 import com.spm.ParkMe.repositories.NotificationRepository;
+import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
 @Service
@@ -30,6 +32,9 @@ public class NotificationDispatcher {
 	
 	@Autowired
 	UserSessionRepository userSessionRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	private SimpMessagingTemplate template;
 
@@ -61,15 +66,16 @@ public class NotificationDispatcher {
 			String username = vigilantsSessions.get(0).getUser().getUsername();
 			Notification notification = new Notification("An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis());
 			notification.setCategoryNotification(CategoryNotification.PARKING);
-			SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-	        headerAccessor.setSessionId(sessionID);
-	        headerAccessor.setLeaveMutable(true);
-	        template.convertAndSendToUser(
-	                sessionID, 
-	                "/notification/item",
-	                notification,
-	                headerAccessor.getMessageHeaders());
-	        notificationRepository.save(notification);
+			this.sendNotificationToUser(username, notification);
+		}
+		else {
+			List<User> vigilants = userRepository.findByRole(Roles.ROLE_VIGILANT);
+			long timestamp = System.currentTimeMillis();
+			for(User vigilant : vigilants) {
+				Notification notification = new Notification("An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), timestamp);
+				notification.setCategoryNotification(CategoryNotification.PARKING);
+				notificationRepository.save(notification);
+			}
 		}
 	}
 	
