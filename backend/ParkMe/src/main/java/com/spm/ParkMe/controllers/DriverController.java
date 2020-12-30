@@ -265,6 +265,10 @@ public class DriverController {
 			ParkingLotBooking booking = bookings.get(0);
 			ParkingLot nearestParkingLot = this.getNearestParkingLotFromCoordinates(compatibleParkingLots, Double.parseDouble(booking.getCoordinates().getLatitude()), Double.parseDouble(booking.getCoordinates().getLongitude()));
 			if(nearestParkingLot != null) {
+				parkingLotBookingRepository.delete(booking);
+				ParkingLot parkingLot = parkingLotRepository.findByStreetAndNumberOfParkingLot(booking.getStreet(), booking.getNumberOfParkingLot()).get(0);
+				parkingLot.setStatus(Status.FREE);
+				parkingLotRepository.save(parkingLot);
 				return ResponseEntity.ok(nearestParkingLot);
 			}
 			else {
