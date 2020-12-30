@@ -14,8 +14,8 @@
       notifications_active
     </span>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div class="notifationItem" *ngFor="let not of notificationsList">
-        <a style="font-size: 12px;" class="dropdown-item" href="#"
+      <div style="cursor: pointer" class="notifationItem" *ngFor="let not of notificationsList">
+        <a (click)="notificationAction(not)" style="font-size: 12px;" class="dropdown-item"
           >{{ not.text }} <span style="color: gray; font-size: 10px;">{{ not.timestamp }}</span>
         </a>
         <hr />

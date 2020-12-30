@@ -29,6 +29,7 @@ import { ModalBookingModeChoiceComponent } from './modal/modal-booking-mode-choi
 import { CoordinatesModalComponent } from './modal/coordinates-modal/coordinates-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BuyTicketComponent } from './modal/buy-ticket/buy-ticket.component';
+import { ConfirmPresenceComponent } from './modal/confirm-presence/confirm-presence.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { BuyTicketComponent } from './modal/buy-ticket/buy-ticket.component';
     CoordinatesModalComponent,
     NavbarComponent,
     BuyTicketComponent,
+    ConfirmPresenceComponent,
   ],
   imports: [
     BrowserModule,
