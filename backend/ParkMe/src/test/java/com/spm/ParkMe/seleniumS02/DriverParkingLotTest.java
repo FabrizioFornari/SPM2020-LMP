@@ -26,41 +26,54 @@ public class DriverParkingLotTest {
 
 	private static StringBuffer verificationErrors = new StringBuffer();
 
+	private static String projectPath;
+
     
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		projectPath = System.getProperty("user.dir");
 		
-		 
-		System.setProperty("webdriver.chrome.driver","src/test/java/com/spm/ParkMe/seleniumS02/chromedriver.exe");
-		
-	    driver = new ChromeDriver();
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    driver.manage().window().maximize();
-	    //250ms frequency of pulling
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+		String OS = System.getProperty("os.name");
+		if(OS.equals("Mac OS X")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
+		}
+		if(OS.contains("Windows")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\windows\\chromedriver.exe");
+		}
+		if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
+		}
+		
+		 
+		
+	    driver = new ChromeDriver();
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    //250ms frequency of pulling
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
 		driver.quit();
 	    String verificationErrorString = verificationErrors.toString();
 	    if (!"".equals(verificationErrorString)) {
 	      fail(verificationErrorString);
 	    }
 	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 	
 
 	
 	@Test
 	@Order(1)
+	@Disabled
 	public void bookAndCancelParkingLotProcess() throws Exception {
 		driver.get("http://localhost:4200/login");
 	    driver.findElement(By.xpath("//label")).click();
@@ -104,6 +117,7 @@ public class DriverParkingLotTest {
 	
 	@Test
 	@Order(2)
+	@Disabled
 	public void bookAndBuyTicket() throws Exception {
 		driver.get("http://localhost:4200/login");
 	    driver.findElement(By.xpath("//label")).click();

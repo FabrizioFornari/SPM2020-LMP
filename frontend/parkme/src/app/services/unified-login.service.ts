@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-const UNIFIED_LOGIN_API = 'http://localhost:8080/api/auth/';
+const UNIFIED_LOGIN_API = '/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -12,6 +12,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class UnifiedLoginService {
+
+  public loggedIn$ = new BehaviorSubject<boolean>(false);
+  
   constructor(private http: HttpClient) {}
 
   login(user: { email: string; password: string }): Observable<any> {

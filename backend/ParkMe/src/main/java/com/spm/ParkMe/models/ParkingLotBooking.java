@@ -36,6 +36,10 @@ public class ParkingLotBooking {
 	}
 	
 	/*------- ACCESSORY METHODS ---------*/
+	public String getId() {
+		return id;
+	}
+	
 	public String getStreet() {
 		return street;
 	}

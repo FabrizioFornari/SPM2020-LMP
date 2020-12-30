@@ -27,40 +27,54 @@ class ParkingLotManagementTest {
 
 	private static StringBuffer verificationErrors = new StringBuffer();
 
+	private static String projectPath;
+
     
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		projectPath = System.getProperty("user.dir");
+		
+	}
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+		String OS = System.getProperty("os.name");
+		if(OS.equals("Mac OS X")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/mac/chromedriver");
+		}
+		if(OS.contains("Windows")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\windows\\chromedriver.exe");
+		}
+		if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
+		}
 		
 		 
-		System.setProperty("webdriver.chrome.driver","src/test/java/com/spm/ParkMe/seleniumS02/chromedriver.exe");
 		
 	    driver = new ChromeDriver();
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    //250ms frequency of pulling
 	}
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-		//driver.quit();
+	@AfterEach
+	void tearDown() throws Exception {
+		driver.quit();
 	    String verificationErrorString = verificationErrors.toString();
 	    if (!"".equals(verificationErrorString)) {
 	      fail(verificationErrorString);
 	    }
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	}
 	
 
 	
 	@Test
 	@Order(1)
+	@Disabled
 	  public void insertParkingLot() throws Exception {
 			driver.get("http://localhost:4200/login");
 		    driver.findElement(By.xpath("//label")).click();
@@ -100,6 +114,7 @@ class ParkingLotManagementTest {
 	
 	@Test
 	@Order(2)
+	@Disabled
 	public void editParkingLot() throws Exception {
 		driver.get("http://localhost:4200/login");
 	    driver.findElement(By.xpath("//label")).click();
@@ -138,6 +153,7 @@ class ParkingLotManagementTest {
 	
 	@Test
 	@Order(3)
+	@Disabled
 	public void deleteParkingLot() throws Exception {
 		driver.get("http://localhost:4200/login");
 	    driver.findElement(By.xpath("//label")).click();

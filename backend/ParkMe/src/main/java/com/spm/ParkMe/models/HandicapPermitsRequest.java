@@ -30,6 +30,9 @@ public class HandicapPermitsRequest {
 		this.setProcessed(isProcessed);
 	}
 	
+	public String getId() {
+		return id;
+	}
 	public String getUsername() {
 		return username;
 	}

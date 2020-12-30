@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.enums.Roles;
@@ -18,6 +19,7 @@ import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.NotificationRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
@@ -26,9 +28,10 @@ import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
-
+import static com.spm.ParkMe.constants.NotificationConstants.*;
 
 @SpringBootApplication
+@EnableScheduling
 public class ParkMeApplication implements CommandLineRunner {
 
 
@@ -52,6 +55,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
 	
 
 	public static void main(String[] args) {
@@ -109,6 +115,9 @@ public class ParkMeApplication implements CommandLineRunner {
 		
 		parkingLotTicketRepository.deleteAll();
 		parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
+		notificationRepository.deleteAll();
+		notificationRepository.save(NOTIFICATION_1);
+		notificationRepository.save(NOTIFICATION_2);
 	}
 
 }

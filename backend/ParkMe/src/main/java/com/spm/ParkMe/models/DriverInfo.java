@@ -20,6 +20,10 @@ public class DriverInfo {
 		this.setVehicleType(driver.getVehicleType());
 		this.setHandicap(false);
 	}
+	
+	public String getId() {
+		return id;
+	}
 
 	public String getUsername() {
 		return username;
