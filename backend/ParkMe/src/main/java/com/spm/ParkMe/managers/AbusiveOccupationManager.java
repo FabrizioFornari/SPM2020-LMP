@@ -51,7 +51,7 @@ public class AbusiveOccupationManager {
 			if(!parkingLotsBooking.isEmpty()) {
 				ParkingLotBooking parkingLotBooking = parkingLotsBooking.get(0);
 				String username = parkingLotBooking.getUsername();
-				Notification notification = new Notification("Your parking lot has been occupied. Is that you?",username, System.currentTimeMillis());
+				Notification notification = new Notification("The parking lot that you booked (" + street + " - #" + numberOfParkingLot + ") has been occupied. Is that you?",username, System.currentTimeMillis());
 				notification.setCategoryNotification(CategoryNotification.PARKING);
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
