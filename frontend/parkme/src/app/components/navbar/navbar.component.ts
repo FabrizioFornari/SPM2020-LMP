@@ -63,15 +63,15 @@ export class NavbarComponent implements OnInit {
 
   notificationAction(not) {
     if (not.categoryNotification == 'PARKING') {
-      this.openModalConfirmPresence(not.text)
+      this.openModalConfirmPresence(not)
     } else {
       console.log('APRI ALTRI MODAL');
     }
   }
 
-  openModalConfirmPresence(text) {
+  openModalConfirmPresence(not) {
     const modalRef = this.modalService.open(ConfirmPresenceComponent);
-    modalRef.componentInstance.notification = text;
+    modalRef.componentInstance.notification = not;
     modalRef.result.then(
       () => {
         console.log('Modal ConfirmPresence Closed');
