@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit {
           element.timestamp = readable_date;
           this.notificationsList.push(element);
         });
+        this.notificationsList = this.notificationsList.reverse();
       },
       (error) => {
         console.log(error);
