@@ -12,6 +12,10 @@ import com.spm.ParkMe.enums.StatusNotification;
 public class Notification {
 
 	@Id private String id;
+
+	@NotNull(message="title must not be null")
+	@NotEmpty(message = "title must not be empty")
+	private String title;
 	@NotNull(message="text must not be null")
 	@NotEmpty(message = "text must not be empty")
 	private String text;
@@ -28,7 +32,8 @@ public class Notification {
 		
 	}
 
-	public Notification(String text, String username, long timeStamp ) {
+	public Notification(String title, String text, String username, long timeStamp ) {
+		this.setTitle(title);
 		this.setText(text);
 		this.setUsername(username);
 		this.setTimeStamp(timeStamp);
@@ -96,6 +101,20 @@ public class Notification {
 			}	
 	}
 	
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		if(title != null && title != "" ) {
+			this.title = title;
+		}
+		else {
+			throw new IllegalArgumentException("title is invalid");
+			}	
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -110,4 +129,5 @@ public class Notification {
 				(notification.getCategoryNotification().equals(this.getCategoryNotification())));
 		
 	}
+
 }
