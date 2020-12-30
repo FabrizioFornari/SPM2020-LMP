@@ -7,8 +7,9 @@ h6 {
   outline: none !important;
 }
 
-.material-icons {
+.material-icons  {
   font-size: 32px;
   color: white;
   cursor: pointer;
 }
+

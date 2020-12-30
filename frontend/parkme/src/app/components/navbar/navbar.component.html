@@ -4,6 +4,7 @@
   >
   <div class="dropdown">
     <span
+      [style.color] = "newNotifications ? 'cornflowerblue' : 'white'"
       id="dropdownMenuButton"
       data-toggle="dropdown"
       aria-haspopup="true"
@@ -14,9 +15,26 @@
       notifications_active
     </span>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div style="cursor: pointer" class="notifationItem" *ngFor="let not of notificationsList">
-        <a (click)="notificationAction(not)" style="font-size: 12px;" class="dropdown-item"
-          >{{ not.title }} <span style="color: gray; font-size: 10px;">{{ not.timestamp }}</span>
+      <div
+        style="cursor: pointer"
+        class="notifationItem"
+        *ngFor="let not of notificationsList"
+      >
+        <a
+          *ngIf="not.statusNotification == 'NEW'"
+          (click)="notificationAction(not)"
+          style="font-size: 12px; font-weight: bold; color: cornflowerblue"
+          class="dropdown-item"
+          >{{ not.title }}
+          <span style="color: gray; font-size: 10px">{{ not.timestamp }}</span>
+        </a>
+        <a
+          *ngIf="not.statusNotification != 'NEW'"
+          (click)="notificationAction(not)"
+          style="font-size: 12px;"
+          class="dropdown-item"
+          >{{ not.title }}
+          <span style="color: gray; font-size: 10px">{{ not.timestamp }}</span>
         </a>
         <hr />
       </div>

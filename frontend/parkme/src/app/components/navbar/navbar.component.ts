@@ -3,6 +3,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmPresenceComponent } from 'src/app/modal/confirm-presence/confirm-presence.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +12,8 @@ import { ConfirmPresenceComponent } from 'src/app/modal/confirm-presence/confirm
 })
 export class NavbarComponent implements OnInit {
   notificationsList = [];
+
+  newNotifications: boolean = false;
 
   constructor(
     private unifiedlogin: UnifiedLoginService,
@@ -33,17 +36,22 @@ export class NavbarComponent implements OnInit {
       });
     });
 
-    this.unifiedlogin.loggedIn$.subscribe((value: boolean) => {
-      if (value) {
-        this.notification();
-      } else {
-        return null;
-      }
-    });
+    if (this.loggedIn) {
+      this.notification();
+    } else {
+      return null;
+    }
+  }
+
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    return jwtHelper.isTokenExpired(token);
   }
 
   notification() {
     this.notificationsList = [];
+    this.newNotifications = false;
     this.notificationService.getNotificationFromDB().subscribe(
       (data) => {
         console.log(data);
@@ -54,7 +62,13 @@ export class NavbarComponent implements OnInit {
           element.timestamp = readable_date;
           this.notificationsList.push(element);
         });
-        this.notificationsList = this.notificationsList.reverse().slice(0, 5);
+        this.notificationsList = this.notificationsList.reverse();
+        for (let index = 0; index < this.notificationsList.length; index++) {
+          if (this.notificationsList[index].statusNotification == "NEW") {
+            this.newNotifications = true;
+            break;
+          }
+        }
       },
       (error) => {
         console.log(error);

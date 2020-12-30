@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NotificationService } from 'src/app/services/notification.service';
-import { UnifiedLoginService } from './services/unified-login.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -13,7 +12,6 @@ export class AppComponent implements OnInit {
   title = 'parkme';
 
   constructor(
-    private unifiedlogin: UnifiedLoginService,
     private notificationService: NotificationService
   ) {}
 
