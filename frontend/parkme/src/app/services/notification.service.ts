@@ -7,6 +7,8 @@ import * as SockJS from 'sockjs-client';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { ToastrService } from 'ngx-toastr';
+
 const NOTIFICATION_API = "/api/notification/getAllUserNotifications";
 
 @Injectable({
@@ -16,7 +18,8 @@ export class NotificationService {
   private client: RxStomp;
   public notifications: string[] = [];
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private toastrService: ToastrService){}
+
 
   getHttpOpt(){
     return {
@@ -47,6 +50,7 @@ export class NotificationService {
         map((response: any) => {
           const text: string = JSON.parse(response.body).text;
           console.log('Got ' + text);
+          this.toastrService.info('You have new notifications');
           return text;
         })
       )

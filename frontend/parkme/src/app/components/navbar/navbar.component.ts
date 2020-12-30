@@ -42,6 +42,7 @@ export class NavbarComponent implements OnInit {
 }
 
   notification(){
+    this.notificationsList = [];
     this.notificationService.getNotificationFromDB().subscribe(
       (data) => {
         console.log(data);
