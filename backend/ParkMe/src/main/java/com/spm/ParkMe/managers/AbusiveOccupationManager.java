@@ -46,7 +46,7 @@ public class AbusiveOccupationManager {
 	}
 	
 	public void sendDriverNotification(String street, Integer numberOfParkingLot) {
-		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED)) {
+		if(this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.BOOKED)) {
 			List<ParkingLotBooking> parkingLotsBooking= parkingLotBookingRepository.findByStreetAndNumberOfParkingLotBooking(street, numberOfParkingLot);
 			if(!parkingLotsBooking.isEmpty()) {
 				ParkingLotBooking parkingLotBooking = parkingLotsBooking.get(0);
