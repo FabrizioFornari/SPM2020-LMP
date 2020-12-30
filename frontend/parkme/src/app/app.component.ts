@@ -13,7 +13,5 @@ export class AppComponent implements OnInit {
   constructor(private notification: NotificationService){}
 
   ngOnInit(){
-    this.notification.connect();
-    this.notification.startNotifications();
   }
 }

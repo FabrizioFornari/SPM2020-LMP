@@ -3,27 +3,26 @@
     ><span class="material-icons"> directions_car </span>ParkMe</a
   >
   <div class="dropdown">
-
-	<span
-    id="dropdownMenuButton"
-    data-toggle="dropdown"
-    aria-haspopup="true"
-    aria-expanded="false"
-    class="material-icons"
-    (click)="notification()"
-  >
-    notifications_active
-  </span>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	<a class="dropdown-item" href="#">Notifica 1</a>
-	<hr>
-	<a class="dropdown-item" href="#">Notifica 2</a>
-	<hr>
-    <a class="dropdown-item" href="#">Notifica 3</a>
+    <span
+      id="dropdownMenuButton"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      class="material-icons"
+      (click)="notification()"
+    >
+      notifications_active
+    </span>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div class="notifationItem" *ngFor="let not of notificationsList">
+        <a style="font-size: 12px;" class="dropdown-item" href="#"
+          >{{ not.text }} <span style="color: gray; font-size: 10px;">{{ not.timestamp }}</span>
+        </a>
+        <hr />
+      </div>
+    </div>
   </div>
 
-  </div>
-  
   <button
     class="navbar-toggler ml-auto hidden-sm-up float-xs-right"
     type="button"

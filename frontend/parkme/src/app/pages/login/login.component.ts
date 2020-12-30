@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginFormValidationService } from 'src/app/services/login-form-validation.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private toastrService: ToastrService,
     private loginValidator: LoginFormValidationService,
     private router: Router,
-    private titleService: Title
+    private titleService: Title,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +60,12 @@ export class LoginComponent implements OnInit {
 
           this.toastrService.success('Successfully Logged In');
           this.isLoading = false;
+          this.unifiedLogin.loggedIn$.next(true);
           this.router.navigate(['/account-info']);
+          //qui deve partire la sottoscrizione alle notifiche
+          this.notificationService.connect();
+          this.notificationService.startNotifications();
+          
         },
         (error) => {
           if (error.status == 401) {
