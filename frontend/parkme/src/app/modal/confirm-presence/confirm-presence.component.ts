@@ -47,7 +47,8 @@ export class ConfirmPresenceComponent implements OnInit {
     modalRef.result.then(
       () => {
         console.log('Modal Confirm Parking Lot Closed');
-        this.ngOnInit();
+        this.router.navigate(['/ticket-list']);
+        window.location.reload();
       },
       () => {
         console.log('Modal Confirm Parking Lot Dismissed');
