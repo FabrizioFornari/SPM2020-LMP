@@ -30,6 +30,7 @@ import { CoordinatesModalComponent } from './modal/coordinates-modal/coordinates
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BuyTicketComponent } from './modal/buy-ticket/buy-ticket.component';
 import { ConfirmPresenceComponent } from './modal/confirm-presence/confirm-presence.component';
+import { VigilantCheckParkComponent } from './modal/vigilant-check-park/vigilant-check-park.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ConfirmPresenceComponent } from './modal/confirm-presence/confirm-prese
     NavbarComponent,
     BuyTicketComponent,
     ConfirmPresenceComponent,
+    VigilantCheckParkComponent,
   ],
   imports: [
     BrowserModule,
