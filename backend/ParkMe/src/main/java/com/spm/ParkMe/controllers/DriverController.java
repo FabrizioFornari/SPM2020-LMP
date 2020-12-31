@@ -222,29 +222,63 @@ public class DriverController {
 	}
 		 
 		
+	private ParkingLot getNearestParkingLotFromCoordinates(List<ParkingLot> parkingLots, double latitude, double longitude) {
+		if(parkingLots.isEmpty()) {
+			return null;
+		}
+		double min = 10000000.0;
+		int index = 0;
+		for(int i = 0; i < parkingLots.size(); i++) {
+			double parkLat = Double.parseDouble(parkingLots.get(i).getCoordinates().getLatitude());
+			double parkLng = Double.parseDouble(parkingLots.get(i).getCoordinates().getLongitude());
+			double distance = Math.hypot(Math.abs(latitude - parkLat), Math.abs(longitude - parkLng));
+			if(distance < min) {
+				min = distance;
+				index = i;
+			}
+		}
+		return parkingLots.get(index);
+	}
 		
 	@GetMapping(path = DRIVER_GET_NEAREST_PARKING_LOT)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<ParkingLot> getNearestParkingLot(Authentication authentication, @NotNull @RequestParam double latitude, @NotNull @RequestParam double longitude) {
 		DriverInfo driverInfo = driverRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("Driver info Not Found with username: " + authentication.getName()));
 		List<ParkingLot> compatibleParkingLots = parkingLotRepository.findCompatibleFreeParkingLots(driverInfo.getHandicap(), driverInfo.getVehicleType());
-		if(compatibleParkingLots.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		ParkingLot nearestParkingLot = this.getNearestParkingLotFromCoordinates(compatibleParkingLots, latitude, longitude);
+		if(nearestParkingLot != null) {
+			return ResponseEntity.ok(nearestParkingLot);
 		}
 		else {
-			double min = 10000000.0;
-			int index = 0;
-			for(int i = 0; i < compatibleParkingLots.size(); i++) {
-				double parkLat = Double.parseDouble(compatibleParkingLots.get(i).getCoordinates().getLatitude());
-				double parkLng = Double.parseDouble(compatibleParkingLots.get(i).getCoordinates().getLongitude());
-				double distance = Math.hypot(Math.abs(latitude - parkLat), Math.abs(longitude - parkLng));
-				if(distance < min) {
-					min = distance;
-					index = i;
-				}
-			}
-			return ResponseEntity.ok(compatibleParkingLots.get(index));
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping(path = DRIVER_CHANGE_PARKING_LOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<ParkingLot> changeParkingLot(Authentication authentication) {
+		DriverInfo driverInfo = driverRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("Driver info Not Found with username: " + authentication.getName()));
+		List<ParkingLot> compatibleParkingLots = parkingLotRepository.findCompatibleFreeParkingLots(driverInfo.getHandicap(), driverInfo.getVehicleType());
+		//get booked parking lot
+		List<ParkingLotBooking> bookings = parkingLotBookingRepository.findByUsername(authentication.getName());
+		if(!bookings.isEmpty()) {
+			ParkingLotBooking booking = bookings.get(0);
+			ParkingLot nearestParkingLot = this.getNearestParkingLotFromCoordinates(compatibleParkingLots, Double.parseDouble(booking.getCoordinates().getLatitude()), Double.parseDouble(booking.getCoordinates().getLongitude()));
+			if(nearestParkingLot != null) {
+				parkingLotBookingRepository.delete(booking);
+				ParkingLot parkingLot = parkingLotRepository.findByStreetAndNumberOfParkingLot(booking.getStreet(), booking.getNumberOfParkingLot()).get(0);
+				parkingLot.setStatus(Status.FREE);
+				parkingLotRepository.save(parkingLot);
+				return ResponseEntity.ok(nearestParkingLot);
+			}
+			else {
+				return new ResponseEntity(new MessageResponse("Unfortunately it seems like there is no compatible parking lot left."), HttpStatus.NOT_FOUND);
+			}
+		}
+		else {
+			return new ResponseEntity(new MessageResponse("You have no booked parking lot."),HttpStatus.CONFLICT);
+		}
+		
 	}
 	
 	

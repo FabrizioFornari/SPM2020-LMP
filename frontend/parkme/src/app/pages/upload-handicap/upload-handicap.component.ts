@@ -27,7 +27,7 @@ export class UploadHandicapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('ParkMe | Handicap UP');
+    this.titleService.setTitle('ParkMe | Handicap Upload');
     this.userInfo = JSON.parse(localStorage.getItem('user'));
   }
 

@@ -43,7 +43,7 @@ export class HandicapPermitsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle('ParkMe | Handicap DW');
+    this.titleService.setTitle('ParkMe | Handicap Download');
     this.updateEntry();
   }
 

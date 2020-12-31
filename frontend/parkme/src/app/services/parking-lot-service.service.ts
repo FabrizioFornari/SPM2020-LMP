@@ -14,6 +14,9 @@ const DRIVER_CANCEL = "/api/driver/deleteBooking";
 const DRIVER_HISTORY = "/api/driver/getAllTicketParkingLot";
 const DRIVER_BUY = "/api/driver/createParkingLotTicket";
 
+
+const CHANGE_PARKING_LOT = "/api/driver/changeParkingLot";
+
 @Injectable({
   providedIn: 'root',
 })
@@ -112,6 +115,10 @@ export class ParkingLotServiceService {
 
   driverBuyTicket(body): Observable<any> {
     return this.http.post(DRIVER_BUY, body, this.getHttpOpt());
+  }
+
+  driverChangeParkingLot(): Observable<any> {
+    return this.http.get(CHANGE_PARKING_LOT, this.getHttpOpt());
   }
 
 }
