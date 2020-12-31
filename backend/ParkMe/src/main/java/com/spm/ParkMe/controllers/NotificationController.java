@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.enums.StatusNotification;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
+import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
@@ -41,10 +42,10 @@ public class NotificationController {
 	
 	
 	@PutMapping(path = NOTIFICATION_SET_STATUS, consumes = "application/json")
-	public ResponseEntity setNotificationStatus(@Valid @RequestBody  ChangeNotificationStatusInfo changeNotificationStatusInfo ) throws IOException {
+	public ResponseEntity<MessageResponse> setNotificationStatus(@Valid @RequestBody  ChangeNotificationStatusInfo changeNotificationStatusInfo ) throws IOException {
 		Notification notification =  notificationRepository.findById(changeNotificationStatusInfo.getId()).orElseThrow();
 		notification.setStatusNotification(changeNotificationStatusInfo.getStatusNotification());
-		return new ResponseEntity(HttpStatus.OK);
+		return ResponseEntity.ok(new MessageResponse("Notification set to READ."));
 	}
 	
 	@GetMapping(path= NOTIFICATION_GET_ALL_USER_NOTIFICATIONS, consumes ="application/json")
