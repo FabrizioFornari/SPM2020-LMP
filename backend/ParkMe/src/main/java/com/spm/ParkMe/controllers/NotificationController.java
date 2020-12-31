@@ -45,6 +45,7 @@ public class NotificationController {
 	public ResponseEntity<MessageResponse> setNotificationStatus(@Valid @RequestBody  ChangeNotificationStatusInfo changeNotificationStatusInfo ) throws IOException {
 		Notification notification =  notificationRepository.findById(changeNotificationStatusInfo.getId()).orElseThrow();
 		notification.setStatusNotification(changeNotificationStatusInfo.getStatusNotification());
+		notificationRepository.save(notification);
 		return ResponseEntity.ok(new MessageResponse("Notification set to READ."));
 	}
 	
