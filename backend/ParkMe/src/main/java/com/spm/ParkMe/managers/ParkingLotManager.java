@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
@@ -12,6 +13,7 @@ public class ParkingLotManager {
 	
 	@Autowired
 	ParkingLotRepository parkingLotRepository;
+	
 	
 	private void setParkingLotStatus(String street, int numberOfParkingLot, Status status) {
 		try {
@@ -22,7 +24,17 @@ public class ParkingLotManager {
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+	}
+	
+	private void setParkingLotSensor(String street, int numberOfParkingLot, SensorState sensorState) {
+		try {
+			ParkingLot parkingLot = this.getParkingLot(street, numberOfParkingLot);
+			parkingLot.setSensorState(sensorState);
+			parkingLotRepository.save(parkingLot);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private ParkingLot getParkingLot(String street, int numberOfParkingLot) throws Exception {
