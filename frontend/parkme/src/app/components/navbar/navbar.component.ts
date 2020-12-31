@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
   newNotifications: boolean = false;
 
   constructor(
-    private unifiedlogin: UnifiedLoginService,
     private notificationService: NotificationService,
     private modalService: NgbModal
   ) {}
@@ -77,11 +76,24 @@ export class NavbarComponent implements OnInit {
   }
 
   notificationAction(not) {
+    this.markRead(not.id);
     if (not.categoryNotification == 'PARKING') {
       this.openModalConfirmPresence(not)
     } else {
       console.log('APRI ALTRI MODAL');
     }
+  }
+
+  markRead(id){
+    this.notificationService.markNotificationRead(id).subscribe(
+      (success) => {
+        console.log(success);
+        this.notification();
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
   openModalConfirmPresence(not) {

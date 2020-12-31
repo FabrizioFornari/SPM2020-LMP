@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 const NOTIFICATION_API = "/api/notification/getAllUserNotifications";
+const NOTIFICATION_READ = "/api/notification/setStatusNotification";
 
 @Injectable({
   providedIn: 'root',
@@ -79,5 +80,14 @@ export class NotificationService {
 
   getNotificationFromDB(): Observable<any>{
     return this.http.get(NOTIFICATION_API, this.getHttpOpt());
+  }
+
+
+  markNotificationRead(id): Observable<any>{
+    let body = {
+      id: id,
+      statusNotification: 'READ'
+    }
+    return this.http.put(NOTIFICATION_READ, body, this.getHttpOpt());
   }
 }
