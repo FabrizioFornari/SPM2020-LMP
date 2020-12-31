@@ -294,9 +294,14 @@ public class DriverController {
 				Thread thread = new Thread(() -> {
 					try {
 						Thread.sleep(10000);
-						abusiveOccupationManager.sendNotificationToDriver(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
-						if(!abusiveOccupationManager.isSolved()) {
-							Thread.sleep(10000);
+						if(parkingLot.getStatus().equals(Status.BOOKED)) {
+							abusiveOccupationManager.sendNotificationToDriver(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+							if(!abusiveOccupationManager.isSolved()) {
+								Thread.sleep(10000);
+								abusiveOccupationManager.sendNotificationToVigilant(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+							}
+						}
+						if(parkingLot.getStatus().equals(Status.FREE)) {
 							abusiveOccupationManager.sendNotificationToVigilant(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 						}
 					} catch (InterruptedException e) {
