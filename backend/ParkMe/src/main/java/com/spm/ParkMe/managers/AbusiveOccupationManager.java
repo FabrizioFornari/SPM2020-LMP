@@ -72,7 +72,7 @@ public class AbusiveOccupationManager {
 				ParkingLotBooking parkingLotBooking = parkingLotsBooking.get(0);
 				String username = parkingLotBooking.getUsername();
 				Notification notification = new Notification("Abusive Occupation Alert", "The parking lot that you booked (" + street + " - #" + numberOfParkingLot + ") has been occupied. Is that you?",username, System.currentTimeMillis());
-				notification.setCategoryNotification(CategoryNotification.PARKING);
+				notification.setCategoryNotification(CategoryNotification.DRIVER_ABUSIVE_PARKING);
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
 		}

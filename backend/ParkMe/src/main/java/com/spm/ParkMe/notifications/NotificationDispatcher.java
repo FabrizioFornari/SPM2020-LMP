@@ -65,7 +65,7 @@ public class NotificationDispatcher {
 			String sessionID = vigilantsSessions.get(0).getSessionID();
 			String username = vigilantsSessions.get(0).getUser().getUsername();
 			Notification notification = new Notification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis());
-			notification.setCategoryNotification(CategoryNotification.PARKING);
+			notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PARKING);
 			this.sendNotificationToUser(username, notification);
 		}
 		else {
@@ -73,7 +73,7 @@ public class NotificationDispatcher {
 			long timestamp = System.currentTimeMillis();
 			for(User vigilant : vigilants) {
 				Notification notification = new Notification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), timestamp);
-				notification.setCategoryNotification(CategoryNotification.PARKING);
+				notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PARKING);
 				notificationRepository.save(notification);
 			}
 		}
