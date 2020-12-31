@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
-import { UnifiedLoginService } from 'src/app/services/unified-login.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmPresenceComponent } from 'src/app/modal/confirm-presence/confirm-presence.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { VigilantCheckParkComponent } from 'src/app/modal/vigilant-check-park/vigilant-check-park.component';
 
 @Component({
   selector: 'app-navbar',
@@ -77,10 +77,12 @@ export class NavbarComponent implements OnInit {
 
   notificationAction(not) {
     this.markRead(not.id);
-    if (not.categoryNotification == 'PARKING') {
+    if (not.categoryNotification == 'DRIVER_ABUSIVE_PARKING') {
       this.openModalConfirmPresence(not)
+    } else if (not.categoryNotification == 'VIGILANT_ABUSIVE_PARKING') {
+      this.openModalVigilantCheckPark(not)
     } else {
-      console.log('APRI ALTRI MODAL');
+      alert('Another Modal');
     }
   }
 
@@ -105,6 +107,19 @@ export class NavbarComponent implements OnInit {
       },
       () => {
         console.log('Modal ConfirmPresence Dismissed');
+      }
+    );
+  }
+
+  openModalVigilantCheckPark(not) {
+    const modalRef = this.modalService.open(VigilantCheckParkComponent);
+    modalRef.componentInstance.notification = not;
+    modalRef.result.then(
+      () => {
+        console.log('Modal VigilantCheck Closed');
+      },
+      () => {
+        console.log('Modal VigilantCheck Dismissed');
       }
     );
   }
