@@ -1,6 +1,7 @@
 package com.spm.ParkMe.enums;
 
 public enum CategoryNotification {
-	PARKING,
+	DRIVER_ABUSIVE_PARKING,
+	VIGILANT_ABUSIVE_PARKING,
 	HANDICAP_REQUEST
 }
