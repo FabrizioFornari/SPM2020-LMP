@@ -83,6 +83,10 @@ public class AbusiveOccupationManager {
 		if(!this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.OCCUPIED) && this.getParkingLotSensorState(street, numberOfParkingLot).equals(SensorState.ON))
 		{
 			notificationDispatcher.sendNotificationToOneVigilant(street, numberOfParkingLot);
+			List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			ParkingLot parkingLot= parkingLots.get(0);
+			parkingLot.setStatus(Status.FREE);
+			parkingLotRepository.save(parkingLot);
 		}else
 		{
 			this.solved=true;
