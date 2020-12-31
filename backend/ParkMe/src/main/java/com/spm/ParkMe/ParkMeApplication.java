@@ -19,6 +19,7 @@ import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.NotificationRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
@@ -28,7 +29,7 @@ import com.spm.ParkMe.repositories.UserSessionRepository;
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
 import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
-
+import static com.spm.ParkMe.constants.NotificationConstants.*;
 
 @SpringBootApplication
 @EnableScheduling
@@ -58,6 +59,9 @@ public class ParkMeApplication implements CommandLineRunner {
 	
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
 	
 
 	public static void main(String[] args) {
@@ -117,6 +121,9 @@ public class ParkMeApplication implements CommandLineRunner {
 		parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
 		
 		userSessionRepository.deleteAll();
+		notificationRepository.deleteAll();
+		notificationRepository.save(NOTIFICATION_1);
+		notificationRepository.save(NOTIFICATION_2);
 	}
 
 }

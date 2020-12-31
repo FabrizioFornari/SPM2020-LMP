@@ -1,0 +1,31 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{notification.title}}</h4>
+	<button
+	  type="button"
+	  class="btn btn-danger"
+	  style="margin-left: 0.5rem;"
+	  (click)="activeModal.close('Close click')"
+	>
+	  Close
+	</button>
+  </div>
+  <div class="modal-body">
+	<p>{{notification.text}}</p>
+	<div class="buttons">
+		<button
+	  type="button"
+	  class="btn btn-success btn-block"
+	  (click)="assert()"
+	>
+	  Yes
+	</button>
+	<button
+	  type="button"
+	  class="btn btn-danger btn-block"
+	  (click)="deny()"
+	>
+	  No
+	</button>
+	</div>
+  </div>
+  

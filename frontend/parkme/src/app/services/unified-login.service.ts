@@ -12,6 +12,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class UnifiedLoginService {
+  
   constructor(private http: HttpClient) {}
 
   login(user: { email: string; password: string }): Observable<any> {

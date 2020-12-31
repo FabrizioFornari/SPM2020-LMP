@@ -13,7 +13,7 @@ import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
 
 public class NotificationConstants {
 
-	
+	public static final String TITLE = "Abusive Occupation Alert";
 	public static final String TEXT = "The parkingLot has been already occupied";
 	public static final String USERNAME = "rocche@park.it";
 	public static final long TIMESTAMP = 1608801132000l;
@@ -22,7 +22,7 @@ public class NotificationConstants {
 	
 
 	
-	public static final Notification NOTIFICATION_1 = new Notification(TEXT, USERNAME, TIMESTAMP);
-	public static final Notification NOTIFICATION_2 = new Notification(TEXT, USERNAME, TIMESTAMP);
+	public static final Notification NOTIFICATION_1 = new Notification(TITLE, TEXT, USERNAME, TIMESTAMP);
+	public static final Notification NOTIFICATION_2 = new Notification(TITLE, TEXT, USERNAME, TIMESTAMP);
 	
 }
