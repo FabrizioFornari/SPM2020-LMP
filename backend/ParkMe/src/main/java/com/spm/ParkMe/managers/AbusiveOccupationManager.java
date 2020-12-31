@@ -87,6 +87,11 @@ public class AbusiveOccupationManager {
 			ParkingLot parkingLot= parkingLots.get(0);
 			parkingLot.setStatus(Status.FREE);
 			parkingLotRepository.save(parkingLot);
+			List<ParkingLotBooking> bookings = parkingLotBookingRepository.findByStreetAndNumberOfParkingLotBooking(street, numberOfParkingLot);
+			if(!bookings.isEmpty()) {
+				ParkingLotBooking booking = bookings.get(0);
+				parkingLotBookingRepository.delete(booking);
+			}
 		}else
 		{
 			this.solved=true;
