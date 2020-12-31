@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.managers.AbusiveOccupationManager;
+import com.spm.ParkMe.managers.ExpirationManager;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
@@ -72,6 +73,9 @@ public class DriverController {
 	
 	@Autowired
 	private AbusiveOccupationManager abusiveOccupationManager;
+	
+	@Autowired
+	private ExpirationManager expirationManager;
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
@@ -306,6 +310,16 @@ public class DriverController {
 			parkingLotBookingRepository.delete(parkingLotBooking);
 			parkingLotRepository.save(parkingLot);
 			parkingLotTicketRepository.save(parkingLotTicket);
+			Thread thread = new Thread(() -> {
+				try {
+					//(parkingLotTicket.getExpiringTimestamp()-System.currentTimeMillis())- (5*60*1000)
+					Thread.sleep(10000);
+					expirationManager.sendNotificationToDriverBeforeTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot(), parkingLotTicket.getUsername());
+					
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			});
 			return new ResponseEntity(HttpStatus.OK);
 		}
 		else
