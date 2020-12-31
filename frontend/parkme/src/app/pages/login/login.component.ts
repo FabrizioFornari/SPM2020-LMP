@@ -60,7 +60,9 @@ export class LoginComponent implements OnInit {
 
           this.toastrService.success('Successfully Logged In');
           this.isLoading = false;
-          this.router.navigate(['/account-info']);
+          this.router.navigate(['/account-info']).then(() => {
+            window.location.reload();
+          });
         },
         (error) => {
           if (error.status == 401) {
