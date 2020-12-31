@@ -304,7 +304,12 @@ public class DriverController {
 					}
 				});
 				thread.start();
+			}else {
+				if(!parkingLot.getStatus().equals(Status.BOOKED)) {
+					parkingLot.setStatus(Status.FREE);
+				}
 			}
+			
 			parkingLot.setSensorState(sensorChangeInfo.getState());
 			parkingLotRepository.save(parkingLot);
 			return new ResponseEntity(new MessageResponse("Sensor status changed"), HttpStatus.OK);
