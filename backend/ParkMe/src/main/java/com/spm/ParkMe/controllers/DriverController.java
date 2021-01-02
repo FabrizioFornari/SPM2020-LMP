@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.managers.AbusiveOccupationManager;
+import com.spm.ParkMe.managers.ParkingLotManager;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
@@ -72,6 +73,9 @@ public class DriverController {
 	
 	@Autowired
 	private AbusiveOccupationManager abusiveOccupationManager;
+	
+	@Autowired
+	private ParkingLotManager parkingLotManager;
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
@@ -153,17 +157,13 @@ public class DriverController {
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity setStatusParkingLotAsOccupied(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if (parkingLot.getStatus() == Status.BOOKED) {
-			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
-					parkingLot.getNumberOfParkingLot());
-			ParkingLot park = parks.get(0);
-			park.setStatus(Status.OCCUPIED);
-			parkingLotRepository.save(park);
-			return new ResponseEntity(HttpStatus.OK);
-		} else {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		try{
+			parkingLotManager.occupyParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+			return new ResponseEntity(new MessageResponse("Parking lot successfully occupied!"), HttpStatus.OK);
 		}
-
+		catch(Exception e){
+			return new ResponseEntity(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED, consumes = "application/json")
@@ -295,24 +295,14 @@ public class DriverController {
 	@PostMapping(path = DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity createParkingLotTicket(@Valid @RequestBody ParkingLotTicket parkingLotTicket)throws IOException{
-		List<ParkingLot> parkingLots=parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
-		List<ParkingLotBooking> parkingLotBookings= parkingLotBookingRepository.findByUsername(parkingLotTicket.getUsername());
-
-		if(!parkingLots.isEmpty() && !parkingLotBookings.isEmpty()) {
-			ParkingLot parkingLot=parkingLots.get(0);
-			parkingLot.setStatus(Status.OCCUPIED);
-			ParkingLotBooking parkingLotBooking= parkingLotBookings.get(0);
-
-			parkingLotBookingRepository.delete(parkingLotBooking);
-			parkingLotRepository.save(parkingLot);
+		try {
+			parkingLotManager.occupyParkingLot(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
 			parkingLotTicketRepository.save(parkingLotTicket);
 			return new ResponseEntity(HttpStatus.OK);
 		}
-		else
-		{
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		catch(Exception e){
+			return new ResponseEntity(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
-		
 	}
 	
 	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
