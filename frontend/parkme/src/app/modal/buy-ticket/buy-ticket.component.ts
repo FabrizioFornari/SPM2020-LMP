@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
@@ -11,7 +10,7 @@ import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.s
   styleUrls: ['./buy-ticket.component.css'],
 })
 export class BuyTicketComponent implements OnInit {
-  hours: Array<String> = ['1', '2', '3', '4', '12'];
+  hours: Array<String> = ['0.005','1', '2', '3', '4', '12'];
   hour: string = null;
 
   @Input() CURRENT_BOOKING: any;
@@ -19,8 +18,7 @@ export class BuyTicketComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     private parkingService: ParkingLotServiceService,
-    private toastrService: ToastrService,
-    private router: Router
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {}

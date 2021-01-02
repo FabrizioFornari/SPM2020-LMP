@@ -320,6 +320,7 @@ public class DriverController {
 					e.printStackTrace();
 				}
 			});
+			thread.start();
 			return new ResponseEntity(HttpStatus.OK);
 		}
 		else

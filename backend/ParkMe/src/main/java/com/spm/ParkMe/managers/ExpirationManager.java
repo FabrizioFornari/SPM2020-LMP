@@ -56,7 +56,6 @@ public class ExpirationManager {
 		public void sendNotificationToDriverBeforeTicketExpiring(String street, Integer numberOfParkingLot, String username) {
 			
 			if(!this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.FREE) ) {
-				
 				List<ParkingLotTicket> parkingLotTickets = parkingLotTicketRepository.findByUsername(username);
 				ParkingLotTicket parkingLotTicket = parkingLotTickets.get(0);
 				Notification notification= new Notification("Ticket Expiring", "The ticket is about to expire. If you want to stay longer please refresh the ticket, otherwise leave the parking lot in 5 minutes.", username, System.currentTimeMillis());
