@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -18,9 +19,12 @@ export class RegisterPage implements OnInit {
     password: ""
   }
 
-  constructor() { }
+  constructor(private titleService: Title) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter(){
+    this.titleService.setTitle('ParkMe | Register');
   }
 
   logForm() {
