@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environment';
 
-const HANDLE_REQUEST_API = '/api/admin/setting/handicapPermits';
+const HANDLE_REQUEST_API = environment.baseUrl + 'api/admin/setting/handicapPermits';
 
 
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environment';
 
-const ACC_MAN_API = '/api/modification/';
+const ACC_MAN_API = environment.baseUrl + 'api/modification/';
  
 
 @Injectable({

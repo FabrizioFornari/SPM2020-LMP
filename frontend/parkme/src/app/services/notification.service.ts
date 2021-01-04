@@ -9,8 +9,10 @@ import { Observable } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 
-const NOTIFICATION_API = "/api/notification/getAllUserNotifications";
-const NOTIFICATION_READ = "/api/notification/setStatusNotification";
+import {environment} from '../../environments/environment';
+
+const NOTIFICATION_API = environment.baseUrl + "api/notification/getAllUserNotifications";
+const NOTIFICATION_READ = environment.baseUrl + "api/notification/setStatusNotification";
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +38,7 @@ export class NotificationService {
       this.client = new RxStomp();
       this.client.configure({
         webSocketFactory: () =>
-          new SockJS(`/notifications`),
+          new SockJS(environment.baseUrl + 'notifications'),
         debug: (msg: string) => console.log(msg),
       });
       this.client.activate();
@@ -46,7 +48,7 @@ export class NotificationService {
   }
   private watchForNotifications() {
     this.client
-      .watch('/user/notification/item')
+      .watch(environment.baseUrl + 'user/notification/item')
       .pipe(
         map((response: any) => {
           const text: string = JSON.parse(response.body).text;
@@ -68,12 +70,12 @@ export class NotificationService {
   }
   startNotifications() {
     if (this.client && this.client.connected) {
-      this.client.publish({ destination: '/swns/start', headers: {'Authorization':localStorage.getItem('token')} });
+      this.client.publish({ destination: environment.baseUrl + 'swns/start', headers: {'Authorization':localStorage.getItem('token')} });
     }
   }
   stopNotifications() {
     if (this.client && this.client.connected) {
-      this.client.publish({ destination: '/swns/stop' });
+      this.client.publish({ destination: environment.baseUrl + 'swns/stop' });
     }
   }
 

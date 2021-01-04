@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const HANDICAP_UPLOAD_API = '/api/driver/requestHandicapPermits';
+const HANDICAP_UPLOAD_API = environment.baseUrl + 'api/driver/requestHandicapPermits';
 
 @Injectable({
   providedIn: 'root',

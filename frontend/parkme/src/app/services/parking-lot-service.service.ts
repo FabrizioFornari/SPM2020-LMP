@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Popup, Layer, Content } from 'leaflet';
+import { environment } from 'src/environments/environment';
 
-const PARKING_LOT_API = '/api/parkingManager/';
+const PARKING_LOT_API = environment.baseUrl + 'api/parkingManager/';
 
-const DRIVER_STREET_API = "/api/driver/streets";
-const DRIVER_PARKS_API = "/api/parkingManager/parkingLots/getStreet"
-const DRIVER_BOOKING = "/api/driver/setStatusBooked";
-const DRIVER_CURRENT_BOOKING = "/api/driver/booking";
-const DRIVER_NEAREST_PARKING = "/api/driver/nearestParkingLot";
-const DRIVER_CANCEL = "/api/driver/deleteBooking";
-const DRIVER_HISTORY = "/api/driver/getAllTicketParkingLot";
-const DRIVER_BUY = "/api/driver/createParkingLotTicket";
+const DRIVER_STREET_API = environment.baseUrl + "api/driver/streets";
+const DRIVER_PARKS_API = environment.baseUrl + "api/parkingManager/parkingLots/getStreet"
+const DRIVER_BOOKING = environment.baseUrl + "api/driver/setStatusBooked";
+const DRIVER_CURRENT_BOOKING = environment.baseUrl + "api/driver/booking";
+const DRIVER_NEAREST_PARKING = environment.baseUrl + "api/driver/nearestParkingLot";
+const DRIVER_CANCEL = environment.baseUrl + "api/driver/deleteBooking";
+const DRIVER_HISTORY = environment.baseUrl + "api/driver/getAllTicketParkingLot";
+const DRIVER_BUY = environment.baseUrl + "api/driver/createParkingLotTicket";
 
 
-const CHANGE_PARKING_LOT = "/api/driver/changeParkingLot";
+const CHANGE_PARKING_LOT = environment.baseUrl + "api/driver/changeParkingLot";
 
 @Injectable({
   providedIn: 'root',
