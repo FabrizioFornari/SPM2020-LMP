@@ -316,8 +316,8 @@ public class DriverController {
 					Thread.sleep(10000);
 					expirationManager.sendNotificationToDriverBeforeTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot(), parkingLotTicket.getUsername());
 					Thread.sleep(1000);
-					if(parkingLot.getStatus()!= Status.FREE || parkingLotBooking.getTimestamp() < System.currentTimeMillis()) {
-						expirationManager.sendNotificationToVigilantForAbusiveParkingLot();
+					if(parkingLot.getStatus()!= Status.FREE && parkingLotBooking.getTimestamp() < System.currentTimeMillis()) {
+						expirationManager.sendNotificationToVigilantForTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
