@@ -46,6 +46,7 @@ public class ModificationController {
 	private PasswordEncoder encoder;
 	
 	@PostMapping(EMAIL_MODIFICATION_ENDPOINT)
+	@PreAuthorize("hasRole('PARKING_MANAGER') or hasRole('DRIVER') or hasRole('ADMIN') or hasRole('VIGILANT')")
 	public ResponseEntity<User> modifyEmail(Authentication authentication, @Valid @RequestBody ChangeMailInfo mailInfo) {
 		String authenticatedUsername = authentication.getName();
 		System.out.println(authenticatedUsername);
@@ -65,6 +66,7 @@ public class ModificationController {
 	}
 	
 	@PostMapping(PHONE_MODIFICATION_ENDPOINT)
+	@PreAuthorize("hasRole('PARKING_MANAGER') or hasRole('DRIVER') or hasRole('ADMIN') or hasRole('VIGILANT')")
 	public ResponseEntity<User> modifyPhone(Authentication authentication, @Valid @RequestBody ChangePhoneInfo phoneInfo ){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
@@ -74,6 +76,7 @@ public class ModificationController {
 	}
 	
 	@PostMapping(PLATE_VEHICLE_MODIFICATION_ENDPOINT)
+	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<User> modifyPlateAndVehicleType(Authentication authentication, @Valid @RequestBody ChangePlateVehicleTypeInfo plateVehicleTypeInfo ){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
@@ -94,6 +97,7 @@ public class ModificationController {
 
 
 	@PostMapping(PASSWORD_MODIFICATION_ENDPOINT)
+	@PreAuthorize("hasRole('PARKING_MANAGER') or hasRole('DRIVER') or hasRole('ADMIN') or hasRole('VIGILANT')")
 	public ResponseEntity<?> modifyPassword(Authentication authentication, @Valid @RequestBody ChangePasswordInfo passwordInfo){
 		String authenticatedUsername = authentication.getName();
 		User user = repository.findByUsername(authenticatedUsername).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with token's username."));

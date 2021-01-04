@@ -18,6 +18,8 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+	
+	<packaging>war</packaging>
 
 
 
@@ -30,7 +32,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			
+			<exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 <dependency>  
     <groupId>org.hibernate.validator</groupId>  
@@ -118,6 +125,14 @@
   <scope>test</scope>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <version>2.4.1</version>
+</dependency>
+
+
 
 
 	</dependencies>
@@ -135,6 +150,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+			<groupId>org.apache.tomcat.maven</groupId>
+			<artifactId>tomcat7-maven-plugin</artifactId>
+			<version>2.2</version>
+			<configuration>
+			<!-- Use tomcat9 user defined credentials. Usually you would place them under the Maven folder .settings.xml telling eclipse to read them from thereby just using adding <server>tomcat9</server>-->
+			<username>tomcat</username>
+			<password>tomcat</password>
+			<update>true</update>
+			<!-- <url>http://localhost:8080/manager/text</url>-->
+			</configuration>
 			</plugin>
 		</plugins>
 	</build>

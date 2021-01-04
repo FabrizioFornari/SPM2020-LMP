@@ -294,7 +294,7 @@ public class ModificationControllerTest {
 					MediaType.APPLICATION_JSON)
 					.content(jsonPlateVehicleTypeInfo.write(plateVehicleTypeInfo).getJson())
 					.contentType(MediaType.APPLICATION_JSON);
-			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+			mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isForbidden());
 		}
 		@Test
 		@WithMockUser(roles= {"DRIVER"})

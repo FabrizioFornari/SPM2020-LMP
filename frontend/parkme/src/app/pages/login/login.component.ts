@@ -81,4 +81,8 @@ export class LoginComponent implements OnInit {
       return null;
     }
   }
+
+  signUp(){
+    this.router.navigate(['/driver-register']);
+  }
 }

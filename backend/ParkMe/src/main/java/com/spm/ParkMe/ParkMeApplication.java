@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -33,7 +34,7 @@ import static com.spm.ParkMe.constants.NotificationConstants.*;
 
 @SpringBootApplication
 @EnableScheduling
-public class ParkMeApplication implements CommandLineRunner {
+public class ParkMeApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
 
 	@Autowired

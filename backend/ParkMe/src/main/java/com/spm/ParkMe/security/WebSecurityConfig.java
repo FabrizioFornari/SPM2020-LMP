@@ -69,8 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/driver/registration").permitAll()
 			.antMatchers("/notifications/**").permitAll()
 			.antMatchers("swns/**").permitAll()
-			.antMatchers("/notification/**").permitAll()
-			.anyRequest().authenticated();
+			.antMatchers("/notification/**").permitAll();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
