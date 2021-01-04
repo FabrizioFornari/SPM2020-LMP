@@ -43,7 +43,6 @@ public class NotificationsController {
     public void stop(StompHeaderAccessor stompHeaderAccessor) {
         dispatcher.remove(stompHeaderAccessor.getSessionId());
     }
-    
 
 	@EventListener
 	public void sessionDisconnectionHandler(SessionDisconnectEvent event) {

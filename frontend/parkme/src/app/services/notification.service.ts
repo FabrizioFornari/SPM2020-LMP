@@ -14,6 +14,11 @@ import {environment} from '../../environments/environment';
 const NOTIFICATION_API = environment.baseUrl + "api/notification/getAllUserNotifications";
 const NOTIFICATION_READ = environment.baseUrl + "api/notification/setStatusNotification";
 
+const NOTIFICATION_CONNECT = environment.baseUrl + 'notifications';
+const NOTIFICATION_WATCH = '/user/notification/item';
+const NOTIFICATION_START = environment.baseUrl + 'swns/start';
+const NOTIFICATION_STOP = environment.baseUrl + 'swns/stop';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,7 +43,7 @@ export class NotificationService {
       this.client = new RxStomp();
       this.client.configure({
         webSocketFactory: () =>
-          new SockJS(environment.baseUrl + 'notifications'),
+          new SockJS(NOTIFICATION_CONNECT),
         debug: (msg: string) => console.log(msg),
       });
       this.client.activate();
@@ -48,7 +53,7 @@ export class NotificationService {
   }
   private watchForNotifications() {
     this.client
-      .watch(environment.baseUrl + 'user/notification/item')
+      .watch(NOTIFICATION_WATCH)
       .pipe(
         map((response: any) => {
           const text: string = JSON.parse(response.body).text;
@@ -70,12 +75,12 @@ export class NotificationService {
   }
   startNotifications() {
     if (this.client && this.client.connected) {
-      this.client.publish({ destination: environment.baseUrl + 'swns/start', headers: {'Authorization':localStorage.getItem('token')} });
+      this.client.publish({ destination: NOTIFICATION_START, headers: {'Authorization':localStorage.getItem('token')} });
     }
   }
   stopNotifications() {
     if (this.client && this.client.connected) {
-      this.client.publish({ destination: environment.baseUrl + 'swns/stop' });
+      this.client.publish({ destination: NOTIFICATION_STOP });
     }
   }
 
