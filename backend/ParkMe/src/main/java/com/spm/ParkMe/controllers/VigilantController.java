@@ -1,6 +1,8 @@
 package com.spm.ParkMe.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +43,14 @@ public class VigilantController {
 
 	@GetMapping(path=VIGILANT_GET_PARKINGLOT, consumes = "application/json")
 	@PreAuthorize("hasRole('VIGILANT')")	
-	public  List<ParkingLot> getParkingLot(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot)  {
-		return parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+	public ResponseEntity getParkingLot(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot)  {
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!parkingLots.isEmpty()) {
+			return ResponseEntity.ok(parkingLots.get(0));
+		}
+		else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 
