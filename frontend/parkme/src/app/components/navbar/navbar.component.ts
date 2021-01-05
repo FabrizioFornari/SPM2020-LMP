@@ -84,7 +84,10 @@ export class NavbarComponent implements OnInit {
       this.openModalVigilantCheckPark(not)
     } else if(not.categoryNotification == 'DRIVER_EXPIRING_TICKET') {
       this.openModalExpiringTicket(not)
-    } else {
+    } else if(not.categoryNotification == 'VIGILANT_EXPIRING_TICKET'){
+      alert('VIGILANT_EXPIRING_TICKET')
+    }
+     else {
       alert('ANOTHER MODAL');
     }
   }

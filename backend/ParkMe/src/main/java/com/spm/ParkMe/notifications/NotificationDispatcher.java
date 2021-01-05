@@ -80,6 +80,28 @@ public class NotificationDispatcher {
 	}
 	
 	
+	public void sendNotificationToOneVigilantWhenTicketExpiring(String street, Integer numberOfParkingLot) {
+		
+
+		List<UserSession> vigilantsSessions= userSessionRepository.findAll().stream().filter(session -> session.getUser().getRole().equals(Roles.ROLE_VIGILANT)).collect(Collectors.toList());
+		if(!vigilantsSessions.isEmpty()) {
+			String sessionID = vigilantsSessions.get(0).getSessionID();
+			String username = vigilantsSessions.get(0).getUser().getUsername();
+			Notification notification = new Notification("Ticket Expiring", "The driver has not renewed the reserved parking, ticket expired. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis());
+			notification.setCategoryNotification(CategoryNotification.VIGILANT_EXPIRING_TICKET);
+			this.sendNotificationToUser(username, notification);
+		}
+		else {
+			List<User> vigilants = userRepository.findByRole(Roles.ROLE_VIGILANT);
+			long timestamp = System.currentTimeMillis();
+			for(User vigilant : vigilants) {
+				Notification notification = new Notification("Ticket Expiring", "The driver has not renewed the reserved parking, ticket expired.  Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), timestamp);
+				notification.setCategoryNotification(CategoryNotification.VIGILANT_EXPIRING_TICKET);
+				notificationRepository.save(notification);
+			}
+		}
+	}
+	
 	public void add(UserSession session)
 	{
 		List<UserSession> sessions = userSessionRepository.findByUsername(session.getUser().getUsername());
