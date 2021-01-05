@@ -39,4 +39,11 @@ public class VigilantController {
 	}
 	
 
+	@GetMapping(path=VIGILANT_GET_PARKINGLOT, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")	
+	public  List<ParkingLot> getParkingLot(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot)  {
+		return parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+	}
+	
+
 }
