@@ -9,7 +9,11 @@ import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.s
 })
 export class ParkingStatusComponent implements OnInit {
 
+  streetList = [];
   parkList = [];
+  parkInfo = [];
+
+  showStreets: boolean = true;
 
   constructor(
     private titleService: Title,
@@ -18,30 +22,45 @@ export class ParkingStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('ParkMe | Parking Status');
-    this.parkingService.vigilantGetParkingList().subscribe(
+    this.parkingService.vigilantGetStreetList().subscribe(
       (success) => {
-        this.parkList = success;
+        this.streetList = success;
       },
       (error) => {
         console.log(error);
-        this.parkList = [];
+        this.streetList = [];
       }
     )
-    this.parkList = [
-      {
-        "via": "Aldo Moro"
-      },
-      {
-        "via": "Madonna delle Carceri"
-      },
-      {
-        "via": "Garibaldi"
-      }
-    ]
   }
 
-  seeStatus(via){
-    alert(via);
+  seeStreet(street){
+    this.parkingService.vigilantGetParksStreet(street).subscribe(
+      (success) => {
+        console.log(success);
+        this.parkList = success;
+        this.showStreets = false;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
+  backButton(){
+    window.location.reload();
+  }
+
+  seeStatus(street, number){
+    this.parkingService.vigilantGetParkInfo(street, number).subscribe(
+      (success) => {
+        this.parkInfo = success;
+        console.table(this.parkInfo);
+      },
+      (error) => {
+        this.parkInfo = [];
+        console.log(error);
+      }
+    )
   }
 
 }

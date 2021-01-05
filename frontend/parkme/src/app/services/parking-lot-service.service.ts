@@ -5,25 +5,25 @@ import { Popup, Layer, Content } from 'leaflet';
 
 const PARKING_LOT_API = '/api/parkingManager/';
 
-const DRIVER_STREET_API = "/api/driver/streets";
-const DRIVER_PARKS_API = "/api/parkingManager/parkingLots/getStreet"
-const DRIVER_BOOKING = "/api/driver/setStatusBooked";
-const DRIVER_CURRENT_BOOKING = "/api/driver/booking";
-const DRIVER_NEAREST_PARKING = "/api/driver/nearestParkingLot";
-const DRIVER_CANCEL = "/api/driver/deleteBooking";
-const DRIVER_HISTORY = "/api/driver/getAllTicketParkingLot";
-const DRIVER_BUY = "/api/driver/createParkingLotTicket";
-const VIGILANT_GET_STREETS = "/api/vigilant/getAllStreet";
+const DRIVER_STREET_API = '/api/driver/streets';
+const DRIVER_PARKS_API = '/api/parkingManager/parkingLots/getStreet';
+const DRIVER_BOOKING = '/api/driver/setStatusBooked';
+const DRIVER_CURRENT_BOOKING = '/api/driver/booking';
+const DRIVER_NEAREST_PARKING = '/api/driver/nearestParkingLot';
+const DRIVER_CANCEL = '/api/driver/deleteBooking';
+const DRIVER_HISTORY = '/api/driver/getAllTicketParkingLot';
+const DRIVER_BUY = '/api/driver/createParkingLotTicket';
+const VIGILANT_GET_STREETS = '/api/vigilant/getAllStreet';
+const VIGILANT_GET_PARKS_STREET = "/api/vigilant/getParkingLots/street";
+const VIGILANT_GET_PARK_INFO = '/api/vigilant/getParkingLot';
 
-
-const CHANGE_PARKING_LOT = "/api/driver/changeParkingLot";
+const CHANGE_PARKING_LOT = '/api/driver/changeParkingLot';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParkingLotServiceService {
   constructor(private http: HttpClient) {}
-
 
   getHttpOpt() {
     return {
@@ -85,25 +85,32 @@ export class ParkingLotServiceService {
     );
   }
 
-
-  driverGetStreetList(): Observable<any>{
+  driverGetStreetList(): Observable<any> {
     return this.http.get(DRIVER_STREET_API, this.getHttpOpt());
   }
 
-  driverGetParkingLots(street: string | HTMLElement | Popup | ((layer: Layer) => Content)): Observable<any>{
-    return this.http.get(DRIVER_PARKS_API + `?street=${street}`, this.getHttpOpt());
+  driverGetParkingLots(
+    street: string | HTMLElement | Popup | ((layer: Layer) => Content)
+  ): Observable<any> {
+    return this.http.get(
+      DRIVER_PARKS_API + `?street=${street}`,
+      this.getHttpOpt()
+    );
   }
 
-  driverBookParkingLot(parkingLot: any): Observable<any>{
+  driverBookParkingLot(parkingLot: any): Observable<any> {
     return this.http.put(DRIVER_BOOKING, parkingLot, this.getHttpOpt());
   }
 
-  driverGetCurrentBooking(): Observable<any>{
+  driverGetCurrentBooking(): Observable<any> {
     return this.http.get(DRIVER_CURRENT_BOOKING, this.getHttpOpt());
   }
 
-  driverGetNearestParkingLot(lat: number, lng: number): Observable<any>{
-    return this.http.get(`${DRIVER_NEAREST_PARKING}?latitude=${lat}&longitude=${lng}`, this.getHttpOpt());
+  driverGetNearestParkingLot(lat: number, lng: number): Observable<any> {
+    return this.http.get(
+      `${DRIVER_NEAREST_PARKING}?latitude=${lat}&longitude=${lng}`,
+      this.getHttpOpt()
+    );
   }
 
   driverCancelBooking(): Observable<any> {
@@ -122,8 +129,21 @@ export class ParkingLotServiceService {
     return this.http.get(CHANGE_PARKING_LOT, this.getHttpOpt());
   }
 
-  vigilantGetParkingList(): Observable<any> {
+  vigilantGetStreetList(): Observable<any> {
     return this.http.get(VIGILANT_GET_STREETS, this.getHttpOpt());
   }
 
+  vigilantGetParksStreet(street): Observable<any> {
+    return this.http.get(
+      VIGILANT_GET_PARKS_STREET + `?street=${street}`,
+      this.getHttpOpt()
+    );
+  }
+
+  vigilantGetParkInfo(street: string, num: number): Observable<any> {
+    return this.http.get(
+      VIGILANT_GET_PARK_INFO + `?street=${street}&numberOfParkingLot=${num}`,
+      this.getHttpOpt()
+    );
+  }
 }
