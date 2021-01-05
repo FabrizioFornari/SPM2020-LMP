@@ -51,4 +51,10 @@ public final class EndpointContants {
 	public static final String NOTIFICATION_ENDPOINT="/api/notification";
 	public static final String NOTIFICATION_SET_STATUS ="/setStatusNotification";
 	public static final String NOTIFICATION_GET_ALL_USER_NOTIFICATIONS ="/getAllUserNotifications";
+	
+	//Vigilant
+	public static final String VIGILANT_ENDPOINT="/api/vigilant";
+	public static final String VIGILANT_GET_PARKINGLOT= "/getParkingLot";
+	public static final String VIGILANT_GET_ALL_PARKINGLOTS= "/getAllParkingLot";
+
 }
