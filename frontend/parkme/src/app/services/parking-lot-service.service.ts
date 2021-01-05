@@ -13,6 +13,7 @@ const DRIVER_NEAREST_PARKING = "/api/driver/nearestParkingLot";
 const DRIVER_CANCEL = "/api/driver/deleteBooking";
 const DRIVER_HISTORY = "/api/driver/getAllTicketParkingLot";
 const DRIVER_BUY = "/api/driver/createParkingLotTicket";
+const VIGILANT_GET_STREETS = "/api/vigilant/getAllStreet";
 
 
 const CHANGE_PARKING_LOT = "/api/driver/changeParkingLot";
@@ -119,6 +120,10 @@ export class ParkingLotServiceService {
 
   driverChangeParkingLot(): Observable<any> {
     return this.http.get(CHANGE_PARKING_LOT, this.getHttpOpt());
+  }
+
+  vigilantGetParkingList(): Observable<any> {
+    return this.http.get(VIGILANT_GET_STREETS, this.getHttpOpt());
   }
 
 }
