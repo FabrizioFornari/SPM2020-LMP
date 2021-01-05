@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ParkInfoComponent } from 'src/app/modal/park-info/park-info.component';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 @Component({
@@ -11,13 +13,13 @@ export class ParkingStatusComponent implements OnInit {
 
   streetList = [];
   parkList = [];
-  parkInfo = [];
 
   showStreets: boolean = true;
 
   constructor(
     private titleService: Title,
-    private parkingService: ParkingLotServiceService
+    private parkingService: ParkingLotServiceService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -53,14 +55,25 @@ export class ParkingStatusComponent implements OnInit {
   seeStatus(street, number){
     this.parkingService.vigilantGetParkInfo(street, number).subscribe(
       (success) => {
-        this.parkInfo = success;
-        console.table(this.parkInfo);
+        this.modalInfo(success);
       },
       (error) => {
-        this.parkInfo = [];
         console.log(error);
       }
     )
+  }
+
+  modalInfo(info){
+    const modalRef = this.modalService.open(ParkInfoComponent);
+    modalRef.componentInstance.INFO = info;
+    modalRef.result.then(
+      () => {
+        console.log('Modal Request Closed');
+      },
+      () => {
+        console.log('Modal Request Closed');
+      }
+    );
   }
 
 }
