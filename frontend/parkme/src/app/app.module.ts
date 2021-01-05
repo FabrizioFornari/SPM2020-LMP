@@ -32,6 +32,7 @@ import { BuyTicketComponent } from './modal/buy-ticket/buy-ticket.component';
 import { ConfirmPresenceComponent } from './modal/confirm-presence/confirm-presence.component';
 import { VigilantCheckParkComponent } from './modal/vigilant-check-park/vigilant-check-park.component';
 import { ExpiringTicketComponent } from './modal/expiring-ticket/expiring-ticket.component';
+import { ParkingStatusComponent } from './pages/parking-status/parking-status.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ExpiringTicketComponent } from './modal/expiring-ticket/expiring-ticket
     ConfirmPresenceComponent,
     VigilantCheckParkComponent,
     ExpiringTicketComponent,
+    ParkingStatusComponent,
   ],
   imports: [
     BrowserModule,
