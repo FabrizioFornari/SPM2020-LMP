@@ -87,4 +87,18 @@ public class VigilantController {
 		}
 	}
 
+	@PutMapping(path = VIGILANT_SET_PARKINGLOT_STATUS_ENABLED, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")
+	public ResponseEntity setStatusParkingLotFree(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
+		
+		List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
+		if(!parks.isEmpty()) {
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.FREE);
+			parkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
 }
