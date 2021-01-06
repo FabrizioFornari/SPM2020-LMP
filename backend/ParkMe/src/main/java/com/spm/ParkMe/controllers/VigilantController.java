@@ -73,14 +73,14 @@ public class VigilantController {
 	
 
 	@PutMapping(path = VIGILANT_SET_PARKINGLOT_STATUS_DISABLED, consumes = "application/json")
-	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsDisabled(@NotNull @RequestBody String street, @NotNull @RequestBody Integer numberOfParkingLot ) throws IOException {
+	@PreAuthorize("hasRole('VIGILANT')")
+	public ResponseEntity setStatusParkingLotDisabled(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
 		
-		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street,numberOfParkingLot);
-		if(!parkingLots.isEmpty()) {
-			ParkingLot parkingLot = parkingLots.get(0);
-			parkingLot.setStatus(Status.DISABLED);
-			parkingLotRepository.save(parkingLot);
+		List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
+		if(!parks.isEmpty()) {
+			ParkingLot park = parks.get(0);
+			park.setStatus(Status.DISABLED);
+			parkingLotRepository.save(park);
 			return new ResponseEntity(HttpStatus.OK);
 		} else {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

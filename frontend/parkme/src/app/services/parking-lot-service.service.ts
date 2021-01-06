@@ -14,8 +14,10 @@ const DRIVER_CANCEL = '/api/driver/deleteBooking';
 const DRIVER_HISTORY = '/api/driver/getAllTicketParkingLot';
 const DRIVER_BUY = '/api/driver/createParkingLotTicket';
 const VIGILANT_GET_STREETS = '/api/vigilant/getAllStreet';
-const VIGILANT_GET_PARKS_STREET = "/api/vigilant/getParkingLots/street";
+const VIGILANT_GET_PARKS_STREET = '/api/vigilant/getParkingLots/street';
 const VIGILANT_GET_PARK_INFO = '/api/vigilant/getParkingLot';
+const VIGILANT_SET_PARK_DISABLED = '/api/vigilant/setStatusParkingLotDisabled';
+const VIGILANT_SET_PARK_ENABLED = '/api/vigilant/setStatusParkingLotEnabled';
 
 const CHANGE_PARKING_LOT = '/api/driver/changeParkingLot';
 
@@ -145,5 +147,12 @@ export class ParkingLotServiceService {
       VIGILANT_GET_PARK_INFO + `?street=${street}&numberOfParkingLot=${num}`,
       this.getHttpOpt()
     );
+  }
+
+  vigilantSetParkDisabled(body): Observable<any> {
+    return this.http.put(VIGILANT_SET_PARK_DISABLED, body, this.getHttpOpt());
+  }
+  vigilantSetParkEnabled(body): Observable<any> {
+    return this.http.put(VIGILANT_SET_PARK_ENABLED, body, this.getHttpOpt());
   }
 }
