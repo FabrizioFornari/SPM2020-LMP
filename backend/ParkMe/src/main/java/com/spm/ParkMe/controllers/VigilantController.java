@@ -6,19 +6,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
@@ -65,5 +70,21 @@ public class VigilantController {
 		return ResponseEntity.ok(infos);
 	}
 	
+	
+
+	@PutMapping(path = VIGILANT_SET_PARKINGLOT_STATUS_DISABLED, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity setStatusParkingLotAsDisabled(@NotNull @RequestBody String street, @NotNull @RequestBody Integer numberOfParkingLot ) throws IOException {
+		
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street,numberOfParkingLot);
+		if(!parkingLots.isEmpty()) {
+			ParkingLot parkingLot = parkingLots.get(0);
+			parkingLot.setStatus(Status.DISABLED);
+			parkingLotRepository.save(parkingLot);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }
