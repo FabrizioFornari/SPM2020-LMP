@@ -7,10 +7,9 @@ import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.s
 @Component({
   selector: 'app-parking-status',
   templateUrl: './parking-status.component.html',
-  styleUrls: ['./parking-status.component.css']
+  styleUrls: ['./parking-status.component.css'],
 })
 export class ParkingStatusComponent implements OnInit {
-
   streetList = [];
   parkList = [];
 
@@ -20,7 +19,7 @@ export class ParkingStatusComponent implements OnInit {
     private titleService: Title,
     private parkingService: ParkingLotServiceService,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('ParkMe | Parking Status');
@@ -32,27 +31,26 @@ export class ParkingStatusComponent implements OnInit {
         console.log(error);
         this.streetList = [];
       }
-    )
+    );
   }
 
-  seeStreet(street){
+  seeStreet(street) {
     this.parkingService.vigilantGetParksStreet(street).subscribe(
       (success) => {
-        console.log(success);
         this.parkList = success;
         this.showStreets = false;
       },
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
 
-  backButton(){
+  backButton() {
     window.location.reload();
   }
 
-  seeStatus(street, number){
+  seeStatus(street, number) {
     this.parkingService.vigilantGetParkInfo(street, number).subscribe(
       (success) => {
         this.modalInfo(success);
@@ -60,10 +58,10 @@ export class ParkingStatusComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
 
-  modalInfo(info){
+  modalInfo(info) {
     const modalRef = this.modalService.open(ParkInfoComponent);
     modalRef.componentInstance.INFO = info;
     modalRef.result.then(
@@ -75,5 +73,4 @@ export class ParkingStatusComponent implements OnInit {
       }
     );
   }
-
 }

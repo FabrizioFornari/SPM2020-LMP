@@ -1,65 +1,112 @@
 <div class="modal-header">
-	<h4 class="modal-title">Parking Lot #{{INFO.numberOfParkingLot}}</h4>
-	<button
-	  type="button"
-	  class="btn btn-danger"
-	  (click)="activeModal.close('Close click')"
-	>
-	  Close
-	</button>
-  </div>
-  <div class="modal-body">
-	<form>
-	  <div class="form-group">
-		<label>Sensor State</label>
-		<input
-		  [ngModel]="INFO.sensorState"
-		  type="text"
-		  class="form-control"
-		  name="sensorState"
-		  disabled
-		/>
-	  </div>
-	  <div class="form-group">
-		<label>Status</label>
-		<input
-		  [ngModel]="INFO.status"
-		  type="text"
-		  class="form-control"
-		  name="status"
-		  disabled
-		/>
-	  </div>
-	  <div class="form-group">
-		<label>Street</label>
-		<input
-		  [ngModel]="INFO.street"
-		  type="text"
-		  class="form-control"
-		  name="street"
-		  disabled
-		/>
-	  </div>
-	  <div class="form-group">
-		<label>IsHandicap</label>
-		<input
-		  [ngModel]="INFO.isHandicapParkingLot"
-		  type="text"
-		  class="form-control"
-		  name="isHandicap"
-		  disabled
-		/>
-	  </div>
-	  <div class="form-group">
-		<label>Vehicle Type</label>
-		<input
-		  [ngModel]="INFO.typeOfVehicle"
-		  type="text"
-		  class="form-control"
-		  name="vehicle"
-		  disabled
-		/>
-	  </div>
-	</form>
-  </div>
-  
+  <h4 class="modal-title">Parking Lot #{{ INFO.numberOfParkingLot }}</h4>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label
+        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        style="color: #df4759"
+        >Sensor State</label
+      >
+      <label
+        *ngIf="
+          INFO.sensorState != 'ON' ||
+          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+        "
+        >Sensor State</label
+      >
+      <input
+        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        style="background-color: #df4759"
+        [ngModel]="INFO.sensorState"
+        type="text"
+        class="form-control"
+        name="sensorState"
+        disabled
+      />
+      <input
+        *ngIf="
+          INFO.sensorState != 'ON' ||
+          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+        "
+        [ngModel]="INFO.sensorState"
+        type="text"
+        class="form-control"
+        name="sensorState"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label
+        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        style="color: #df4759"
+        >Status</label
+      >
+      <label
+        *ngIf="
+          INFO.sensorState != 'ON' ||
+          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+        "
+        >Status</label
+      >
+      <input
+        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        style="background-color: #df4759"
+        [ngModel]="INFO.status"
+        type="text"
+        class="form-control"
+        name="status"
+        disabled
+      />
+      <input
+        *ngIf="
+          INFO.sensorState != 'ON' ||
+          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+        "
+        [ngModel]="INFO.status"
+        type="text"
+        class="form-control"
+        name="status"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Street</label>
+      <input
+        [ngModel]="INFO.street"
+        type="text"
+        class="form-control"
+        name="street"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>IsHandicap</label>
+      <input
+        [ngModel]="INFO.isHandicapParkingLot"
+        type="text"
+        class="form-control"
+        name="isHandicap"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Vehicle Type</label>
+      <input
+        [ngModel]="INFO.typeOfVehicle"
+        type="text"
+        class="form-control"
+        name="vehicle"
+        disabled
+      />
+    </div>
+  </form>
+</div>

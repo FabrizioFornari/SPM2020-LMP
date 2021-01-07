@@ -1,27 +1,35 @@
-
-
-#streetCard{
-	text-align: center;
-	cursor: pointer;
+#streetCardInfo {
+  text-align: center;
+  cursor: pointer;
 }
 
-#backCard{
-	text-align:center;
-	cursor: pointer;
+#streetCardDanger {
+  text-align: center;
+  cursor: pointer;
 }
 
-#backCard:hover{
-	background-color: #f7f7f7;
-	color: #292b2c;
+#backCard {
+  text-align: center;
+  cursor: pointer;
 }
 
-#streetCard:hover{
-	background-color: #f7f7f7;
-	color: #5bc0de;
+#backCard:hover {
+  background-color: #f7f7f7;
+  color: #292b2c;
 }
 
-.container{
-margin-top: 2rem;
+#streetCardInfo:hover {
+  background-color: #f7f7f7;
+  color: #5bc0de;
+}
+
+#streetCardDanger:hover {
+  background-color: #f7f7f7;
+  color: #df4759;
+}
+
+.container {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
