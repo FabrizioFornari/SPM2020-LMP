@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.managers.AbusiveOccupationManager;
@@ -83,8 +84,7 @@ public class DriverController {
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
-		driver.setPassword(encoder.encode(driver.getPassword()));
-		repository.save(driver);
+		repository.save(new User(driver.getUsername(), driver.getFirstName(), driver.getLastName(), driver.getSsn(), driver.getPhone(), driver.getEmail(), encoder.encode(driver.getPassword()), Roles.ROLE_DRIVER));
 		driverRepository.save(new DriverInfo(driver));
 	}
 
