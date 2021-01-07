@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const PM_REGISTER_API = environment.baseUrl + 'api/parkingmanager/registration';
-const VG_REGISTER_API = environment.baseUrl + 'api/vigilant/registration';
+const PM_REGISTER_API = environment.baseUrl + 'api/admin/registration/parkingManager';
+const VG_REGISTER_API = environment.baseUrl + 'api/admin/registration/vigilant';
 
 
 @Injectable({
