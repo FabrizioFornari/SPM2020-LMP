@@ -48,6 +48,7 @@ export class DriverRegistrationComponent implements OnInit {
   onLoginSubmit() {
 
     const user = {
+      username: this.email,
       firstName: this.name,
       lastName: this.surname,
       ssn: this.ssn,
