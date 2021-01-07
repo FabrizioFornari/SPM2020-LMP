@@ -82,18 +82,15 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 				new User("flash@park.it", "Andrea", "Falaschini", "ZZZZZZ10A01A000Z", "+39 333 3333333","flash@park.it",  encoder.encode("Flash"), Roles.ROLE_PARKING_MANAGER),
 				new User("fusaro@turbomondialismo.it","Diego", "Fusaro", "ZZZZZZ10A01A000Z", "+39 333 3333333","fusaro@turbomondialismo.it", encoder.encode("Fusaro"), Roles.ROLE_ADMIN), };
 		Driver driver = new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "4 Wheels Standard Vehicle");
-		Driver driver2 = new Driver("gino@park.it", "Gino", "Ginetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","gino@park.it",  encoder.encode("Gino"), "BB000AA", "car");
 		repository.deleteAll();
 		for (User user : users) {
 			repository.save(user);
 		}
 		driverInfoRepository.deleteAll();
 		driverInfoRepository.save(new DriverInfo(driver));
-		driverInfoRepository.save(new DriverInfo(driver2));
 		handicapRequestsRepository.deleteAll();
 		HandicapPermitsRequest[] requests = new HandicapPermitsRequest[] {
 				new HandicapPermitsRequest("rocche@park.it", System.currentTimeMillis(), false, false),
-				new HandicapPermitsRequest("gino@park.it", System.currentTimeMillis(), false, false),
 		};
 		for (HandicapPermitsRequest req : requests) {
 			handicapRequestsRepository.save(req);
