@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpiringTicketComponent } from './expiring-ticket.component';
+import { ParkingStatusComponent } from './parking-status.component';
 
-describe('ExpiringTicketComponent', () => {
-  let component: ExpiringTicketComponent;
-  let fixture: ComponentFixture<ExpiringTicketComponent>;
+describe('ParkingStatusComponent', () => {
+  let component: ParkingStatusComponent;
+  let fixture: ComponentFixture<ParkingStatusComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExpiringTicketComponent ]
+      declarations: [ ParkingStatusComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExpiringTicketComponent);
+    fixture = TestBed.createComponent(ParkingStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

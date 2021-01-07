@@ -148,6 +148,17 @@
           Ticket List <span class="sr-only"></span>
         </h6>
       </li>
+      <li
+        class="nav-item"
+        data-toggle="collapse"
+        data-target=".navbar-collapse.show"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <h6 class="nav-link" [routerLink]="['/parking-status']">
+          Parking Status <span class="sr-only"></span>
+        </h6>
+      </li>
     </ul>
   </div>
 </nav>

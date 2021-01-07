@@ -51,4 +51,13 @@ public final class EndpointContants {
 	public static final String NOTIFICATION_ENDPOINT="/api/notification";
 	public static final String NOTIFICATION_SET_STATUS ="/setStatusNotification";
 	public static final String NOTIFICATION_GET_ALL_USER_NOTIFICATIONS ="/getAllUserNotifications";
+	
+	//Vigilant
+	public static final String VIGILANT_ENDPOINT="/api/vigilant";
+	public static final String VIGILANT_GET_PARKINGLOT= "/getParkingLot";
+	public static final String VIGILANT_GET_ALL_PARKINGLOTS_FOR_STREET ="/getParkingLots/street";
+	public static final String VIGILANT_GET_ALL_PARKINGLOTS= "/getAllParkingLot";
+	public static final String VIGILANT_GET_ALL_STREET_NAME ="/getAllStreet";
+	public static final String VIGILANT_SET_PARKINGLOT_STATUS_DISABLED= "/setStatusParkingLotDisabled";
+	public static final String VIGILANT_SET_PARKINGLOT_STATUS_ENABLED="/setStatusParkingLotEnabled";
 }

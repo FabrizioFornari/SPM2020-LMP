@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmPresenceComponent } from 'src/app/modal/confirm-presence/confirm-presence.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { VigilantCheckParkComponent } from 'src/app/modal/vigilant-check-park/vigilant-check-park.component';
-import { ExpiringTicketComponent } from 'src/app/modal/expiring-ticket/expiring-ticket.component';
 
 @Component({
   selector: 'app-navbar',
@@ -83,8 +82,11 @@ export class NavbarComponent implements OnInit {
     } else if (not.categoryNotification == 'VIGILANT_ABUSIVE_PARKING') {
       this.openModalVigilantCheckPark(not)
     } else if(not.categoryNotification == 'DRIVER_EXPIRING_TICKET') {
-      this.openModalExpiringTicket(not)
-    } else {
+      this.openModalVigilantCheckPark(not)
+    } else if(not.categoryNotification == 'VIGILANT_EXPIRING_TICKET'){
+      this.openModalVigilantCheckPark(not);
+    }
+     else {
       alert('ANOTHER MODAL');
     }
   }
@@ -127,16 +129,4 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  openModalExpiringTicket(not) {
-    const modalRef = this.modalService.open(ExpiringTicketComponent);
-    modalRef.componentInstance.notification = not;
-    modalRef.result.then(
-      () => {
-        console.log('Modal VigilantCheck Closed');
-      },
-      () => {
-        console.log('Modal VigilantCheck Dismissed');
-      }
-    );
-  }
 }

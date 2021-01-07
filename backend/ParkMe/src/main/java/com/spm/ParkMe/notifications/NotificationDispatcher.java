@@ -18,9 +18,12 @@ import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.Notification;
+import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.ParkingLotNotification;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.UserSession;
 import com.spm.ParkMe.repositories.NotificationRepository;
+import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
@@ -35,6 +38,9 @@ public class NotificationDispatcher {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ParkingLotRepository parkingLotRepository;
 
 	private SimpMessagingTemplate template;
 
@@ -64,7 +70,9 @@ public class NotificationDispatcher {
 		if(!vigilantsSessions.isEmpty()) {
 			String sessionID = vigilantsSessions.get(0).getSessionID();
 			String username = vigilantsSessions.get(0).getUser().getUsername();
-			Notification notification = new Notification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis());
+			List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			ParkingLot parkingLot= parkingLots.get(0);
+			Notification notification = new ParkingLotNotification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis(),parkingLot);
 			notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PARKING);
 			this.sendNotificationToUser(username, notification);
 		}
@@ -72,13 +80,41 @@ public class NotificationDispatcher {
 			List<User> vigilants = userRepository.findByRole(Roles.ROLE_VIGILANT);
 			long timestamp = System.currentTimeMillis();
 			for(User vigilant : vigilants) {
-				Notification notification = new Notification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), timestamp);
+				List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+				ParkingLot parkingLot= parkingLots.get(0);
+				Notification notification = new ParkingLotNotification("Abusive Occupation Alert","An abusive occupation has been detected. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(),timestamp,parkingLot);
 				notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PARKING);
 				notificationRepository.save(notification);
 			}
 		}
 	}
 	
+	
+	public void sendNotificationToOneVigilantWhenTicketExpiring(String street, Integer numberOfParkingLot) {
+		
+
+		List<UserSession> vigilantsSessions= userSessionRepository.findAll().stream().filter(session -> session.getUser().getRole().equals(Roles.ROLE_VIGILANT)).collect(Collectors.toList());
+		if(!vigilantsSessions.isEmpty()) {
+			String sessionID = vigilantsSessions.get(0).getSessionID();
+			String username = vigilantsSessions.get(0).getUser().getUsername();
+			List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			ParkingLot parkingLot= parkingLots.get(0);
+			ParkingLotNotification notification = new ParkingLotNotification("Ticket Expiring", "The driver has not renewed the reserved parking, ticket expired. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis(), parkingLot);
+			notification.setCategoryNotification(CategoryNotification.VIGILANT_EXPIRING_TICKET);
+			this.sendNotificationToUser(username, notification);
+		}
+		else {
+			List<User> vigilants = userRepository.findByRole(Roles.ROLE_VIGILANT);
+			long timestamp = System.currentTimeMillis();
+			for(User vigilant : vigilants) {
+				List<ParkingLot> parkingLots= parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+				ParkingLot parkingLot= parkingLots.get(0);
+				ParkingLotNotification notification = new ParkingLotNotification("Ticket Expiring", "The driver has not renewed the reserved parking, ticket expired. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), System.currentTimeMillis(), parkingLot);
+				notification.setCategoryNotification(CategoryNotification.VIGILANT_EXPIRING_TICKET);
+				notificationRepository.save(notification);
+			}
+		}
+	}
 	
 	public void add(UserSession session)
 	{

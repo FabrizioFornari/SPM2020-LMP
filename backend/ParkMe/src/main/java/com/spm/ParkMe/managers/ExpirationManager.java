@@ -6,16 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.spm.ParkMe.enums.CategoryNotification;
+import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
+import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
+import com.spm.ParkMe.repositories.UserRepository;
 
 @Component
 public class ExpirationManager {
@@ -32,6 +36,8 @@ public class ExpirationManager {
 	
 	@Autowired
 	private ParkingLotTicketRepository parkingLotTicketRepository;
+	
+	 
 	
 	
 	//--------- CONSTRUCTOR --------- //
@@ -63,11 +69,11 @@ public class ExpirationManager {
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
 			
-			
-			
-			
-
-
 		}
+		
+		public void sendNotificationToVigilantForTicketExpiring(String street, Integer numberOfParkingLot) {
+			notificationDispatcher.sendNotificationToOneVigilantWhenTicketExpiring( street,  numberOfParkingLot);
+		}
+			
 	
 }
