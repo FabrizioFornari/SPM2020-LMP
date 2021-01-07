@@ -16,6 +16,7 @@ export class DriverAuthService {
   constructor(private http: HttpClient) {}
 
   register(user: {
+    username: string;
     firstName: string;
     lastName: string;
     ssn: string;
