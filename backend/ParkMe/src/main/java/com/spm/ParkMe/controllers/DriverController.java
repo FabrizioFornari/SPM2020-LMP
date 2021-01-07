@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,8 +78,12 @@ public class DriverController {
 	@Autowired
 	private ExpirationManager expirationManager;
 	
+	@Autowired
+	PasswordEncoder encoder;
+	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public void registration(@Valid @RequestBody Driver driver) throws IOException {
+		driver.setPassword(encoder.encode(driver.getPassword()));
 		repository.save(driver);
 		driverRepository.save(new DriverInfo(driver));
 	}
