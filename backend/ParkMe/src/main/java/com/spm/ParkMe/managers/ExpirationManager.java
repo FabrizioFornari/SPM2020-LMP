@@ -12,6 +12,7 @@ import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.ParkingLotNotification;
 import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
@@ -64,7 +65,7 @@ public class ExpirationManager {
 			if(!this.getStatusParkingLot(street, numberOfParkingLot).equals(Status.FREE) ) {
 				List<ParkingLotTicket> parkingLotTickets = parkingLotTicketRepository.findByUsername(username);
 				ParkingLotTicket parkingLotTicket = parkingLotTickets.get(0);
-				Notification notification= new Notification("Ticket Expiring", "The ticket is about to expire. If you want to stay longer please refresh the ticket, otherwise leave the parking lot in 5 minutes.", username, System.currentTimeMillis());
+				Notification notification= new ParkingLotNotification("Ticket Expiring", "The ticket is about to expire. If you want to stay longer please refresh the ticket, otherwise leave the parking lot in 5 minutes.", username, System.currentTimeMillis(), parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot).get(0));
 				notification.setCategoryNotification(CategoryNotification.DRIVER_EXPIRING_TICKET);
 				notificationDispatcher.sendNotificationToUser(username, notification);
 			}
