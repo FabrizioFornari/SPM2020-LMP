@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
@@ -36,12 +37,14 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.MessageResponse;
+import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.SensorChangeInfo;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
+import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
@@ -78,6 +81,9 @@ public class DriverController {
 	
 	@Autowired
 	private ExpirationManager expirationManager;
+	
+	@Autowired
+	private NotificationDispatcher notificationDispatcher;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -172,7 +178,7 @@ public class DriverController {
 		} else {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
-
+	}
 
 	@GetMapping(path = DRIVER_GET_ALL_STREETS)
 	@PreAuthorize("hasRole('DRIVER')")
@@ -351,6 +357,19 @@ public class DriverController {
 				thread.start();
 			}else {
 				if(!parkingLot.getStatus().equals(Status.BOOKED)) {
+					if(parkingLot.getStatus().equals(Status.OCCUPIED)) {
+						List<ParkingLotTicket> parkingLotTickets= parkingLotTicketRepository.findByStreetAndNumberOfParkingLot(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
+						if(!parkingLotTickets.isEmpty()) {
+							ParkingLotTicket parkingLotTicket = parkingLotTickets.get(0);
+							if(System.currentTimeMillis()<(parkingLotTicket.getExpiringTimestamp()-(5*60*1000))){
+								Double refundCalculated =((parkingLotTicket.getExpiringTimestamp()-System.currentTimeMillis())/3600000)*parkingLot.getPricePerHour();
+								Notification notification= new Notification( "Money refunded", "You have been refunded "+ refundCalculated+ " Euros.", parkingLotTicket.getUsername(), System.currentTimeMillis() );
+								notification.setCategoryNotification(CategoryNotification.DRIVER_REFUNDED_TICKET);
+								notificationDispatcher.sendNotificationToUser(parkingLotTicket.getUsername(), notification);
+							}
+						}
+					}
+				
 					parkingLot.setStatus(Status.FREE);
 				}
 			}
@@ -364,5 +383,6 @@ public class DriverController {
 		}
 		
 	}
+	
 	
 }
