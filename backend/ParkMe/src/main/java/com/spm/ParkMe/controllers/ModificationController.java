@@ -64,7 +64,7 @@ public class ModificationController {
 				return ResponseEntity.ok(user);
 			}
 			else {
-				return new ResponseEntity<User>(HttpStatus.IM_USED);
+				return new ResponseEntity<User>(HttpStatus.CONFLICT);
 			}
 		}
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
