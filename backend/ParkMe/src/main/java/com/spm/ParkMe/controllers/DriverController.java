@@ -42,6 +42,7 @@ import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
 import com.spm.ParkMe.models.User;
+import com.spm.ParkMe.models.requestBody.RefreshTicketInfo;
 import com.spm.ParkMe.models.requestBody.SensorChangeInfo;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.notifications.NotificationDispatcher;
@@ -309,8 +310,8 @@ public class DriverController {
 					//(parkingLotTicket.getExpiringTimestamp()-System.currentTimeMillis())- (5*60*1000)
 					Thread.sleep(10000);
 					expirationManager.sendNotificationToDriverBeforeTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot(), parkingLotTicket.getUsername());
-					Thread.sleep(1000);
-					if(parkingLot.getStatus()!= Status.FREE && parkingLotBooking.getTimestamp() < System.currentTimeMillis()) {
+					Thread.sleep(10000);
+					if(parkingLot.getStatus()!= Status.FREE && parkingLotTicket.getExpiringTimestamp() < System.currentTimeMillis()) {
 						expirationManager.sendNotificationToVigilantForTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
 					}
 				} catch (InterruptedException e) {
@@ -384,5 +385,42 @@ public class DriverController {
 		
 	}
 	
-	
+	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity createRefreshParkingLotTicket(@NotNull @RequestBody  RefreshTicketInfo refreshTicketInfo) {
+		List<ParkingLotTicket> parkingLotTickets= parkingLotTicketRepository.findByStreetAndNumberOfParkingLot(refreshTicketInfo.getStreet(), refreshTicketInfo.getNumberOfParkingLot());
+		List<ParkingLot> parkings= parkingLotRepository.findByStreetAndNumberOfParkingLot(refreshTicketInfo.getStreet(), refreshTicketInfo.getNumberOfParkingLot());
+		if(!parkingLotTickets.isEmpty() && !parkings.isEmpty()) {
+			ParkingLotTicket parkingLotTicket= parkingLotTickets.get(0);
+			if(System.currentTimeMillis() < parkingLotTicket.getExpiringTimestamp() ) {
+				parkingLotTicket.setExpiringTimestamp(parkingLotTicket.getExpiringTimestamp()+(refreshTicketInfo.getExtraHours()*60*60*1000));
+				parkingLotTicketRepository.save(parkingLotTicket);
+				ParkingLot park= parkings.get(0);
+				Thread thread = new Thread(() -> {
+					try {
+						//(parkingLotTicket.getExpiringTimestamp()-System.currentTimeMillis())- (5*60*1000)
+						Thread.sleep(10000);
+						expirationManager.sendNotificationToDriverBeforeTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot(), parkingLotTicket.getUsername());
+						Thread.sleep(10000);
+						if(park.getStatus()!= Status.FREE && parkingLotTicket.getExpiringTimestamp() < System.currentTimeMillis()) {
+							expirationManager.sendNotificationToVigilantForTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				});
+				thread.start();
+				return new ResponseEntity(new MessageResponse("Ticket refreshed successfully"), HttpStatus.OK);
+			}else
+			{
+				return new  ResponseEntity(new MessageResponse("Ticket is already expired and cannot be refreshed"), HttpStatus.NOT_FOUND);
+			}
+		}else
+		{
+			return new ResponseEntity(new MessageResponse("There aren't parkingLots or Tickets"),HttpStatus.NOT_FOUND);
+		}
+		
+		
+		
+}
 }
