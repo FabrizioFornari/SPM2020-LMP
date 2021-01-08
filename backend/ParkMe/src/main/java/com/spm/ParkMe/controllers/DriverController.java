@@ -173,23 +173,6 @@ public class DriverController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 
-	}
-
-	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED, consumes = "application/json")
-	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity setStatusParkingLotAsDisabled(@Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if (parkingLot.getStatus() != Status.BOOKED && parkingLot.getStatus() != Status.OCCUPIED) {
-			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
-					parkingLot.getNumberOfParkingLot());
-			ParkingLot park = parks.get(0);
-			park.setStatus(Status.DISABLED);
-			parkingLotRepository.save(park);
-
-			return new ResponseEntity(HttpStatus.OK);
-		} else {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
-		}
-	}
 
 	@GetMapping(path = DRIVER_GET_ALL_STREETS)
 	@PreAuthorize("hasRole('DRIVER')")
