@@ -21,6 +21,7 @@ public final class EndpointContants {
 	public static final String DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT="/createParkingLotTicket";
 	public static final String DRIVER_SET_SENSOR_PARKINGLOT="/setSensorParkingLot";
 	public static final String DRIVER_CHANGE_PARKING_LOT = "/changeParkingLot";
+	public static final String DRIVER_REFRESH_TICKET="/refreshTicket";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";

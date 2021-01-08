@@ -385,7 +385,7 @@ public class DriverController {
 		
 	}
 	
-	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
+	@PutMapping(path = DRIVER_REFRESH_TICKET)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity createRefreshParkingLotTicket(@NotNull @RequestBody  RefreshTicketInfo refreshTicketInfo) {
 		List<ParkingLotTicket> parkingLotTickets= parkingLotTicketRepository.findByStreetAndNumberOfParkingLot(refreshTicketInfo.getStreet(), refreshTicketInfo.getNumberOfParkingLot());
