@@ -310,7 +310,7 @@ public class DriverController {
 					//(parkingLotTicket.getExpiringTimestamp()-System.currentTimeMillis())- (5*60*1000)
 					Thread.sleep(10000);
 					expirationManager.sendNotificationToDriverBeforeTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot(), parkingLotTicket.getUsername());
-					Thread.sleep(10000);
+					Thread.sleep(30000);
 					if(parkingLot.getStatus()!= Status.FREE && parkingLotTicket.getExpiringTimestamp() < System.currentTimeMillis()) {
 						expirationManager.sendNotificationToVigilantForTicketExpiring(parkingLotTicket.getStreet(), parkingLotTicket.getNumberOfParkingLot());
 					}
