@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmPresenceComponent } from 'src/app/modal/confirm-presence/confirm-presence.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { VigilantCheckParkComponent } from 'src/app/modal/vigilant-check-park/vigilant-check-park.component';
+import { RefundComponent } from 'src/app/modal/refund/refund.component';
 
 @Component({
   selector: 'app-navbar',
@@ -63,7 +64,7 @@ export class NavbarComponent implements OnInit {
         });
         this.notificationsList = this.notificationsList.reverse();
         for (let index = 0; index < this.notificationsList.length; index++) {
-          if (this.notificationsList[index].statusNotification == "NEW") {
+          if (this.notificationsList[index].statusNotification == 'NEW') {
             this.newNotifications = true;
             break;
           }
@@ -78,20 +79,21 @@ export class NavbarComponent implements OnInit {
   notificationAction(not) {
     this.markRead(not.id);
     if (not.categoryNotification == 'DRIVER_ABUSIVE_PARKING') {
-      this.openModalConfirmPresence(not)
+      this.openModalConfirmPresence(not);
     } else if (not.categoryNotification == 'VIGILANT_ABUSIVE_PARKING') {
-      this.openModalVigilantCheckPark(not)
-    } else if(not.categoryNotification == 'DRIVER_EXPIRING_TICKET') {
-      this.openModalVigilantCheckPark(not)
-    } else if(not.categoryNotification == 'VIGILANT_EXPIRING_TICKET'){
       this.openModalVigilantCheckPark(not);
-    }
-     else {
+    } else if (not.categoryNotification == 'DRIVER_EXPIRING_TICKET') {
+      this.openModalVigilantCheckPark(not);
+    } else if (not.categoryNotification == 'VIGILANT_EXPIRING_TICKET') {
+      this.openModalVigilantCheckPark(not);
+    } else if (not.categoryNotification == 'DRIVER_REFUNDED_TICKET') {
+      this.openModalRefund(not);
+    } else {
       alert('ANOTHER MODAL');
     }
   }
 
-  markRead(id){
+  markRead(id) {
     this.notificationService.markNotificationRead(id).subscribe(
       (success) => {
         console.log(success);
@@ -100,7 +102,20 @@ export class NavbarComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    )
+    );
+  }
+
+  openModalRefund(not) {
+    const modalRef = this.modalService.open(RefundComponent);
+    modalRef.componentInstance.notification = not;
+    modalRef.result.then(
+      () => {
+        console.log('Modal ConfirmPresence Closed');
+      },
+      () => {
+        console.log('Modal ConfirmPresence Dismissed');
+      }
+    );
   }
 
   openModalConfirmPresence(not) {
@@ -128,5 +143,4 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
-
 }
