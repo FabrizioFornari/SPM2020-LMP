@@ -34,6 +34,7 @@ import { VigilantCheckParkComponent } from './modal/vigilant-check-park/vigilant
 import { ParkingStatusComponent } from './pages/parking-status/parking-status.component';
 import { ParkInfoComponent } from './modal/park-info/park-info.component';
 import { RefundComponent } from './modal/refund/refund.component';
+import { RefreshTicketComponent } from './modal/refresh-ticket/refresh-ticket.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { RefundComponent } from './modal/refund/refund.component';
     ParkingStatusComponent,
     ParkInfoComponent,
     RefundComponent,
+    RefreshTicketComponent,
   ],
   imports: [
     BrowserModule,

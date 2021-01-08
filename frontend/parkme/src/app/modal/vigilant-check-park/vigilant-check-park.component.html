@@ -12,10 +12,19 @@
 <div class="modal-body">
   <p>{{ notification.text }}</p>
   <button
+    *ngIf="ROLE == 'ROLE_VIGILANT'"
     (click)="openModalVigilantCheckInfo(notification.parkingLot)"
     type="button"
     class="btn btn-info btn-lg btn-block"
   >
     Info
+  </button>
+  <button
+    *ngIf="ROLE == 'ROLE_DRIVER'"
+    (click)="openModalRefreshTicket(notification)"
+    type="button"
+    class="btn btn-info btn-lg btn-block"
+  >
+    Refresh
   </button>
 </div>

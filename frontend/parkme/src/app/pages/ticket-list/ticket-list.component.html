@@ -7,7 +7,11 @@
       <p>Price/h: €{{ currentBooking.pricePerHour }}</p>
     </div>
     <div class="buttons">
-      <button (click)="confirm(currentBooking)" type="button" class="btn btn-success btn-lg">
+      <button
+        (click)="confirm(currentBooking)"
+        type="button"
+        class="btn btn-success btn-lg"
+      >
         Confirm
       </button>
       <button
@@ -31,20 +35,18 @@
   <div *ngIf="isCurrentTicket" class="current-booking">
     <div class="info">
       <h3>Current Ticket</h3>
-      <p>Street: {{currentTicket.street}}</p>
-      <p>Parking #{{currentTicket.numberOfParkingLot}}</p>
-      <p>Cost: €{{currentTicket.moneySpent}}</p>
-      <p>Expire At: {{currentTicket.expiringTimestamp}}</p>
-    </div>
-    <div class="buttons">
-      <button type="button" class="btn btn-success btn-lg">
-        Refresh
-      </button>
-      
+      <p>Street: {{ currentTicket.street }}</p>
+      <p>Parking #{{ currentTicket.numberOfParkingLot }}</p>
+      <p>Cost: €{{ currentTicket.moneySpent }}</p>
+      <p>Expire At: {{ currentTicket.expiringTimestamp }}</p>
     </div>
   </div>
 
-  <div *ngIf="!isCurrentBooking && !isCurrentTicket" (click)="newBooking()" class="new-booking">
+  <div
+    *ngIf="!isCurrentBooking && !isCurrentTicket"
+    (click)="newBooking()"
+    class="new-booking"
+  >
     New Booking
     <i class="material-icons"> add_to_photos </i>
   </div>
@@ -65,11 +67,11 @@
         <tbody>
           <tr *ngFor="let ticket of ticketHistory; index as i">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ticket.street}}</td>
-            <td>{{ticket.numberOfParkingLot}}</td>
-            <td>{{ticket.username}}</td>
-            <td>{{ticket.moneySpent}}</td>
-            <td>{{ticket.expiringTimestamp}}</td>
+            <td>{{ ticket.street }}</td>
+            <td>{{ ticket.numberOfParkingLot }}</td>
+            <td>{{ ticket.username }}</td>
+            <td>{{ ticket.moneySpent }}</td>
+            <td>{{ ticket.expiringTimestamp }}</td>
           </tr>
         </tbody>
       </table>
