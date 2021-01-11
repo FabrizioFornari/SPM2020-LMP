@@ -84,8 +84,8 @@ public class DriverController {
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
 	public ResponseEntity registration(@Valid @RequestBody Driver driver) throws IOException {
-		Optional<User> Users = repository.findByUsername(driver.getEmail());
-		if(Users.isEmpty()) {
+		
+		if(!repository.existsByUsername(driver.getEmail())) {
 			repository.save(new User(driver.getUsername(), driver.getFirstName(), driver.getLastName(), driver.getSsn(), driver.getPhone(), driver.getEmail(), encoder.encode(driver.getPassword()), Roles.ROLE_DRIVER));
 			driverRepository.save(new DriverInfo(driver));
 			return new ResponseEntity(HttpStatus.OK);
