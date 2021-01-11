@@ -56,19 +56,26 @@ public class AdminController {
 			repository.save(pmanager);
 			return new ResponseEntity(HttpStatus.OK);
 		}else {
+			
 			return new ResponseEntity(HttpStatus.CONFLICT);
-
 		}
 	
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(VIGILANT_REGISTRATION_ENDPOINT)
-	public void vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
-		vigilant.setUsername(vigilant.getEmail());
-		vigilant.setPassword(encoder.encode(vigilant.getPassword()));
-		vigilant.setRole(Roles.ROLE_VIGILANT);
-		repository.save(vigilant);
+	public ResponseEntity vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
+		if(!repository.existsByUsername(vigilant.getUsername())){
+			vigilant.setUsername(vigilant.getEmail());
+			vigilant.setPassword(encoder.encode(vigilant.getPassword()));
+			vigilant.setRole(Roles.ROLE_VIGILANT);
+			repository.save(vigilant);
+			return new ResponseEntity(HttpStatus.OK);
+		}else 
+		{
+			return new ResponseEntity(HttpStatus.CONFLICT);
+			}
+	
 	}
 	
 	@GetMapping(ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT)
