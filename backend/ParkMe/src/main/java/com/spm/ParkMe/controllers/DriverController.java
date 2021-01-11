@@ -83,9 +83,17 @@ public class DriverController {
 	PasswordEncoder encoder;
 	
 	@PostMapping(path = DRIVER_REGISTRATION_ENDPOINT, consumes = "application/json")
-	public void registration(@Valid @RequestBody Driver driver) throws IOException {
-		repository.save(new User(driver.getUsername(), driver.getFirstName(), driver.getLastName(), driver.getSsn(), driver.getPhone(), driver.getEmail(), encoder.encode(driver.getPassword()), Roles.ROLE_DRIVER));
-		driverRepository.save(new DriverInfo(driver));
+	public ResponseEntity registration(@Valid @RequestBody Driver driver) throws IOException {
+		Optional<User> Users = repository.findByUsername(driver.getEmail());
+		if(Users.isEmpty()) {
+			repository.save(new User(driver.getUsername(), driver.getFirstName(), driver.getLastName(), driver.getSsn(), driver.getPhone(), driver.getEmail(), encoder.encode(driver.getPassword()), Roles.ROLE_DRIVER));
+			driverRepository.save(new DriverInfo(driver));
+			return new ResponseEntity(HttpStatus.OK);
+		}else
+		{
+			return new ResponseEntity(HttpStatus.CONFLICT);		
+			}
+	
 	}
 
 	@PostMapping(path = DRIVER_HANDICAP_PERMITS_ENDPOINT, consumes = "application/json")
