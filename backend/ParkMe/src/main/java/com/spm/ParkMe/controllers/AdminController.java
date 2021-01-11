@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -42,6 +44,9 @@ public class AdminController {
 	
 	@Autowired
 	private HandicapPermitsRequestsRepository handicapRepository;;
+	
+	@Autowired
+	private DriverInfoRepository driverInfoRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -100,9 +105,12 @@ public class AdminController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> setHandicapPermits(@NotNull @RequestBody AdminHandicapRequestAcceptance acceptance ) {
 		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + acceptance.getUsername()));
+		DriverInfo driverInfo = driverInfoRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with username " + acceptance.getUsername()));
 		handicapPermits.setProcessed(true);
 		handicapPermits.setAccepted(acceptance.getIsAccepted());
-		handicapRepository.save(handicapPermits);
+		driverInfo.setHandicap(acceptance.getIsAccepted());
+		handicapRepository.delete(handicapPermits);
+		driverInfoRepository.save(driverInfo);
 		return ResponseEntity.ok(handicapPermits);
 	}
 	
