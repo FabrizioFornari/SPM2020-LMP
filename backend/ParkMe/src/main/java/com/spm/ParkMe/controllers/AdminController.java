@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,11 +48,18 @@ public class AdminController {
 		
 	@PostMapping(PARKING_MANAGER_REGISTRATION_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
-	public void parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
-		pmanager.setUsername(pmanager.getEmail());
-		pmanager.setPassword(encoder.encode(pmanager.getPassword()));
-		pmanager.setRole(Roles.ROLE_PARKING_MANAGER);
-		repository.save(pmanager);
+	public ResponseEntity parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
+		if(!repository.existsByUsername(pmanager.getUsername())) {
+			pmanager.setUsername(pmanager.getEmail());
+			pmanager.setPassword(encoder.encode(pmanager.getPassword()));
+			pmanager.setRole(Roles.ROLE_PARKING_MANAGER);
+			repository.save(pmanager);
+			return new ResponseEntity(HttpStatus.OK);
+		}else {
+			return new ResponseEntity(HttpStatus.CONFLICT);
+
+		}
+	
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
