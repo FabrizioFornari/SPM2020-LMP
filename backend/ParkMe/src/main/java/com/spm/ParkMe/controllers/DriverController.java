@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.net.HttpHeaders;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
@@ -118,36 +119,42 @@ public class DriverController {
 
 	@PutMapping(path = DRIVER_STATUS_PARKINGLOT_SET_STATUS_BOOKED, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity<?> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot parkingLot) throws IOException {
-		if(parkingLot.getStatus() != (Status.FREE)) {
-			return new ResponseEntity<String>("Parking Lot is already booked or occupied.", HttpStatus.CONFLICT);
+	public ResponseEntity<?> setStatusParkingLotAsBooked(Authentication authentication, @Valid @RequestBody ParkingLot pl) throws IOException {
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(pl.getStreet(), pl.getNumberOfParkingLot());
+		if(!parkingLots.isEmpty()) {
+			ParkingLot parkingLot = parkingLots.get(0);
+			if(parkingLot.getStatus() != (Status.FREE)) {
+				return new ResponseEntity<String>("Parking Lot is already booked or occupied.", HttpStatus.CONFLICT);
+			}
+			else if(parkingLotBookingRepository.existsByUsername(authentication.getName())) {
+				return new ResponseEntity<String>("You already have booked a parking lot. If you want to book a different one, please cancel the current booking.", HttpStatus.CONFLICT);
+			}
+			else if(!parkingLot.getTypeOfVehicle().equals(driverRepository.findByUsername(authentication.getName()).get().getVehicleType())) {
+				return new ResponseEntity<String>("Your vehicle can not be parked in this parking lot.", HttpStatus.CONFLICT);
+			}
+			else if(parkingLot.getIsHandicapParkingLot() && !driverRepository.findByUsername(authentication.getName()).get().getHandicap()) {
+				return new ResponseEntity<String>("You have no permission to park in a hanidcap parking lot.", HttpStatus.CONFLICT);
+			}
+			/*
+			else if(!parkingLotTicketRepository.findByUsername(authentication.getName()).isEmpty()) {
+				return new ResponseEntity<String>("You already have bought a ticket. You can book a new parking lot when you will free the current one.", HttpStatus.CONFLICT);
+			}
+			*/
+			else {
+				//set parking lot status as booked
+				List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
+						parkingLot.getNumberOfParkingLot());
+				ParkingLot park = parks.get(0);
+				park.setStatus(Status.BOOKED);
+				parkingLotRepository.save(park);
+				//create a booking object
+				ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis(), parkingLot.getCoordinates(), parkingLot.getPricePerHour());
+				parkingLotBookingRepository.save(booking);
+				return ResponseEntity.ok(new MessageResponse("Parking Lot Successfully Booked"));
+			}
 		}
-		else if(parkingLotBookingRepository.existsByUsername(authentication.getName())) {
-			return new ResponseEntity<String>("You already have booked a parking lot. If you want to book a different one, please cancel the current booking.", HttpStatus.CONFLICT);
-		}
-		else if(!parkingLot.getTypeOfVehicle().equals(driverRepository.findByUsername(authentication.getName()).get().getVehicleType())) {
-			return new ResponseEntity<String>("Your vehicle can not be parked in this parking lot.", HttpStatus.CONFLICT);
-		}
-		else if(parkingLot.getIsHandicapParkingLot() && !driverRepository.findByUsername(authentication.getName()).get().getHandicap()) {
-			return new ResponseEntity<String>("You have no permission to park in a hanidcap parking lot.", HttpStatus.CONFLICT);
-		}
-		/*
-		else if(!parkingLotTicketRepository.findByUsername(authentication.getName()).isEmpty()) {
-			return new ResponseEntity<String>("You already have bought a ticket. You can book a new parking lot when you will free the current one.", HttpStatus.CONFLICT);
-		}
-		*/
-		else {
-			//set parking lot status as booked
-			List<ParkingLot> parks = parkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),
-					parkingLot.getNumberOfParkingLot());
-			ParkingLot park = parks.get(0);
-			park.setStatus(Status.BOOKED);
-			parkingLotRepository.save(park);
-			//create a booking object
-			ParkingLotBooking booking = new ParkingLotBooking(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot(), authentication.getName(), System.currentTimeMillis(), parkingLot.getCoordinates(), parkingLot.getPricePerHour());
-			parkingLotBookingRepository.save(booking);
-			return ResponseEntity.ok(new MessageResponse("Parking Lot Successfully Booked"));
-		}
+		return new ResponseEntity(new MessageResponse("There is no parking lot with street " + pl.getStreet() + " and #" + pl.getNumberOfParkingLot()), HttpStatus.NOT_FOUND);
+		
 
 	}
 
