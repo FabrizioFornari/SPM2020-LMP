@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">map</p>
+  <h4 class="modal-title">Selected Coordinates</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <p>Latitude: {{ LAT }}</p>
+  <p>Longitude: {{ LNG }}</p>
+  <button
+    (click)="confirm(LAT, LNG)"
+    type="button"
+    class="btn btn-success btn-block"
+  >
+    Confirm
+  </button>
+  <button
+    (click)="backButton()"
+    type="button"
+    class="btn btn-secondary btn-block"
+  >
+    Back
+  </button>
+</div>

@@ -1,0 +1,29 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+#cardFunction {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  background-color: #375a7f;
+}
+
+#cardFunction .material-icons {
+  font-size: 40px;
+}
+
+#cardFunction:hover {
+  background-color: #f7f7f7;
+  color: #375a7f;
+}
+
+.card-text {
+  margin-left: 2rem;
+}

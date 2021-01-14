@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">notifications</p>
+  <h4 class="modal-title">{{ notification.title }}</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <p>{{ notification.text }}</p>
+  <div class="buttons">
+    <button type="button" class="btn btn-success btn-block" (click)="assert()">
+      Yes
+    </button>
+    <button type="button" class="btn btn-danger btn-block" (click)="deny()">
+      No
+    </button>
+  </div>
+</div>

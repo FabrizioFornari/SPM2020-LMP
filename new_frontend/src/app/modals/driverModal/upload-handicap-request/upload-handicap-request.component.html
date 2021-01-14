@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">accessible</p>
+  <h4 class="modal-title">Upload Request</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <form #update="ngForm" (ngSubmit)="uploadRequest()">
+    <div class="form-group">
+      <label>First Name</label>
+      <input
+        [ngModel]="USER.firstName"
+        type="text"
+        class="form-control"
+        name="firstName"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input
+        [ngModel]="USER.lastName"
+        type="text"
+        class="form-control"
+        name="lastName"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label>SSN</label>
+      <input
+        [ngModel]="USER.ssn"
+        type="text"
+        class="form-control"
+        name="ssn"
+        disabled
+      />
+    </div>
+
+    <button type="submit" id="updateButton" class="btn btn-block">
+      Upload
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </form>
+</div>
