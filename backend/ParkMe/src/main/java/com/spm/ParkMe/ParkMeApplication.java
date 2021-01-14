@@ -120,8 +120,8 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		
 		userSessionRepository.deleteAll();
 		notificationRepository.deleteAll();
-		notificationRepository.save(NOTIFICATION_1);
-		notificationRepository.save(NOTIFICATION_2);
+		//notificationRepository.save(NOTIFICATION_1);
+		//notificationRepository.save(NOTIFICATION_2);
 	}
 
 }
