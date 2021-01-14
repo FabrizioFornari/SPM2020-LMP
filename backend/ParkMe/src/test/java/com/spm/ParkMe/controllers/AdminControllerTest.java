@@ -33,9 +33,11 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -64,6 +66,9 @@ public class AdminControllerTest {
 	private HandicapPermitsRequestsRepository handicapPermitsRepository;
     @Autowired
     private WebApplicationContext context;
+    
+    @Autowired
+    private DriverInfoRepository driverInfoRepository;
 	
     @Autowired
 	UserRepository userRepository;
@@ -84,6 +89,9 @@ public class AdminControllerTest {
 		handicapPermits.add(new HandicapPermitsRequest(VIGILANT_MAIL, 45444444, false, false));
 		
 		handicapPermitsRepository.saveAll(handicapPermits);
+		
+		driverInfoRepository.deleteAll();
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
