@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
-const PM_REGISTER_API =
-  'http://localhost:8080/api/admin/registration/parkingManager';
+const PM_REGISTER_API = environment.baseUrl + 
+  'api/admin/registration/parkingManager';
 
 @Injectable({
   providedIn: 'root',

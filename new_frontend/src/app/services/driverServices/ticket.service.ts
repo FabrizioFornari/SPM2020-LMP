@@ -3,23 +3,24 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { Injectable } from '@angular/core';
 import { Popup, Layer } from 'leaflet';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const DRIVER_CURRENT_BOOKING = 'http://localhost:8080/api/driver/booking';
+const DRIVER_CURRENT_BOOKING = environment.baseUrl + 'api/driver/booking';
 const DRIVER_HISTORY =
-  'http://localhost:8080/api/driver/getAllTicketParkingLot';
-const DRIVER_CANCEL = 'http://localhost:8080/api/driver/deleteBooking';
-const DRIVER_BUY = 'http://localhost:8080/api/driver/createParkingLotTicket';
-const DRIVER_STREET_API = 'http://localhost:8080/api/driver/streets';
+  environment.baseUrl + 'api/driver/getAllTicketParkingLot';
+const DRIVER_CANCEL = environment.baseUrl + 'api/driver/deleteBooking';
+const DRIVER_BUY = environment.baseUrl + 'api/driver/createParkingLotTicket';
+const DRIVER_STREET_API = environment.baseUrl + 'api/driver/streets';
 const DRIVER_PARKS_API =
-  'http://localhost:8080/api/parkingManager/parkingLots/getStreet';
-const DRIVER_BOOKING = 'http://localhost:8080/api/driver/setStatusBooked';
+  environment.baseUrl + 'api/parkingManager/parkingLots/getStreet';
+const DRIVER_BOOKING = environment.baseUrl + 'api/driver/setStatusBooked';
 const DRIVER_NEAREST_PARKING =
-  'http://localhost:8080/api/driver/nearestParkingLot';
+  environment.baseUrl + 'api/driver/nearestParkingLot';
 
 const DRIVER_CHANGE_PARKING_LOT =
-  'http://localhost:8080/api/driver/changeParkingLot';
+  environment.baseUrl + 'api/driver/changeParkingLot';
 
-const DRIVER_REFRESH_TICKET = 'http://localhost:8080/api/driver/refreshTicket';
+const DRIVER_REFRESH_TICKET = environment.baseUrl + 'api/driver/refreshTicket';
 
 @Injectable({
   providedIn: 'root',

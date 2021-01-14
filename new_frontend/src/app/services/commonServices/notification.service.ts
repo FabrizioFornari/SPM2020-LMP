@@ -7,16 +7,17 @@ import * as SockJS from 'sockjs-client';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { NgxToastService } from './ngx-toast.service';
+import {environment} from '../../../environments/environment';
 
-const NOTIFICATION_API =
-  'http://localhost:8080/api/notification/getAllUserNotifications';
-const NOTIFICATION_READ =
-  'http://localhost:8080/api/notification/setStatusNotification';
+const NOTIFICATION_API = environment.baseUrl +
+  'api/notification/getAllUserNotifications';
+const NOTIFICATION_READ = environment.baseUrl +
+  'api/notification/setStatusNotification';
 
-const NOTIFICATION_CONNECT = 'http://localhost:8080/notifications';
-const NOTIFICATION_WATCH = '/user/notification/item'; //env is not used here
-const NOTIFICATION_START = '/swns/start';
-const NOTIFICATION_STOP = '/swns/stop';
+const NOTIFICATION_CONNECT = environment.baseUrl + 'notifications';
+const NOTIFICATION_WATCH = '/user/notification/item'; 
+const NOTIFICATION_START = environment.baseUrl + 'swns/start';
+const NOTIFICATION_STOP = environment.baseUrl + 'swns/stop';
 
 @Injectable({
   providedIn: 'root',

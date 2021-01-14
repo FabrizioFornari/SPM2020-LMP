@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const PARKING_LOT_API = 'http://localhost:8080/api/parkingManager/';
+const PARKING_LOT_API = environment.baseUrl + 'api/parkingManager/';
 
 @Injectable({
   providedIn: 'root',

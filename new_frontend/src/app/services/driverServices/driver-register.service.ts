@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 const DRIVER_REGISTER_ENDPOINT =
-  'http://localhost:8080/api/driver/registration';
+environment.baseUrl + 'api/driver/registration';
 
 @Injectable({
   providedIn: 'root',

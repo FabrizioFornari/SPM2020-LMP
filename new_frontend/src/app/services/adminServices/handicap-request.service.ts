@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
-const DOWNLOAD_HANDICAP =
-  'http://localhost:8080/api/admin/handicapPermits/notProcessed';
+const DOWNLOAD_HANDICAP = environment.baseUrl + 
+  'api/admin/handicapPermits/notProcessed';
 
-const HANDLE_REQUEST_API =
-  'http://localhost:8080/api/admin/setting/handicapPermits';
+const HANDLE_REQUEST_API  = environment.baseUrl + 'api/admin/setting/handicapPermits';
 
 @Injectable({
   providedIn: 'root',

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
-const VG_REGISTER_API = 'http://localhost:8080/api/admin/registration/vigilant';
+const VG_REGISTER_API = environment.baseUrl + 'api/admin/registration/vigilant';
 
 @Injectable({
   providedIn: 'root',

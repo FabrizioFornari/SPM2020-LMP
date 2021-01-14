@@ -1,17 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const VIGILANT_SET_PARK_DISABLED =
-  'http://localhost:8080/api/vigilant/setStatusParkingLotDisabled';
+  environment.baseUrl + 'api/vigilant/setStatusParkingLotDisabled';
 const VIGILANT_SET_PARK_ENABLED =
-  'http://localhost:8080/api/vigilant/setStatusParkingLotEnabled';
+  environment.baseUrl + 'api/vigilant/setStatusParkingLotEnabled';
 const VIGILANT_GET_PARK_INFO =
-  'http://localhost:8080/api/vigilant/getParkingLot';
+  environment.baseUrl + 'api/vigilant/getParkingLot';
 
-const VIGILANT_GET_STREETS = 'http://localhost:8080/api/vigilant/getAllStreet';
+const VIGILANT_GET_STREETS = environment.baseUrl + 'api/vigilant/getAllStreet';
 const VIGILANT_GET_PARKS_STREET =
-  'http://localhost:8080/api/vigilant/getParkingLots/street';
+  environment.baseUrl + 'api/vigilant/getParkingLots/street';
 
 @Injectable({
   providedIn: 'root',
