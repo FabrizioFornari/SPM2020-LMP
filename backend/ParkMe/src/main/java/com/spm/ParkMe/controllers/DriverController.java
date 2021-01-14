@@ -363,7 +363,7 @@ public class DriverController {
 								abusiveOccupationManager.sendNotificationToVigilant(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 							}
 						}
-						if(parkingLot.getStatus().equals(Status.FREE)) {
+						if(parkingLot.getStatus().equals(Status.FREE) || parkingLot.getStatus().equals(Status.DISABLED)) {
 							abusiveOccupationManager.sendNotificationToVigilant(sensorChangeInfo.getStreet(), sensorChangeInfo.getNumber());
 						}
 					} catch (InterruptedException e) {
