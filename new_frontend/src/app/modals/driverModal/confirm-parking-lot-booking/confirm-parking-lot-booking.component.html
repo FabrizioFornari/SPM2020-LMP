@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">local_parking</p>
+  <h4 class="modal-title">Parking Lot #{{ PARKINGLOT.numberOfParkingLot }}</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <p>
+    Status:
+    <span *ngIf="PARKINGLOT.status != 'FREE'" style="color: red">{{
+      PARKINGLOT.status
+    }}</span>
+    <span *ngIf="PARKINGLOT.status == 'FREE'" style="color: green">{{
+      PARKINGLOT.status
+    }}</span>
+  </p>
+  <p>Street: {{ PARKINGLOT.street }}</p>
+  <p>Vehicle: {{ PARKINGLOT.typeOfVehicle }}</p>
+  <p>Price: ${{ PARKINGLOT.pricePerHour }}/h</p>
+  <button
+    (click)="bookAPark(PARKINGLOT)"
+    [disabled]="
+      PARKINGLOT.status != 'FREE' ||
+      userInfo.vehicleType != PARKINGLOT.typeOfVehicle ||
+      (!userInfo.isHandicap && PARKINGLOT.isHandicapParkingLot)
+    "
+    type="button"
+    class="btn btn-success btn-block"
+  >
+    Confirm Booking
+  </button>
+  <button
+    (click)="backButton()"
+    type="button"
+    class="btn btn-secondary btn-block"
+  >
+    Back
+  </button>
+</div>

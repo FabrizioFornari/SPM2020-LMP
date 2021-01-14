@@ -1,0 +1,70 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+html,
+body {
+  font-family: "Roboto Mono", monospace !important;
+  background-color: #222222 !important;
+  color: #adb5bd !important;
+}
+
+/* leaflet marker style START */
+
+.marker-pin-occupied {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: red;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+.marker-pin-occupied::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  margin: 3px 0 0 3px;
+  background: red;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.marker-pin-free {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: green;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+.marker-pin-free::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  margin: 3px 0 0 3px;
+  background: green;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.custom-div-icon i {
+  position: absolute;
+  width: 22px;
+  font-size: 22px;
+  color: white;
+  left: 0;
+  right: 0;
+  margin: 10px auto;
+  text-align: center;
+}
+
+/* leaflet marker style END */

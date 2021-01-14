@@ -1,0 +1,42 @@
+.navbar {
+  min-height: 70px;
+  background-color: #375a7f !important;
+}
+
+.navbar-brand {
+  text-align: center;
+  display: block;
+}
+
+.navbar-brand span {
+  display: inline;
+  display: inline-table;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 32px;
+}
+
+a {
+  text-align: center;
+  display: block;
+}
+
+a span {
+  display: inline;
+  display: inline-table;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#menuButton {
+  color: white;
+  font-size: 40px;
+}
+
+#notificationIcon {
+  font-size: 32px;
+  margin-right: 1rem;
+  margin-left: 0.4rem;
+  cursor: pointer;
+  color: white;
+}

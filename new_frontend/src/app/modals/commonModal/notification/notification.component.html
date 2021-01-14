@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">notifications</p>
+  <h4 class="modal-title">Notifications</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <div
+    (click)="showNotification(notification)"
+    *ngFor="let notification of NOTIFICATIONS"
+    class="notificationBody"
+  >
+    <div
+      [style.color]="
+        notification.statusNotification == 'NEW' ? 'cornflowerblue' : 'black'
+      "
+      class="notificationText"
+    >
+      <p class="material-icons">event_note</p>
+      <p>{{ notification.title }}</p>
+    </div>
+    <div class="notificationTime">
+      <p>{{ notification.timestamp }}</p>
+    </div>
+  </div>
+</div>

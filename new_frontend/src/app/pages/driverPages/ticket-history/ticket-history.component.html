@@ -1,0 +1,16 @@
+<div class="page-container">
+  <div *ngFor="let ticket of ticketHistory; index as i" class="ticket-history">
+    <div class="container-fluid">
+      <p style="margin-top: 0.75rem; font-size: 20px; font-weight: bold">
+        #{{ i + 1 }}
+      </p>
+      <p>Street: {{ ticket.street }}</p>
+      <p>Parking Lot #{{ ticket.numberOfParkingLot }}</p>
+      <p>Username: {{ ticket.username }}</p>
+      <p>Cost: €{{ ticket.moneySpent }}</p>
+      <p>Expiration Date: {{ ticket.expiringTimestamp }}</p>
+    </div>
+  </div>
+
+  <h3 *ngIf="ticketHistory.length == 0">No Ticket ...</h3>
+</div>

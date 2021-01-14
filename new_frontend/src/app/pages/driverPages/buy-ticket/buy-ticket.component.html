@@ -1,0 +1,108 @@
+<div *ngIf="isCurrentBooking">
+  <div class="container">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-form my-5">
+        <div class="card-body">
+          <div class="currentBookingTitle">
+            <span class="material-icons"> book_online </span>
+            <p>Current Booking</p>
+          </div>
+          <div class="info-item">
+            <p><span>Street: </span>{{ currentBooking.street }}</p>
+          </div>
+
+          <div class="info-item">
+            <p>
+              <span>Parking: </span>#{{ currentBooking.numberOfParkingLot }}
+            </p>
+          </div>
+
+          <div class="info-item">
+            <p><span>Booking Date: </span>{{ currentBooking.timestamp }}</p>
+          </div>
+          <div class="info-item">
+            <p><span>Price/h: </span>€{{ currentBooking.pricePerHour }}</p>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <div
+            (click)="confirm(currentBooking)"
+            id="buttonConfirm"
+            class="actionButton"
+          >
+            <p class="material-icons">check_circle</p>
+          </div>
+          <div
+            (click)="
+              maps(
+                currentBooking.coordinates.latitude,
+                currentBooking.coordinates.longitude
+              )
+            "
+            id="buttonMaps"
+            class="actionButton"
+          >
+            <p class="material-icons">location_on</p>
+          </div>
+          <div (click)="cancel()" id="buttonCancel" class="actionButton">
+            <p class="material-icons">cancel</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isCurrentTicket">
+  <div class="container">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-form my-5">
+        <div class="card-body">
+          <div class="currentTicketTitle">
+            <span class="material-icons"> chrome_reader_mode </span>
+            <p>Current Ticket</p>
+          </div>
+          <div class="info-item">
+            <p><span>Street: </span>{{ currentTicket.street }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><span>Parking: </span>#{{ currentTicket.numberOfParkingLot }}</p>
+          </div>
+
+          <div class="info-item">
+            <p>
+              <span>Expiration Date: </span
+              >{{ currentTicket.expiringTimestamp }}
+            </p>
+          </div>
+          <div class="info-item">
+            <p><span>Cost: </span>€{{ currentTicket.moneySpent }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-container">
+  <div *ngIf="!isCurrentBooking && !isCurrentTicket" (click)="newBooking()">
+    <div class="card text-white mt-4" style="width: 22rem">
+      <div id="cardFunction" class="card-body">
+        <span class="material-icons"> add_circle </span>
+        <h5 class="card-text">New Booking</h5>
+      </div>
+    </div>
+  </div>
+
+  <div
+    (click)="showHistory()"
+    class="card text-white mt-4"
+    style="width: 22rem"
+  >
+    <div id="cardFunctionHistory" class="card-body">
+      <span class="material-icons"> format_list_bulleted </span>
+      <h5 class="card-text">Ticket History</h5>
+    </div>
+  </div>
+</div>

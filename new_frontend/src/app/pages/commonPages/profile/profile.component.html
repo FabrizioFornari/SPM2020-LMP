@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card card-form my-5">
+      <div class="card-body">
+        <div class="userIcon">
+          <p class="material-icons">account_circle</p>
+        </div>
+        <div class="info-item">
+          <p><span>Name: </span>{{ user.firstName }} {{ user.lastName }}</p>
+        </div>
+
+        <div class="info-item">
+          <p><span>SSN: </span>{{ user.ssn }}</p>
+        </div>
+
+        <div class="info-item">
+          <p><span>Role: </span>{{ user.roles }}</p>
+        </div>
+
+        <div *ngIf="user.roles == 'ROLE_DRIVER'" class="info-item">
+          <p>
+            <span>Handicap: </span
+            ><span *ngIf="user.isHandicap" style="color: green">Yes</span>
+            <span *ngIf="!user.isHandicap" style="color: red">No</span>
+          </p>
+          <p
+            *ngIf="!user.isHandicap"
+            (click)="openModalHandicapRequest()"
+            class="material-icons"
+          >
+            pending_actions
+          </p>
+        </div>
+
+        <div *ngIf="user.roles == 'ROLE_DRIVER'" class="info-item">
+          <p><span>Vehicle: </span>{{ user.vehicleType }} ({{ user.plate }})</p>
+          <p (click)="openModalUpdatePlateVehicle()" class="material-icons">
+            create
+          </p>
+        </div>
+
+        <div class="info-item">
+          <p><span>Email: </span>{{ user.email }}</p>
+          <p (click)="openModalUpdateEmail()" class="material-icons">create</p>
+        </div>
+
+        <div class="info-item">
+          <p><span>Password: </span>**********</p>
+          <p (click)="openModalUpdatePassword()" class="material-icons">
+            create
+          </p>
+        </div>
+
+        <div class="info-item">
+          <p><span>Phone: </span>{{ user.phone }}</p>
+          <p (click)="openModalUpdatePhone()" class="material-icons">create</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
