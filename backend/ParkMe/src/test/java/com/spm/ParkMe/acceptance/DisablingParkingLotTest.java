@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
@@ -65,7 +66,7 @@ public class DisablingParkingLotTest {
 	}
 	
 	@Test
-	@Order(1)
+	@Tag("AcceptanceTest")
 	  public void disablingParkingLot() throws Exception {
 	    driver.get("http://localhost:4200/login");
 	    driver.findElement(By.xpath("//label")).click();

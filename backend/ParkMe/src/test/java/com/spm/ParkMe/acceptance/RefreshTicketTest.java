@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
@@ -68,7 +69,7 @@ public class RefreshTicketTest {
 	}
 	
 	@Test
-	@Order(1)
+	@Tag("AcceptanceTest")
 	public void refreshTicket() throws Exception {
 		driver.get("http://localhost:4200/login");
 		Thread.sleep(waiting);
