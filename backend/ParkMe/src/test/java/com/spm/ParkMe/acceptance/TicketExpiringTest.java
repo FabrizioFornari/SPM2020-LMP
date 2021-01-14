@@ -10,9 +10,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -23,8 +21,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TicketExpiringTest {
 
 
@@ -38,6 +34,7 @@ public class TicketExpiringTest {
 	private static int mediumWaiting = 2000;
 	private static int notificationShortWait = 15000;
 	private static int notificationLongWait = 25000;
+	
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -68,6 +65,7 @@ public class TicketExpiringTest {
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    driver.manage().window().maximize();
 	    //250ms frequency of pulling
+	    
 	}
 
 	@AfterEach
@@ -88,7 +86,7 @@ public class TicketExpiringTest {
 		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
 		    Thread.sleep(waiting);
 		    driver.findElement(By.id("inputPassword")).sendKeys(Keys.ENTER);
-		    WebDriverWait wait = new WebDriverWait(driver, 3);
+		    WebDriverWait wait = new WebDriverWait(driver, 60);
 		    wait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd).executeScript("return window.localStorage.getItem(\"token\")") != null); 
 		    assertEquals("ParkMe | Profile", driver.getTitle());
 		    driver.findElement(By.linkText("Buy-Ticket")).click();

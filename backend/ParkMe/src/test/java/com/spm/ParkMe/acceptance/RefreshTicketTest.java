@@ -22,6 +22,11 @@ public class RefreshTicketTest {
 	
 	static String projectPath;
 	
+	private static int waiting = 1500;
+	private static int mediumWaiting = 2000;
+	private static int notificationShortWait = 15000;
+	private static int notificationLongWait = 25000;
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		projectPath = System.getProperty("user.dir");
@@ -66,47 +71,47 @@ public class RefreshTicketTest {
 	@Order(1)
 	public void refreshTicket() throws Exception {
 		driver.get("http://localhost:4200/login");
-		Thread.sleep(1000);
+		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("inputPassword")).clear();
 	    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.linkText("Buy-Ticket")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//div[@id='cardFunction']/span")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("automatic")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//app-map/div")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("updateButton")).click();
 	    Thread.sleep(12000);
 	    driver.findElement(By.id("notificationIcon")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//div/div/p[2]")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
-	    Thread.sleep(1000);
+	    Thread.sleep(waiting);
 	    driver.findElement(By.id("updateButton")).click();
-	    Thread.sleep(2000);
+	    Thread.sleep(mediumWaiting);
 	}
 
 }

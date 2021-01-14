@@ -75,7 +75,7 @@ public class AbusiveParkingTest {
 	
 	
 	@Test
-	  public void testUntitledTestCase() throws Exception {
+	  public void abusiveParkingNotificationTest() throws Exception {
 	    driver.get("http://localhost:4200/login");
 	    Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
