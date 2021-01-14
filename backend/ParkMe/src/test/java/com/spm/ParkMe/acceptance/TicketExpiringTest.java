@@ -4,11 +4,13 @@ import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
 
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -66,7 +68,8 @@ public class TicketExpiringTest {
 	      fail(verificationErrorString);
 	    }
 	}
-
+	
+	@Test
 	 public void testUntitledTestCase() throws Exception {
 		    driver.get("http://localhost:4200/login");
 		    driver.findElement(By.xpath("//label")).click();
