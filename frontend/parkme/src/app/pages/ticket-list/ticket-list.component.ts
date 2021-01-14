@@ -15,7 +15,7 @@ const GOOGLE_MAPS = 'https://www.google.com/maps/dir//';
 })
 export class TicketListComponent implements OnInit {
   isCurrentBooking: boolean = false;
-  
+
   isCurrentTicket: boolean = false;
 
   currentBooking;
@@ -69,18 +69,18 @@ export class TicketListComponent implements OnInit {
   }
 
   confirm(curBook) {
-      let modalRef = this.modalService.open(BuyTicketComponent);
-      modalRef.componentInstance.CURRENT_BOOKING = curBook;
-      modalRef.result.then(
-        () => {
-          console.log('Modal Confirm Parking Lot Closed');
-          this.ngOnInit();
-        },
-        () => {
-          console.log('Modal Confirm Parking Lot Dismissed');
-          this.ngOnInit();
-        }
-      );
+    let modalRef = this.modalService.open(BuyTicketComponent);
+    modalRef.componentInstance.CURRENT_BOOKING = curBook;
+    modalRef.result.then(
+      () => {
+        console.log('Modal Confirm Parking Lot Closed');
+        this.ngOnInit();
+      },
+      () => {
+        console.log('Modal Confirm Parking Lot Dismissed');
+        this.ngOnInit();
+      }
+    );
   }
 
   maps(lat: any, long: any) {
@@ -99,16 +99,15 @@ export class TicketListComponent implements OnInit {
         console.log(error);
         this.toastrService.warning('Error while deleting Booking');
       }
-    )
+    );
   }
 
-
-  getTicketHistory(){
+  getTicketHistory() {
     this.ticketHistory = [];
     this.parkingService.driverGetTicketHistory().subscribe(
       (success) => {
         console.log(success);
-        success.forEach(element => {
+        success.forEach((element) => {
           let readable_date = `${new Date(
             element.expiringTimestamp
           ).toLocaleDateString('it-IT')} (${new Date(
@@ -128,7 +127,7 @@ export class TicketListComponent implements OnInit {
         console.log(error);
         this.ticketHistory = [];
       }
-    )
-      console.log(this.ticketHistory);
+    );
+    console.log(this.ticketHistory);
   }
 }

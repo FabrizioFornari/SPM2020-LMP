@@ -14,7 +14,6 @@ public final class EndpointContants {
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_FREE="/setStatusFree";
 	public static final String DRIVER_GET_ALL_STREETS = "/streets";
 	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_OCCUPIED="/setStatusOccupied";
-	public static final String DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED="/setStatusDisabled";
 	public static final String DRIVER_GET_CURRENT_BOOKING = "/booking";
 	public static final String DRIVER_DELETE_CURRENT_BOOKING ="/deleteBooking";
 	public static final String DRIVER_GET_NEAREST_PARKING_LOT = "/nearestParkingLot";
@@ -22,6 +21,7 @@ public final class EndpointContants {
 	public static final String DRIVER_POST_CREATE_DRIVER_TICKET_PARKINGLOT="/createParkingLotTicket";
 	public static final String DRIVER_SET_SENSOR_PARKINGLOT="/setSensorParkingLot";
 	public static final String DRIVER_CHANGE_PARKING_LOT = "/changeParkingLot";
+	public static final String DRIVER_REFRESH_TICKET="/refreshTicket";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";

@@ -249,21 +249,6 @@ public class DriverControllerTests {
 	
 	@Test
 	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
-	public void setStatusParkingLotAsDisabledWhenStatusDifferentFromOccupiedAndBooked() throws Exception {
-		parkingLotRepository.save(parkingLot);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.put(
-				DRIVER_ENDPOINT + DRIVER_STATUS_PARKINGLOT_SET_STATUS_DISABLED).accept(
-				MediaType.APPLICATION_JSON)
-				.content(jsonParkingLot.write(parkingLot).getJson())
-				.contentType(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		MockHttpServletResponse response = result.getResponse();
-		assertEquals(HttpStatus.OK.value(), response.getStatus());	
-		
-	}
-	
-	@Test
-	@WithMockUser(username = DRIVER_MAIL, roles= {"DRIVER"})
 	public void getParkingLotBookingReturnsOK() throws Exception {
 		
 		parkingLotRepository.save(parkingLot);

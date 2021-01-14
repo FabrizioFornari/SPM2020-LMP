@@ -1,19 +1,20 @@
+import { formatCurrency } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { info } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { ParkingLotServiceService } from 'src/app/services/parking-lot-service.service';
 
 @Component({
-  selector: 'app-buy-ticket',
-  templateUrl: './buy-ticket.component.html',
-  styleUrls: ['./buy-ticket.component.css'],
+  selector: 'app-refresh-ticket',
+  templateUrl: './refresh-ticket.component.html',
+  styleUrls: ['./refresh-ticket.component.css'],
 })
-export class BuyTicketComponent implements OnInit {
+export class RefreshTicketComponent implements OnInit {
   hours: Array<String> = ['1', '2', '3', '4', '12'];
   hour: string = null;
 
-  @Input() CURRENT_BOOKING: any;
+  @Input() INFO: any;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -28,26 +29,25 @@ export class BuyTicketComponent implements OnInit {
     this.activeModal.dismiss();
   }
 
-  BUY(form: NgForm) {
-    console.log(Date.now());
-
+  refresh(form) {
     let body = {
-      street: this.CURRENT_BOOKING.street,
-      numberOfParkingLot: this.CURRENT_BOOKING.numberOfParkingLot,
-      username: this.CURRENT_BOOKING.username,
-      moneySpent: form.value.hour * this.CURRENT_BOOKING.pricePerHour,
-      expiringTimestamp: Date.now() + form.value.hour * 3600000,
+      street: this.INFO.street,
+      numberOfParkingLot: this.INFO.numberOfParkingLot,
+      extraHours: parseInt(form.value.hour),
     };
-    this.parkingService.driverBuyTicket(body).subscribe(
+
+    console.log(body);
+
+    this.parkingService.driverRefreshTicket(body).subscribe(
       (success) => {
         console.log(success);
-        this.toastrService.success('Ticket Bought');
+        this.toastrService.success('Ticket Refreshed');
         this.hour = null;
         this.activeModal.dismiss();
       },
       (error) => {
         console.log(error);
-        this.toastrService.warning('Error Buying Ticket');
+        this.toastrService.warning('Error Refreshing Ticket');
         this.hour = null;
         this.activeModal.dismiss();
       }
