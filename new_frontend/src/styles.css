@@ -68,3 +68,9 @@ body {
 }
 
 /* leaflet marker style END */
+
+/* tweak ngx toaster style */
+.toast-top-right {
+  top: 100px !important;
+  right: 12px !important;
+}
