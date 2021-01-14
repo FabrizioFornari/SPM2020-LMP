@@ -11,11 +11,13 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 
-public class RefreshTicketTest {
-	
+
+
+
+public class DisablingParkingLotTest {
+
 	private static WebDriver driver;
 
 	private static StringBuffer verificationErrors = new StringBuffer();
@@ -64,49 +66,32 @@ public class RefreshTicketTest {
 	
 	@Test
 	@Order(1)
-	public void refreshTicket() throws Exception {
-		driver.get("http://localhost:4200/login");
-		Thread.sleep(1000);
+	  public void disablingParkingLot() throws Exception {
+	    driver.get("http://localhost:4200/login");
+	    driver.findElement(By.xpath("//label")).click();
+	    Thread.sleep(1000);
 	    driver.findElement(By.id("inputEmail")).clear();
-	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+	    Thread.sleep(1000);
+	    driver.findElement(By.id("inputEmail")).sendKeys("cret@park.it");
 	    Thread.sleep(1000);
 	    driver.findElement(By.id("inputPassword")).clear();
-	    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    driver.findElement(By.id("inputPassword")).sendKeys("Cret");
 	    Thread.sleep(1000);
-	    driver.findElement(By.linkText("Buy-Ticket")).click();
+	    driver.findElement(By.id("inputPassword")).sendKeys(Keys.ENTER);
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//div[@id='cardFunction']/span")).click();
+	    driver.findElement(By.linkText("Vigilant-Panel")).click();
 	    Thread.sleep(1000);
-	    driver.findElement(By.id("automatic")).click();
+	    driver.findElement(By.xpath("//div[@id='cardFunction']/h5")).click(); 
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//app-map/div")).click();
+	    driver.findElement(By.id("streetCardInfo")).click();
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
-	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("updateButton")).click();
-	    Thread.sleep(12000);
-	    driver.findElement(By.id("notificationIcon")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//div/div/p[2]")).click();
+	    driver.findElement(By.xpath("(//div[@id='streetCardInfo']/h5)[2]")).click();
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
-	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("updateButton")).click();
 	    Thread.sleep(2000);
-	}
+	  }
+	  
+	
 
 }

@@ -1,20 +1,18 @@
 package com.spm.ParkMe.acceptance;
 
-import static org.junit.Assert.fail;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.fail;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-
-public class RefreshTicketTest {
+public class DriverFreesParkingLotTest {
 	
 	private static WebDriver driver;
 
@@ -64,7 +62,7 @@ public class RefreshTicketTest {
 	
 	@Test
 	@Order(1)
-	public void refreshTicket() throws Exception {
+	public void driverFreesParkingLot() throws Exception {
 		driver.get("http://localhost:4200/login");
 		Thread.sleep(1000);
 	    driver.findElement(By.id("inputEmail")).clear();
@@ -79,33 +77,25 @@ public class RefreshTicketTest {
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//div[@id='cardFunction']/span")).click();
 	    Thread.sleep(1000);
-	    driver.findElement(By.id("automatic")).click();
+	    driver.findElement(By.id("manual")).click();
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//app-map/div")).click();
+	    //Aldo Moro # 8 
+	    driver.findElement(By.xpath("//div[4]/img[2]")).click();
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//button[@type='button']")).click();
+	    driver.findElement(By.xpath("//i")).click();
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
 	    Thread.sleep(1000);
 	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
-	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
+	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("4");
 	    Thread.sleep(1000);
 	    driver.findElement(By.id("updateButton")).click();
-	    Thread.sleep(12000);
+	    Thread.sleep(20000);
 	    driver.findElement(By.id("notificationIcon")).click();
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//div/div/p[2]")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//button[@type='button']")).click();
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("inputHour")).click();
-	    Thread.sleep(1000);
-	    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("1");
-	    Thread.sleep(1000);
-	    driver.findElement(By.id("updateButton")).click();
 	    Thread.sleep(2000);
 	}
 
