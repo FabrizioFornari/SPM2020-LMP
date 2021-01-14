@@ -152,39 +152,6 @@ class AccountManagementTest {
 	  }
 
 	
-	 public void testUntitledTestCase() throws Exception {
-		    driver.get("http://localhost:4200/login");
-		    driver.findElement(By.xpath("//label")).click();
-		    driver.findElement(By.id("inputEmail")).clear();
-		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
-		    driver.findElement(By.id("inputPassword")).clear();
-		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
-		    driver.findElement(By.id("inputPassword")).sendKeys(Keys.ENTER);
-		    driver.findElement(By.linkText("Buy-Ticket")).click();
-		    driver.findElement(By.xpath("//div[@id='cardFunction']/h5")).click();
-		    driver.findElement(By.id("manual")).click();
-		    driver.findElement(By.xpath("//div[4]/img[2]")).click();
-		    driver.findElement(By.xpath("//div[4]/div[3]/div")).click();
-		    driver.findElement(By.xpath("//button[@type='button']")).click();
-		    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
-		    driver.findElement(By.id("inputHour")).click();
-		    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("0.005");
-		    driver.findElement(By.id("updateButton")).click();
-		    driver.findElement(By.id("notificationIcon")).click();
-		    driver.findElement(By.xpath("//div/div/p[2]")).click();
-		    driver.findElement(By.xpath("//app-check-park/div/p[2]")).click();
-		    driver.findElement(By.linkText("exit_to_app Logout")).click();
-		    driver.findElement(By.xpath("//label")).click();
-		    driver.findElement(By.id("inputEmail")).clear();
-		    driver.findElement(By.id("inputEmail")).sendKeys("cret@park.it");
-		    driver.findElement(By.id("inputPassword")).clear();
-		    driver.findElement(By.id("inputPassword")).sendKeys("Cret");
-		    driver.findElement(By.id("inputPassword")).sendKeys(Keys.ENTER);
-		    driver.findElement(By.id("notificationIcon")).click();
-		    driver.findElement(By.xpath("//div[2]/div/div/div/p[2]")).click();
-		    driver.findElement(By.xpath("//button[@type='button']")).click();
-		    driver.findElement(By.xpath("//app-park-info/div/p[2]")).click();
-		  }
 	
 
 }
