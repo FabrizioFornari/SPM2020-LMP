@@ -314,6 +314,7 @@ public class DriverController {
 		if(!parkingLots.isEmpty() && !parkingLotBookings.isEmpty()) {
 			ParkingLot parkingLot=parkingLots.get(0);
 			parkingLot.setStatus(Status.OCCUPIED);
+			parkingLot.setSensorState(SensorState.ON);
 			ParkingLotBooking parkingLotBooking= parkingLotBookings.get(0);
 
 			parkingLotBookingRepository.delete(parkingLotBooking);
