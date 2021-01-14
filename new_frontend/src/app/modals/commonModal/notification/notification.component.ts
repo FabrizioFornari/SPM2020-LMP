@@ -11,7 +11,7 @@ import { CheckParkComponent } from '../check-park/check-park.component';
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit {
-  @Input() NOTIFICATIONS: any;
+  @Input() NOTIFICATIONS: any[];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -19,7 +19,8 @@ export class NotificationComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   showNotification(notification) {
     console.table(notification);
