@@ -36,6 +36,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
+import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -84,6 +85,10 @@ public class AdminControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
+		if(userRepository.existsByUsername(VIGILANT_MAIL)) {
+			User vigilant = userRepository.findByUsername(VIGILANT_MAIL).get();
+			userRepository.delete(vigilant);
+		}
 		handicapPermitsRepository.deleteAll();
 		handicapPermits.add(new HandicapPermitsRequest(DRIVER_MAIL,444444444, false, false));
 		handicapPermits.add(new HandicapPermitsRequest(VIGILANT_MAIL, 45444444, false, false));
@@ -127,7 +132,7 @@ public class AdminControllerTest {
 	@Test
 	@WithMockUser(roles= {"ADMIN"})
 	public void registrationOfVigilantAuthorizedWithRightToken() throws Exception {
-	
+		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(
