@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">notifications</p>
+  <h5 class="modal-title">
+    Parking Lot #{{ INFO.numberOfParkingLot }} Selected
+  </h5>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <form #update="ngForm" (ngSubmit)="refresh(update)">
+    <div class="form-label-group">
+      <p>Parking Hour</p>
+      <select
+        class="form-control"
+        type="text"
+        name="hour"
+        id="inputHour"
+        [(ngModel)]="hour"
+        name="hour"
+      >
+        <option *ngFor="let hour of hours" [ngValue]="hour">
+          {{ hour }}
+        </option>
+      </select>
+    </div>
+    <button
+      [disabled]="!hour"
+      style="margin-top: 1rem"
+      type="submit"
+      id="updateButton"
+      class="btn btn-block btn-success"
+    >
+      Refresh
+    </button>
+  </form>
+  <button
+    style="margin-top: 1rem"
+    (click)="backButton()"
+    type="button"
+    class="btn btn-secondary btn-block"
+  >
+    Back
+  </button>
+</div>

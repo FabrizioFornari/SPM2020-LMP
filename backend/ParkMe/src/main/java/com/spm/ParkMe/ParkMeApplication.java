@@ -80,7 +80,7 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		users = new User[] { new User("cret@park.it", "Manuel", "Cretone", "ZZZZZZ10A01A000Z", "+39 333 3333333", "cret@park.it", encoder.encode("Cret"), Roles.ROLE_VIGILANT),
 				new User("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), Roles.ROLE_DRIVER),
 				new User("flash@park.it", "Andrea", "Falaschini", "ZZZZZZ10A01A000Z", "+39 333 3333333","flash@park.it",  encoder.encode("Flash"), Roles.ROLE_PARKING_MANAGER),
-				new User("fusaro@turbomondialismo.it","Diego", "Fusaro", "ZZZZZZ10A01A000Z", "+39 333 3333333","fusaro@turbomondialismo.it", encoder.encode("Fusaro"), Roles.ROLE_ADMIN), };
+				new User("admin@park.it","Diego", "Fusaro", "ZZZZZZ10A01A000Z", "+39 333 3333333","admin@park.it", encoder.encode("Fusaro"), Roles.ROLE_ADMIN), };
 		Driver driver = new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "4 Wheels Standard Vehicle");
 		repository.deleteAll();
 		for (User user : users) {
@@ -120,8 +120,8 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		
 		userSessionRepository.deleteAll();
 		notificationRepository.deleteAll();
-		notificationRepository.save(NOTIFICATION_1);
-		notificationRepository.save(NOTIFICATION_2);
+		//notificationRepository.save(NOTIFICATION_1);
+		//notificationRepository.save(NOTIFICATION_2);
 	}
 
 }

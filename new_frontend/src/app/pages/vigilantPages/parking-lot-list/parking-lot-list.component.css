@@ -1,0 +1,38 @@
+#streetCardInfo {
+  text-align: center;
+  cursor: pointer;
+  background-color: #375a7f;
+}
+
+#streetCardDanger {
+  text-align: center;
+  cursor: pointer;
+}
+
+#backCard {
+  text-align: center;
+  cursor: pointer;
+}
+
+#backCard:hover {
+  background-color: #f7f7f7;
+  color: #292b2c;
+}
+
+#streetCardInfo:hover {
+  background-color: #f7f7f7;
+  color: #375a7f;
+}
+
+#streetCardDanger:hover {
+  background-color: #f7f7f7;
+  color: #df4759;
+}
+
+.container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}

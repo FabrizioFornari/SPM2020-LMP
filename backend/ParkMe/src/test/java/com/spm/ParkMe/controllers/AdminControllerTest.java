@@ -33,9 +33,12 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
+import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -64,6 +67,9 @@ public class AdminControllerTest {
 	private HandicapPermitsRequestsRepository handicapPermitsRepository;
     @Autowired
     private WebApplicationContext context;
+    
+    @Autowired
+    private DriverInfoRepository driverInfoRepository;
 	
     @Autowired
 	UserRepository userRepository;
@@ -79,11 +85,18 @@ public class AdminControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
+		if(userRepository.existsByUsername(VIGILANT_MAIL)) {
+			User vigilant = userRepository.findByUsername(VIGILANT_MAIL).get();
+			userRepository.delete(vigilant);
+		}
 		handicapPermitsRepository.deleteAll();
 		handicapPermits.add(new HandicapPermitsRequest(DRIVER_MAIL,444444444, false, false));
 		handicapPermits.add(new HandicapPermitsRequest(VIGILANT_MAIL, 45444444, false, false));
 		
 		handicapPermitsRepository.saveAll(handicapPermits);
+		
+		driverInfoRepository.deleteAll();
+		driverInfoRepository.save(new DriverInfo(DRIVER_OBJECT));
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -119,7 +132,7 @@ public class AdminControllerTest {
 	@Test
 	@WithMockUser(roles= {"ADMIN"})
 	public void registrationOfVigilantAuthorizedWithRightToken() throws Exception {
-	
+		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				ADMIN_ENDPOINT + VIGILANT_REGISTRATION_ENDPOINT).accept(

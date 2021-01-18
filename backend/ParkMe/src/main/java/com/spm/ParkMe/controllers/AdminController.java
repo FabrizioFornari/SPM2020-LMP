@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
 import com.spm.ParkMe.models.Driver;
+import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
+import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 
@@ -43,24 +46,41 @@ public class AdminController {
 	private HandicapPermitsRequestsRepository handicapRepository;;
 	
 	@Autowired
+	private DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
 	private PasswordEncoder encoder;
 		
 	@PostMapping(PARKING_MANAGER_REGISTRATION_ENDPOINT)
 	@PreAuthorize("hasRole('ADMIN')")
-	public void parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
-		pmanager.setUsername(pmanager.getEmail());
-		pmanager.setPassword(encoder.encode(pmanager.getPassword()));
-		pmanager.setRole(Roles.ROLE_PARKING_MANAGER);
-		repository.save(pmanager);
+	public ResponseEntity parkingManagerRegistration(@Valid @RequestBody ParkingManager pmanager)  {
+		if(!repository.existsByUsername(pmanager.getUsername())) {
+			pmanager.setUsername(pmanager.getEmail());
+			pmanager.setPassword(encoder.encode(pmanager.getPassword()));
+			pmanager.setRole(Roles.ROLE_PARKING_MANAGER);
+			repository.save(pmanager);
+			return new ResponseEntity(HttpStatus.OK);
+		}else {
+			
+			return new ResponseEntity(HttpStatus.CONFLICT);
+		}
+	
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(VIGILANT_REGISTRATION_ENDPOINT)
-	public void vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
-		vigilant.setUsername(vigilant.getEmail());
-		vigilant.setPassword(encoder.encode(vigilant.getPassword()));
-		vigilant.setRole(Roles.ROLE_VIGILANT);
-		repository.save(vigilant);
+	public ResponseEntity vigilantRegistration(@Valid @RequestBody Vigilant vigilant)  {
+		if(!repository.existsByUsername(vigilant.getUsername())){
+			vigilant.setUsername(vigilant.getEmail());
+			vigilant.setPassword(encoder.encode(vigilant.getPassword()));
+			vigilant.setRole(Roles.ROLE_VIGILANT);
+			repository.save(vigilant);
+			return new ResponseEntity(HttpStatus.OK);
+		}else 
+		{
+			return new ResponseEntity(HttpStatus.CONFLICT);
+			}
+	
 	}
 	
 	@GetMapping(ADMIN_GET_ALL_HANDICAP_PERMITS_ENDPOINT)
@@ -85,9 +105,12 @@ public class AdminController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> setHandicapPermits(@NotNull @RequestBody AdminHandicapRequestAcceptance acceptance ) {
 		HandicapPermitsRequest handicapPermits= handicapRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find handicap request with username " + acceptance.getUsername()));
+		DriverInfo driverInfo = driverInfoRepository.findByUsername(acceptance.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Cannot find user with username " + acceptance.getUsername()));
 		handicapPermits.setProcessed(true);
 		handicapPermits.setAccepted(acceptance.getIsAccepted());
-		handicapRepository.save(handicapPermits);
+		driverInfo.setHandicap(acceptance.getIsAccepted());
+		handicapRepository.delete(handicapPermits);
+		driverInfoRepository.save(driverInfo);
 		return ResponseEntity.ok(handicapPermits);
 	}
 	

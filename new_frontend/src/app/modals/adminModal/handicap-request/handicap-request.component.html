@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">accessible</p>
+  <h4 class="modal-title">Handicap Request</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <form #update="ngForm">
+    <div class="form-group">
+      <label>Username</label>
+      <input
+        [ngModel]="REQ.username"
+        type="text"
+        class="form-control"
+        name="username"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Upload Date</label>
+      <input
+        [ngModel]="REQ.timestamp"
+        type="text"
+        class="form-control"
+        name="ssn"
+        disabled
+      />
+    </div>
+
+    <button
+      (click)="acceptRequest(REQ.username)"
+      id="updateButton"
+      class="btn btn-block btn-success"
+    >
+      Accept
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+    <button
+      (click)="rejectRequest(REQ.username)"
+      id="updateButton"
+      class="btn btn-block btn-danger"
+    >
+      Reject
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </form>
+</div>

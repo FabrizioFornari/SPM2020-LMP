@@ -1,0 +1,35 @@
+.notificationBody {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.notificationBody:hover {
+  cursor: pointer;
+}
+
+.notificationText {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.notificationTime {
+  color: #375a7f;
+}
+
+.modal {
+  background-color: #375a7f;
+}
+.modal-header {
+  color: white;
+  background-color: #375a7f;
+}

@@ -51,16 +51,21 @@ public class ModificationController {
 		String authenticatedUsername = authentication.getName();
 		System.out.println(authenticatedUsername);
 		if(authenticatedUsername.equals(mailInfo.getCurrentEmail())) {
-			User user = repository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is wrong."));
-			user.setUsername(mailInfo.getNewEmail());
-			user.setEmail(mailInfo.getNewEmail());
-			repository.save(user);
-			if(user.getRole() == Roles.ROLE_DRIVER) {
-				DriverInfo driverInfo = driverInfoRepository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is not registrated in Driver Info collection."));
-				driverInfo.setUsername(mailInfo.getNewEmail());
-				driverInfoRepository.save(driverInfo);
+			if(!repository.existsByUsername(mailInfo.getNewEmail())) {
+				User user = repository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is wrong."));
+				user.setUsername(mailInfo.getNewEmail());
+				user.setEmail(mailInfo.getNewEmail());
+				repository.save(user);
+				if(user.getRole() == Roles.ROLE_DRIVER) {
+					DriverInfo driverInfo = driverInfoRepository.findByUsername(mailInfo.getCurrentEmail()).orElseThrow(() -> new UsernameNotFoundException("The provided current email is not registrated in Driver Info collection."));
+					driverInfo.setUsername(mailInfo.getNewEmail());
+					driverInfoRepository.save(driverInfo);
+				}
+				return ResponseEntity.ok(user);
 			}
-			return ResponseEntity.ok(user);
+			else {
+				return new ResponseEntity<User>(HttpStatus.CONFLICT);
+			}
 		}
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 	}

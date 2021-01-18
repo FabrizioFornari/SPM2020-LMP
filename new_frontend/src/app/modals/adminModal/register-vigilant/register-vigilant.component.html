@@ -1,0 +1,114 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">how_to_reg</p>
+  <h4 class="modal-title">New Vigilant</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <form #update="ngForm" (ngSubmit)="registerManager()">
+    <div *ngIf="firstNameError" class="alert alert-danger" role="alert">
+      Invalid First Name Format
+    </div>
+    <div class="form-group">
+      <label for="inputFirstName">First Name</label>
+      <input
+        type="text"
+        id="inputFirstName"
+        class="form-control"
+        placeholder="First Name"
+        [(ngModel)]="firstName"
+        name="firstName"
+      />
+    </div>
+
+    <div *ngIf="lastNameError" class="alert alert-danger" role="alert">
+      Invalid Last Name Format
+    </div>
+    <div class="form-group">
+      <label for="inputLastName">Last Name</label>
+      <input
+        type="text"
+        id="inputLastName"
+        class="form-control"
+        placeholder="Last Name"
+        [(ngModel)]="lastName"
+        name="lastName"
+      />
+    </div>
+
+    <div *ngIf="ssnError" class="alert alert-danger" role="alert">
+      Invalid SSN Format
+    </div>
+    <div class="form-group">
+      <label for="inputSsn">SSN</label>
+      <input
+        type="text"
+        id="inputSsn"
+        class="form-control"
+        placeholder="SSN"
+        [(ngModel)]="ssn"
+        name="ssn"
+      />
+    </div>
+
+    <div *ngIf="emailError" class="alert alert-danger" role="alert">
+      Invalid Email Format
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input
+        type="email"
+        id="inputEmail"
+        class="form-control"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+      />
+    </div>
+
+    <div *ngIf="phoneError" class="alert alert-danger" role="alert">
+      Invalid Mobile Phone Format
+    </div>
+    <div class="form-group">
+      <label for="inputPhone">Mobile Phone</label>
+      <input
+        type="text"
+        id="inputPhone"
+        class="form-control"
+        placeholder="Mobile Phone"
+        [(ngModel)]="phone"
+        name="phone"
+      />
+    </div>
+
+    <div *ngIf="passwordError" class="alert alert-danger" role="alert">
+      Invalid Password Format
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input
+        type="password"
+        id="inputPassword"
+        class="form-control"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+      />
+    </div>
+    <button type="submit" id="updateButton" class="btn btn-block">
+      Register
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </form>
+</div>

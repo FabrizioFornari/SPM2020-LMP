@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">settings</p>
+  <h4 class="modal-title">Select Mode</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <div class="buttons">
+    <button
+      id="manual"
+      (click)="manual()"
+      type="button"
+      class="btn btn-lg btn-block"
+    >
+      Manual
+    </button>
+    <button
+      id="automatic"
+      (click)="automatic()"
+      type="button"
+      class="btn btn-lg btn-block"
+    >
+      Automatic
+    </button>
+  </div>
+</div>

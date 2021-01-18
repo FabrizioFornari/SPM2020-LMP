@@ -1,0 +1,32 @@
+.card-form {
+  border: 0;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.userIcon {
+  text-align: center;
+  color: #375a7f;
+}
+
+.userIcon .material-icons {
+  font-size: 80px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.info-item span {
+  color: #375a7f;
+}
+
+.info-item .material-icons {
+  color: #375a7f;
+  cursor: pointer;
+}

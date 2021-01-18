@@ -1,0 +1,55 @@
+<div *ngIf="showStreets" class="container">
+  <div
+    *ngFor="let street of streetList"
+    class="card text-white bg-info mt-4"
+    style="width: 22rem"
+  >
+    <div
+      (click)="seeStreet(street.street)"
+      id="streetCardInfo"
+      class="card-body"
+    >
+      <h5 class="card-text">{{ street.street }}</h5>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!showStreets" class="container">
+  <div class="card text-white bg-secondary mt-4 mb-5" style="width: 22rem">
+    <div (click)="backButton()" id="backCard" class="card-body">
+      <h5 class="card-text">BACK</h5>
+    </div>
+  </div>
+  <div *ngFor="let park of parkList">
+    <div
+      *ngIf="
+        park.sensorState != 'ON' ||
+        (park.sensorState == 'ON' && park.status == 'OCCUPIED')
+      "
+      class="card text-white bg-info mt-4 mb-4"
+      style="width: 22rem"
+    >
+      <div
+        (click)="seeStatus(park.street, park.numberOfParkingLot)"
+        id="streetCardInfo"
+        class="card-body"
+      >
+        <h5 class="card-text">ParkingLot # : {{ park.numberOfParkingLot }}</h5>
+      </div>
+    </div>
+
+    <div
+      *ngIf="park.sensorState == 'ON' && park.status != 'OCCUPIED'"
+      class="card text-white bg-danger mt-4 mb-4"
+      style="width: 22rem"
+    >
+      <div
+        (click)="seeStatus(park.street, park.numberOfParkingLot)"
+        id="streetCardDanger"
+        class="card-body"
+      >
+        <h5 class="card-text">ParkingLot # : {{ park.numberOfParkingLot }}</h5>
+      </div>
+    </div>
+  </div>
+</div>

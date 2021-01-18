@@ -114,7 +114,7 @@ public class DriverControllerTests {
 	@Test
 	public void registeringCorrectDriverReturnsOK() throws Exception {
 	
-		
+		userRepository.deleteAll();
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
 				DRIVER_ENDPOINT + DRIVER_REGISTRATION_ENDPOINT).accept(
 				MediaType.APPLICATION_JSON)
