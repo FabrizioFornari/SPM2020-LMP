@@ -9,6 +9,17 @@
   font-size: 48px;
 }
 
+.currentSubscriptionTitle {
+  text-align: center;
+  color: #375a7f;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.currentSubscriptionTitle .material-icons {
+  font-size: 48px;
+}
+
 .currentTicketTitle {
   text-align: center;
   color: #375a7f;

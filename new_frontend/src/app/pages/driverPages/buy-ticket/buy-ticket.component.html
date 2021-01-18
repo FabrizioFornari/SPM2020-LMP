@@ -85,12 +85,50 @@
   </div>
 </div>
 
+<div *ngIf="isCurrentSubscription">
+  <div class="container">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-form my-5">
+        <div class="card-body">
+          <div class="currentSubscriptionTitle">
+            <span class="material-icons"> chrome_reader_mode </span>
+            <p>Current Subscription</p>
+          </div>
+          <div class="info-item">
+            <p><span>Street: </span>Via Madonna delle Carceri</p>
+          </div>
+
+          <div class="info-item">
+            <p><span>Parking: </span>#12</p>
+          </div>
+
+          <div class="info-item">
+            <p><span>Expiration Date: </span>21-02-2021 (13:45:09)</p>
+          </div>
+          <div class="info-item">
+            <p><span>Cost: </span>€30</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="page-container">
   <div *ngIf="!isCurrentBooking && !isCurrentTicket" (click)="newBooking()">
     <div class="card text-white mt-4" style="width: 22rem">
       <div id="cardFunction" class="card-body">
         <span class="material-icons"> add_circle </span>
         <h5 class="card-text">New Booking</h5>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isCurrentSubscription" (click)="newSubscription()">
+    <div class="card text-white mt-4" style="width: 22rem">
+      <div id="cardFunction" class="card-body">
+        <span class="material-icons"> add_circle </span>
+        <h5 class="card-text">New Subscription</h5>
       </div>
     </div>
   </div>
