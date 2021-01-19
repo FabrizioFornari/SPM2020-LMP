@@ -112,7 +112,6 @@ export class BuyTicketComponent implements OnInit {
   getCurrentSubscription() {
     this.ticket.driverGetCurrentSubscription().subscribe(
       (success) => {
-        console.log(success);
         this.currentSubscription = success;
         this.currentSubscription.expiration = `${new Date(
           this.currentSubscription.expiration

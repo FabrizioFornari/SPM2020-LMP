@@ -25,6 +25,9 @@ const DRIVER_REFRESH_TICKET = environment.baseUrl + "api/driver/refreshTicket";
 const DRIVER_CURRENT_SUBSCRIPTION =
   environment.baseUrl + "api/driver/getCurrentSubscription";
 
+const DRIVER_GET_PERSONAL_LOTS =
+  environment.baseUrl + "api/driver/availablePersonalParkingLots";
+
 @Injectable({
   providedIn: "root",
 })
@@ -56,8 +59,11 @@ export class TicketService {
     return this.http.post(DRIVER_BUY, body, this.getHttpOpt());
   }
 
-  driverGetStreetList(): Observable<any> {
-    return this.http.get(DRIVER_STREET_API, this.getHttpOpt());
+  driverGetStreetList(personal: boolean): Observable<any> {
+    return this.http.get(
+      DRIVER_STREET_API + `?personal=${personal}`,
+      this.getHttpOpt()
+    );
   }
 
   driverGetParkingLots(
@@ -90,5 +96,12 @@ export class TicketService {
 
   driverGetCurrentSubscription(): Observable<any> {
     return this.http.get(DRIVER_CURRENT_SUBSCRIPTION, this.getHttpOpt());
+  }
+
+  driverGetPersonalParkingLots(street: string): Observable<any> {
+    return this.http.get(
+      DRIVER_GET_PERSONAL_LOTS + `?street=${street}`,
+      this.getHttpOpt()
+    );
   }
 }
