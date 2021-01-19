@@ -16,6 +16,8 @@ export class BuySubscriptionComponent implements OnInit {
   monthsList: Array<String> = ["1", "2", "3", "4", "6", "12"];
   months: string = null;
 
+  userInfo;
+
   constructor(
     public activeModal: NgbActiveModal,
     private ticketService: TicketService,
@@ -24,7 +26,7 @@ export class BuySubscriptionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.table(this.PARKINGLOT);
+    this.userInfo = JSON.parse(localStorage.getItem("user"));
   }
 
   backButton() {
