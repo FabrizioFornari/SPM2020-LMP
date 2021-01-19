@@ -95,18 +95,21 @@
             <p>Current Subscription</p>
           </div>
           <div class="info-item">
-            <p><span>Street: </span>Via Madonna delle Carceri</p>
+            <p><span>Street: </span>{{ currentSubscription.street }}</p>
           </div>
 
           <div class="info-item">
-            <p><span>Parking: </span>#12</p>
+            <p>
+              <span>Parking: </span>#{{
+                currentSubscription.numberOfParkingLot
+              }}
+            </p>
           </div>
 
           <div class="info-item">
-            <p><span>Expiration Date: </span>21-02-2021 (13:45:09)</p>
-          </div>
-          <div class="info-item">
-            <p><span>Cost: </span>€30</p>
+            <p>
+              <span>Expiration Date: </span>{{ currentSubscription.expiration }}
+            </p>
           </div>
         </div>
       </div>

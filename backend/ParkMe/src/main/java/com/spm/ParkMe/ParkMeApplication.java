@@ -17,6 +17,7 @@ import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotTicket;
+import com.spm.ParkMe.models.PersonalParkingLotSubscription;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -25,6 +26,7 @@ import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
 import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotSubscriptionRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
@@ -67,6 +69,9 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 	
 	@Autowired
 	private NotificationRepository notificationRepository;
+	
+	@Autowired
+	private PersonalParkingLotSubscriptionRepository personalParkingLotSubscriptionRepository;
 	
 
 	public static void main(String[] args) {
@@ -127,6 +132,10 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		
 		personalParkingLotRepository.deleteAll();
 		personalParkingLotRepository.save(PERSONAL);
+		
+		personalParkingLotSubscriptionRepository.deleteAll();
+		personalParkingLotSubscriptionRepository.save(new PersonalParkingLotSubscription(
+				"rocche@park.it", System.currentTimeMillis() + 20024235348468L, "Via Madonna delle Carceri", 51));
 	}
 
 }

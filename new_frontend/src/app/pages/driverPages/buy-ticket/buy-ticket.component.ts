@@ -25,6 +25,8 @@ export class BuyTicketComponent implements OnInit {
 
   currentTicket;
 
+  currentSubscription;
+
   ticketHistory = [];
 
   constructor(
@@ -39,6 +41,7 @@ export class BuyTicketComponent implements OnInit {
     this.titleService.setTitle("ParkMe | Buy Ticket");
     this.getCurrentBooking();
     this.getTicketHistory();
+    this.getCurrentSubscription();
   }
 
   newBooking() {
@@ -83,7 +86,6 @@ export class BuyTicketComponent implements OnInit {
     this.ticketHistory = [];
     this.ticket.driverGetTicketHistory().subscribe(
       (success) => {
-        console.log(success);
         success.forEach((element) => {
           let readable_date = `${new Date(
             element.expiringTimestamp
@@ -103,6 +105,25 @@ export class BuyTicketComponent implements OnInit {
       (error) => {
         console.log(error);
         this.ticketHistory = [];
+      }
+    );
+  }
+
+  getCurrentSubscription() {
+    this.ticket.driverGetCurrentSubscription().subscribe(
+      (success) => {
+        console.log(success);
+        this.currentSubscription = success;
+        this.currentSubscription.expiration = `${new Date(
+          this.currentSubscription.expiration
+        ).toLocaleDateString("it-IT")} (${new Date(
+          this.currentSubscription.expiration
+        ).toLocaleTimeString("it-IT")})`;
+        this.isCurrentSubscription = true;
+      },
+      (error) => {
+        console.log(error);
+        this.isCurrentSubscription = false;
       }
     );
   }
