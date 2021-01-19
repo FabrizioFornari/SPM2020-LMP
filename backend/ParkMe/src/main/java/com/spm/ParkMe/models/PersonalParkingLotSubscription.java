@@ -82,6 +82,10 @@ public class PersonalParkingLotSubscription {
 			}	
 	}
 	
+	private boolean isExpired() {
+		return this.expiration < System.currentTimeMillis();
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
