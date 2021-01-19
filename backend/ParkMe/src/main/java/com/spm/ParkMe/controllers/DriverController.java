@@ -1,6 +1,7 @@
 package com.spm.ParkMe.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,8 @@ import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
+import com.spm.ParkMe.models.PersonalParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLotSubscription;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.RefreshTicketInfo;
 import com.spm.ParkMe.models.requestBody.SensorChangeInfo;
@@ -51,6 +54,8 @@ import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotSubscriptionRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
@@ -85,6 +90,12 @@ public class DriverController {
 	
 	@Autowired
 	private NotificationDispatcher notificationDispatcher;
+	
+	@Autowired
+	private PersonalParkingLotRepository personalParkingLotRepository;
+	
+	@Autowired
+	private PersonalParkingLotSubscriptionRepository personalParkingLotSubscriptionRepository;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -437,5 +448,21 @@ public class DriverController {
 		
 		
 		
-}
+	}
+	
+	@GetMapping(path = DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity getAllAvailablePersonalParkingLots() {
+		List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findAll();
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findAll();
+		List<PersonalParkingLot> result = new ArrayList<PersonalParkingLot>();
+		for(PersonalParkingLot parkingLot : parkingLots) {
+			for(PersonalParkingLotSubscription subscription : subscriptions) {
+				if(parkingLot.getStreet().equals(subscription.getStreet()) && parkingLot.getNumberOfParkingLot() == subscription.getNumberOfParkingLot()) {
+					result.add(parkingLot);
+				}
+			}
+		}
+		return ResponseEntity.ok(result);
+	}
 }
