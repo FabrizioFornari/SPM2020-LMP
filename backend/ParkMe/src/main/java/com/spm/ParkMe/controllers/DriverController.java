@@ -479,6 +479,22 @@ public class DriverController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping(path = DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS_FROM_STREET)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity getAllAvailablePersonalParkingLotsFromStreet(@NotNull @RequestParam String street) {
+		List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findByStreet(street);
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findAll();
+		List<PersonalParkingLot> result = new ArrayList<PersonalParkingLot>();
+		for(PersonalParkingLot parkingLot : parkingLots) {
+			for(PersonalParkingLotSubscription subscription : subscriptions) {
+				if(parkingLot.getStreet().equals(subscription.getStreet()) && parkingLot.getNumberOfParkingLot() == subscription.getNumberOfParkingLot()) {
+					result.add(parkingLot);
+				}
+			}
+		}
+		return ResponseEntity.ok(result);
+	}
+	
 	@GetMapping(path = DRIVER_GET_CURRENT_PERSONAL_PARKINGLOT)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity<PersonalParkingLot> getCurrentPersonalParkingLot(Authentication authentication) {
