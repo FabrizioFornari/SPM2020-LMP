@@ -525,7 +525,7 @@ public class DriverController {
 	public ResponseEntity createPersonalParkingLotSubscription( Authentication authentication, @NotNull @RequestBody  Subscription subscription) {
 		List<PersonalParkingLotSubscription> subs = personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
 		if(subs.isEmpty()) {
-			PersonalParkingLotSubscription personalParkingLotSubscription = new PersonalParkingLotSubscription(authentication.getName(), System.currentTimeMillis() + subscription.getMonths() * 30 * 24 * 60 * 60 * 1000, subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
+			PersonalParkingLotSubscription personalParkingLotSubscription = new PersonalParkingLotSubscription(authentication.getName(), System.currentTimeMillis() + (subscription.getMonths() * 30 * 24 * 60 * 60 * 1000L), subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
 			personalParkingLotSubscriptionRepository.insert(personalParkingLotSubscription);
 			return new ResponseEntity(HttpStatus.OK);
 		}else {

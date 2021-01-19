@@ -28,6 +28,8 @@ const DRIVER_CURRENT_SUBSCRIPTION =
 const DRIVER_GET_PERSONAL_LOTS =
   environment.baseUrl + "api/driver/availablePersonalParkingLots";
 
+const DRIVER_BUY_SUBSCRIPTION =
+  environment.baseUrl + "api/driver/createPersonalParkingLotSubscription";
 @Injectable({
   providedIn: "root",
 })
@@ -103,5 +105,9 @@ export class TicketService {
       DRIVER_GET_PERSONAL_LOTS + `?street=${street}`,
       this.getHttpOpt()
     );
+  }
+
+  driverBuySubscription(body): Observable<any> {
+    return this.http.post(DRIVER_BUY_SUBSCRIPTION, body, this.getHttpOpt());
   }
 }
