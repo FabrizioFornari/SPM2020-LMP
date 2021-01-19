@@ -11,6 +11,7 @@ import {
   Popup,
   tileLayer,
 } from "leaflet";
+import { BuySubscriptionComponent } from "src/app/modals/driverModal/buy-subscription/buy-subscription.component";
 import { ConfirmParkingLotBookingComponent } from "src/app/modals/driverModal/confirm-parking-lot-booking/confirm-parking-lot-booking.component";
 import { CoordinatesModalComponent } from "src/app/modals/driverModal/coordinates-modal/coordinates-modal.component";
 import { TicketService } from "src/app/services/driverServices/ticket.service";
@@ -153,7 +154,7 @@ export class MapComponent implements OnInit {
               if (item.personalParkingLotStatus !== "DISABLED") {
                 let markerItem = this.createPersonalMarker(item).on(
                   "click",
-                  () => this.zone.run(() => this.openModalBookParking(item))
+                  () => this.zone.run(() => this.openModalBuySubscription(item))
                 );
                 markers.push(markerItem);
               }
@@ -272,6 +273,20 @@ export class MapComponent implements OnInit {
       },
       () => {
         console.log("Modal Confirm Parking Lot Dismissed");
+      }
+    );
+  }
+
+  openModalBuySubscription(parkinglot: any) {
+    let modalRef = this.modalService.open(BuySubscriptionComponent);
+    modalRef.componentInstance.PARKINGLOT = parkinglot;
+    modalRef.result.then(
+      () => {
+        console.log("Modal BuySubscription Closed");
+        this.ngOnInit();
+      },
+      () => {
+        console.log("Modal BuySubscription Dismissed");
       }
     );
   }
