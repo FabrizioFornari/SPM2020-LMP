@@ -23,7 +23,7 @@ public final class EndpointContants {
 	public static final String DRIVER_CHANGE_PARKING_LOT = "/changeParkingLot";
 	public static final String DRIVER_REFRESH_TICKET="/refreshTicket";
 	public static final String DRIVER_GET_CURRENT_PERSONAL_PARKINGLOT="/getCurrentPersonalParkingLot";
-	
+	public static final String DRIVER_CREATE_PERSONAL_PARKINGLOT_SUBSCRIPTION="/createPersonalParkingLotSubscription";
 	public static final String DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS = "/availablePersonalParkingLots";
 	
 	//modification controller

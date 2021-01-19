@@ -48,6 +48,7 @@ import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.RefreshTicketInfo;
 import com.spm.ParkMe.models.requestBody.SensorChangeInfo;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
+import com.spm.ParkMe.models.requestBody.Subscription;
 import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -480,6 +481,21 @@ public class DriverController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
+	}
+	
+	@PostMapping(path= DRIVER_CREATE_PERSONAL_PARKINGLOT_SUBSCRIPTION, consumes = "application/json")
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity createPersonalParkingLotSubscription( Authentication authentication, @NotNull @RequestBody  Subscription subscription) {
+		List<PersonalParkingLotSubscription> subs = personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
+		if(subs.isEmpty()) {
+			PersonalParkingLotSubscription personalParkingLotSubscription = new PersonalParkingLotSubscription(authentication.getName(),subscription.getMonths(), subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
+			personalParkingLotSubscriptionRepository.insert(personalParkingLotSubscription);
+			return new ResponseEntity(HttpStatus.CREATED);
+		}else {
+			return new ResponseEntity(HttpStatus.CONFLICT);
+
+		}
+	
 	}
 	 
 }
