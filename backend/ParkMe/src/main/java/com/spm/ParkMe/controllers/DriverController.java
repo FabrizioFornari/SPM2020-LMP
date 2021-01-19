@@ -217,8 +217,8 @@ public class DriverController {
 		List<StreetInfo> infos;
 		if(personal) {
 			infos = personalParkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
-					.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
-							parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
+					.map(street -> new StreetInfo(personalParkingLotRepository.findByStreet(street).get(0).getStreet(),
+							personalParkingLotRepository.findByStreet(street).get(0).getCoordinates()))
 					.collect(Collectors.toList());
 		}
 		else {
