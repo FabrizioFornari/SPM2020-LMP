@@ -213,11 +213,21 @@ public class DriverController {
 
 	@GetMapping(path = DRIVER_GET_ALL_STREETS)
 	@PreAuthorize("hasRole('DRIVER')")
-	public ResponseEntity<List<StreetInfo>> getAllStreetInfos() {
-		List<StreetInfo> infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
-				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
-						parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
-				.collect(Collectors.toList());
+	public ResponseEntity<List<StreetInfo>> getAllStreetInfos(@NotNull @RequestParam boolean personal) {
+		List<StreetInfo> infos;
+		if(personal) {
+			infos = personalParkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
+					.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
+							parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
+					.collect(Collectors.toList());
+		}
+		else {
+			infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
+					.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
+							parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
+					.collect(Collectors.toList());
+		}
+		
 		return ResponseEntity.ok(infos);
 	}
 
