@@ -24,6 +24,7 @@ import com.spm.ParkMe.repositories.NotificationRepository;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
@@ -57,6 +58,9 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 	
 	@Autowired
 	private UserSessionRepository userSessionRepository;
+	
+	@Autowired
+	private PersonalParkingLotRepository personalParkingLotRepository;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -120,8 +124,9 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		
 		userSessionRepository.deleteAll();
 		notificationRepository.deleteAll();
-		//notificationRepository.save(NOTIFICATION_1);
-		//notificationRepository.save(NOTIFICATION_2);
+		
+		personalParkingLotRepository.deleteAll();
+		personalParkingLotRepository.save(PERSONAL);
 	}
 
 }

@@ -10,6 +10,7 @@ import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;
+import com.spm.ParkMe.models.PersonalParkingLot;
 import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
 import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
@@ -58,4 +59,7 @@ public class ParkingLotCostants {
 
 	//ParkingLot Ticket
 	public static final ParkingLotTicket PARKING_TICKET= new ParkingLotTicket(STREET, 4, DRIVER_MAIL, 0.0, 1604581416000L);
+	
+	//personal parking lot 
+	public static final PersonalParkingLot PERSONAL = new PersonalParkingLot(STREET, 51, false, 30.0, CAR, new Coordinates("43.14316508456341", "13.066703410918063"));
 }
