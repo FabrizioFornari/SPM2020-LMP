@@ -83,6 +83,9 @@ public class DriverController {
 	private ParkingLotTicketRepository parkingLotTicketRepository;
 	
 	@Autowired
+	private PersonalParkingLotRepository personalParkingLot;
+	
+	@Autowired
 	private AbusiveOccupationManager abusiveOccupationManager;
 	
 	@Autowired
@@ -90,6 +93,7 @@ public class DriverController {
 	
 	@Autowired
 	private NotificationDispatcher notificationDispatcher;
+	
 	
 	@Autowired
 	private PersonalParkingLotRepository personalParkingLotRepository;
@@ -446,8 +450,6 @@ public class DriverController {
 			return new ResponseEntity(new MessageResponse("There aren't parkingLots or Tickets"),HttpStatus.NOT_FOUND);
 		}
 		
-		
-		
 	}
 	
 	@GetMapping(path = DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS)
@@ -465,4 +467,19 @@ public class DriverController {
 		}
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping(path = DRIVER_GET_CURRENT_PERSONAL_PARKINGLOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<PersonalParkingLot> getCurrentPersonalParkingLot(Authentication authentication) {
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findByUsername(authentication.getName());
+		if(!subscriptions.isEmpty()) {
+			PersonalParkingLotSubscription subscription= subscriptions.get(0);
+			List<PersonalParkingLot> personalParkingLots=personalParkingLot.findByStreetAndNumberOfParkingLot(subscription.getStreet(), subscription.getNumberOfParkingLot());
+			return ResponseEntity.ok(personalParkingLots.get(0));
+		
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+	}
+	 
 }
