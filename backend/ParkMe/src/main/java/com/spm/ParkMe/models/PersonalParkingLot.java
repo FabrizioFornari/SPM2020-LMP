@@ -25,7 +25,7 @@ public class PersonalParkingLot extends Parking{
 	
 	public PersonalParkingLot(String street, Integer numberOfParkingLot, Boolean isHandicapParkingLot,Double price, String typeOfVehicle, Coordinates coordinates) {
 		super(street,numberOfParkingLot,isHandicapParkingLot,typeOfVehicle,coordinates);
-		this.setPrice(price);;
+		this.setPrice(price);
 		this.setPersonalParkingLotStatus(PersonalParkingLotStatus.FREE);
 		
 	}

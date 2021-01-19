@@ -82,7 +82,7 @@ public class PersonalParkingLotSubscription {
 			}	
 	}
 	
-	private boolean isExpired() {
+	public boolean isExpired() {
 		return this.expiration < System.currentTimeMillis();
 	}
 	
