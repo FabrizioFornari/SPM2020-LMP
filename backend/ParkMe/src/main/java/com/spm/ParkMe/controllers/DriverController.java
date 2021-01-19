@@ -483,6 +483,19 @@ public class DriverController {
 		
 	}
 	
+	@GetMapping(path = DRIVER_GET_CURRENT_PERSONAL_SUBSCRIPTION)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity<PersonalParkingLotSubscription> getCurrentPersonalSubscription(Authentication authentication) {
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findByUsername(authentication.getName());
+		if(!subscriptions.isEmpty()) {
+			PersonalParkingLotSubscription subscription= subscriptions.get(0);
+			return ResponseEntity.ok(subscription);
+		
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+	}
+	
 	@PostMapping(path= DRIVER_CREATE_PERSONAL_PARKINGLOT_SUBSCRIPTION, consumes = "application/json")
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity createPersonalParkingLotSubscription( Authentication authentication, @NotNull @RequestBody  Subscription subscription) {
