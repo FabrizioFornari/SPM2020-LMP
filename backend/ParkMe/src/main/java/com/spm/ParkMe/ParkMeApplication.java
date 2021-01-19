@@ -132,10 +132,11 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		
 		personalParkingLotRepository.deleteAll();
 		personalParkingLotRepository.save(PERSONAL);
+		personalParkingLotRepository.save(PERSONAL2);
 		
 		personalParkingLotSubscriptionRepository.deleteAll();
-		personalParkingLotSubscriptionRepository.save(new PersonalParkingLotSubscription(
-				"rocche@park.it", System.currentTimeMillis() + 20024235348468L, "Via Madonna delle Carceri", 51));
+//		personalParkingLotSubscriptionRepository.save(new PersonalParkingLotSubscription(
+//				"rocche@park.it", System.currentTimeMillis() + 60000, "via Madonna delle Carceri", 51));
 	}
 
 }

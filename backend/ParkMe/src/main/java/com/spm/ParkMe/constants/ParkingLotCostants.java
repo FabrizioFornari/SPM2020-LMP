@@ -62,4 +62,6 @@ public class ParkingLotCostants {
 	
 	//personal parking lot 
 	public static final PersonalParkingLot PERSONAL = new PersonalParkingLot(STREET, 51, false, 30.0, CAR, new Coordinates("43.14316508456341", "13.066703410918063"));
+	
+	public static final PersonalParkingLot PERSONAL2 = new PersonalParkingLot(STREET, 52, true, 30.0, CAR, new Coordinates("43.143190797585994", "13.066845733401893"));
 }

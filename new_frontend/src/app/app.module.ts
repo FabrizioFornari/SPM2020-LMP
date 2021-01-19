@@ -41,6 +41,7 @@ import { RefreshTicketComponent } from './modals/driverModal/refresh-ticket/refr
 import { ParkInfoComponent } from './modals/vigilantModal/park-info/park-info.component';
 import { RefundComponentComponent } from './modals/driverModal/refund-component/refund-component.component';
 import { ParkingLotListComponent } from './pages/vigilantPages/parking-lot-list/parking-lot-list.component';
+import { BuySubscriptionComponent } from './modals/driverModal/buy-subscription/buy-subscription.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { ParkingLotListComponent } from './pages/vigilantPages/parking-lot-list/
     ParkInfoComponent,
     RefundComponentComponent,
     ParkingLotListComponent,
+    BuySubscriptionComponent,
   ],
   imports: [
     BrowserModule,

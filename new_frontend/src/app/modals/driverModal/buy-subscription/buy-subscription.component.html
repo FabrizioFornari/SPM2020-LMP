@@ -1,0 +1,79 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">monetization_on</p>
+  <h4 class="modal-title">Buy Subscription</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+
+<div class="modal-body">
+  <form #update="ngForm" (ngSubmit)="buySubscription(update)">
+    <div class="form-group">
+      <label>Street</label>
+      <input
+        [ngModel]="PARKINGLOT.street"
+        type="text"
+        class="form-control"
+        name="street"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Parking Lot #</label>
+      <input
+        [ngModel]="PARKINGLOT.numberOfParkingLot"
+        type="text"
+        class="form-control"
+        name="nummber"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Price €</label>
+      <input
+        [ngModel]="PARKINGLOT.price"
+        type="text"
+        class="form-control"
+        name="price"
+        disabled
+      />
+    </div>
+    <div class="form-label-group">
+      <p>Parking Months</p>
+      <select
+        class="form-control"
+        type="text"
+        name="months"
+        [(ngModel)]="months"
+      >
+        <option *ngFor="let months of monthsList" [ngValue]="months">
+          {{ months }}
+        </option>
+      </select>
+    </div>
+    <button
+      [disabled]="
+        !months ||
+        userInfo.vehicleType != PARKINGLOT.typeOfVehicle ||
+          (!userInfo.isHandicap && PARKINGLOT.isHandicapParkingLot)
+      "
+      style="margin-top: 1rem"
+      type="submit"
+      class="btn btn-block btn-success"
+    >
+      Buy
+    </button>
+  </form>
+  <button
+    style="margin-top: 1rem"
+    (click)="backButton()"
+    type="button"
+    class="btn btn-secondary btn-block"
+  >
+    Back
+  </button>
+</div>
