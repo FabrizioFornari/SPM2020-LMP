@@ -468,15 +468,14 @@ public class DriverController {
 	public ResponseEntity getAllAvailablePersonalParkingLots() {
 		List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findAll();
 		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findAll();
-		List<PersonalParkingLot> result = new ArrayList<PersonalParkingLot>();
-		for(PersonalParkingLot parkingLot : parkingLots) {
-			for(PersonalParkingLotSubscription subscription : subscriptions) {
-				if(parkingLot.getStreet().equals(subscription.getStreet()) && parkingLot.getNumberOfParkingLot() == subscription.getNumberOfParkingLot()) {
-					result.add(parkingLot);
+		for(int i = 0; i < parkingLots.size(); i++) {
+			for(int j= 0; j < subscriptions.size(); j++) {
+				if(parkingLots.get(i).getStreet().equals(subscriptions.get(j).getStreet()) && parkingLots.get(i).getNumberOfParkingLot() == subscriptions.get(j).getNumberOfParkingLot()) {
+					parkingLots.remove(i);
 				}
 			}
 		}
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(parkingLots);
 	}
 	
 	@GetMapping(path = DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS_FROM_STREET)
@@ -484,15 +483,14 @@ public class DriverController {
 	public ResponseEntity getAllAvailablePersonalParkingLotsFromStreet(@NotNull @RequestParam String street) {
 		List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findByStreet(street);
 		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findAll();
-		List<PersonalParkingLot> result = new ArrayList<PersonalParkingLot>();
-		for(PersonalParkingLot parkingLot : parkingLots) {
-			for(PersonalParkingLotSubscription subscription : subscriptions) {
-				if(parkingLot.getStreet().equals(subscription.getStreet()) && parkingLot.getNumberOfParkingLot() == subscription.getNumberOfParkingLot()) {
-					result.add(parkingLot);
+		for(int i = 0; i < parkingLots.size(); i++) {
+			for(int j= 0; j < subscriptions.size(); j++) {
+				if(parkingLots.get(i).getStreet().equals(subscriptions.get(j).getStreet()) && parkingLots.get(i).getNumberOfParkingLot() == subscriptions.get(j).getNumberOfParkingLot()) {
+					parkingLots.remove(i);
 				}
 			}
 		}
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(parkingLots);
 	}
 	
 	@GetMapping(path = DRIVER_GET_CURRENT_PERSONAL_PARKINGLOT)
