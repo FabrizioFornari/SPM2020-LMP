@@ -144,7 +144,7 @@ public class VigilantController {
 	
 	@PutMapping(path = VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_DISABLED, consumes = "application/json")
 	@PreAuthorize("hasRole('VIGILANT')")
-	public ResponseEntity setStatusPersonalParkingLotDisabled(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
+	public ResponseEntity setStatusPersonalParkingLotDisabled(@NotNull @RequestBody PersonalParkingLot parkingLot ) throws IOException {
 		
 		List<PersonalParkingLot> parks = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
 		if(!parks.isEmpty()) {
@@ -159,7 +159,7 @@ public class VigilantController {
 
 	@PutMapping(path = VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_ENABLED, consumes = "application/json")
 	@PreAuthorize("hasRole('VIGILANT')")
-	public ResponseEntity setStatusPersonalParkingLotFree(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
+	public ResponseEntity setStatusPersonalParkingLotFree(@NotNull @RequestBody PersonalParkingLot parkingLot ) throws IOException {
 		
 		List<PersonalParkingLot> parks = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
 		if(!parks.isEmpty()) {
