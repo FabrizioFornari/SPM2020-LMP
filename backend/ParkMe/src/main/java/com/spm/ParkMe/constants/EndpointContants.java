@@ -68,5 +68,7 @@ public final class EndpointContants {
 	public static final String VIGILANT_GET_ALL_STREET_NAME ="/getAllStreet";
 	public static final String VIGILANT_SET_PARKINGLOT_STATUS_DISABLED= "/setStatusParkingLotDisabled";
 	public static final String VIGILANT_SET_PARKINGLOT_STATUS_ENABLED="/setStatusParkingLotEnabled";
+	public static final String VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_DISABLED= "/setStatusPersonalParkingLotDisabled";
+	public static final String VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_ENABLED="/setStatusPersonalParkingLotEnabled";
 	public static final String VIGILANT_GET_ALL_PERSONAL_PARKINGLOTS_FOR_STREET = "/getPersonalParkingLots/street";
 }

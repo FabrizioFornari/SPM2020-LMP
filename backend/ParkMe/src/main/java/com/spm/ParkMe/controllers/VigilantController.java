@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.PersonalParkingLotStatus;
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.PersonalParkingLot;
@@ -135,6 +136,36 @@ public class VigilantController {
 			ParkingLot park = parks.get(0);
 			park.setStatus(Status.FREE);
 			parkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping(path = VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_DISABLED, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")
+	public ResponseEntity setStatusPersonalParkingLotDisabled(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
+		
+		List<PersonalParkingLot> parks = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
+		if(!parks.isEmpty()) {
+			PersonalParkingLot park = parks.get(0);
+			park.setPersonalParkingLotStatus(PersonalParkingLotStatus.DISABLED);
+			personalParkingLotRepository.save(park);
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping(path = VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_ENABLED, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")
+	public ResponseEntity setStatusPersonalParkingLotFree(@NotNull @RequestBody ParkingLot parkingLot ) throws IOException {
+		
+		List<PersonalParkingLot> parks = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(),parkingLot.getNumberOfParkingLot());
+		if(!parks.isEmpty()) {
+			PersonalParkingLot park = parks.get(0);
+			park.setPersonalParkingLotStatus(PersonalParkingLotStatus.FREE);
+			personalParkingLotRepository.save(park);
 			return new ResponseEntity(HttpStatus.OK);
 		} else {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
