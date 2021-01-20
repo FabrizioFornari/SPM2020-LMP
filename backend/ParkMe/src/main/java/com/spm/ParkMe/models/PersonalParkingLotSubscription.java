@@ -86,11 +86,11 @@ public class PersonalParkingLotSubscription {
 			}	
 	}
 	
-	private Coordinates getCoordinates() {
+	public Coordinates getCoordinates() {
 		return this.coordinates;
 	}
 
-	private void setCoordinates(Coordinates coordinates) {
+	public void setCoordinates(Coordinates coordinates) {
 		this.coordinates = coordinates;
 	}
 	
