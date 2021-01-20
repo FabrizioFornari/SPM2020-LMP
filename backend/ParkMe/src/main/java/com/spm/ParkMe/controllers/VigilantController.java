@@ -64,8 +64,12 @@ public class VigilantController {
 	@PreAuthorize("hasRole('VIGILANT')")	
 	public ResponseEntity getParkingLot(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot)  {
 		List<ParkingLot> parkingLots = parkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		List<PersonalParkingLot> personalParkingLots = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
 		if(!parkingLots.isEmpty()) {
 			return ResponseEntity.ok(parkingLots.get(0));
+		}
+		else if(!personalParkingLots.isEmpty()){
+			return ResponseEntity.ok(personalParkingLots.get(0));
 		}
 		else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
