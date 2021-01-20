@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ConfirmSubscriptionComponent } from "src/app/modals/driverModal/confirm-subscription/confirm-subscription.component";
 import { PayTicketComponent } from "src/app/modals/driverModal/pay-ticket/pay-ticket.component";
 import { SelectBookingTypeComponent } from "src/app/modals/driverModal/select-booking-type/select-booking-type.component";
 import { NgxToastService } from "src/app/services/commonServices/ngx-toast.service";
@@ -112,7 +113,7 @@ export class BuyTicketComponent implements OnInit {
   getCurrentSubscription() {
     this.ticket.driverGetCurrentSubscription().subscribe(
       (success) => {
-        console.log(success);
+        console.table(success);
         this.currentSubscription = success;
         this.currentSubscription.expiration = `${new Date(
           this.currentSubscription.expiration
@@ -138,6 +139,21 @@ export class BuyTicketComponent implements OnInit {
       },
       () => {
         console.log("Modal Confirm Parking Lot Dismissed");
+        this.ngOnInit();
+      }
+    );
+  }
+
+  confirmSubscription(currSub) {
+    let modalRef = this.modalService.open(ConfirmSubscriptionComponent);
+    modalRef.componentInstance.CURRENT_SUBSCRIPTION = currSub;
+    modalRef.result.then(
+      () => {
+        console.log("Modal Confirm Subscription Closed");
+        this.ngOnInit();
+      },
+      () => {
+        console.log("Modal Confirm Subscription Dismissed");
         this.ngOnInit();
       }
     );

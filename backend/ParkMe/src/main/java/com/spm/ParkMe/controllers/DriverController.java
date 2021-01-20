@@ -371,9 +371,10 @@ public class DriverController {
 		
 	}
 	
-	@PostMapping(path = DRIVER_OCCUPY_PERSONAL_PARKING_LOT)
+	@PutMapping(path = DRIVER_OCCUPY_PERSONAL_PARKING_LOT)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity occupyPersonalParkingLot(Authentication authentication) {
+		System.out.println(authentication.getName());
 		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findByUsername(authentication.getName());
 		if(!subscriptions.isEmpty()) {
 			PersonalParkingLotSubscription sub = subscriptions.get(0);

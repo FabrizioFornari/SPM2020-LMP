@@ -111,6 +111,27 @@
               <span>Expiration Date: </span>{{ currentSubscription.expiration }}
             </p>
           </div>
+          <div class="buttons">
+            <div
+              (click)="confirmSubscription(currentSubscription)"
+              id="buttonConfirm"
+              class="actionButton"
+            >
+              <p class="material-icons">check_circle</p>
+            </div>
+            <div
+              (click)="
+                maps(
+                  currentSubscription.coordinates.latitude,
+                  currentSubscription.coordinates.longitude
+                )
+              "
+              id="buttonMaps"
+              class="actionButton"
+            >
+              <p class="material-icons">location_on</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
