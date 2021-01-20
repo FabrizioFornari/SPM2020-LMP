@@ -24,6 +24,7 @@ import static com.spm.ParkMe.constants.EndpointContants.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -71,13 +72,24 @@ public class VigilantController {
 		}
 	}
 	
+	
+	private StreetInfo getStreetInfoFromStreetName(String street) {
+		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(street);
+		if(!parkingLots.isEmpty()) {
+			return new StreetInfo(parkingLots.get(0).getStreet(), parkingLots.get(0).getCoordinates());
+		}
+		else {
+			return new StreetInfo(personalParkingLotRepository.findByStreet(street).get(0).getStreet(),
+					personalParkingLotRepository.findByStreet(street).get(0).getCoordinates());
+		}
+	}
+	
 	@GetMapping(path = VIGILANT_GET_ALL_STREET_NAME)
 	@PreAuthorize("hasRole('VIGILANT')")
 	public ResponseEntity<List<StreetInfo>> getAllStreetInfoName() {
-		List<StreetInfo> infos = parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()).distinct()
-				.map(street -> new StreetInfo(parkingLotRepository.findByStreet(street).get(0).getStreet(),
-						parkingLotRepository.findByStreet(street).get(0).getCoordinates()))
-				.collect(Collectors.toList());
+		List<StreetInfo> infos = Stream.concat(parkingLotRepository.findAll().stream().map(lot -> lot.getStreet()), 
+				personalParkingLotRepository.findAll().stream().map(lot -> lot.getStreet())).distinct()
+				.map(street -> getStreetInfoFromStreetName(street)).collect(Collectors.toList());
 		return ResponseEntity.ok(infos);
 	}
 	
