@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: '/ParkMe/'
+  baseUrl: '/SPM2020-LMP/'
 };
