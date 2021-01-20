@@ -72,6 +72,18 @@ public class VigilantController {
 		}
 	}
 	
+	@GetMapping(path=VIGILANT_GET_PERSONAL_PARKINGLOT, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")	
+	public ResponseEntity getPersonalParkingLot(@NotNull @RequestParam String street, @NotNull @RequestParam Integer numberOfParkingLot)  {
+		List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!parkingLots.isEmpty()) {
+			return ResponseEntity.ok(parkingLots.get(0));
+		}
+		else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	
 	private StreetInfo getStreetInfoFromStreetName(String street) {
 		List<ParkingLot> parkingLots = parkingLotRepository.findByStreet(street);
