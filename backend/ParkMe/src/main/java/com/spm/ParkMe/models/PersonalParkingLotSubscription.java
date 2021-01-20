@@ -18,18 +18,22 @@ public class PersonalParkingLotSubscription {
 	@NotNull(message="Street must not be null")
 	@NotEmpty(message = "Street must not be empty")
 	private String street;
+	@NotNull(message="Coordinates must not be null")
+	private Coordinates coordinates;
 	
 	public PersonalParkingLotSubscription(){
 		
 	}
 	
-	public PersonalParkingLotSubscription(String username, long expiration, String street, int numberOfParkingLot){
+	public PersonalParkingLotSubscription(String username, long expiration, String street, int numberOfParkingLot, Coordinates coordinates){
 		this.setUsername(username);
 		this.setExpiration(expiration);
 		this.setStreet(street);
 		this.setNumberOfParkingLot(numberOfParkingLot);
+		this.setCoordinates(coordinates);
 	}
 	
+
 	public String getId() {
 		return this.id;
 	}
@@ -80,6 +84,14 @@ public class PersonalParkingLotSubscription {
 		else {
 			throw new IllegalArgumentException("expiration is invalid");
 			}	
+	}
+	
+	private Coordinates getCoordinates() {
+		return this.coordinates;
+	}
+
+	private void setCoordinates(Coordinates coordinates) {
+		this.coordinates = coordinates;
 	}
 	
 	public boolean isExpired() {

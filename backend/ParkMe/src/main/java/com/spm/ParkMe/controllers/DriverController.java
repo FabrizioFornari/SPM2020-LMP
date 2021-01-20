@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.net.HttpHeaders;
 import com.spm.ParkMe.enums.CategoryNotification;
+import com.spm.ParkMe.enums.PersonalParkingLotStatus;
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.enums.SensorState;
 import com.spm.ParkMe.enums.Status;
@@ -369,6 +371,32 @@ public class DriverController {
 		
 	}
 	
+	@PostMapping(path = DRIVER_OCCUPY_PERSONAL_PARKING_LOT)
+	@PreAuthorize("hasRole('DRIVER')")
+	public ResponseEntity occupyPersonalParkingLot(Authentication authentication) {
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findByUsername(authentication.getName());
+		if(!subscriptions.isEmpty()) {
+			PersonalParkingLotSubscription sub = subscriptions.get(0);
+			List<PersonalParkingLot> parkingLots = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(sub.getStreet(), sub.getNumberOfParkingLot());
+			if(!parkingLots.isEmpty()) {
+				PersonalParkingLot parkingLot = parkingLots.get(0);
+				if(parkingLot.getPersonalParkingLotStatus().equals(PersonalParkingLotStatus.DISABLED)) {
+					return new ResponseEntity(new MessageResponse("The parking lot is currently disabled. Please select another one."), HttpStatus.CONFLICT);
+				}
+				parkingLot.setSensorState(SensorState.ON);
+				parkingLot.setPersonalParkingLotStatus(PersonalParkingLotStatus.OCCUPIED);
+				return new ResponseEntity(new MessageResponse("Personal Parking lot successfully confirmed."), HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity(new MessageResponse("It seems like your subscription does not match any personal parking lot. Contact the administrator."), HttpStatus.NOT_FOUND);
+			}
+		}
+		else {
+			return new ResponseEntity(new MessageResponse("You don't have a personal parking lot subscription active."), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 	@PutMapping(path = DRIVER_SET_SENSOR_PARKINGLOT)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity setParkingLotSensor(@NotNull @RequestBody SensorChangeInfo sensorChangeInfo) {
@@ -525,11 +553,11 @@ public class DriverController {
 	public ResponseEntity createPersonalParkingLotSubscription( Authentication authentication, @NotNull @RequestBody  Subscription subscription) {
 		List<PersonalParkingLotSubscription> subs = personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
 		if(subs.isEmpty()) {
-			PersonalParkingLotSubscription personalParkingLotSubscription = new PersonalParkingLotSubscription(authentication.getName(), System.currentTimeMillis() + (subscription.getMonths() * 30 * 24 * 60 * 60 * 1000L), subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot());
+			PersonalParkingLotSubscription personalParkingLotSubscription = new PersonalParkingLotSubscription(authentication.getName(), System.currentTimeMillis() + (subscription.getMonths() * 30 * 24 * 60 * 60 * 1000L), subscription.getPersonalParkingLot().getStreet(), subscription.getPersonalParkingLot().getNumberOfParkingLot(), subscription.getPersonalParkingLot().getCoordinates());
 			personalParkingLotSubscriptionRepository.insert(personalParkingLotSubscription);
 			return new ResponseEntity(HttpStatus.OK);
 		}else {
-			return new ResponseEntity(HttpStatus.CONFLICT);
+			return new ResponseEntity(new MessageResponse("You already have a personal parking lot subscription."), HttpStatus.CONFLICT);
 
 		}
 	
