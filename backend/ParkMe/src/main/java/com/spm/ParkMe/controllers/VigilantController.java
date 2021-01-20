@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLot;
 import com.spm.ParkMe.models.requestBody.StreetInfo;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
 
@@ -35,6 +37,9 @@ public class VigilantController {
 	@Autowired
 	ParkingLotRepository parkingLotRepository;
 	
+	@Autowired
+	PersonalParkingLotRepository personalParkingLotRepository;
+	
 	@GetMapping(path=VIGILANT_GET_ALL_PARKINGLOTS, consumes = "application/json")
 	@PreAuthorize("hasRole('VIGILANT')")
 	public  List<ParkingLot> getAllParkingLots()  {
@@ -45,6 +50,12 @@ public class VigilantController {
 	@PreAuthorize("hasRole('VIGILANT')")	
 	public  List<ParkingLot> getAllParkingLotsForSpecificStreet(@NotNull @RequestParam String street)  {
 		return parkingLotRepository.findByStreet(street);
+	}
+	
+	@GetMapping(path=VIGILANT_GET_ALL_PERSONAL_PARKINGLOTS_FOR_STREET, consumes = "application/json")
+	@PreAuthorize("hasRole('VIGILANT')")	
+	public  List<PersonalParkingLot> getAllPersonalParkingLotsForSpecificStreet(@NotNull @RequestParam String street)  {
+		return personalParkingLotRepository.findByStreet(street);
 	}
 	
 
