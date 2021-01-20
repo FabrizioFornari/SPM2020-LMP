@@ -111,7 +111,7 @@
     </div>
   </form>
   <button
-    *ngIf="state != 'DISABLED'"
+    *ngIf="!INFO.personalParkingLotStatus && state != 'DISABLED'"
     (click)="disablePark(INFO)"
     type="button"
     class="btn btn-danger btn-lg btn-block"
@@ -119,8 +119,24 @@
     Disable
   </button>
   <button
-    *ngIf="state == 'DISABLED'"
+    *ngIf="!INFO.personalParkingLotStatus && state == 'DISABLED'"
     (click)="enablePark(INFO)"
+    type="button"
+    class="btn btn-success btn-lg btn-block"
+  >
+    Enable
+  </button>
+  <button
+    *ngIf="INFO.personalParkingLotStatus && state != 'DISABLED'"
+    (click)="disablePersonalPark(INFO)"
+    type="button"
+    class="btn btn-danger btn-lg btn-block"
+  >
+    Disable
+  </button>
+  <button
+    *ngIf="INFO.personalParkingLotStatus && state == 'DISABLED'"
+    (click)="enablePersonalPark(INFO)"
     type="button"
     class="btn btn-success btn-lg btn-block"
   >
