@@ -27,8 +27,7 @@ export class ParkInfoComponent implements OnInit {
   disablePark(body) {
     console.log(body);
     this.parkingService.vigilantSetParkDisabled(body).subscribe(
-      (success) => {
-        console.log(success);
+      () => {
         this.toast.createToster("success", "Successfully Disabled");
 
         this.activeModal.dismiss();
@@ -45,6 +44,42 @@ export class ParkInfoComponent implements OnInit {
   enablePark(body) {
     console.log(body);
     this.parkingService.vigilantSetParkEnabled(body).subscribe(
+      (success) => {
+        console.log(success);
+        this.toast.createToster("success", "Successfully Enabled");
+
+        this.activeModal.dismiss();
+      },
+      (error) => {
+        console.log(error);
+        this.toast.createToster("error", "Error Enabling");
+
+        this.activeModal.dismiss();
+      }
+    );
+  }
+
+  disablePersonalPark(body) {
+    console.log(body);
+    this.parkingService.vigilantSetPersonalParkDisabled(body).subscribe(
+      (success) => {
+        console.log(success);
+        this.toast.createToster("success", "Successfully Disabled");
+
+        this.activeModal.dismiss();
+      },
+      (error) => {
+        console.log(error);
+        this.toast.createToster("error", "Error Disabling");
+
+        this.activeModal.dismiss();
+      }
+    );
+  }
+
+  enablePersonalPark(body) {
+    console.log(body);
+    this.parkingService.vigilantSetPersonalParkEnabled(body).subscribe(
       (success) => {
         console.log(success);
         this.toast.createToster("success", "Successfully Enabled");

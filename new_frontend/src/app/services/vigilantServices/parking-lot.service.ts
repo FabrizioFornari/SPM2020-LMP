@@ -7,6 +7,12 @@ const VIGILANT_SET_PARK_DISABLED =
   environment.baseUrl + "api/vigilant/setStatusParkingLotDisabled";
 const VIGILANT_SET_PARK_ENABLED =
   environment.baseUrl + "api/vigilant/setStatusParkingLotEnabled";
+
+const VIGILANT_SET_PERSONAL_PARK_DISABLED =
+  environment.baseUrl + "api/vigilant/setStatusPersonalParkingLotDisabled";
+const VIGILANT_SET_PERSONAL_PARK_ENABLED =
+  environment.baseUrl + "api/vigilant/setStatusPersonalParkingLotEnabled";
+
 const VIGILANT_GET_PARK_INFO =
   environment.baseUrl + "api/vigilant/getParkingLot";
 
@@ -38,6 +44,22 @@ export class ParkingLotService {
   vigilantSetParkEnabled(body): Observable<any> {
     return this.http.put(VIGILANT_SET_PARK_ENABLED, body, this.getHttpOpt());
   }
+
+  vigilantSetPersonalParkDisabled(body): Observable<any> {
+    return this.http.put(
+      VIGILANT_SET_PERSONAL_PARK_DISABLED,
+      body,
+      this.getHttpOpt()
+    );
+  }
+  vigilantSetPersonalParkEnabled(body): Observable<any> {
+    return this.http.put(
+      VIGILANT_SET_PERSONAL_PARK_ENABLED,
+      body,
+      this.getHttpOpt()
+    );
+  }
+
   vigilantGetParkInfo(street: string, num: number): Observable<any> {
     return this.http.get(
       VIGILANT_GET_PARK_INFO + `?street=${street}&numberOfParkingLot=${num}`,
