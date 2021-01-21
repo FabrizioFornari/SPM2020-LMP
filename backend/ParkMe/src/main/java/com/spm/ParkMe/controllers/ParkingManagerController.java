@@ -190,6 +190,10 @@ public class ParkingManagerController {
 	@DeleteMapping(path=PARKING_MANAGER_DELETE_PERSONAL_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> deletePersonalParkingLot(@NotNull @RequestParam String street , @NotNull @RequestParam Integer numberOfParkingLot)throws IOException {
+		List<PersonalParkingLotSubscription> subscriptions = personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!subscriptions.isEmpty()) {
+			return new ResponseEntity(new MessageResponse("The parking lot has an active subscription. Please contact the administrator."), HttpStatus.CONFLICT);
+		}
 		List<PersonalParkingLot> parkingLotsWithSameNumber = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			personalParkingLotRepository.delete(parkingLotsWithSameNumber.get(0));
