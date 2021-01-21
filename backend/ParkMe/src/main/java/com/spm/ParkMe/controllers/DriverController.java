@@ -392,6 +392,7 @@ public class DriverController {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@PutMapping(path = DRIVER_OCCUPY_PERSONAL_PARKING_LOT)
 	@PreAuthorize("hasRole('DRIVER')")
 	public ResponseEntity occupyPersonalParkingLot(Authentication authentication) {
@@ -400,6 +401,11 @@ public class DriverController {
 				.findByUsername(authentication.getName());
 		if (!subscriptions.isEmpty()) {
 			PersonalParkingLotSubscription sub = subscriptions.get(0);
+			if(sub.isExpired()) {
+				return new ResponseEntity(
+						new MessageResponse("Your subscription is expireded! Please, consider to renew it."),
+						HttpStatus.CONFLICT);
+			}
 			List<PersonalParkingLot> parkingLots = personalParkingLotRepository
 					.findByStreetAndNumberOfParkingLot(sub.getStreet(), sub.getNumberOfParkingLot());
 			if (!parkingLots.isEmpty()) {
