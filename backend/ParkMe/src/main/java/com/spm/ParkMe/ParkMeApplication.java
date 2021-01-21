@@ -66,14 +66,20 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 	private NotificationRepository notificationRepository;
 	
 
-	public static void main(String[] args) {
-		SpringApplication.run(ParkMeApplication.class, args);
-	}
 	
 	@Override
-	  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-	      return builder.sources(ParkMeApplication.class);
-	  }
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return configureApplication(builder);
+    }
+
+    public static void main(String[] args) {
+        configureApplication(new SpringApplicationBuilder()).run(args);
+    }
+
+    private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
+        return builder.sources(ParkMeApplication.class);
+    }
+
 
 
 	@Override
