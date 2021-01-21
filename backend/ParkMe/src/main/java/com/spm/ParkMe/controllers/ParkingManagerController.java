@@ -28,10 +28,12 @@ import com.spm.ParkMe.enums.PersonalParkingLotStatus;
 import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.Parking;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.PersonalParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
+import com.spm.ParkMe.models.requestBody.TotalParkingLots;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
 import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
 
@@ -111,8 +113,8 @@ public class ParkingManagerController {
 	
 	@GetMapping(path=PARKING_MANAGER_GET_ALL_PARKINGLOT_ENDPOINT, consumes = "application/json")
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
-	public  List<ParkingLot> allParkingLots()  {
-		return parkingLotRepository.findAll();
+	public  ResponseEntity<TotalParkingLots> allParkingLots()  {
+		return new ResponseEntity<TotalParkingLots>(new TotalParkingLots(parkingLotRepository.findAll(), personalParkingLotRepository.findAll()),HttpStatus.OK);
 	}
 	
 	@GetMapping(path=PARKING_MANAER_GET_ALL_PARKINGLOTS_STREET_ENDPOINT, consumes = "application/json")
@@ -126,11 +128,11 @@ public class ParkingManagerController {
 	public ResponseEntity<?> createPersonalParkingLot(@Valid @RequestBody PersonalParkingLot parkingLot) throws IOException {
 		List<PersonalParkingLot> parkingLotsWithSameNumber = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
-			return new ResponseEntity<ParkingLot>(HttpStatus.CONFLICT);
+			return new ResponseEntity<PersonalParkingLot>(HttpStatus.CONFLICT);
 		}
 		parkingLot.setPersonalParkingLotStatus(PersonalParkingLotStatus.FREE);
 		personalParkingLotRepository.save(parkingLot);
-		return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+		return new ResponseEntity<PersonalParkingLot>(HttpStatus.OK);
 	}
 
 }
