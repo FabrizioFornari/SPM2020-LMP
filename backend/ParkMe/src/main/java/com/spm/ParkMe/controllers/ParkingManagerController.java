@@ -24,13 +24,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spm.ParkMe.enums.PersonalParkingLotStatus;
 import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLot;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.requestBody.ChangeParkingLot;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
 
 @RestController
 @RequestMapping(PARKING_MANAGER_ENDPOINT)
@@ -41,6 +44,9 @@ public class ParkingManagerController {
 	
 	@Autowired
 	private ParkingLotRepository parkingLotRepository;
+	
+	@Autowired
+	private PersonalParkingLotRepository personalParkingLotRepository;
 	
 	@PostMapping(path=PARKING_MANAGER_CREATE_PARKINGLOT_ENDPOINT,consumes = "application/json" )
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
@@ -115,6 +121,16 @@ public class ParkingManagerController {
 		return parkingLotRepository.findByStreet(street);
 	}
 	
-	
+	@PostMapping(path=PARKING_MANAGER_CREATE_PERSONAL_PARKINGLOT_ENDPOINT,consumes = "application/json" )
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
+	public ResponseEntity<?> createPersonalParkingLot(@Valid @RequestBody PersonalParkingLot parkingLot) throws IOException {
+		List<PersonalParkingLot> parkingLotsWithSameNumber = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+		if(!parkingLotsWithSameNumber.isEmpty()) {
+			return new ResponseEntity<ParkingLot>(HttpStatus.CONFLICT);
+		}
+		parkingLot.setPersonalParkingLotStatus(PersonalParkingLotStatus.FREE);
+		personalParkingLotRepository.save(parkingLot);
+		return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+	}
 
 }
