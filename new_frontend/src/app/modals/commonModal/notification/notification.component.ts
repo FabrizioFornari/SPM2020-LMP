@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NotificationService } from "src/app/services/commonServices/notification.service";
 import { ConfirmPresenceComponent } from "../../driverModal/confirm-presence/confirm-presence.component";
+import { ConfirmSubscriptionComponent } from "../../driverModal/confirm-subscription/confirm-subscription.component";
 import { RefundComponentComponent } from "../../driverModal/refund-component/refund-component.component";
 import { CheckParkComponent } from "../check-park/check-park.component";
 import { GenericNotificationComponent } from "../generic-notification/generic-notification.component";
@@ -35,6 +36,10 @@ export class NotificationComponent implements OnInit {
       this.openModalCheckPark(notification);
     } else if (notification.categoryNotification == "DRIVER_REFUNDED_TICKET") {
       this.openModalRefund(notification);
+    } else if (
+      notification.categoryNotification == "DRIVER_ABUSIVE_PERSONAL_PARKINGLOT"
+    ) {
+      this.openModalConfirmPresencePersonal();
     } else {
       this.openModalGeneric(notification);
     }
@@ -65,6 +70,20 @@ export class NotificationComponent implements OnInit {
       },
       () => {
         console.log("Modal ConfirmPresence Dismissed");
+        this.activeModal.dismiss();
+      }
+    );
+  }
+
+  openModalConfirmPresencePersonal() {
+    const modalRef = this.modalService.open(ConfirmSubscriptionComponent);
+    modalRef.result.then(
+      () => {
+        console.log("Modal ConfirmPresencePersonal Closed");
+        this.activeModal.dismiss();
+      },
+      () => {
+        console.log("Modal ConfirmPresencePersonal Dismissed");
         this.activeModal.dismiss();
       }
     );
