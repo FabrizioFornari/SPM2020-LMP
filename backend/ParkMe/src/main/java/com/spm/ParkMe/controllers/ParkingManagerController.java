@@ -186,5 +186,16 @@ public class ParkingManagerController {
 		}
 		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);
 	}
+	
+	@DeleteMapping(path=PARKING_MANAGER_DELETE_PERSONAL_PARKINGLOT_ENDPOINT,consumes = "application/json" )
+	@PreAuthorize("hasRole('PARKING_MANAGER')")
+	public ResponseEntity<?> deletePersonalParkingLot(@NotNull @RequestParam String street , @NotNull @RequestParam Integer numberOfParkingLot)throws IOException {
+		List<PersonalParkingLot> parkingLotsWithSameNumber = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+		if(!parkingLotsWithSameNumber.isEmpty()) {
+			personalParkingLotRepository.delete(parkingLotsWithSameNumber.get(0));
+			return new ResponseEntity<ParkingLot>(HttpStatus.OK);
+		}
+		return new ResponseEntity<ParkingLot>(HttpStatus.NOT_FOUND);
+	}
 
 }
