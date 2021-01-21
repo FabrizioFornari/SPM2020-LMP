@@ -125,6 +125,7 @@ public class ParkingManagerController {
 	@PreAuthorize("hasRole('PARKING_MANAGER')")
 	public ResponseEntity<?> createPersonalParkingLot(@Valid @RequestBody PersonalParkingLot parkingLot) throws IOException {
 		List<PersonalParkingLot> parkingLotsWithSameNumber = personalParkingLotRepository.findByStreetAndNumberOfParkingLot(parkingLot.getStreet(), parkingLot.getNumberOfParkingLot());
+		System.out.println(parkingLotsWithSameNumber.size());
 		if(!parkingLotsWithSameNumber.isEmpty()) {
 			return new ResponseEntity<ParkingLot>(HttpStatus.CONFLICT);
 		}

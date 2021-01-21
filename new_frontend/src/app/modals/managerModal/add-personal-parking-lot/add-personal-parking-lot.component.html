@@ -1,0 +1,106 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">local_parking</p>
+  <h5 class="modal-title">New Personal Parking Lot</h5>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+<div class="modal-body">
+  <form #addPark="ngForm" (ngSubmit)="addParkingLot(addPark)">
+    <div class="form-group">
+      <label>Street</label>
+      <input
+        [ngModel]="street"
+        type="text"
+        class="form-control"
+        name="street"
+        placeholder="Enter street"
+      />
+    </div>
+    <div class="form-group">
+      <label>Number</label>
+      <input
+        [ngModel]="numberOfParkingLot"
+        type="number"
+        class="form-control"
+        name="numberOfParkingLot"
+        placeholder="Enter Parking Number"
+      />
+    </div>
+
+    <div class="form-group">
+      <p>isHandicap</p>
+      <select
+        class="form-control"
+        type="text"
+        name="isHandicapParkingLot"
+        id="isHandicapParkingLot"
+        [(ngModel)]="isHandicapParkingLot"
+      >
+        <option *ngFor="let type of handicapType" [ngValue]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Price</label>
+      <input
+        [ngModel]="price"
+        type="number"
+        class="form-control"
+        name="price"
+        placeholder="Enter Price"
+      />
+    </div>
+
+    <div class="form-group">
+      <p>Vehicle Type</p>
+      <select
+        class="form-control"
+        type="text"
+        name="typeOfVehicle"
+        id="typeOfVehicle"
+        [(ngModel)]="typeOfVehicle"
+      >
+        <option *ngFor="let type of vehicleType" [ngValue]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Latitude</label>
+      <input
+        [ngModel]="latitude"
+        type="text"
+        class="form-control"
+        name="latitude"
+        placeholder="Enter Latitude"
+      />
+    </div>
+    <div class="form-group">
+      <label>Longitude</label>
+      <input
+        [ngModel]="longitude"
+        type="text"
+        class="form-control"
+        name="longitude"
+        placeholder="Enter Longitude"
+      />
+    </div>
+    <button type="submit" id="updateButton" class="btn btn-block btn-success">
+      INSERT
+      <span
+        *ngIf="isLoading"
+        class="spinner-border"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </form>
+</div>

@@ -45,6 +45,7 @@ import { BuySubscriptionComponent } from './modals/driverModal/buy-subscription/
 import { SelectParkingTypeComponent } from './modals/vigilantModal/select-parking-type/select-parking-type.component';
 import { ConfirmSubscriptionComponent } from './modals/driverModal/confirm-subscription/confirm-subscription.component';
 import { GenericNotificationComponent } from './modals/commonModal/generic-notification/generic-notification.component';
+import { AddPersonalParkingLotComponent } from './modals/managerModal/add-personal-parking-lot/add-personal-parking-lot.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { GenericNotificationComponent } from './modals/commonModal/generic-notif
     SelectParkingTypeComponent,
     ConfirmSubscriptionComponent,
     GenericNotificationComponent,
+    AddPersonalParkingLotComponent,
   ],
   imports: [
     BrowserModule,
