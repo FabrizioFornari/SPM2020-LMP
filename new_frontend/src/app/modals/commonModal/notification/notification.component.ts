@@ -31,7 +31,9 @@ export class NotificationComponent implements OnInit {
     } else if (
       notification.categoryNotification == "VIGILANT_ABUSIVE_PARKING" ||
       notification.categoryNotification == "DRIVER_EXPIRING_TICKET" ||
-      notification.categoryNotification == "VIGILANT_EXPIRING_TICKET"
+      notification.categoryNotification == "VIGILANT_EXPIRING_TICKET" ||
+      notification.categoryNotification ==
+        "VIGILANT_ABUSIVE_PERSONAL_PARKINGLOT"
     ) {
       this.openModalCheckPark(notification);
     } else if (notification.categoryNotification == "DRIVER_REFUNDED_TICKET") {
