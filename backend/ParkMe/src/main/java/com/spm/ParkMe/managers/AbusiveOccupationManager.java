@@ -11,9 +11,13 @@ import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.PersonalParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLotSubscription;
 import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotSubscriptionRepository;
 
 @Component
 public class AbusiveOccupationManager {
@@ -27,6 +31,8 @@ public class AbusiveOccupationManager {
 	
 	@Autowired
 	private ParkingLotBookingRepository parkingLotBookingRepository;
+	@Autowired
+	private PersonalParkingLotSubscriptionRepository personalParkingLotSubscriptionRepository;
 	
 	private boolean solved;
 	
@@ -99,6 +105,12 @@ public class AbusiveOccupationManager {
 		}
 		
 	}
+	
+	public void sendNotificationToVigilantForAbusivePersonalParkingLot(String street, Integer numberOfParkingLot) {
+		notificationDispatcher.sendNotificationToOneVigilantForAbusivePersonalParkingLot(street, numberOfParkingLot);
+	}
+	
+	
 	
 	public boolean isSolved() {
 		return solved;
