@@ -110,7 +110,18 @@ public class AbusiveOccupationManager {
 		notificationDispatcher.sendNotificationToOneVigilantForAbusivePersonalParkingLot(street, numberOfParkingLot);
 	}
 	
-	
+	public void sendNotificationToDriverForAbusivePersonalParkingLot(String street, Integer numberOfParkingLot) {
+		
+			List<PersonalParkingLotSubscription> personalParkingLotSubscriptions= personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			if(!personalParkingLotSubscriptions.isEmpty()) {
+				PersonalParkingLotSubscription personalParkingLotSubscription = personalParkingLotSubscriptions.get(0);
+				String username = personalParkingLotSubscription.getUsername();
+				Notification notification = new Notification("Abusive Personal Parking Lot Occupation Alert", "Your Personal Parking Lot (" + street + " - #" + numberOfParkingLot + ") has been occupied. Is that you?",username, System.currentTimeMillis());
+				notification.setCategoryNotification(CategoryNotification.DRIVER_ABUSIVE_PERSONAL_PARKINGLOT);
+				notificationDispatcher.sendNotificationToUser(username, notification);
+			
+		}
+	}
 	
 	public boolean isSolved() {
 		return solved;
