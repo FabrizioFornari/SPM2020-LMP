@@ -137,8 +137,8 @@ public class NotificationDispatcher {
 			for(User vigilant : vigilants) {
 				List<PersonalParkingLot> personalParkingLots= personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
 				PersonalParkingLot personalParkingLot= personalParkingLots.get(0);
-				PersonalParkingLotNotification notification = new PersonalParkingLotNotification("Ticket Expiring", "The driver has not renewed the reserved parking, ticket expired. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), System.currentTimeMillis(), personalParkingLot);
-				notification.setCategoryNotification(CategoryNotification.VIGILANT_EXPIRING_TICKET);
+				PersonalParkingLotNotification notification = new PersonalParkingLotNotification("Abusive Personal Parking Lot Occupation", "A personal Parking Lot has been abusively occupied. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), System.currentTimeMillis(), personalParkingLot);
+				notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PERSONAL_PARKINGLOT);
 				notificationRepository.save(notification);
 			}
 		}
