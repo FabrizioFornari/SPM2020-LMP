@@ -69,6 +69,7 @@ export class ParkingLotServiceService {
     oldStreet: string;
     oldNumberOfParkingLot: number;
   }): Observable<any> {
+    console.log(body);
     return this.http.put(
       PARKING_LOT_API + "parkingLot/update",
       body,
@@ -83,6 +84,36 @@ export class ParkingLotServiceService {
     return this.http.delete(
       PARKING_LOT_API +
         `parkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
+      this.getHttpOpt()
+    );
+  }
+
+  updatePersonalParkingLot(body: {
+    newStreet: string;
+    newNumberOfParkingLot: number;
+    newIsHandicapParkingLot: boolean;
+    newPrice: number;
+    newTypeOfVehicle: string;
+    newLatitude: string;
+    newLongitude: string;
+    oldStreet: string;
+    oldNumberOfParkingLot: number;
+  }): Observable<any> {
+    console.log(body);
+    return this.http.put(
+      PARKING_LOT_API + "personalParkingLot/update",
+      body,
+      this.getHttpOpt()
+    );
+  }
+
+  deletePersonalParkingLot(body: {
+    street: string;
+    numberOfParkingLot: number;
+  }): Observable<any> {
+    return this.http.delete(
+      PARKING_LOT_API +
+        `personalParkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
       this.getHttpOpt()
     );
   }

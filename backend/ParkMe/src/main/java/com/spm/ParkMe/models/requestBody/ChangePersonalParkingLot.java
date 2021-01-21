@@ -9,7 +9,7 @@ public class ChangePersonalParkingLot {
 	@NotEmpty(message = "street must not be empty")
 	private String oldStreet;
 	
-	@NotNull(message="numberOfParkingLot must not be null")
+	@NotNull(message="oldNumberOfParkingLot must not be null")
 	private Integer oldNumberOfParkingLot;
 	
 	private String newStreet;
@@ -20,10 +20,10 @@ public class ChangePersonalParkingLot {
 	private String newLatitude;
 	private String newLongitude;
 	
-	public ChangePersonalParkingLot(String street, Integer numberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newPrice, String newTypeOfVehicle
+	public ChangePersonalParkingLot(String oldStreet, Integer oldNumberOfParkingLot, String newStreet, Integer newNumberOfParkingLot, Boolean newIsHandicapParkingLot, Double newPrice, String newTypeOfVehicle
 			, String newLatitude, String newLongitude) {
-		this.setOldNumberOfParkingLot(numberOfParkingLot);
-		this.setOldStreet(street);
+		this.setOldNumberOfParkingLot(oldNumberOfParkingLot);
+		this.setOldStreet(oldStreet);
 		this.setNewStreet(newStreet);
 		this.setNewNumberOfParkingLot(newNumberOfParkingLot);
 		this.setNewIsHandicapParkingLot(newIsHandicapParkingLot);

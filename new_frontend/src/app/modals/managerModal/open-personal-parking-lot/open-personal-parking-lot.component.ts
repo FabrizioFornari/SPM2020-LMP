@@ -4,11 +4,11 @@ import { NgxToastService } from "src/app/services/commonServices/ngx-toast.servi
 import { ParkingLotServiceService } from "src/app/services/managerServices/parking-lot-service.service";
 
 @Component({
-  selector: "app-open-parking-lot",
-  templateUrl: "./open-parking-lot.component.html",
-  styleUrls: ["./open-parking-lot.component.css"],
+  selector: "app-open-personal-parking-lot",
+  templateUrl: "./open-personal-parking-lot.component.html",
+  styleUrls: ["./open-personal-parking-lot.component.css"],
 })
-export class OpenParkingLotComponent implements OnInit {
+export class OpenPersonalParkingLotComponent implements OnInit {
   @Input() PARK: any;
 
   isLoading: boolean = false;
@@ -23,7 +23,7 @@ export class OpenParkingLotComponent implements OnInit {
   newStreet: string = "";
   newNumberOfParkingLot: number;
   newIsHandicapParkingLot: string = "";
-  newPricePerHours: number;
+  newPrice: number;
   newTypeOfVehicle: string = "";
   newLatitude: string = "";
   newLongitude: string = "";
@@ -41,9 +41,9 @@ export class OpenParkingLotComponent implements OnInit {
       street: park.street,
       numberOfParkingLot: park.numberOfParkingLot,
     };
-    this.parkingLotService.deleteParkingLot(body).subscribe(
+    this.parkingLotService.deletePersonalParkingLot(body).subscribe(
       () => {
-        this.toast.createToster("success", "Parking Lot Deleted");
+        this.toast.createToster("success", "Personal Parking Lot Deleted");
         this.isLoading = false;
         this.activeModal.dismiss();
       },
@@ -55,9 +55,12 @@ export class OpenParkingLotComponent implements OnInit {
         } else if (error.status == 403) {
           this.toast.createToster("error", "Forbidden");
         } else if (error.status == 404) {
-          this.toast.createToster("error", "Parking Lot Not Found");
+          this.toast.createToster("error", "Personal Parking Lot Not Found");
         } else if (error.status == 409) {
-          this.toast.createToster("error", "Conflict");
+          this.toast.createToster(
+            "error",
+            "Active Subscription Cannot Be Deleted"
+          );
         } else if (error.status == 500) {
           this.toast.createToster("error", "Server Error");
         } else if (error.status == 503) {
@@ -74,7 +77,7 @@ export class OpenParkingLotComponent implements OnInit {
       isHandicapParkingLot: string;
       newStreet: string;
       newNumberOfParkingLot: number;
-      newPricePerHours: number;
+      newPrice: number;
       vehicleType: string;
       newLatitude: string;
       newLongitude: string;
@@ -92,7 +95,7 @@ export class OpenParkingLotComponent implements OnInit {
       newStreet: form.value.newStreet,
       newNumberOfParkingLot: form.value.newNumberOfParkingLot,
       newIsHandicapParkingLot: handicapBool,
-      newPricePerHours: form.value.newPricePerHours,
+      newPrice: form.value.newPrice,
       newTypeOfVehicle: form.value.vehicleType,
       newLatitude: form.value.newLatitude,
       newLongitude: form.value.newLongitude,
@@ -102,9 +105,9 @@ export class OpenParkingLotComponent implements OnInit {
 
     console.log(body);
 
-    this.parkingLotService.updateParkingLot(body).subscribe(
+    this.parkingLotService.updatePersonalParkingLot(body).subscribe(
       () => {
-        this.toast.createToster("success", "Parking Lot Updated");
+        this.toast.createToster("success", "Personal Parking Lot Updated");
         this.isLoading = false;
         this.activeModal.dismiss();
       },
@@ -116,9 +119,12 @@ export class OpenParkingLotComponent implements OnInit {
         } else if (error.status == 403) {
           this.toast.createToster("error", "Forbidden");
         } else if (error.status == 404) {
-          this.toast.createToster("error", "Parking Lot Not Found");
+          this.toast.createToster("error", "Personal Parking Lot Not Found");
         } else if (error.status == 409) {
-          this.toast.createToster("error", "Conflict");
+          this.toast.createToster(
+            "error",
+            "Active Subscription Cannot Be Updated"
+          );
         } else if (error.status == 500) {
           this.toast.createToster("error", "Server Error");
         } else if (error.status == 503) {
