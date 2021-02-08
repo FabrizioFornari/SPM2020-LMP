@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 
-const PARKING_LOT_API = environment.baseUrl + 'api/parkingManager/';
+const PARKING_LOT_API = environment.baseUrl + "api/parkingManager/";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ParkingLotServiceService {
   constructor(private http: HttpClient) {}
@@ -14,15 +14,15 @@ export class ParkingLotServiceService {
   getHttpOpt() {
     return {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       }),
     };
   }
 
   getAllParkingLots(): Observable<any> {
     return this.http.get(
-      PARKING_LOT_API + 'parkingLots/all',
+      PARKING_LOT_API + "parkingLots/all",
       this.getHttpOpt()
     );
   }
@@ -37,7 +37,22 @@ export class ParkingLotServiceService {
   }): Observable<any> {
     console.log(body);
     return this.http.post(
-      PARKING_LOT_API + 'parkingLot/create',
+      PARKING_LOT_API + "parkingLot/create",
+      body,
+      this.getHttpOpt()
+    );
+  }
+
+  addPersonalParkingLot(body: {
+    street: any;
+    numberOfParkingLot: any;
+    isHandicapParkingLot: boolean;
+    price: any;
+    typeOfVehicle: any;
+    coordinates: { latitude: any; longitude: any };
+  }): Observable<any> {
+    return this.http.post(
+      PARKING_LOT_API + "personalParkingLot/create",
       body,
       this.getHttpOpt()
     );
@@ -54,8 +69,9 @@ export class ParkingLotServiceService {
     oldStreet: string;
     oldNumberOfParkingLot: number;
   }): Observable<any> {
+    console.log(body);
     return this.http.put(
-      PARKING_LOT_API + 'parkingLot/update',
+      PARKING_LOT_API + "parkingLot/update",
       body,
       this.getHttpOpt()
     );
@@ -68,6 +84,36 @@ export class ParkingLotServiceService {
     return this.http.delete(
       PARKING_LOT_API +
         `parkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
+      this.getHttpOpt()
+    );
+  }
+
+  updatePersonalParkingLot(body: {
+    newStreet: string;
+    newNumberOfParkingLot: number;
+    newIsHandicapParkingLot: boolean;
+    newPrice: number;
+    newTypeOfVehicle: string;
+    newLatitude: string;
+    newLongitude: string;
+    oldStreet: string;
+    oldNumberOfParkingLot: number;
+  }): Observable<any> {
+    console.log(body);
+    return this.http.put(
+      PARKING_LOT_API + "personalParkingLot/update",
+      body,
+      this.getHttpOpt()
+    );
+  }
+
+  deletePersonalParkingLot(body: {
+    street: string;
+    numberOfParkingLot: number;
+  }): Observable<any> {
+    return this.http.delete(
+      PARKING_LOT_API +
+        `personalParkingLot/delete?street=${body.street}&numberOfParkingLot=${body.numberOfParkingLot}`,
       this.getHttpOpt()
     );
   }

@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <p style="font-size: 32px" class="material-icons">check_circle</p>
+  <h4 class="modal-title">Confirm Presence</h4>
+  <p
+    (click)="activeModal.close('Close click')"
+    style="font-size: 32px; cursor: pointer"
+    class="material-icons"
+  >
+    cancel
+  </p>
+</div>
+
+<div class="modal-body" style="text-align: center; color: black">
+  <h5>Are you arrived?</h5>
+  <button
+    style="margin-top: 2rem"
+    (click)="confirmSubScription()"
+    type="button"
+    class="btn btn-success btn-block"
+  >
+    Yes
+  </button>
+  <button
+    style="margin-top: 0.5rem"
+    (click)="deny()"
+    type="button"
+    class="btn btn-danger btn-block"
+  >
+    No
+  </button>
+</div>

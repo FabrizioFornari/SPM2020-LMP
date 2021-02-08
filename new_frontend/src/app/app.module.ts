@@ -41,6 +41,12 @@ import { RefreshTicketComponent } from './modals/driverModal/refresh-ticket/refr
 import { ParkInfoComponent } from './modals/vigilantModal/park-info/park-info.component';
 import { RefundComponentComponent } from './modals/driverModal/refund-component/refund-component.component';
 import { ParkingLotListComponent } from './pages/vigilantPages/parking-lot-list/parking-lot-list.component';
+import { BuySubscriptionComponent } from './modals/driverModal/buy-subscription/buy-subscription.component';
+import { SelectParkingTypeComponent } from './modals/vigilantModal/select-parking-type/select-parking-type.component';
+import { ConfirmSubscriptionComponent } from './modals/driverModal/confirm-subscription/confirm-subscription.component';
+import { GenericNotificationComponent } from './modals/commonModal/generic-notification/generic-notification.component';
+import { AddPersonalParkingLotComponent } from './modals/managerModal/add-personal-parking-lot/add-personal-parking-lot.component';
+import { OpenPersonalParkingLotComponent } from './modals/managerModal/open-personal-parking-lot/open-personal-parking-lot.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +84,12 @@ import { ParkingLotListComponent } from './pages/vigilantPages/parking-lot-list/
     ParkInfoComponent,
     RefundComponentComponent,
     ParkingLotListComponent,
+    BuySubscriptionComponent,
+    SelectParkingTypeComponent,
+    ConfirmSubscriptionComponent,
+    GenericNotificationComponent,
+    AddPersonalParkingLotComponent,
+    OpenPersonalParkingLotComponent,
   ],
   imports: [
     BrowserModule,

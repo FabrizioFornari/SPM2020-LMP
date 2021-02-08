@@ -1,32 +1,32 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxToastService } from 'src/app/services/commonServices/ngx-toast.service';
-import { ParkingLotServiceService } from 'src/app/services/managerServices/parking-lot-service.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxToastService } from "src/app/services/commonServices/ngx-toast.service";
+import { ParkingLotServiceService } from "src/app/services/managerServices/parking-lot-service.service";
 
 @Component({
-  selector: 'app-open-parking-lot',
-  templateUrl: './open-parking-lot.component.html',
-  styleUrls: ['./open-parking-lot.component.css'],
+  selector: "app-open-parking-lot",
+  templateUrl: "./open-parking-lot.component.html",
+  styleUrls: ["./open-parking-lot.component.css"],
 })
 export class OpenParkingLotComponent implements OnInit {
   @Input() PARK: any;
 
   isLoading: boolean = false;
 
-  handicapType: Array<String> = ['True', 'False'];
+  handicapType: Array<String> = ["True", "False"];
   vehicleType: Array<String> = [
-    '2 Wheels Vehicle',
-    '4 Wheels Standard Vehicle',
-    '4 Wheels Big Vehicle',
+    "2 Wheels Vehicle",
+    "4 Wheels Standard Vehicle",
+    "4 Wheels Big Vehicle",
   ];
 
-  newStreet: string = '';
+  newStreet: string = "";
   newNumberOfParkingLot: number;
-  newIsHandicapParkingLot: string = '';
+  newIsHandicapParkingLot: string = "";
   newPricePerHours: number;
-  newTypeOfVehicle: string = '';
-  newLatitude: string = '';
-  newLongitude: string = '';
+  newTypeOfVehicle: string = "";
+  newLatitude: string = "";
+  newLongitude: string = "";
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -43,26 +43,26 @@ export class OpenParkingLotComponent implements OnInit {
     };
     this.parkingLotService.deleteParkingLot(body).subscribe(
       () => {
-        this.toast.createToster('success', 'Parking Lot Deleted');
+        this.toast.createToster("success", "Parking Lot Deleted");
         this.isLoading = false;
         this.activeModal.dismiss();
       },
       (error) => {
         if (error.status == 400) {
-          this.toast.createToster('error', 'Bad Request');
+          this.toast.createToster("error", "Bad Request");
         } else if (error.status == 401) {
-          this.toast.createToster('error', 'Unauthorized');
+          this.toast.createToster("error", "Unauthorized");
         } else if (error.status == 403) {
-          this.toast.createToster('error', 'Forbidden');
+          this.toast.createToster("error", "Forbidden");
         } else if (error.status == 404) {
-          this.toast.createToster('error', 'Parking Lot Not Found');
+          this.toast.createToster("error", "Parking Lot Not Found");
         } else if (error.status == 409) {
-          this.toast.createToster('error', 'Conflict');
+          this.toast.createToster("error", "Conflict");
         } else if (error.status == 500) {
-          this.toast.createToster('error', 'Server Error');
+          this.toast.createToster("error", "Server Error");
         } else if (error.status == 503) {
-          this.toast.createToster('error', 'Server Unavailable');
-        } else this.toast.createToster('error', 'Unknown Error');
+          this.toast.createToster("error", "Server Unavailable");
+        } else this.toast.createToster("error", "Unknown Error");
         this.isLoading = false;
         this.activeModal.dismiss();
       }
@@ -82,9 +82,9 @@ export class OpenParkingLotComponent implements OnInit {
   }) {
     let handicapBool: boolean;
 
-    if (form.value.isHandicapParkingLot == 'True') {
+    if (form.value.isHandicapParkingLot == "True") {
       handicapBool = true;
-    } else if (form.value.isHandicapParkingLot == 'False') {
+    } else if (form.value.isHandicapParkingLot == "False") {
       handicapBool = false;
     }
 
@@ -104,26 +104,26 @@ export class OpenParkingLotComponent implements OnInit {
 
     this.parkingLotService.updateParkingLot(body).subscribe(
       () => {
-        this.toast.createToster('success', 'Parking Lot Updated');
+        this.toast.createToster("success", "Parking Lot Updated");
         this.isLoading = false;
         this.activeModal.dismiss();
       },
       (error) => {
         if (error.status == 400) {
-          this.toast.createToster('error', 'Bad Request');
+          this.toast.createToster("error", "Bad Request");
         } else if (error.status == 401) {
-          this.toast.createToster('error', 'Unauthorized');
+          this.toast.createToster("error", "Unauthorized");
         } else if (error.status == 403) {
-          this.toast.createToster('error', 'Forbidden');
+          this.toast.createToster("error", "Forbidden");
         } else if (error.status == 404) {
-          this.toast.createToster('error', 'Parking Lot Not Found');
+          this.toast.createToster("error", "Parking Lot Not Found");
         } else if (error.status == 409) {
-          this.toast.createToster('error', 'Conflict');
+          this.toast.createToster("error", "Conflict");
         } else if (error.status == 500) {
-          this.toast.createToster('error', 'Server Error');
+          this.toast.createToster("error", "Server Error");
         } else if (error.status == 503) {
-          this.toast.createToster('error', 'Server Unavailable');
-        } else this.toast.createToster('error', 'Unknown Error');
+          this.toast.createToster("error", "Server Unavailable");
+        } else this.toast.createToster("error", "Unknown Error");
         this.isLoading = false;
         this.activeModal.dismiss();
       }
