@@ -39,12 +39,6 @@
                 </exclusion>
             </exclusions>
 		</dependency>
-<dependency>  
-    <groupId>org.hibernate.validator</groupId>  
-    <artifactId>hibernate-validator</artifactId>  
-    <version>6.0.13.Final</version>  
-</dependency>  
-
 
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -129,6 +123,7 @@
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-tomcat</artifactId>
+    <scope>provided</scope>
     <version>2.4.1</version>
 </dependency>
 
@@ -162,12 +157,13 @@
 			<version>2.2</version>
 			<configuration>
 			<!-- Use tomcat9 user defined credentials. Usually you would place them under the Maven folder .settings.xml telling eclipse to read them from thereby just using adding <server>tomcat9</server>-->
-			<username>tomcat</username>
-			<password>tomcat</password>
+			<username>war-deployer</username>
+			<password>jenkins-tomcat-plugin</password>
 			<update>true</update>
 			<!-- <url>http://localhost:8080/manager/text</url>-->
 			</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 
