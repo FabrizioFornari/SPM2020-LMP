@@ -12,8 +12,7 @@ import com.spm.ParkMe.enums.Status;
 public class PersonalParkingLot extends Parking{
 
 	
-	@NotNull(message="Street must not be null")
-	@NotEmpty(message = "Street must not be empty")
+	@NotNull(message="Price must not be null")
 	private Double price;
 	private PersonalParkingLotStatus status;
 	
