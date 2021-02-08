@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PayTicketComponent } from 'src/app/modals/driverModal/pay-ticket/pay-ticket.component';
-import { SelectBookingTypeComponent } from 'src/app/modals/driverModal/select-booking-type/select-booking-type.component';
-import { NgxToastService } from 'src/app/services/commonServices/ngx-toast.service';
-import { TicketService } from 'src/app/services/driverServices/ticket.service';
+import { Component, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
+import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ConfirmSubscriptionComponent } from "src/app/modals/driverModal/confirm-subscription/confirm-subscription.component";
+import { PayTicketComponent } from "src/app/modals/driverModal/pay-ticket/pay-ticket.component";
+import { SelectBookingTypeComponent } from "src/app/modals/driverModal/select-booking-type/select-booking-type.component";
+import { NgxToastService } from "src/app/services/commonServices/ngx-toast.service";
+import { TicketService } from "src/app/services/driverServices/ticket.service";
 
-const GOOGLE_MAPS = 'https://www.google.com/maps/dir//';
+const GOOGLE_MAPS = "https://www.google.com/maps/dir//";
 
 @Component({
-  selector: 'app-buy-ticket',
-  templateUrl: './buy-ticket.component.html',
-  styleUrls: ['./buy-ticket.component.css'],
+  selector: "app-buy-ticket",
+  templateUrl: "./buy-ticket.component.html",
+  styleUrls: ["./buy-ticket.component.css"],
 })
 export class BuyTicketComponent implements OnInit {
   isCurrentBooking: boolean = false;
 
   isCurrentTicket: boolean = false;
 
+  isCurrentSubscription: boolean = false;
+
   currentBooking;
 
   currentTicket;
+
+  currentSubscription;
 
   ticketHistory = [];
 
@@ -34,25 +39,30 @@ export class BuyTicketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('ParkMe | Buy Ticket');
+    this.titleService.setTitle("ParkMe | Buy Ticket");
     this.getCurrentBooking();
     this.getTicketHistory();
+    this.getCurrentSubscription();
   }
 
   newBooking() {
     const modalRef = this.modalService.open(SelectBookingTypeComponent);
     modalRef.result.then(
       () => {
-        console.log('Modal Select Booking Type Closed');
+        console.log("Modal Select Booking Type Closed");
       },
       () => {
-        console.log('Modal Select Booking Type  Dismissed');
+        console.log("Modal Select Booking Type  Dismissed");
       }
     );
   }
 
+  newSubscription() {
+    this.router.navigateByUrl("/map", { state: { subscription: true } });
+  }
+
   showHistory() {
-    this.router.navigate(['driver/ticket-history']);
+    this.router.navigate(["driver/ticket-history"]);
   }
 
   getCurrentBooking() {
@@ -61,9 +71,9 @@ export class BuyTicketComponent implements OnInit {
         this.currentBooking = success;
         this.currentBooking.timestamp = `${new Date(
           this.currentBooking.timestamp
-        ).toLocaleDateString('it-IT')} (${new Date(
+        ).toLocaleDateString("it-IT")} (${new Date(
           this.currentBooking.timestamp
-        ).toLocaleTimeString('it-IT')})`;
+        ).toLocaleTimeString("it-IT")})`;
         this.isCurrentBooking = true;
       },
       (error) => {
@@ -77,13 +87,12 @@ export class BuyTicketComponent implements OnInit {
     this.ticketHistory = [];
     this.ticket.driverGetTicketHistory().subscribe(
       (success) => {
-        console.log(success);
         success.forEach((element) => {
           let readable_date = `${new Date(
             element.expiringTimestamp
-          ).toLocaleDateString('it-IT')} (${new Date(
+          ).toLocaleDateString("it-IT")} (${new Date(
             element.expiringTimestamp
-          ).toLocaleTimeString('it-IT')})`;
+          ).toLocaleTimeString("it-IT")})`;
           if (element.expiringTimestamp > Date.now()) {
             this.currentTicket = element;
             this.currentTicket.expiringTimestamp = readable_date;
@@ -101,16 +110,50 @@ export class BuyTicketComponent implements OnInit {
     );
   }
 
+  getCurrentSubscription() {
+    this.ticket.driverGetCurrentSubscription().subscribe(
+      (success) => {
+        console.table(success);
+        this.currentSubscription = success;
+        this.currentSubscription.expiration = `${new Date(
+          this.currentSubscription.expiration
+        ).toLocaleDateString("it-IT")} (${new Date(
+          this.currentSubscription.expiration
+        ).toLocaleTimeString("it-IT")})`;
+        this.isCurrentSubscription = true;
+      },
+      (error) => {
+        console.log(error);
+        this.isCurrentSubscription = false;
+      }
+    );
+  }
+
   confirm(curBook) {
     let modalRef = this.modalService.open(PayTicketComponent);
     modalRef.componentInstance.CURRENT_BOOKING = curBook;
     modalRef.result.then(
       () => {
-        console.log('Modal Confirm Parking Lot Closed');
+        console.log("Modal Confirm Parking Lot Closed");
         this.ngOnInit();
       },
       () => {
-        console.log('Modal Confirm Parking Lot Dismissed');
+        console.log("Modal Confirm Parking Lot Dismissed");
+        this.ngOnInit();
+      }
+    );
+  }
+
+  confirmSubscription(currSub) {
+    let modalRef = this.modalService.open(ConfirmSubscriptionComponent);
+    modalRef.componentInstance.CURRENT_SUBSCRIPTION = currSub;
+    modalRef.result.then(
+      () => {
+        console.log("Modal Confirm Subscription Closed");
+        this.ngOnInit();
+      },
+      () => {
+        console.log("Modal Confirm Subscription Dismissed");
         this.ngOnInit();
       }
     );
@@ -125,12 +168,12 @@ export class BuyTicketComponent implements OnInit {
       (success) => {
         console.log(success);
         this.isCurrentBooking = false;
-        this.toast.createToster('success', 'Successfully Cancelled');
+        this.toast.createToster("success", "Successfully Cancelled");
         this.ngOnInit();
       },
       (error) => {
         console.log(error);
-        this.toast.createToster('error', 'Error while deleting Booking');
+        this.toast.createToster("error", "Error while deleting Booking");
       }
     );
   }

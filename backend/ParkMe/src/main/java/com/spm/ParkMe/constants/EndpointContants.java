@@ -1,5 +1,7 @@
 package com.spm.ParkMe.constants;
 
+import static com.spm.ParkMe.constants.EndpointContants.VIGILANT_GET_ALL_PARKINGLOTS_FOR_STREET;
+
 public final class EndpointContants {
 	
 	//authentication controller
@@ -22,6 +24,12 @@ public final class EndpointContants {
 	public static final String DRIVER_SET_SENSOR_PARKINGLOT="/setSensorParkingLot";
 	public static final String DRIVER_CHANGE_PARKING_LOT = "/changeParkingLot";
 	public static final String DRIVER_REFRESH_TICKET="/refreshTicket";
+	public static final String DRIVER_GET_CURRENT_PERSONAL_PARKINGLOT="/getCurrentPersonalParkingLot";
+	public static final String DRIVER_GET_CURRENT_PERSONAL_SUBSCRIPTION = "/getCurrentSubscription";
+	public static final String DRIVER_CREATE_PERSONAL_PARKINGLOT_SUBSCRIPTION="/createPersonalParkingLotSubscription";
+	public static final String DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS = "/availablePersonalParkingLots";
+	public static final String DRIVER_GET_ALL_AVAILABLE_PERSONAL_PARKING_LOTS_FROM_STREET = "/availablePersonalParkingLotsFromStreet";
+	public static final String DRIVER_OCCUPY_PERSONAL_PARKING_LOT = "/occupyPersonalParkingLot";
 	
 	//modification controller
 	public static final String MODIFICATION_ENDPOINT = "/api/modification";
@@ -55,9 +63,13 @@ public final class EndpointContants {
 	//Vigilant
 	public static final String VIGILANT_ENDPOINT="/api/vigilant";
 	public static final String VIGILANT_GET_PARKINGLOT= "/getParkingLot";
+	public static final String VIGILANT_GET_PERSONAL_PARKINGLOT = "/getPersonalParkingLot";
 	public static final String VIGILANT_GET_ALL_PARKINGLOTS_FOR_STREET ="/getParkingLots/street";
 	public static final String VIGILANT_GET_ALL_PARKINGLOTS= "/getAllParkingLot";
 	public static final String VIGILANT_GET_ALL_STREET_NAME ="/getAllStreet";
 	public static final String VIGILANT_SET_PARKINGLOT_STATUS_DISABLED= "/setStatusParkingLotDisabled";
 	public static final String VIGILANT_SET_PARKINGLOT_STATUS_ENABLED="/setStatusParkingLotEnabled";
+	public static final String VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_DISABLED= "/setStatusPersonalParkingLotDisabled";
+	public static final String VIGILANT_SET_PERSONAL_PARKINGLOT_STATUS_ENABLED="/setStatusPersonalParkingLotEnabled";
+	public static final String VIGILANT_GET_ALL_PERSONAL_PARKINGLOTS_FOR_STREET = "/getPersonalParkingLots/street";
 }

@@ -13,19 +13,19 @@
   <form>
     <div class="form-group">
       <label
-        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        *ngIf="INFO.sensorState == 'ON' && state != 'OCCUPIED'"
         style="color: #df4759"
         >Sensor State</label
       >
       <label
         *ngIf="
           INFO.sensorState != 'ON' ||
-          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+          (INFO.sensorState == 'ON' && state == 'OCCUPIED')
         "
         >Sensor State</label
       >
       <input
-        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        *ngIf="INFO.sensorState == 'ON' && state != 'OCCUPIED'"
         style="background-color: #df4759"
         [ngModel]="INFO.sensorState"
         type="text"
@@ -36,7 +36,7 @@
       <input
         *ngIf="
           INFO.sensorState != 'ON' ||
-          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+          (INFO.sensorState == 'ON' && state == 'OCCUPIED')
         "
         [ngModel]="INFO.sensorState"
         type="text"
@@ -47,21 +47,21 @@
     </div>
     <div class="form-group">
       <label
-        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        *ngIf="INFO.sensorState == 'ON' && state != 'OCCUPIED'"
         style="color: #df4759"
         >Status</label
       >
       <label
         *ngIf="
           INFO.sensorState != 'ON' ||
-          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+          (INFO.sensorState == 'ON' && state == 'OCCUPIED')
         "
         >Status</label
       >
       <input
-        *ngIf="INFO.sensorState == 'ON' && INFO.status != 'OCCUPIED'"
+        *ngIf="INFO.sensorState == 'ON' && state != 'OCCUPIED'"
         style="background-color: #df4759"
-        [ngModel]="INFO.status"
+        [ngModel]="state"
         type="text"
         class="form-control"
         name="status"
@@ -70,9 +70,9 @@
       <input
         *ngIf="
           INFO.sensorState != 'ON' ||
-          (INFO.sensorState == 'ON' && INFO.status == 'OCCUPIED')
+          (INFO.sensorState == 'ON' && state == 'OCCUPIED')
         "
-        [ngModel]="INFO.status"
+        [ngModel]="state"
         type="text"
         class="form-control"
         name="status"
@@ -111,7 +111,7 @@
     </div>
   </form>
   <button
-    *ngIf="INFO.status != 'DISABLED'"
+    *ngIf="!INFO.personalParkingLotStatus && state != 'DISABLED'"
     (click)="disablePark(INFO)"
     type="button"
     class="btn btn-danger btn-lg btn-block"
@@ -119,8 +119,24 @@
     Disable
   </button>
   <button
-    *ngIf="INFO.status == 'DISABLED'"
+    *ngIf="!INFO.personalParkingLotStatus && state == 'DISABLED'"
     (click)="enablePark(INFO)"
+    type="button"
+    class="btn btn-success btn-lg btn-block"
+  >
+    Enable
+  </button>
+  <button
+    *ngIf="INFO.personalParkingLotStatus && state != 'DISABLED'"
+    (click)="disablePersonalPark(INFO)"
+    type="button"
+    class="btn btn-danger btn-lg btn-block"
+  >
+    Disable
+  </button>
+  <button
+    *ngIf="INFO.personalParkingLotStatus && state == 'DISABLED'"
+    (click)="enablePersonalPark(INFO)"
     type="button"
     class="btn btn-success btn-lg btn-block"
   >

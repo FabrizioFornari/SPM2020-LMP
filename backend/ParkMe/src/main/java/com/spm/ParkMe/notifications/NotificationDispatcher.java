@@ -20,10 +20,13 @@ import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotNotification;
+import com.spm.ParkMe.models.PersonalParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLotNotification;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.UserSession;
 import com.spm.ParkMe.repositories.NotificationRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
 import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
@@ -41,6 +44,8 @@ public class NotificationDispatcher {
 	
 	@Autowired
 	ParkingLotRepository parkingLotRepository;
+	@Autowired 
+	PersonalParkingLotRepository personalParkingLotRepository;
 
 	private SimpMessagingTemplate template;
 
@@ -115,6 +120,31 @@ public class NotificationDispatcher {
 			}
 		}
 	}
+	
+	public void sendNotificationToOneVigilantForAbusivePersonalParkingLot(String street, Integer numberOfParkingLot) {
+		List<UserSession> vigilantsSessions= userSessionRepository.findAll().stream().filter(session -> session.getUser().getRole().equals(Roles.ROLE_VIGILANT)).collect(Collectors.toList());
+		if(!vigilantsSessions.isEmpty()) {
+			String sessionID = vigilantsSessions.get(0).getSessionID();
+			String username = vigilantsSessions.get(0).getUser().getUsername();
+			List<PersonalParkingLot> personalParkingLots= personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			PersonalParkingLot personalParkingLot= personalParkingLots.get(0);
+			PersonalParkingLotNotification notification = new PersonalParkingLotNotification("Abusive Personal Parking Lot Occupation", "A personal Parking Lot has been abusively occupied. Please go check "+ street + " "+ numberOfParkingLot,username, System.currentTimeMillis(), personalParkingLot);
+			notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PERSONAL_PARKINGLOT);
+			this.sendNotificationToUser(username, notification);
+		}else {
+			List<User> vigilants = userRepository.findByRole(Roles.ROLE_VIGILANT);
+			long timestamp = System.currentTimeMillis();
+			for(User vigilant : vigilants) {
+				List<PersonalParkingLot> personalParkingLots= personalParkingLotRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+				PersonalParkingLot personalParkingLot= personalParkingLots.get(0);
+				PersonalParkingLotNotification notification = new PersonalParkingLotNotification("Abusive Personal Parking Lot Occupation", "A personal Parking Lot has been abusively occupied. Please go check "+ street + " "+ numberOfParkingLot,vigilant.getUsername(), System.currentTimeMillis(), personalParkingLot);
+				notification.setCategoryNotification(CategoryNotification.VIGILANT_ABUSIVE_PERSONAL_PARKINGLOT);
+				notificationRepository.save(notification);
+			}
+		}
+	}
+	
+	
 	
 	public void add(UserSession session)
 	{

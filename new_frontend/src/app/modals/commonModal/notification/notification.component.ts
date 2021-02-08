@@ -1,14 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NotificationService } from 'src/app/services/commonServices/notification.service';
-import { ConfirmPresenceComponent } from '../../driverModal/confirm-presence/confirm-presence.component';
-import { RefundComponentComponent } from '../../driverModal/refund-component/refund-component.component';
-import { CheckParkComponent } from '../check-park/check-park.component';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NotificationService } from "src/app/services/commonServices/notification.service";
+import { ConfirmPresenceComponent } from "../../driverModal/confirm-presence/confirm-presence.component";
+import { ConfirmSubscriptionComponent } from "../../driverModal/confirm-subscription/confirm-subscription.component";
+import { RefundComponentComponent } from "../../driverModal/refund-component/refund-component.component";
+import { CheckParkComponent } from "../check-park/check-park.component";
+import { GenericNotificationComponent } from "../generic-notification/generic-notification.component";
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css'],
+  selector: "app-notification",
+  templateUrl: "./notification.component.html",
+  styleUrls: ["./notification.component.css"],
 })
 export class NotificationComponent implements OnInit {
   @Input() NOTIFICATIONS: any[];
@@ -19,23 +21,45 @@ export class NotificationComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   showNotification(notification) {
     console.table(notification);
     this.markRead(notification.id);
-    if (notification.categoryNotification == 'DRIVER_ABUSIVE_PARKING') {
+    if (notification.categoryNotification == "DRIVER_ABUSIVE_PARKING") {
       this.openModalConfirmPresence(notification);
     } else if (
-      notification.categoryNotification == 'VIGILANT_ABUSIVE_PARKING' ||
-      notification.categoryNotification == 'DRIVER_EXPIRING_TICKET' ||
-      notification.categoryNotification == 'VIGILANT_EXPIRING_TICKET'
+      notification.categoryNotification == "VIGILANT_ABUSIVE_PARKING" ||
+      notification.categoryNotification == "DRIVER_EXPIRING_TICKET" ||
+      notification.categoryNotification == "VIGILANT_EXPIRING_TICKET" ||
+      notification.categoryNotification ==
+        "VIGILANT_ABUSIVE_PERSONAL_PARKINGLOT"
     ) {
       this.openModalCheckPark(notification);
-    } else if (notification.categoryNotification == 'DRIVER_REFUNDED_TICKET') {
+    } else if (notification.categoryNotification == "DRIVER_REFUNDED_TICKET") {
       this.openModalRefund(notification);
+    } else if (
+      notification.categoryNotification == "DRIVER_ABUSIVE_PERSONAL_PARKINGLOT"
+    ) {
+      this.openModalConfirmPresencePersonal();
+    } else {
+      this.openModalGeneric(notification);
     }
+  }
+
+  openModalGeneric(not) {
+    const modalRef = this.modalService.open(GenericNotificationComponent);
+    modalRef.componentInstance.notification = not;
+    modalRef.result.then(
+      () => {
+        console.log("Modal Generic Closed");
+        this.activeModal.dismiss();
+      },
+      () => {
+        console.log("Modal Generic Dismissed");
+        this.activeModal.dismiss();
+      }
+    );
   }
 
   openModalConfirmPresence(not) {
@@ -43,11 +67,25 @@ export class NotificationComponent implements OnInit {
     modalRef.componentInstance.notification = not;
     modalRef.result.then(
       () => {
-        console.log('Modal ConfirmPresence Closed');
+        console.log("Modal ConfirmPresence Closed");
         this.activeModal.dismiss();
       },
       () => {
-        console.log('Modal ConfirmPresence Dismissed');
+        console.log("Modal ConfirmPresence Dismissed");
+        this.activeModal.dismiss();
+      }
+    );
+  }
+
+  openModalConfirmPresencePersonal() {
+    const modalRef = this.modalService.open(ConfirmSubscriptionComponent);
+    modalRef.result.then(
+      () => {
+        console.log("Modal ConfirmPresencePersonal Closed");
+        this.activeModal.dismiss();
+      },
+      () => {
+        console.log("Modal ConfirmPresencePersonal Dismissed");
         this.activeModal.dismiss();
       }
     );
@@ -58,11 +96,11 @@ export class NotificationComponent implements OnInit {
     modalRef.componentInstance.notification = not;
     modalRef.result.then(
       () => {
-        console.log('Modal Check Closed');
+        console.log("Modal Check Closed");
         this.activeModal.dismiss();
       },
       () => {
-        console.log('Modal Check Dismissed');
+        console.log("Modal Check Dismissed");
         this.activeModal.dismiss();
       }
     );
@@ -74,11 +112,11 @@ export class NotificationComponent implements OnInit {
     modalRef.componentInstance.notification = not;
     modalRef.result.then(
       () => {
-        console.log('Modal ConfirmPresence Closed');
+        console.log("Modal ConfirmPresence Closed");
         this.activeModal.dismiss();
       },
       () => {
-        console.log('Modal ConfirmPresence Dismissed');
+        console.log("Modal ConfirmPresence Dismissed");
         this.activeModal.dismiss();
       }
     );

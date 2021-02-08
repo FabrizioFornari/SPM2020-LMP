@@ -1,29 +1,41 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
-import { Injectable } from '@angular/core';
-import { Popup, Layer } from 'leaflet';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Content } from "@angular/compiler/src/render3/r3_ast";
+import { Injectable } from "@angular/core";
+import { Popup, Layer } from "leaflet";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 
-const DRIVER_CURRENT_BOOKING = environment.baseUrl + 'api/driver/booking';
+const DRIVER_CURRENT_BOOKING = environment.baseUrl + "api/driver/booking";
 const DRIVER_HISTORY =
-  environment.baseUrl + 'api/driver/getAllTicketParkingLot';
-const DRIVER_CANCEL = environment.baseUrl + 'api/driver/deleteBooking';
-const DRIVER_BUY = environment.baseUrl + 'api/driver/createParkingLotTicket';
-const DRIVER_STREET_API = environment.baseUrl + 'api/driver/streets';
+  environment.baseUrl + "api/driver/getAllTicketParkingLot";
+const DRIVER_CANCEL = environment.baseUrl + "api/driver/deleteBooking";
+const DRIVER_BUY = environment.baseUrl + "api/driver/createParkingLotTicket";
+const DRIVER_STREET_API = environment.baseUrl + "api/driver/streets";
 const DRIVER_PARKS_API =
-  environment.baseUrl + 'api/parkingManager/parkingLots/getStreet';
-const DRIVER_BOOKING = environment.baseUrl + 'api/driver/setStatusBooked';
+  environment.baseUrl + "api/parkingManager/parkingLots/getStreet";
+const DRIVER_BOOKING = environment.baseUrl + "api/driver/setStatusBooked";
 const DRIVER_NEAREST_PARKING =
-  environment.baseUrl + 'api/driver/nearestParkingLot';
+  environment.baseUrl + "api/driver/nearestParkingLot";
 
 const DRIVER_CHANGE_PARKING_LOT =
-  environment.baseUrl + 'api/driver/changeParkingLot';
+  environment.baseUrl + "api/driver/changeParkingLot";
 
-const DRIVER_REFRESH_TICKET = environment.baseUrl + 'api/driver/refreshTicket';
+const DRIVER_REFRESH_TICKET = environment.baseUrl + "api/driver/refreshTicket";
+
+const DRIVER_CURRENT_SUBSCRIPTION =
+  environment.baseUrl + "api/driver/getCurrentSubscription";
+
+const DRIVER_GET_PERSONAL_LOTS =
+  environment.baseUrl + "api/driver/availablePersonalParkingLots";
+
+const DRIVER_BUY_SUBSCRIPTION =
+  environment.baseUrl + "api/driver/createPersonalParkingLotSubscription";
+
+const DRIVER_CONFIRM_SUB =
+  environment.baseUrl + "api/driver/occupyPersonalParkingLot";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TicketService {
   constructor(private http: HttpClient) {}
@@ -31,8 +43,8 @@ export class TicketService {
   getHttpOpt() {
     return {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       }),
     };
   }
@@ -53,8 +65,11 @@ export class TicketService {
     return this.http.post(DRIVER_BUY, body, this.getHttpOpt());
   }
 
-  driverGetStreetList(): Observable<any> {
-    return this.http.get(DRIVER_STREET_API, this.getHttpOpt());
+  driverGetStreetList(personal: boolean): Observable<any> {
+    return this.http.get(
+      DRIVER_STREET_API + `?personal=${personal}`,
+      this.getHttpOpt()
+    );
   }
 
   driverGetParkingLots(
@@ -83,5 +98,24 @@ export class TicketService {
 
   driverRefreshTicket(body): Observable<any> {
     return this.http.put(DRIVER_REFRESH_TICKET, body, this.getHttpOpt());
+  }
+
+  driverGetCurrentSubscription(): Observable<any> {
+    return this.http.get(DRIVER_CURRENT_SUBSCRIPTION, this.getHttpOpt());
+  }
+
+  driverGetPersonalParkingLots(street: string): Observable<any> {
+    return this.http.get(
+      DRIVER_GET_PERSONAL_LOTS + `?street=${street}`,
+      this.getHttpOpt()
+    );
+  }
+
+  driverBuySubscription(body): Observable<any> {
+    return this.http.post(DRIVER_BUY_SUBSCRIPTION, body, this.getHttpOpt());
+  }
+
+  driverConfirmSubscription(): Observable<any> {
+    return this.http.put(DRIVER_CONFIRM_SUB, null, this.getHttpOpt());
   }
 }

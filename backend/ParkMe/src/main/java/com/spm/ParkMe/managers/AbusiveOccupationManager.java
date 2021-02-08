@@ -11,9 +11,13 @@ import com.spm.ParkMe.enums.Status;
 import com.spm.ParkMe.models.Notification;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
+import com.spm.ParkMe.models.PersonalParkingLot;
+import com.spm.ParkMe.models.PersonalParkingLotSubscription;
 import com.spm.ParkMe.notifications.NotificationDispatcher;
 import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
 import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotSubscriptionRepository;
 
 @Component
 public class AbusiveOccupationManager {
@@ -27,6 +31,8 @@ public class AbusiveOccupationManager {
 	
 	@Autowired
 	private ParkingLotBookingRepository parkingLotBookingRepository;
+	@Autowired
+	private PersonalParkingLotSubscriptionRepository personalParkingLotSubscriptionRepository;
 	
 	private boolean solved;
 	
@@ -98,6 +104,23 @@ public class AbusiveOccupationManager {
 			return;
 		}
 		
+	}
+	
+	public void sendNotificationToVigilantForAbusivePersonalParkingLot(String street, Integer numberOfParkingLot) {
+		notificationDispatcher.sendNotificationToOneVigilantForAbusivePersonalParkingLot(street, numberOfParkingLot);
+	}
+	
+	public void sendNotificationToDriverForAbusivePersonalParkingLot(String street, Integer numberOfParkingLot) {
+		
+			List<PersonalParkingLotSubscription> personalParkingLotSubscriptions= personalParkingLotSubscriptionRepository.findByStreetAndNumberOfParkingLot(street, numberOfParkingLot);
+			if(!personalParkingLotSubscriptions.isEmpty()) {
+				PersonalParkingLotSubscription personalParkingLotSubscription = personalParkingLotSubscriptions.get(0);
+				String username = personalParkingLotSubscription.getUsername();
+				Notification notification = new Notification("Abusive Personal Parking Lot Occupation Alert", "Your Personal Parking Lot (" + street + " - #" + numberOfParkingLot + ") has been occupied. Is that you?",username, System.currentTimeMillis());
+				notification.setCategoryNotification(CategoryNotification.DRIVER_ABUSIVE_PERSONAL_PARKINGLOT);
+				notificationDispatcher.sendNotificationToUser(username, notification);
+			
+		}
 	}
 	
 	public boolean isSolved() {
