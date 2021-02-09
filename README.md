@@ -1,6 +1,6 @@
 # ParkMe
 
-[![Build Status](http://apromore.unicam.it:8080/jenkins/buildStatus/icon?job=SPM2020LMP)](http://apromore.unicam.it:8080/jenkins/job/SPM2020LMP/)
+[![Build Status](http://apromore.unicam.it:8080/jenkins/job/SPM2020LMP/badge/icon)](http://apromore.unicam.it:8080/jenkins/job/SPM2020LMP/)
  
 ## Table of contents
 
