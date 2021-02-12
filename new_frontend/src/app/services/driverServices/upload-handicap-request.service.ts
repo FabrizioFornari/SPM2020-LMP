@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const HANDICAP_UPLOAD_API =
-environment.baseUrl + 'pi/driver/requestHandicapPermits';
+environment.baseUrl + 'api/driver/requestHandicapPermits';
 
 @Injectable({
   providedIn: 'root',
