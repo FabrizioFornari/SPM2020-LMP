@@ -251,6 +251,7 @@ public class FinalTest {
 	}
 	
 	@Order(5)
+	@Tag("AcceptanceTest")
 	@Test
 	 public void driverBuysPersonalParkingLot() throws Exception {
 	    driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
@@ -285,4 +286,34 @@ public class FinalTest {
 	    Thread.sleep(waiting);
 	  }
 	
+	@Order(6)
+	@Test
+	@Tag("AcceptanceTest")
+	public void vigilantDisableParkingLot() throws Exception{
+		Thread.sleep(waiting);
+		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).clear();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).sendKeys("cret@park.it");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).clear();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).sendKeys("Cret");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.linkText("Vigilant-Panel")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("cardFunction")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("streetCardInfo")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("public")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//div[@id='streetCardInfo']/h5")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='button']")).click();
+	    Thread.sleep(mediumWaiting);
+	}	
 }
