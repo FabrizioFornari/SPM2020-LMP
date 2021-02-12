@@ -182,7 +182,7 @@ public class FinalTest {
 		    driver.findElement(By.id("updateButton")).click();
 		    Thread.sleep(mediumWaiting);
 	}
-	
+	@Disabled
 	@Order(3)
 	@Test
 	@Tag("AcceptanceTest")
@@ -204,4 +204,50 @@ public class FinalTest {
 	    driver.findElement(By.id("updateButton")).click();
 	    Thread.sleep(mediumWaiting);
 	}
+	
+	@Order(4)
+	@Test
+	@Tag("AcceptanceTest")
+	public void driverBooksParkingLotAndWaitForNotificationExpiringTicket() throws Exception {
+		 driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.linkText("Buy-Ticket")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//div[@id='cardFunction']/h5")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("automatic")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//app-map/div")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//button[@type='button']")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//button[@type='button']")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputHour")).click();
+		    Thread.sleep(waiting);
+		    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("0.005");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("updateButton")).click();
+		    Thread.sleep(waiting);
+		    Thread.sleep(notificationShortWait);
+		    driver.findElement(By.id("notificationIcon")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//div/div/p[2]")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//app-check-park/div/p[2]")).click();
+		    Thread.sleep(mediumWaiting);
+	}
+	
 }
