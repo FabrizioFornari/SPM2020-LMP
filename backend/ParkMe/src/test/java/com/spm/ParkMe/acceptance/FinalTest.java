@@ -81,6 +81,7 @@ public class FinalTest {
 	}
 	@Order(1)
 	@Test
+	@Disabled
 	@Tag("AcceptanceTest")
 	  public void parkingManagerCreatesParkingLot() throws Exception {
 		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
@@ -181,7 +182,7 @@ public class FinalTest {
 		    driver.findElement(By.id("updateButton")).click();
 		    Thread.sleep(mediumWaiting);
 	}
-	@Disabled
+
 	@Order(3)
 	@Test
 	@Tag("AcceptanceTest")
@@ -252,6 +253,7 @@ public class FinalTest {
 	
 	@Order(5)
 	@Tag("AcceptanceTest")
+	@Disabled
 	@Test
 	 public void driverBuysPersonalParkingLot() throws Exception {
 	    driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
@@ -287,6 +289,7 @@ public class FinalTest {
 	  }
 	
 	@Order(6)
+	@Disabled
 	@Test
 	@Tag("AcceptanceTest")
 	public void vigilantDisableParkingLot() throws Exception{
@@ -316,4 +319,28 @@ public class FinalTest {
 	    driver.findElement(By.xpath("//button[@type='button']")).click();
 	    Thread.sleep(mediumWaiting);
 	}	
+	
+	@Order(9)
+	@Test
+	@Tag("AcceptanceTest")
+	public void adminAcceptsHandicapRequest() throws Exception{
+		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).clear();
+	    driver.findElement(By.id("inputEmail")).sendKeys("admin@park.it");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).clear();
+	    driver.findElement(By.id("inputPassword")).sendKeys("Fusaro");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.linkText("Admin-Panel")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("(//div[@id='cardFunction'])[3]")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("cardFunction")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("updateButton")).click();
+	    Thread.sleep(waiting);
+	}
 }
