@@ -79,7 +79,6 @@ public class FinalTest {
 	      fail(verificationErrorString);
 	    }
 	}
-	@Disabled
 	@Order(1)
 	@Test
 	@Tag("AcceptanceTest")
@@ -205,6 +204,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
+	@Disabled
 	@Order(4)
 	@Test
 	@Tag("AcceptanceTest")
@@ -249,5 +249,40 @@ public class FinalTest {
 		    driver.findElement(By.xpath("//app-check-park/div/p[2]")).click();
 		    Thread.sleep(mediumWaiting);
 	}
+	
+	@Order(5)
+	@Test
+	 public void driverBuysPersonalParkingLot() throws Exception {
+	    driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).clear();
+	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).clear();
+	    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.linkText("Buy-Ticket")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("(//div[@id='cardFunction'])[2]")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//div[4]/img[2]")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//div[3]/i")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.name("months")).click();
+	    Thread.sleep(waiting);
+	    new Select(driver.findElement(By.name("months"))).selectByVisibleText("4");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.name("months")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='button']")).click();
+	    Thread.sleep(waiting);
+	  }
 	
 }
