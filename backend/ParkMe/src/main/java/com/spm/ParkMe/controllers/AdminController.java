@@ -18,16 +18,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
+import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
+import com.spm.ParkMe.models.MessageResponse;
 import com.spm.ParkMe.models.ParkingManager;
+import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
+import com.spm.ParkMe.repositories.NotificationRepository;
+import com.spm.ParkMe.repositories.ParkingLotBookingRepository;
+import com.spm.ParkMe.repositories.ParkingLotRepository;
+import com.spm.ParkMe.repositories.ParkingLotTicketRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotRepository;
+import com.spm.ParkMe.repositories.PersonalParkingLotSubscriptionRepository;
 import com.spm.ParkMe.repositories.UserRepository;
-
+import com.spm.ParkMe.repositories.UserSessionRepository;
 
 import static com.spm.ParkMe.constants.EndpointContants.*;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_1;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_10;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_11;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_2;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_3;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_4;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_5;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_6;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_7;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_8;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PARKING_9;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PERSONAL;
+import static com.spm.ParkMe.constants.ParkingLotCostants.PERSONAL2;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,10 +63,31 @@ public class AdminController {
 	private UserRepository repository;
 	
 	@Autowired
-	private HandicapPermitsRequestsRepository handicapRepository;;
+	private HandicapPermitsRequestsRepository handicapRepository;
 	
 	@Autowired
 	private DriverInfoRepository driverInfoRepository;
+	
+	@Autowired
+	private ParkingLotRepository parkingLotRepository;
+	
+	@Autowired
+	private ParkingLotBookingRepository parkingLotBookingRepository;
+	
+	@Autowired
+	private ParkingLotTicketRepository parkingLotTicketRepository;
+	
+	@Autowired
+	private UserSessionRepository userSessionRepository;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
+	
+	@Autowired
+	private PersonalParkingLotRepository personalParkingLotRepository;
+	
+	@Autowired
+	private PersonalParkingLotSubscriptionRepository personalParkingLotSubscriptionRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -113,4 +156,50 @@ public class AdminController {
 	}
 	
 	
+	//ONLY FOR DEVELPMENT PURPOSE
+	@GetMapping("/reset")
+	public ResponseEntity<?> resetDB(){
+		User[] users = null;
+		users = new User[] { new User("cret@park.it", "Manuel", "Cretone", "ZZZZZZ10A01A000Z", "+39 333 3333333", "cret@park.it", encoder.encode("Cret"), Roles.ROLE_VIGILANT),
+				new User("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), Roles.ROLE_DRIVER),
+				new User("flash@park.it", "Andrea", "Falaschini", "ZZZZZZ10A01A000Z", "+39 333 3333333","flash@park.it",  encoder.encode("Flash"), Roles.ROLE_PARKING_MANAGER),
+				new User("admin@park.it","Diego", "Fusaro", "ZZZZZZ10A01A000Z", "+39 333 3333333","admin@park.it", encoder.encode("Fusaro"), Roles.ROLE_ADMIN), };
+		Driver driver = new Driver("rocche@park.it", "Giacomo", "Rocchetti", "ZZZZZZ10A01A000Z", "+39 333 3333333","rocche@park.it",  encoder.encode("Rocche"), "AA000AA", "4 Wheels Standard Vehicle");
+		repository.deleteAll();
+		for (User user : users) {
+			repository.save(user);
+		}
+		driverInfoRepository.deleteAll();
+		driverInfoRepository.save(new DriverInfo(driver));
+		handicapRepository.deleteAll();
+		
+		parkingLotRepository.deleteAll();
+		
+		parkingLotRepository.save(PARKING_1);
+		parkingLotRepository.save(PARKING_2);
+		parkingLotRepository.save(PARKING_3);
+		parkingLotRepository.save(PARKING_4);
+		parkingLotRepository.save(PARKING_5);
+		parkingLotRepository.save(PARKING_6);
+		parkingLotRepository.save(PARKING_7);
+		parkingLotRepository.save(PARKING_8);
+		parkingLotRepository.save(PARKING_9);
+		parkingLotRepository.save(PARKING_10);
+		parkingLotRepository.save(PARKING_11);
+		
+		parkingLotBookingRepository.deleteAll();
+		
+		parkingLotTicketRepository.deleteAll();
+		
+		userSessionRepository.deleteAll();
+		notificationRepository.deleteAll();
+		
+		personalParkingLotRepository.deleteAll();
+		personalParkingLotRepository.save(PERSONAL);
+		personalParkingLotRepository.save(PERSONAL2);
+		
+		personalParkingLotSubscriptionRepository.deleteAll();
+		
+		return ResponseEntity.ok(new MessageResponse("DB reset successfully"));
+	}
 }
