@@ -133,5 +133,53 @@ public class FinalTest {
 	    driver.findElement(By.xpath("//p[2]")).click();
 	    Thread.sleep(mediumWaiting);
 	  }
-
+	
+	
+	@Order(2)
+	@Test
+	@Tag("AcceptanceTest")
+	  public void driverChangeUserInfo() throws Exception {
+			driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		 	Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//div[6]/p[2]")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.name("newPlate")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.name("newPlate")).sendKeys("AA555AA");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputNewVehicle")).click();
+		    Thread.sleep(waiting);
+		    new Select(driver.findElement(By.id("inputNewVehicle"))).selectByVisibleText("4 Wheels Big Vehicle");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("updateButton")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.xpath("//div[9]/p[2]")).click();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.name("newPhone")).clear();
+		    Thread.sleep(waiting);
+		    driver.findElement(By.name("newPhone")).sendKeys("+39 334 5555555");
+		    Thread.sleep(waiting);
+		    driver.findElement(By.id("updateButton")).click();
+		    Thread.sleep(mediumWaiting);
+	}
 }
