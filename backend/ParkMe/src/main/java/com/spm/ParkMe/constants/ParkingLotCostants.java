@@ -1,12 +1,7 @@
 package com.spm.ParkMe.constants;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.annotation.Id;
 
 import com.spm.ParkMe.models.Coordinates;
-import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.ParkingLot;
 import com.spm.ParkMe.models.ParkingLotBooking;
 import com.spm.ParkMe.models.ParkingLotTicket;

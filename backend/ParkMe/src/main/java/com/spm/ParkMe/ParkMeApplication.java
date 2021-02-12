@@ -4,7 +4,6 @@ package com.spm.ParkMe;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -12,13 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spm.ParkMe.enums.Roles;
-import com.spm.ParkMe.models.Coordinates;
 import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
-import com.spm.ParkMe.models.HandicapPermitsRequest;
-import com.spm.ParkMe.models.ParkingLot;
-import com.spm.ParkMe.models.ParkingLotTicket;
-import com.spm.ParkMe.models.PersonalParkingLotSubscription;
 import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;
@@ -32,9 +26,7 @@ import com.spm.ParkMe.repositories.UserRepository;
 import com.spm.ParkMe.repositories.UserSessionRepository;
 
 import static com.spm.ParkMe.constants.ParkingLotCostants.*;
-import static com.spm.ParkMe.constants.UserInfoConstants.DRIVER_MAIL;
 
-import static com.spm.ParkMe.constants.NotificationConstants.*;
 
 @SpringBootApplication
 @EnableScheduling
@@ -110,12 +102,6 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		driverInfoRepository.deleteAll();
 		driverInfoRepository.save(new DriverInfo(driver));
 		handicapRequestsRepository.deleteAll();
-		HandicapPermitsRequest[] requests = new HandicapPermitsRequest[] {
-				new HandicapPermitsRequest("rocche@park.it", System.currentTimeMillis(), false, false),
-		};
-		for (HandicapPermitsRequest req : requests) {
-			handicapRequestsRepository.save(req);
-		}
 		
 		parkingLotRepository.deleteAll();
 		
@@ -137,7 +123,7 @@ public class ParkMeApplication extends SpringBootServletInitializer implements C
 		parkingLotBookingRepository.deleteAll();
 		
 		parkingLotTicketRepository.deleteAll();
-		parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
+		//parkingLotTicketRepository.save(new ParkingLotTicket(STREET, 4, "rocche@park.it", 0.0, 1604581416000L));
 		
 		userSessionRepository.deleteAll();
 		notificationRepository.deleteAll();

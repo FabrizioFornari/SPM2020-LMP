@@ -1,15 +1,9 @@
 package com.spm.ParkMe.constants;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.annotation.Id;
 
 import com.spm.ParkMe.enums.CategoryNotification;
 import com.spm.ParkMe.enums.StatusNotification;
 import com.spm.ParkMe.models.Notification;
-import com.spm.ParkMe.models.ParkingLot;
-import com.spm.ParkMe.models.requestBody.ChangeNotificationStatusInfo;
 
 public class NotificationConstants {
 

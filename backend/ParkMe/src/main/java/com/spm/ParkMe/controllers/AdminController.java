@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spm.ParkMe.enums.Roles;
 import com.spm.ParkMe.models.AdminHandicapRequestAcceptance;
-import com.spm.ParkMe.models.Driver;
 import com.spm.ParkMe.models.DriverInfo;
 import com.spm.ParkMe.models.HandicapPermitsRequest;
 import com.spm.ParkMe.models.ParkingManager;
-import com.spm.ParkMe.models.User;
 import com.spm.ParkMe.models.Vigilant;
 import com.spm.ParkMe.repositories.DriverInfoRepository;
 import com.spm.ParkMe.repositories.HandicapPermitsRequestsRepository;

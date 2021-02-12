@@ -1,9 +1,6 @@
 package com.spm.ParkMe.models.requestBody;
 
-import org.springframework.data.annotation.Id;
-
 import com.spm.ParkMe.enums.StatusNotification;
-import com.spm.ParkMe.models.Coordinates;
 
 public class ChangeNotificationStatusInfo {
 

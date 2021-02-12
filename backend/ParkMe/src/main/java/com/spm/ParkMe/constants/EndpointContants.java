@@ -1,6 +1,5 @@
 package com.spm.ParkMe.constants;
 
-import static com.spm.ParkMe.constants.EndpointContants.VIGILANT_GET_ALL_PARKINGLOTS_FOR_STREET;
 
 public final class EndpointContants {
 	
