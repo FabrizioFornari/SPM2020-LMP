@@ -79,7 +79,7 @@ public class FinalTest {
 	      fail(verificationErrorString);
 	    }
 	}
-	
+	@Disabled
 	@Order(1)
 	@Test
 	@Tag("AcceptanceTest")
@@ -134,7 +134,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	  }
 	
-	
+	@Disabled
 	@Order(2)
 	@Test
 	@Tag("AcceptanceTest")
@@ -181,5 +181,27 @@ public class FinalTest {
 		    Thread.sleep(waiting);
 		    driver.findElement(By.id("updateButton")).click();
 		    Thread.sleep(mediumWaiting);
+	}
+	
+	@Order(3)
+	@Test
+	@Tag("AcceptanceTest")
+	  public void driverAsksForHandicapPermissions() throws Exception {
+		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).clear();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).clear();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.xpath("//p[2]")).click();
+	    Thread.sleep(waiting);
+	    driver.findElement(By.id("updateButton")).click();
+	    Thread.sleep(mediumWaiting);
 	}
 }
