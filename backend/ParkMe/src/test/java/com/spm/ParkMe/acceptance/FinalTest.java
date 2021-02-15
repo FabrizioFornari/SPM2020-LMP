@@ -80,6 +80,7 @@ public class FinalTest {
 	    }
 	}
 
+	
 	@Order(1)
 	@Test
 	@Tag("AcceptanceTest")
@@ -134,6 +135,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	  }
 	
+
 	@Order(2)
 	@Test
 	@Tag("AcceptanceTest")
@@ -158,25 +160,7 @@ public class FinalTest {
 		    Thread.sleep(waiting);
 		    driver.findElement(By.id("inputNewVehicle")).click();
 		    Thread.sleep(waiting);
-		    new Select(driver.findElement(By.id("inputNewVehicle"))).selectByVisibleText("4 Wheels Big Vehicle");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("updateButton")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputEmail")).clear();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputPassword")).clear();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//button[@type='submit']")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//div[9]/p[2]")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.name("newPhone")).clear();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.name("newPhone")).sendKeys("+39 334 5555555");
+		    new Select(driver.findElement(By.id("inputNewVehicle"))).selectByVisibleText("4 Wheels Standard Vehicle");
 		    Thread.sleep(waiting);
 		    driver.findElement(By.id("updateButton")).click();
 		    Thread.sleep(mediumWaiting);
@@ -204,53 +188,8 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-
-	@Order(4)
-	@Test
-	@Tag("AcceptanceTest")
-	public void driverBooksParkingLotAndWaitForNotificationExpiringTicket() throws Exception {
-		 driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputEmail")).clear();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputPassword")).clear();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputPassword")).sendKeys("Rocche");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//button[@type='submit']")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.linkText("Buy-Ticket")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//div[@id='cardFunction']/h5")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("automatic")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//app-map/div")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//button[@type='button']")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//button[@type='button']")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//div[@id='buttonConfirm']/p")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("inputHour")).click();
-		    Thread.sleep(waiting);
-		    new Select(driver.findElement(By.id("inputHour"))).selectByVisibleText("0.005");
-		    Thread.sleep(waiting);
-		    driver.findElement(By.id("updateButton")).click();
-		    Thread.sleep(waiting);
-		    Thread.sleep(notificationShortWait);
-		    driver.findElement(By.id("notificationIcon")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//div/div/p[2]")).click();
-		    Thread.sleep(waiting);
-		    driver.findElement(By.xpath("//app-check-park/div/p[2]")).click();
-		    Thread.sleep(mediumWaiting);
-	}
 	
-	@Order(5)
+	@Order(4)
 	@Tag("AcceptanceTest")
 	@Test
 	 public void driverBuysPersonalParkingLot() throws Exception {
@@ -286,7 +225,8 @@ public class FinalTest {
 	    Thread.sleep(waiting);
 	  }
 
-	@Order(6)
+	
+	@Order(5)
 	@Test
 	@Tag("AcceptanceTest")
 	public void vigilantDisableParkingLot() throws Exception{
@@ -319,8 +259,8 @@ public class FinalTest {
 
 
 	
-
-	@Order(7)
+	
+	@Order(6)
 	@Test
 	@Tag("AcceptanceTest")
 	public void vigilantDisablePersonalParkingLot() throws Exception{
@@ -351,7 +291,8 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-	@Order(8)
+	
+	@Order(7)
 	@Test
 	@Tag("AcceptanceTest")
 	public void vigilantCheckParkingLotStatusFromNotification() throws Exception {
@@ -418,7 +359,8 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 
-	@Order(9)
+	
+	@Order(8)
 	@Test
 	@Tag("AcceptanceTest")
 	public void adminAcceptsHandicapRequest() throws Exception{
