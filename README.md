@@ -11,14 +11,9 @@ Jenkins Build Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![Build Status](http:
     1. [SpringBoot](#tools_springboot)
     2. [MongoDB](#tools_mongodb)
     3. [Angular](#tools_angular)
-	4. [Leaflet](#tools_leaflet)
+    4. [Leaflet](#tools_leaflet)
 
-3. [Installation](#installation)
-	1. [Angular Frontend](#installation_angular)
-	2. [SpringBoot Backend](#installation_springboot)
-	3. [MongoDB](#installation_mongodb)
-
-4. [Project Team](#project_team)
+3. [Project Team](#project_team)
 
 
 
@@ -45,8 +40,6 @@ The [milestones](https://github.com/FabrizioFornari/SPM2020-LMP/milestones) and 
 4. [Leaflet](https://leafletjs.com/)
 
 	<img src="https://leafletjs.com/docs/images/logo.png" alt="SpringBoot" width="300" height="100" />
-
-## Installation (TO BE DONE ...) <a name="installation"/>
 
 
 ### Project Team <a name="project_team"/>
