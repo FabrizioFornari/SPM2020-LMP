@@ -77,7 +77,7 @@ public class FinalTest {
 			options.addArguments("--disable-extensions");
 			options.addArguments("--start-maximized");		
 			options.addArguments("--headless");
-			//waiting = mediumWaiting = notificationLongWait = notificationShortWait = 0;
+			waiting = mediumWaiting = notificationLongWait = notificationShortWait = 50;
 		}
 		
 		
@@ -307,7 +307,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-	
+	@Disabled
 	@Order(7)
 	@Test
 	@Tag("AcceptanceTest")
