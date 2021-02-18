@@ -198,7 +198,7 @@ public class FinalTest {
 	    Thread.sleep(waiting);
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    Thread.sleep(waiting);
-	    driver.findElement(By.xpath("//p[2]")).click();
+	    driver.findElement(By.id("handicapIcon")).click();
 	    Thread.sleep(waiting);
 	    driver.findElement(By.id("updateButton")).click();
 	    Thread.sleep(mediumWaiting);
