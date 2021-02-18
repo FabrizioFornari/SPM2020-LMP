@@ -24,6 +24,7 @@
             <span *ngIf="!user.isHandicap" style="color: red">No</span>
           </p>
           <p
+            id="handicapIcon"
             *ngIf="!user.isHandicap"
             (click)="openModalHandicapRequest()"
             class="material-icons"
