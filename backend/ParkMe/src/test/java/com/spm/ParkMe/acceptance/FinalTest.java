@@ -19,6 +19,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,6 +39,9 @@ public class FinalTest {
 	
 	static String projectPath;
 
+	private static ChromeOptions options;
+	
+	private static boolean headless = true;
     
 	
 	@BeforeAll
@@ -63,9 +67,21 @@ public class FinalTest {
 			System.setProperty("webdriver.chrome.driver", projectPath+"/drivers/linux/chromedriver");
 		}
 		
-		 
+
+		ChromeOptions options = new ChromeOptions();
+		if(headless) {
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--window-size=1920,1080");
+			options.addArguments("--disable-gpu");
+			options.addArguments("--disable-extensions");
+			options.addArguments("--start-maximized");		
+			options.addArguments("--headless");
+			waiting = mediumWaiting = notificationLongWait = notificationShortWait = 50;
+		}
 		
-	    driver = new ChromeDriver();
+		
+	    driver = new ChromeDriver(options);
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    driver.manage().window().maximize();
 	    //250ms frequency of pulling
@@ -291,7 +307,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-	
+	@Disabled
 	@Order(7)
 	@Test
 	@Tag("AcceptanceTest")
