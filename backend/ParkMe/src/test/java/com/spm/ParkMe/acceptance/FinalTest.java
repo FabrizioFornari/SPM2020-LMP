@@ -42,6 +42,7 @@ public class FinalTest {
 	private static ChromeOptions options;
 	
 	private static boolean headless = true;
+	private static String baseUrl = "http://apromore.unicam.it/SPM2020-LMP/";
     
 	
 	@BeforeAll
@@ -78,6 +79,7 @@ public class FinalTest {
 			options.addArguments("--start-maximized");		
 			options.addArguments("--headless");
 			waiting = mediumWaiting = notificationLongWait = notificationShortWait = 50;
+			baseUrl = "http://localhost/SPM2020-LMP/";
 		}
 		
 		
@@ -101,7 +103,7 @@ public class FinalTest {
 	@Test
 	@Tag("AcceptanceTest")
 	  public void parkingManagerCreatesParkingLot() throws Exception {
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 		Thread.sleep(waiting);
@@ -156,7 +158,7 @@ public class FinalTest {
 	@Test
 	@Tag("AcceptanceTest")
 	  public void driverChangeUserInfo() throws Exception {
-			driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+			driver.get(baseUrl + "#/login");
 		 	Thread.sleep(waiting);
 		    driver.findElement(By.id("inputEmail")).clear();
 		    Thread.sleep(waiting);
@@ -186,7 +188,7 @@ public class FinalTest {
 	@Test
 	@Tag("AcceptanceTest")
 	  public void driverAsksForHandicapPermissions() throws Exception {
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    Thread.sleep(waiting);
@@ -209,7 +211,7 @@ public class FinalTest {
 	@Tag("AcceptanceTest")
 	@Test
 	 public void driverBuysPersonalParkingLot() throws Exception {
-	    driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+	    driver.get(baseUrl + "#/login");
 	    Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    driver.findElement(By.id("inputEmail")).sendKeys("rocche@park.it");
@@ -247,7 +249,7 @@ public class FinalTest {
 	@Tag("AcceptanceTest")
 	public void vigilantDisableParkingLot() throws Exception{
 		Thread.sleep(waiting);
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    Thread.sleep(waiting);
@@ -281,7 +283,7 @@ public class FinalTest {
 	@Tag("AcceptanceTest")
 	public void vigilantDisablePersonalParkingLot() throws Exception{
 		Thread.sleep(waiting);
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    Thread.sleep(waiting);
@@ -312,7 +314,7 @@ public class FinalTest {
 	@Test
 	@Tag("AcceptanceTest")
 	public void vigilantCheckParkingLotStatusFromNotification() throws Exception {
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    Thread.sleep(waiting);
@@ -380,7 +382,7 @@ public class FinalTest {
 	@Test
 	@Tag("AcceptanceTest")
 	public void adminAcceptsHandicapRequest() throws Exception{
-		driver.get("http://apromore.unicam.it/SPM2020-LMP/#/login");
+		driver.get(baseUrl + "#/login");
 		Thread.sleep(waiting);
 	    driver.findElement(By.id("inputEmail")).clear();
 	    driver.findElement(By.id("inputEmail")).sendKeys("admin@park.it");
