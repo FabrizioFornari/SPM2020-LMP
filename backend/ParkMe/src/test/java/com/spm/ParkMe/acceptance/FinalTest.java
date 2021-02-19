@@ -71,6 +71,7 @@ public class FinalTest {
 
 		ChromeOptions options = new ChromeOptions();
 		if(headless) {
+			System.out.println("Headless");
 			options.addArguments("--disable-dev-shm-usage");
 			options.addArguments("--no-sandbox");
 			options.addArguments("--window-size=1920,1080");
@@ -98,7 +99,7 @@ public class FinalTest {
 	    }
 	}
 
-	
+	@Disabled
 	@Order(1)
 	@Test
 	@Tag("AcceptanceTest")
@@ -153,7 +154,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	  }
 	
-
+	@Disabled
 	@Order(2)
 	@Test
 	@Tag("AcceptanceTest")
@@ -183,7 +184,7 @@ public class FinalTest {
 		    driver.findElement(By.id("updateButton")).click();
 		    Thread.sleep(mediumWaiting);
 	}
-
+	@Disabled
 	@Order(3)
 	@Test
 	@Tag("AcceptanceTest")
@@ -206,7 +207,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-	
+	@Disabled
 	@Order(4)
 	@Tag("AcceptanceTest")
 	@Test
@@ -243,7 +244,7 @@ public class FinalTest {
 	    Thread.sleep(waiting);
 	  }
 
-	
+	@Disabled
 	@Order(5)
 	@Test
 	@Tag("AcceptanceTest")
@@ -277,7 +278,7 @@ public class FinalTest {
 
 
 	
-	
+	@Disabled
 	@Order(6)
 	@Test
 	@Tag("AcceptanceTest")
@@ -309,7 +310,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 	
-	@Disabled
+	
 	@Order(7)
 	@Test
 	@Tag("AcceptanceTest")
@@ -377,7 +378,7 @@ public class FinalTest {
 	    Thread.sleep(mediumWaiting);
 	}
 
-	
+	@Disabled
 	@Order(8)
 	@Test
 	@Tag("AcceptanceTest")
