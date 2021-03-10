@@ -42,7 +42,7 @@ public class FinalTest {
 	private static ChromeOptions options;
 	
 	private static boolean headless = true;
-	private static String baseUrl = "http://apromore.unicam.it/SPM2020-LMP/";
+	private static String baseUrl = "http://proslabtest.unicam.it/SPM2020-LMP/";
     
 	
 	@BeforeAll
